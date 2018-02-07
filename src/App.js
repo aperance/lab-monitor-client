@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import NavBar from "./NavBar";
 import AssetTable from "./AssetTable";
+import DrawerContainer from "./DrawerContainer";
 
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider>
-        <div>
-          <NavBar />
+      <div>
+        <NavBar />
+        <div className="container">
           <AssetTable />
+          <DrawerContainer />
         </div>
-      </MuiThemeProvider>
+      </div>
     );
   }
 }

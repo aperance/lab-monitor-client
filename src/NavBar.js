@@ -8,7 +8,10 @@ class NavBar extends Component {
         title="Lab Monitor"
         iconClassNameRight="muidocs-icon-navigation-expand-more"
         showMenuIconButton={false}
-        style={{ backgroundColor: "rgb(0, 134, 212)" }}
+        style={{
+          backgroundColor: "rgb(0, 134, 212)",
+          position: "fixed"
+        }}
       />
     );
   }
