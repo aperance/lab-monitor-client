@@ -16,7 +16,7 @@ class AssetTable extends Component {
         multiSelectable={true}
         onRowSelection={rowsByIndex =>
           this.props.handleRowSelect(
-            rowsByIndex.map(index => this.props.rows[index].id)
+            rowsByIndex.map(index => this.props.rowOrder[index])
           )
         }
       >
@@ -30,12 +30,9 @@ class AssetTable extends Component {
           </TableRow>
         </TableHeader>
         <TableBody deselectOnClickaway={false} displayRowCheckbox={false}>
-          {this.props.rows.map(row => (
-            <TableRow
-              key={row.id}
-              selected={this.props.selected.includes(row.id)}
-            >
-              {row.data.map(rowColumn => (
+          {this.props.rowOrder.map(row => (
+            <TableRow key={row} selected={this.props.selected.includes(row)}>
+              {this.props.rows[row].map(rowColumn => (
                 <TableRowColumn>{rowColumn}</TableRowColumn>
               ))}
             </TableRow>
@@ -50,6 +47,7 @@ const mapStateToProps = state => {
   return {
     header: state.table.header,
     rows: state.table.rows,
+    rowOrder: Object.keys(state.table.rows),
     selected: state.selected
   };
 };
