@@ -1,44 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from "material-ui/Table";
+import AssetTableHeader from "./AssetTableHeader";
+import AssetTableBody from "./AssetTableBody";
 
 class AssetTable extends Component {
   render() {
     return (
-      <Table
-        multiSelectable={true}
-        onRowSelection={rowsByIndex =>
-          this.props.handleRowSelect(
-            rowsByIndex.map(index => this.props.rowOrder[index])
-          )
-        }
-      >
-        <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-          <TableRow>
-            {this.props.header.map(headerColumn => (
-              <TableHeaderColumn key={headerColumn}>
-                {headerColumn}
-              </TableHeaderColumn>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody deselectOnClickaway={false} displayRowCheckbox={false}>
-          {this.props.rowOrder.map(row => (
-            <TableRow key={row} selected={this.props.selected.includes(row)}>
-              {this.props.rows[row].map(rowColumn => (
-                <TableRowColumn>{rowColumn}</TableRowColumn>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <div>
+        <AssetTableHeader header={this.props.header} />
+        <AssetTableBody
+          rows={this.props.rows}
+          rowOrder={this.props.rowOrder}
+          selected={this.props.selected}
+          handleRowSelect={this.props.handleRowSelect}
+        />
+      </div>
     );
   }
 }

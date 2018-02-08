@@ -1,9 +1,6 @@
 import { combineReducers } from "redux";
 
-const tableReducer = (
-  state = { header: [], rows: {}, rowOrder: [] },
-  actions
-) => {
+const tableReducer = (state = { header: [], rows: {} }, actions) => {
   switch (actions.type) {
     case "TABLE_POPULATE":
       return { ...actions.tableData };

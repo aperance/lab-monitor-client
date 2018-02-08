@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div>
         <NavBar />
-        <div className="container">
+        <div style={{ paddingTop: "64px" }} className="container">
           <AssetTable />
           <DrawerContainer />
         </div>
