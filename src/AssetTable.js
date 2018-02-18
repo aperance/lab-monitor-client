@@ -1,19 +1,41 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import AssetTableHeader from "./AssetTableHeader";
-import AssetTableBody from "./AssetTableBody";
+import Table, {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from "material-ui/Table";
 
 class AssetTable extends Component {
   render() {
     return (
       <div>
-        <AssetTableHeader header={this.props.header} />
-        <AssetTableBody
-          rows={this.props.rows}
-          rowOrder={this.props.rowOrder}
-          selected={this.props.selected}
-          handleRowSelect={this.props.handleRowSelect}
-        />
+        <Table>
+          <TableHead>
+            <TableRow>
+              {this.props.columns.map(column => (
+                <TableCell key={column.title}>{column.title}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {Object.keys(this.props.tableData).map(rowKey => (
+              <TableRow
+                onClick={e => this.props.handleRowClick(rowKey)}
+                key={rowKey}
+                selected={this.props.selected.includes(rowKey)}
+              >
+                {this.props.columns.map(column => (
+                  <TableCell key={rowKey + column.property}>
+                    {this.props.tableData[rowKey][column.property]}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     );
   }
@@ -21,19 +43,18 @@ class AssetTable extends Component {
 
 const mapStateToProps = state => {
   return {
-    header: state.table.header,
-    rows: state.table.rows,
-    rowOrder: Object.keys(state.table.rows),
+    columns: state.configuration.columns,
+    tableData: state.table,
     selected: state.selected
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleRowSelect: selected => {
+    handleRowClick: rowKey => {
       dispatch({
-        type: "SET_SELECTED",
-        selected
+        type: "UPDATE_SELECTED",
+        id: rowKey
       });
     }
   };

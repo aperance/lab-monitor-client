@@ -3,11 +3,15 @@ import io from "socket.io-client";
 export default function(store) {
   const socket = io.connect(`http://localhost:4000`);
 
-  socket.on("tablePopulate", tableData => {
-    store.dispatch({ type: "TABLE_POPULATE", tableData });
+  socket.on("setConfiguration", configuration => {
+    store.dispatch({ type: "SET_CONFIGURATION", configuration });
   });
 
-  socket.on("tableUpdate", updatedRow => {
-    store.dispatch({ type: "TABLE_UPDATE", updatedRow });
+  socket.on("populateTable", allRows => {
+    store.dispatch({ type: "POPULATE_TABLE", allRows });
+  });
+
+  socket.on("updateTable", updatedRow => {
+    store.dispatch({ type: "UPDATE_TABLE", updatedRow });
   });
 }

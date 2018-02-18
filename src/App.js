@@ -10,7 +10,7 @@ class App extends Component {
         <NavBar />
         <div style={{ paddingTop: "64px" }} className="container">
           <AssetTable />
-          <DrawerContainer />
+          {/* <DrawerContainer /> */}
         </div>
       </div>
     );
