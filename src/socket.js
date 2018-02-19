@@ -1,14 +1,15 @@
 import io from "socket.io-client";
 
 export default function(store) {
-  const socket = io.connect(`http://localhost:4000`);
+  const socket = io.connect(`http://localhost:8080`);
 
-  socket.on("setConfiguration", configuration => {
+  socket.on("SET_CONFIGURATION", configuration => {
     store.dispatch({ type: "SET_CONFIGURATION", configuration });
   });
 
-  socket.on("populateTable", allRows => {
+  socket.on("POPULATE_TABLE", allRows => {
     store.dispatch({ type: "POPULATE_TABLE", allRows });
+    console.log(allRows);
   });
 
   socket.on("updateTable", updatedRow => {
