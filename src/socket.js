@@ -9,10 +9,9 @@ export default function(store) {
 
   socket.on("POPULATE_TABLE", allRows => {
     store.dispatch({ type: "POPULATE_TABLE", allRows });
-    console.log(allRows);
   });
 
-  socket.on("updateTable", updatedRow => {
-    store.dispatch({ type: "UPDATE_TABLE", updatedRow });
+  socket.on("UPDATE_ROW", ({ id, changes }) => {
+    store.dispatch({ type: "UPDATE_ROW", id, changes });
   });
 }

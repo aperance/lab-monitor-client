@@ -13,8 +13,11 @@ const tableReducer = (state = {}, actions) => {
   switch (actions.type) {
     case "POPULATE_TABLE":
       return { ...actions.allRows };
-    case "UPDATE_TABLE":
-      return { ...state, ...actions.updatedRow };
+    case "UPDATE_ROW":
+      return {
+        ...state,
+        [actions.id]: { ...state[actions.id], ...actions.changes }
+      };
     default:
       return { ...state };
   }
