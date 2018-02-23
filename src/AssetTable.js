@@ -15,7 +15,9 @@ class AssetTable extends Component {
           <TableHead>
             <TableRow>
               {this.props.columns.map(column => (
-                <TableCell key={column.title}>{column.title}</TableCell>
+                <TableCell key={column.title} padding="dense">
+                  {column.title}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -28,7 +30,7 @@ class AssetTable extends Component {
                 selected={this.props.selected.includes(rowKey)}
               >
                 {this.props.columns.map(column => (
-                  <TableCell key={rowKey + column.property}>
+                  <TableCell key={rowKey + column.property} padding="dense">
                     {this.props.tableData[rowKey][column.property]}
                   </TableCell>
                 ))}
