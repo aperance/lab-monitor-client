@@ -10,7 +10,7 @@ import Table, {
 class AssetTable extends Component {
   render() {
     return (
-      <div>
+      <div style={{ paddingTop: "64px" }}>
         <Table>
           <TableHead>
             <TableRow>
