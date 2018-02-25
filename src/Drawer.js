@@ -6,7 +6,7 @@ class Drawer extends Component {
       <div
         style={{
           height: "100%",
-          top: "64px",
+          top: "0px",
           position: "fixed",
           zIndex: "1",
           overflowX: "hidden",

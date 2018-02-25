@@ -1,49 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Table, {
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow
-} from "material-ui/Table";
+import List, { ListItem, ListItemText } from "material-ui/List";
 
 class DetailsList extends Component {
   render() {
     return (
-      <div>
-        {/* <iframe
-          src=
-          width="100%"
-          height="500"
-          frameBorder="0"
-          title="d"
-          sandbox
-        /> */}
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell key="property" padding="dense">
-                Property
-              </TableCell>
-              <TableCell key="value" padding="dense">
-                Value
-              </TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {Object.entries(this.props.data).map(([key, value]) => (
-              <TableRow key={key + ":r"}>
-                <TableCell key={key + ":k"} padding="dense">
-                  {key}
-                </TableCell>
-                <TableCell key={key + ":v"} padding="dense">
-                  {value}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <div style={{ paddingTop: "64px" }}>
+        <List>
+          {Object.entries(this.props.data).map(([key, value]) => (
+            <ListItem dense={true}>
+              <ListItemText
+                disableTypography={true}
+                style={{ fontSize: "0.75rem" }}
+                primary={
+                  <div>
+                    <span>{key}: </span>
+                    <span style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+                      {value}
+                    </span>
+                  </div>
+                }
+              />
+            </ListItem>
+          ))}
+        </List>
       </div>
     );
   }
