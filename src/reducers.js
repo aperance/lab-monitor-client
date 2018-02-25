@@ -26,11 +26,16 @@ const tableReducer = (state = {}, actions) => {
 const selectedReducer = (state = [], actions) => {
   switch (actions.type) {
     case "UPDATE_SELECTED":
-      let newState = [...state];
-      const index = newState.indexOf(actions.id);
-      if (index === -1) newState.push(actions.id);
-      else newState.splice(index, 1);
-      return newState;
+      const index = state.indexOf(actions.id);
+      if (actions.multi) {
+        let newState = [...state];
+        if (index === -1) newState.push(actions.id);
+        else newState.splice(index, 1);
+        return newState;
+      } else {
+        if (state.length === 1 && index === 0) return [];
+        else return [actions.id];
+      }
     default:
       return [...state];
   }

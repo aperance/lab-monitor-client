@@ -25,7 +25,10 @@ class AssetTable extends Component {
           <TableBody>
             {Object.keys(this.props.tableData).map(rowKey => (
               <TableRow
-                onClick={e => this.props.handleRowClick(rowKey)}
+                onClick={e => {
+                  console.log(e.nativeEvent);
+                  this.props.handleRowClick(e.nativeEvent, rowKey);
+                }}
                 key={rowKey}
                 selected={this.props.selected.includes(rowKey)}
               >
@@ -53,10 +56,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleRowClick: rowKey => {
+    handleRowClick: (e, rowKey) => {
       dispatch({
         type: "UPDATE_SELECTED",
-        id: rowKey
+        id: rowKey,
+        multi: e.altKey || e.ctrlKey
       });
     }
   };

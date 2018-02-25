@@ -28,7 +28,7 @@ const mapStateToProps = state => {
     case 0:
       return { drawers: ["0px", "0px"] };
     case 1:
-      return { drawers: ["50px", "500px"] };
+      return { drawers: ["50px", "600px"] };
     default:
       return { drawers: ["50px", "0px"] };
   }
