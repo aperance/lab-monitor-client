@@ -25,10 +25,7 @@ class AssetTable extends Component {
           <TableBody>
             {Object.keys(this.props.tableData).map(rowKey => (
               <TableRow
-                onClick={e => {
-                  console.log(e.nativeEvent);
-                  this.props.handleRowClick(e.nativeEvent, rowKey);
-                }}
+                onClick={e => this.props.handleRowClick(e.nativeEvent, rowKey)}
                 key={rowKey}
                 selected={this.props.selected.includes(rowKey)}
               >
