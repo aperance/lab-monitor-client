@@ -2,24 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import List, { ListItem, ListItemText } from "material-ui/List";
 
-class DetailsList extends Component {
+class History extends Component {
   render() {
     return (
       <div>
         <List>
-          {Object.entries(this.props.data).map(([key, value]) => (
-            <ListItem button divider={true}>
+          {Object.keys(this.props.data).map(key => (
+            <ListItem button divider={true} key={key}>
               <ListItemText
                 disableTypography={true}
                 style={{ fontSize: "0.75rem" }}
-                primary={
-                  <div>
-                    <span>{key}: </span>
-                    <span style={{ color: "rgba(0, 0, 0, 0.54)" }}>
-                      {value}
-                    </span>
-                  </div>
-                }
+                primary={key}
               />
             </ListItem>
           ))}
@@ -38,4 +31,4 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps)(DetailsList);
+export default connect(mapStateToProps)(History);

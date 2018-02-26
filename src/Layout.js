@@ -4,7 +4,7 @@ import NavBar from "./NavBar";
 import AssetTable from "./AssetTable";
 import Drawer from "./Drawer";
 import Toolbar from "./Toolbar";
-import DetailsList from "./DetailsList";
+import History from "./History";
 import WebPage from "./WebPage";
 
 class Layout extends Component {
@@ -39,7 +39,7 @@ const mapStateToProps = state => {
   } else {
     drawer1offset = "500px";
     drawer2offset = "0px";
-    if (state.subView === "details") drawer2Contents = <DetailsList />;
+    if (state.subView === "history") drawer2Contents = <History />;
     else if (state.subView === "logsPage")
       drawer2Contents = (
         <WebPage target={state.selected[0] + state.configuration.logsPath} />

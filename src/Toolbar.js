@@ -8,18 +8,12 @@ class Toolbar extends Component {
     return (
       <div>
         <List style={{ color: "rgba(0, 0, 0, 0.54)" }}>
-          <ListItem button onClick={e => this.props.handleClick(e, "details")}>
-            <ListItemIcon>
-              <Icon style={{ marginRight: "0px" }}>list</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Details" disableTypography={true} />
-          </ListItem>
           <ListItem
             button
             onClick={e => this.props.handleClick(e, "statePage")}
           >
             <ListItemIcon>
-              <Icon style={{ marginRight: "0px" }}>code</Icon>
+              <Icon style={{ marginRight: "0px" }}>list</Icon>
             </ListItemIcon>
             <ListItemText primary="State" disableTypography={true} />
           </ListItem>
@@ -28,6 +22,12 @@ class Toolbar extends Component {
               <Icon style={{ marginRight: "0px" }}>description</Icon>
             </ListItemIcon>
             <ListItemText primary="Logs" disableTypography={true} />
+          </ListItem>
+          <ListItem button onClick={e => this.props.handleClick(e, "history")}>
+            <ListItemIcon>
+              <Icon style={{ marginRight: "0px" }}>access_time</Icon>
+            </ListItemIcon>
+            <ListItemText primary="History" disableTypography={true} />
           </ListItem>
         </List>
       </div>
