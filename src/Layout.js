@@ -12,10 +12,10 @@ class Layout extends Component {
       <div>
         <NavBar />
         <AssetTable />
-        <Drawer width={this.props.drawers[0]} offset={this.props.drawers[1]}>
+        <Drawer width="100px" offset={this.props.drawer1offset}>
           <Toolbar />
         </Drawer>
-        <Drawer width={this.props.drawers[1]} offset="0px">
+        <Drawer width="500px" offset={this.props.drawer2offset}>
           <DetailsList />
         </Drawer>
       </div>
@@ -26,11 +26,20 @@ class Layout extends Component {
 const mapStateToProps = state => {
   switch (state.selected.length) {
     case 0:
-      return { drawers: ["0px", "0px"] };
+      return {
+        drawer1offset: "-100px",
+        drawer2offset: "-600px"
+      };
     case 1:
-      return { drawers: ["100px", "500px"] };
+      return {
+        drawer1offset: "500px",
+        drawer2offset: "0px"
+      };
     default:
-      return { drawers: ["100px", "0px"] };
+      return {
+        drawer1offset: "0px",
+        drawer2offset: "-500px"
+      };
   }
 };
 
