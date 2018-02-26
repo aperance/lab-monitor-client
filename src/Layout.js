@@ -5,19 +5,38 @@ import AssetTable from "./AssetTable";
 import Drawer from "./Drawer";
 import Toolbar from "./Toolbar";
 import DetailsList from "./DetailsList";
+import Logs from "./Logs";
 
 class Layout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { drawerContents: "details" };
+  }
+
+  drawerContents() {
+    switch (this.state.drawerContents) {
+      case "details":
+        return <DetailsList />;
+      default:
+        return null;
+    }
+  }
+
   render() {
     return (
       <div>
         <NavBar />
-        <AssetTable />
-        <Drawer width="100px" offset={this.props.drawer1offset}>
-          <Toolbar />
-        </Drawer>
-        <Drawer width="500px" offset={this.props.drawer2offset}>
-          <DetailsList />
-        </Drawer>
+        <div>
+          <AssetTable />
+          <Drawer width="100px" offset={this.props.drawer1offset}>
+            <Toolbar />
+          </Drawer>
+          <Drawer width="500px" offset={this.props.drawer2offset}>
+            {this.state.drawerContents === "details" && <DetailsList />}
+            {/* {this.state.drawerContents === "htmlOnly" && <HtmlOnly />} */}
+            {this.state.drawerContents === "logs" && <Logs />}
+          </Drawer>
+        </div>
       </div>
     );
   }
@@ -44,4 +63,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Layout);
-//export default App;
