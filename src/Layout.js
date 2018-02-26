@@ -8,15 +8,20 @@ import DetailsList from "./DetailsList";
 import WebPage from "./WebPage";
 
 class Layout extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { drawer2Contents: "logsPage" };
-  }
-
   render() {
-    let drawer2Contents = null;
-    if (this.props.drawer2show) {
-      switch (this.state.drawer2Contents) {
+    let drawer2Contents, drawer1offset, drawer2offset;
+    if (this.props.drawersVisible === 0) {
+      drawer1offset = "-150px";
+      drawer2offset = "-650px";
+      drawer2Contents = null;
+    } else if (this.props.drawersVisible === 1) {
+      drawer1offset = "0px";
+      drawer2offset = "-500px";
+      drawer2Contents = null;
+    } else {
+      drawer1offset = "500px";
+      drawer2offset = "0px";
+      switch (this.props.subView) {
         case "details":
           drawer2Contents = <DetailsList />;
           break;
@@ -27,6 +32,7 @@ class Layout extends Component {
           drawer2Contents = <WebPage target={this.props.statePath} />;
           break;
         default:
+          drawer2Contents = null;
           break;
       }
     }
@@ -36,10 +42,10 @@ class Layout extends Component {
         <NavBar />
         <div style={{ paddingTop: "64px" }}>
           <AssetTable />
-          <Drawer width="100px" offset={this.props.drawer1offset}>
+          <Drawer width="150px" offset={drawer1offset}>
             <Toolbar />
           </Drawer>
-          <Drawer width="500px" offset={this.props.drawer2offset}>
+          <Drawer width="500px" offset={drawer2offset}>
             {drawer2Contents}
           </Drawer>
         </div>
@@ -49,30 +55,18 @@ class Layout extends Component {
 }
 
 const mapStateToProps = state => {
-  switch (state.selected.length) {
-    case 0:
-      return {
-        drawer1offset: "-100px",
-        drawer2offset: "-600px",
-        drawer2show: false
-      };
-    case 1:
-      return {
-        drawer1offset: "500px",
-        drawer2offset: "0px",
-        drawer2show: true,
-        logsPath:
-          "http://" + state.selected[0] + state.configuration.logsPath || null,
-        statePath:
-          "http://" + state.selected[0] + state.configuration.statePath || null
-      };
-    default:
-      return {
-        drawer1offset: "0px",
-        drawer2offset: "-500px",
-        drawer2show: false
-      };
-  }
+  let drawersVisible;
+  if (state.selected.length === 0) drawersVisible = 0;
+  else if (state.selected.length === 1 && state.subView) drawersVisible = 2;
+  else drawersVisible = 1;
+  return {
+    drawersVisible,
+    logsPath:
+      "http://" + state.selected[0] + state.configuration.logsPath || null,
+    statePath:
+      "http://" + state.selected[0] + state.configuration.statePath || null,
+    subView: state.subView
+  };
 };
 
 export default connect(mapStateToProps)(Layout);

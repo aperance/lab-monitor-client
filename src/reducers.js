@@ -41,8 +41,20 @@ const selectedReducer = (state = [], actions) => {
   }
 };
 
+const subViewReducer = (state = null, actions) => {
+  switch (actions.type) {
+    case "UPDATE_SUB_VIEW":
+      if (actions.id === state) return null;
+      else return actions.id;
+    default:
+      const newState = state;
+      return newState;
+  }
+};
+
 export default combineReducers({
   configuration: configurationReducer,
   table: tableReducer,
-  selected: selectedReducer
+  selected: selectedReducer,
+  subView: subViewReducer
 });
