@@ -40,7 +40,7 @@ const mapStateToProps = state => {
     drawer1offset = "500px";
     drawer2offset = "0px";
     if (state.subView === "details") drawer2Contents = <DetailsList />;
-    if (state.subView === "logsPage")
+    else if (state.subView === "logsPage")
       drawer2Contents = (
         <WebPage target={state.selected[0] + state.configuration.logsPath} />
       );
