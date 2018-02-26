@@ -8,7 +8,7 @@ class DetailsList extends Component {
       <div style={{ paddingTop: "64px" }}>
         <List>
           {Object.entries(this.props.data).map(([key, value]) => (
-            <ListItem dense={true}>
+            <ListItem button divider={true}>
               <ListItemText
                 disableTypography={true}
                 style={{ fontSize: "0.75rem" }}
