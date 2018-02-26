@@ -4,7 +4,7 @@ class WebPage extends Component {
   render() {
     return (
       <iframe
-        src={this.props.target}
+        src={"http://" + this.props.target}
         title="iframe"
         width="100%"
         height="100%"
