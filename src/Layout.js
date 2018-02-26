@@ -13,15 +13,6 @@ class Layout extends Component {
     this.state = { drawerContents: "details" };
   }
 
-  drawerContents() {
-    switch (this.state.drawerContents) {
-      case "details":
-        return <DetailsList />;
-      default:
-        return null;
-    }
-  }
-
   render() {
     return (
       <div>
