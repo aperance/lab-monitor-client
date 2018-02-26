@@ -10,7 +10,7 @@ import Table, {
 class AssetTable extends Component {
   render() {
     return (
-      <div style={{ paddingTop: "64px", whiteSpace: "nowrap" }}>
+      <div style={{ whiteSpace: "nowrap" }}>
         <Table>
           <TableHead>
             <TableRow style={{ height: "48px" }}>

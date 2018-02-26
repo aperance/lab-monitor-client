@@ -5,7 +5,7 @@ import List, { ListItem, ListItemText } from "material-ui/List";
 class DetailsList extends Component {
   render() {
     return (
-      <div style={{ paddingTop: "64px" }}>
+      <div>
         <List>
           {Object.entries(this.props.data).map(([key, value]) => (
             <ListItem button divider={true}>

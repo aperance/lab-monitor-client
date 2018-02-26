@@ -26,7 +26,7 @@ class Layout extends Component {
     return (
       <div>
         <NavBar />
-        <div>
+        <div style={{ paddingTop: "64px" }}>
           <AssetTable />
           <Drawer width="100px" offset={this.props.drawer1offset}>
             <Toolbar />
