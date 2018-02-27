@@ -25,6 +25,7 @@ class AssetTable extends Component {
           <TableBody>
             {Object.keys(this.props.tableData).map(rowKey => (
               <TableRow
+                hover
                 onClick={e => this.props.handleRowClick(e.nativeEvent, rowKey)}
                 key={rowKey}
                 selected={this.props.selected.includes(rowKey)}
