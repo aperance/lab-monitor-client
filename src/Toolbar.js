@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import List from "material-ui/List";
 import Divider from "material-ui/Divider";
 import ToolbarItem from "./ToolbarItem.js";
+import { requestAction } from "./socket.js";
 
 class Toolbar extends Component {
   render() {
@@ -55,21 +56,21 @@ class Toolbar extends Component {
             icon="delete"
             chevron={false}
             selected={false}
-            onClick={e => this.props.handleClick(e, "")}
+            onClick={e => requestAction(this.props.selected, "deleteLogs")}
           />
           <ToolbarItem
             name="Clean Start"
             icon="refresh"
             chevron={false}
             selected={false}
-            onClick={e => this.props.handleClick(e, "")}
+            onClick={e => requestAction(this.props.selected, "cleanStart")}
           />
           <ToolbarItem
             name="RAM Clear"
             icon="memory"
             chevron={false}
             selected={false}
-            onClick={e => this.props.handleClick(e, "")}
+            onClick={e => requestAction(this.props.selected, "ramClear")}
           />
         </List>
       </div>
@@ -79,7 +80,8 @@ class Toolbar extends Component {
 
 const mapStateToProps = state => {
   return {
-    subView: state.subView
+    subView: state.subView,
+    selected: state.selected
   };
 };
 

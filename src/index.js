@@ -5,9 +5,9 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import "./index.css";
 import Layout from "./Layout";
 import store from "./store.js";
-import startSocket from "./socket.js";
+import { connectStoreToSocket } from "./socket.js";
 
-startSocket(store);
+connectStoreToSocket(store);
 
 ReactDOM.render(
   <Provider store={store}>

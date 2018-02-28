@@ -1,8 +1,8 @@
 import io from "socket.io-client";
+const socket = io("http://localhost:8080");
+console.log("Websocket connected");
 
-export default function(store) {
-  const socket = io.connect(`http://localhost:8080`);
-
+const connectStoreToSocket = store => {
   socket.on("SET_CONFIGURATION", configuration => {
     store.dispatch({ type: "SET_CONFIGURATION", configuration });
   });
@@ -14,4 +14,12 @@ export default function(store) {
   socket.on("UPDATE_ROW", ({ id, changes }) => {
     store.dispatch({ type: "UPDATE_ROW", id, changes });
   });
-}
+};
+
+const requestAction = (targets, type) => {
+  socket.emit("REQUEST_ACTION", targets, type, response =>
+    console.log(response)
+  );
+};
+
+export { connectStoreToSocket, requestAction };
