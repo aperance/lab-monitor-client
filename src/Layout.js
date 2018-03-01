@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import NavBar from "./NavBar";
 import AssetTable from "./AssetTable";
-import Drawer from "./Drawer";
+import Drawers from "./Drawer";
 import Toolbar from "./Toolbar";
 import History from "./History";
 import WebPage from "./WebPage";
@@ -14,12 +14,10 @@ class Layout extends Component {
         <NavBar />
         <div style={{ paddingTop: "64px" }}>
           <AssetTable />
-          <Drawer width="200px" offset={this.props.drawer1offset}>
+          <Drawers childrenVisible={this.props.drawersVisible}>
             <Toolbar />
-          </Drawer>
-          <Drawer width="600px" offset={this.props.drawer2offset}>
             {this.props.drawer2Contents}
-          </Drawer>
+          </Drawers>
         </div>
       </div>
     );
@@ -27,21 +25,17 @@ class Layout extends Component {
 }
 
 const mapStateToProps = state => {
-  let drawer2Contents, drawer1offset, drawer2offset;
+  let drawer2Contents, drawersVisible;
   if (state.selected.rows.length === 0) {
-    // If no assets selected, move both drawers off screen.
-    drawer1offset = "-200px";
-    drawer2offset = "-800px";
+    drawersVisible = 0;
     drawer2Contents = null;
-  } else if (!state.selected.view || state.selected.rows.length !== 1) {
+  } else if (!state.selected.view) {
     // If no view selected, or multiple assets selected, show only toolbar on screen.
-    drawer1offset = "0px";
-    drawer2offset = "-600px";
+    drawersVisible = 1;
     drawer2Contents = null;
   } else {
     // If view selected, and single asset selected, move both drawers on screen.
-    drawer1offset = "600px";
-    drawer2offset = "0px";
+    drawersVisible = 2;
     // Fill in drawer contents based on selected view.
     if (state.selected.view === "history") drawer2Contents = <History />;
     else if (state.selected.view === "logsPage")
@@ -58,7 +52,7 @@ const mapStateToProps = state => {
       );
     else drawer2Contents = null;
   }
-  return { drawer1offset, drawer2offset, drawer2Contents };
+  return { drawer2Contents, drawersVisible };
 };
 
 export default connect(mapStateToProps)(Layout);
