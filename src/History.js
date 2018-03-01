@@ -23,9 +23,9 @@ class History extends Component {
 }
 
 const mapStateToProps = state => {
-  switch (state.selected.length) {
+  switch (state.selected.rows.length) {
     case 1:
-      return { data: state.table[state.selected[0]] };
+      return { data: state.table[state.selected.rows[0]] };
     default:
       return { data: {} };
   }

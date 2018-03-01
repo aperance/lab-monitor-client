@@ -14,21 +14,21 @@ class Toolbar extends Component {
             name="State"
             icon="list"
             chevron={true}
-            selected={this.props.subView === "statePage"}
+            selected={this.props.selected.view === "statePage"}
             onClick={e => this.props.handleClick(e, "statePage")}
           />
           <ToolbarItem
             name="Logs"
             icon="description"
             chevron={true}
-            selected={this.props.subView === "logsPage"}
+            selected={this.props.selected.view === "logsPage"}
             onClick={e => this.props.handleClick(e, "logsPage")}
           />
           <ToolbarItem
             name="History"
             icon="history"
             chevron={true}
-            selected={this.props.subView === "history"}
+            selected={this.props.selected.view === "history"}
             onClick={e => this.props.handleClick(e, "history")}
           />
         </List>
@@ -38,14 +38,14 @@ class Toolbar extends Component {
             name="Log Level"
             icon="settings"
             chevron={true}
-            selected={this.props.subView === "logLevel"}
+            selected={this.props.selected.view === "logLevel"}
             onClick={e => this.props.handleClick(e, "logLevel")}
           />
           <ToolbarItem
             name="PSTools"
             icon="laptop_windows"
             chevron={true}
-            selected={this.props.subView === "psTools"}
+            selected={this.props.selected.view === "psTools"}
             onClick={e => this.props.handleClick(e, "psTools")}
           />
         </List>
@@ -56,21 +56,21 @@ class Toolbar extends Component {
             icon="delete"
             chevron={false}
             selected={false}
-            onClick={e => requestAction(this.props.selected, "deleteLogs")}
+            onClick={e => requestAction(this.props.selected.rows, "deleteLogs")}
           />
           <ToolbarItem
             name="Clean Start"
             icon="refresh"
             chevron={false}
             selected={false}
-            onClick={e => requestAction(this.props.selected, "cleanStart")}
+            onClick={e => requestAction(this.props.selected.rows, "cleanStart")}
           />
           <ToolbarItem
             name="RAM Clear"
             icon="memory"
             chevron={false}
             selected={false}
-            onClick={e => requestAction(this.props.selected, "ramClear")}
+            onClick={e => requestAction(this.props.selected.rows, "ramClear")}
           />
         </List>
       </div>
@@ -79,10 +79,7 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    subView: state.subView,
-    selected: state.selected
-  };
+  return { selected: state.selected };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -90,7 +87,7 @@ const mapDispatchToProps = dispatch => {
     handleClick: (e, selectedView) => {
       dispatch({
         type: "UPDATE_SUB_VIEW",
-        id: selectedView
+        view: selectedView
       });
     }
   };

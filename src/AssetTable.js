@@ -52,18 +52,23 @@ const mapStateToProps = state => {
   return {
     columns: state.configuration.columns,
     tableData: state.table,
-    selected: state.selected
+    selected: state.selected.rows
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     handleRowClick: (e, rowKey) => {
-      dispatch({
-        type: "UPDATE_SELECTED",
-        id: rowKey,
-        multi: e.altKey || e.ctrlKey
-      });
+      if (e.altKey || e.ctrlKey)
+        dispatch({
+          type: "MULTI_ROW_SELECT",
+          row: rowKey
+        });
+      else
+        dispatch({
+          type: "SINGLE_ROW_SELECT",
+          row: rowKey
+        });
     }
   };
 };

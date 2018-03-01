@@ -17,7 +17,7 @@ class Layout extends Component {
           <Drawer width="200px" offset={this.props.drawer1offset}>
             <Toolbar />
           </Drawer>
-          <Drawer width="500px" offset={this.props.drawer2offset}>
+          <Drawer width="600px" offset={this.props.drawer2offset}>
             {this.props.drawer2Contents}
           </Drawer>
         </div>
@@ -28,29 +28,33 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
   let drawer2Contents, drawer1offset, drawer2offset;
-  if (state.selected.length === 0) {
+  if (state.selected.rows.length === 0) {
     // If no assets selected, move both drawers off screen.
     drawer1offset = "-200px";
-    drawer2offset = "-700px";
+    drawer2offset = "-800px";
     drawer2Contents = null;
-  } else if (!state.subView || state.selected.length !== 1) {
+  } else if (!state.selected.view || state.selected.rows.length !== 1) {
     // If no view selected, or multiple assets selected, show only toolbar on screen.
     drawer1offset = "0px";
-    drawer2offset = "-500px";
+    drawer2offset = "-600px";
     drawer2Contents = null;
   } else {
     // If view selected, and single asset selected, move both drawers on screen.
-    drawer1offset = "500px";
+    drawer1offset = "600px";
     drawer2offset = "0px";
     // Fill in drawer contents based on selected view.
-    if (state.subView === "history") drawer2Contents = <History />;
-    else if (state.subView === "logsPage")
+    if (state.selected.view === "history") drawer2Contents = <History />;
+    else if (state.selected.view === "logsPage")
       drawer2Contents = (
-        <WebPage target={state.selected[0] + state.configuration.logsPath} />
+        <WebPage
+          target={state.selected.rows[0] + state.configuration.logsPath}
+        />
       );
-    else if (state.subView === "statePage")
+    else if (state.selected.view === "statePage")
       drawer2Contents = (
-        <WebPage target={state.selected[0] + state.configuration.statePath} />
+        <WebPage
+          target={state.selected.rows[0] + state.configuration.statePath}
+        />
       );
     else drawer2Contents = null;
   }

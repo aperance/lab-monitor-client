@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const socket = io("http://localhost:8080");
+const socket = io("http://10.80.146.123:8080");
 console.log("Websocket connected");
 
 const connectStoreToSocket = store => {
