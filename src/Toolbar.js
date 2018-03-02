@@ -86,7 +86,7 @@ const mapDispatchToProps = dispatch => {
   return {
     handleClick: (e, selectedView) => {
       dispatch({
-        type: "UPDATE_SUB_VIEW",
+        type: "VIEW_SELECT",
         view: selectedView
       });
     }

@@ -7,7 +7,7 @@ import Layout from "./Layout";
 import store from "./store.js";
 import { connectStoreToSocket } from "./socket.js";
 
-connectStoreToSocket(store);
+connectStoreToSocket();
 
 ReactDOM.render(
   <Provider store={store}>

@@ -23,21 +23,77 @@ const tableReducer = (state = {}, actions) => {
   }
 };
 
-const selectedReducer = (state = { rows: [], view: null }, actions) => {
-  const index = state.rows.indexOf(actions.row);
+const selectedReducer = (
+  state = { rows: [], view: null, history: { property: null, values: [] } },
+  actions
+) => {
   switch (actions.type) {
     case "SINGLE_ROW_SELECT":
-      if (state.rows.length === 1 && index === 0)
-        return { rows: [], view: null };
-      else return { ...state, rows: [actions.row] };
+      if (state.rows.length === 1 && state.rows.indexOf(actions.row) === 0)
+        return {
+          rows: [],
+          view: null,
+          history: { property: null, values: [] }
+        };
+      else
+        return {
+          rows: [actions.row],
+          view: state.view,
+          history: { ...state.history, values: [] }
+        };
+
     case "MULTI_ROW_SELECT":
-      const selectedRows = state.rows;
-      if (index === -1) selectedRows.push(actions.row);
-      else selectedRows.splice(index, 1);
-      return { rows: selectedRows, view: null };
-    case "UPDATE_SUB_VIEW":
-      if (actions.view === state.view) return { ...state, view: null };
-      else return { ...state, view: actions.view };
+      const rows = state.rows;
+      if (rows.indexOf(actions.row) === -1) rows.push(actions.row);
+      else rows.splice(rows.indexOf(actions.row), 1);
+      return {
+        rows,
+        view: null,
+        history: { property: null, values: [] }
+      };
+
+    case "VIEW_SELECT":
+      if (actions.view === state.view)
+        return {
+          ...state,
+          view: null,
+          history: { property: null, values: [] }
+        };
+      else
+        return {
+          ...state,
+          view: actions.view,
+          history: { property: null, values: [] }
+        };
+
+    case "HISTORY_SELECT":
+      if (actions.property === state.history.property)
+        return {
+          ...state,
+          history: { property: null, values: [] }
+        };
+      else
+        return {
+          ...state,
+          history: { property: actions.property, values: [] }
+        };
+
+    case "HISTORY_POPULATE":
+      if (
+        state.rows.length === 1 &&
+        state.rows.indexOf(actions.id) === 0 &&
+        state.view === "history" &&
+        state.history.property === actions.property
+      )
+        return {
+          ...state,
+          history: { property: actions.property, values: actions.values }
+        };
+      else
+        return {
+          ...state,
+          history: { property: null, values: [] }
+        };
     default:
       return { ...state };
   }
