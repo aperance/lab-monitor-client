@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Toolbar from "./Toolbar";
-import History from "./History";
-import HistoryDetails from "./HistoryDetails";
-import WebPage from "./WebPage";
+import ToolbarContainer from "./containers/ToolbarContainer";
+import HistoryListContainer from "./containers/HistoryListContainer";
+import HistoryDetailsContainer from "./containers/HistoryDetailsContainer";
+import WebPageContainer from "./containers/WebPageContainer";
 
 const widths = [200, 600, 400];
 const offsets = [
@@ -28,16 +28,14 @@ const baseStyles = {
 class DrawerContainer extends Component {
   render() {
     const viewLookup = {
-      history: <History />,
-      logsPage: <WebPage target={this.props.rows[0] + this.props.logsPath} />,
-      statePage: <WebPage target={this.props.rows[0] + this.props.statePath} />
+      history: <HistoryListContainer />,
+      logsPage: <WebPageContainer />,
+      statePage: <WebPageContainer />
     };
     let drawerContents = [
-      this.props.rows[0] ? <Toolbar /> : null,
+      this.props.rows[0] ? <ToolbarContainer /> : null,
       this.props.view ? viewLookup[this.props.view] : null,
-      this.props.history.property ? (
-        <HistoryDetails id={this.props.rows[0]} history={this.props.history} />
-      ) : null
+      this.props.history.property ? <HistoryDetailsContainer /> : null
     ];
 
     return (
@@ -66,9 +64,7 @@ const mapStateToProps = state => {
   return {
     view: state.selected.view,
     rows: state.selected.rows,
-    history: state.selected.history,
-    statePath: state.configuration.statePath,
-    logsPath: state.configuration.logsPath
+    history: state.selected.history
   };
 };
 

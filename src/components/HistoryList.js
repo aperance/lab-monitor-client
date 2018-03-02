@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import List, { ListItem, ListItemText, ListItemIcon } from "material-ui/List";
 import Icon from "material-ui/Icon";
 
-class History extends Component {
+class HistoryList extends Component {
   render() {
     return (
       <div>
@@ -36,25 +35,4 @@ class History extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    propertyList:
-      state.selected.rows.length === 1
-        ? state.table[state.selected.rows[0]]
-        : {},
-    selectedProperty: state.selected.history.property
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    handleClick: (e, property) => {
-      dispatch({
-        type: "HISTORY_SELECT",
-        property
-      });
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(History);
+export default HistoryList;

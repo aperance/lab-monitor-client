@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import List from "material-ui/List";
 import Divider from "material-ui/Divider";
 import ToolbarItem from "./ToolbarItem.js";
-import { requestAction } from "./socket.js";
+import { requestAction } from "../socket.js";
 
 class Toolbar extends Component {
   render() {
@@ -78,19 +77,4 @@ class Toolbar extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { selected: state.selected };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    handleClick: (e, selectedView) => {
-      dispatch({
-        type: "VIEW_SELECT",
-        view: selectedView
-      });
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default Toolbar;

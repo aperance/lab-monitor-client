@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import NavBar from "./NavBar";
-import AssetTable from "./AssetTable";
+import NavBar from "./components/NavBar";
+import AssetTableContainer from "./containers/AssetTableContainer";
 import DrawerContainer from "./DrawerContainer";
 
 class Layout extends Component {
@@ -9,7 +9,7 @@ class Layout extends Component {
       <div>
         <NavBar />
         <div style={{ paddingTop: "64px" }}>
-          <AssetTable />
+          <AssetTableContainer />
           <DrawerContainer />
         </div>
       </div>

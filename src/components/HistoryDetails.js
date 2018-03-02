@@ -5,7 +5,7 @@ import Table, {
   TableHead,
   TableRow
 } from "material-ui/Table";
-import { getHistory } from "./socket.js";
+import { getHistory } from "../socket.js";
 
 class HistoryDetails extends Component {
   componentDidMount() {
