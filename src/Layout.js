@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./NavBar";
 import AssetTable from "./AssetTable";
-import DrawerContainer from "./Drawer";
+import DrawerContainer from "./DrawerContainer";
 
 class Layout extends Component {
   render() {
