@@ -30,7 +30,6 @@ class Toolbar extends Component {
               selected={this.props.view === "history"}
               onClick={e => this.props.handleClick(e, "history")}
             />
-            <Divider />
             <ToolbarItem
               name="PSTools"
               icon="laptop_windows"
@@ -40,14 +39,13 @@ class Toolbar extends Component {
             />
           </div>
         )}
+        <Divider />
         <ToolbarItem
           name="Log Level"
           icon="settings"
-          chevron={true}
-          selected={this.props.view === "logLevel"}
-          onClick={e => this.props.handleClick(e, "logLevel")}
+          chevron={false}
+          onClick={e => this.props.openLogLevel(e)}
         />
-        <Divider />
         <ToolbarItem
           name="Delete Logs"
           icon="delete"

@@ -17,11 +17,17 @@ const mapDispatchToProps = dispatch => {
         view: selectedView
       });
     },
+    openLogLevel: e => {
+      dispatch({
+        type: "OPEN_DIALOG",
+        object: { logLevel: true }
+      });
+    },
     requestAction: (targets, type) => {
       console.log(targets);
       console.log(type);
 
-      socket.emit("REQUEST_ACTION", targets, type, response =>
+      socket.emit("REQUEST_ACTION", targets, type, {}, response =>
         console.log(response)
       );
     }

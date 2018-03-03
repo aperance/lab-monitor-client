@@ -1,6 +1,9 @@
 import { combineReducers } from "redux";
 
-const configurationReducer = (state = { columns: [] }, actions) => {
+const configurationReducer = (
+  state = { columns: [], logLevel: { level: [], namespace: [] } },
+  actions
+) => {
   switch (actions.type) {
     case "SET_CONFIGURATION":
       return { ...actions.configuration };
@@ -57,10 +60,19 @@ const selectedReducer = (
   }
 };
 
-const HistoryReducer = (state = {}, actions) => {
+const historyReducer = (state = {}, actions) => {
   switch (actions.type) {
     case "POPULATE_HISTORY":
       return { ...actions.allRows };
+    default:
+      return { ...state };
+  }
+};
+
+const dialogReducer = (state = { logLevel: false }, actions) => {
+  switch (actions.type) {
+    case "OPEN_DIALOG":
+      return { ...state, ...actions.object };
     default:
       return { ...state };
   }
@@ -70,5 +82,6 @@ export default combineReducers({
   configuration: configurationReducer,
   table: tableReducer,
   selected: selectedReducer,
-  history: HistoryReducer
+  history: historyReducer,
+  dialog: dialogReducer
 });
