@@ -11,6 +11,7 @@ class LogLevel extends Component {
     super(props);
     this.state = { namespace: "", level: "" };
   }
+
   render() {
     return (
       <Dialog open={this.props.open} onClose={this.props.cancelLogLevel}>
@@ -29,6 +30,7 @@ class LogLevel extends Component {
                 ))}
               </Select>
             </FormControl>
+
             <FormControl>
               <InputLabel>Level</InputLabel>
               <Select
@@ -44,6 +46,7 @@ class LogLevel extends Component {
             </FormControl>
           </form>
         </DialogContent>
+
         <DialogActions>
           <Button
             onClick={e => {

@@ -43,10 +43,7 @@ const selectedReducer = (
       return { rows, view: null, history: null };
 
     case "VIEW_SELECT":
-      if (
-        actions.view === state.view ||
-        (state.rows.length !== 1 && actions.view !== "logLevel")
-      )
+      if (actions.view === state.view || state.rows.length !== 1)
         return { ...state, view: null, history: null };
       else return { ...state, view: actions.view, history: null };
 
