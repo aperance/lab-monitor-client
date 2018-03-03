@@ -4,6 +4,8 @@ import ToolbarContainer from "./containers/ToolbarContainer";
 import HistoryListContainer from "./containers/HistoryListContainer";
 import HistoryDetailsContainer from "./containers/HistoryDetailsContainer";
 import WebPageContainer from "./containers/WebPageContainer";
+import PsToolsContainer from "./containers/PsToolsContainer";
+import LogLevelContainer from "./containers/LogLevelContainer";
 
 const widths = [200, 600, 400];
 const offsets = [
@@ -30,7 +32,9 @@ class DrawerContainer extends Component {
     const viewLookup = {
       history: <HistoryListContainer />,
       logsPage: <WebPageContainer />,
-      statePage: <WebPageContainer />
+      statePage: <WebPageContainer />,
+      psTools: <PsToolsContainer />,
+      logLevel: <LogLevelContainer />
     };
     let drawerContents = [
       this.props.rows[0] ? <ToolbarContainer /> : null,
