@@ -3,11 +3,19 @@ import List, { ListItem, ListItemText, ListItemIcon } from "material-ui/List";
 import Icon from "material-ui/Icon";
 
 class HistoryList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { properties: this.props.properties.slice(0, 20) };
+    setTimeout(() => this.setState({ properties: this.props.properties }), 600);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ properties: nextProps.properties });
+  }
   render() {
     return (
       <div>
         <List>
-          {this.props.propertyList.map(property => (
+          {this.state.properties.map(property => (
             <ListItem
               button
               onClick={e => this.props.handleClick(e, property)}

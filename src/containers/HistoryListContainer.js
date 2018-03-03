@@ -4,7 +4,7 @@ import HistoryList from "../components/HistoryList";
 const mapStateToProps = state => {
   return {
     id: state.selected.rows[0],
-    propertyList:
+    properties:
       state.selected.rows.length === 1
         ? Object.keys(state.history[state.selected.rows[0]])
         : [],
