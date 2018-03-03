@@ -34,13 +34,16 @@ const selectedReducer = (
       else return { ...state, rows: [actions.row] };
 
     case "MULTI_ROW_SELECT":
-      const rows = state.rows;
+      const rows = [...state.rows];
       if (rows.indexOf(actions.row) === -1) rows.push(actions.row);
       else rows.splice(rows.indexOf(actions.row), 1);
       return { rows, view: null, history: null };
 
     case "VIEW_SELECT":
-      if (actions.view === state.view)
+      if (
+        actions.view === state.view ||
+        (state.rows.length !== 1 && actions.view !== "logLevel")
+      )
         return { ...state, view: null, history: null };
       else return { ...state, view: actions.view, history: null };
 

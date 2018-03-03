@@ -5,57 +5,61 @@ import ToolbarItem from "./ToolbarItem.js";
 
 class Toolbar extends Component {
   render() {
+    console.log(this.props.rows.length);
+
     return (
       <div>
+        {" "}
         <List>
-          <ToolbarItem
-            name="State"
-            icon="list"
-            chevron={true}
-            selected={this.props.selected.view === "statePage"}
-            onClick={e => this.props.handleClick(e, "statePage")}
-          />
-          <ToolbarItem
-            name="Logs"
-            icon="description"
-            chevron={true}
-            selected={this.props.selected.view === "logsPage"}
-            onClick={e => this.props.handleClick(e, "logsPage")}
-          />
-          <ToolbarItem
-            name="History"
-            icon="history"
-            chevron={true}
-            selected={this.props.selected.view === "history"}
-            onClick={e => this.props.handleClick(e, "history")}
-          />
-        </List>
-        <Divider />
-        <List>
+          {this.props.rows.length === 1 && (
+            <div>
+              <ToolbarItem
+                name="State"
+                icon="list"
+                chevron={true}
+                selected={this.props.view === "statePage"}
+                onClick={e => this.props.handleClick(e, "statePage")}
+              />
+              <ToolbarItem
+                name="Logs"
+                icon="description"
+                chevron={true}
+                selected={this.props.view === "logsPage"}
+                onClick={e => this.props.handleClick(e, "logsPage")}
+              />
+              <ToolbarItem
+                name="History"
+                icon="history"
+                chevron={true}
+                selected={this.props.view === "history"}
+                onClick={e => this.props.handleClick(e, "history")}
+              />
+              <Divider />
+              <ToolbarItem
+                name="PSTools"
+                icon="laptop_windows"
+                chevron={true}
+                selected={this.props.view === "psTools"}
+                onClick={e => this.props.handleClick(e, "psTools")}
+              />
+            </div>
+          )}
+
           <ToolbarItem
             name="Log Level"
             icon="settings"
             chevron={true}
-            selected={this.props.selected.view === "logLevel"}
+            selected={this.props.view === "logLevel"}
             onClick={e => this.props.handleClick(e, "logLevel")}
           />
-          <ToolbarItem
-            name="PSTools"
-            icon="laptop_windows"
-            chevron={true}
-            selected={this.props.selected.view === "psTools"}
-            onClick={e => this.props.handleClick(e, "psTools")}
-          />
-        </List>
-        <Divider />
-        <List>
+          <Divider />
           <ToolbarItem
             name="Delete Logs"
             icon="delete"
             chevron={false}
             selected={false}
             onClick={e =>
-              this.props.requestAction(this.props.selected.rows, "deleteLogs")
+              this.props.requestAction(this.props.rows, "deleteLogs")
             }
           />
           <ToolbarItem
@@ -64,7 +68,7 @@ class Toolbar extends Component {
             chevron={false}
             selected={false}
             onClick={e =>
-              this.props.requestAction(this.props.selected.rows, "cleanStart")
+              this.props.requestAction(this.props.rows, "cleanStart")
             }
           />
           <ToolbarItem
@@ -72,9 +76,7 @@ class Toolbar extends Component {
             icon="memory"
             chevron={false}
             selected={false}
-            onClick={e =>
-              this.props.requestAction(this.props.selected.rows, "ramClear")
-            }
+            onClick={e => this.props.requestAction(this.props.rows, "ramClear")}
           />
         </List>
       </div>

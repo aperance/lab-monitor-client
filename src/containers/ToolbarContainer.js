@@ -3,7 +3,10 @@ import Toolbar from "../components/Toolbar";
 import socket from "../socket.js";
 
 const mapStateToProps = state => {
-  return { selected: state.selected };
+  return {
+    rows: state.selected.rows,
+    view: state.selected.view
+  };
 };
 
 const mapDispatchToProps = dispatch => {
