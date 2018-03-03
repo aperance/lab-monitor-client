@@ -3,11 +3,12 @@ import HistoryList from "../components/HistoryList";
 
 const mapStateToProps = state => {
   return {
+    id: state.selected.rows[0],
     propertyList:
       state.selected.rows.length === 1
-        ? state.table[state.selected.rows[0]]
-        : {},
-    selectedProperty: state.selected.history.property
+        ? Object.keys(state.history[state.selected.rows[0]])
+        : [],
+    selectedProperty: state.selected.history
   };
 };
 

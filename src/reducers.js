@@ -24,76 +24,40 @@ const tableReducer = (state = {}, actions) => {
 };
 
 const selectedReducer = (
-  state = { rows: [], view: null, history: { property: null, values: [] } },
+  state = { rows: [], view: null, history: null },
   actions
 ) => {
   switch (actions.type) {
     case "SINGLE_ROW_SELECT":
       if (state.rows.length === 1 && state.rows.indexOf(actions.row) === 0)
-        return {
-          rows: [],
-          view: null,
-          history: { property: null, values: [] }
-        };
-      else
-        return {
-          rows: [actions.row],
-          view: state.view,
-          history: { ...state.history, values: [] }
-        };
+        return { rows: [], view: null, history: null };
+      else return { ...state, rows: [actions.row] };
 
     case "MULTI_ROW_SELECT":
       const rows = state.rows;
       if (rows.indexOf(actions.row) === -1) rows.push(actions.row);
       else rows.splice(rows.indexOf(actions.row), 1);
-      return {
-        rows,
-        view: null,
-        history: { property: null, values: [] }
-      };
+      return { rows, view: null, history: null };
 
     case "VIEW_SELECT":
       if (actions.view === state.view)
-        return {
-          ...state,
-          view: null,
-          history: { property: null, values: [] }
-        };
-      else
-        return {
-          ...state,
-          view: actions.view,
-          history: { property: null, values: [] }
-        };
+        return { ...state, view: null, history: null };
+      else return { ...state, view: actions.view, history: null };
 
     case "HISTORY_SELECT":
-      if (actions.property === state.history.property)
-        return {
-          ...state,
-          history: { property: null, values: [] }
-        };
-      else
-        return {
-          ...state,
-          history: { property: actions.property, values: [] }
-        };
+      if (actions.property === state.history)
+        return { ...state, history: null };
+      else return { ...state, history: actions.property };
 
-    case "HISTORY_POPULATE":
-      if (
-        state.rows.length === 1 &&
-        state.rows.indexOf(actions.id) === 0 &&
-        state.view === "history" &&
-        state.history.property === actions.property
-      )
-        return {
-          ...state,
-          history: { property: actions.property, values: actions.values }
-        };
-      else
-        return {
-          ...state,
-          history: { property: null, values: [] }
-        };
+    default:
+      return { ...state };
+  }
+};
+
+const HistoryReducer = (state = {}, actions) => {
+  switch (actions.type) {
+    case "POPULATE_HISTORY":
+      return { ...actions.allRows };
     default:
       return { ...state };
   }
@@ -102,5 +66,6 @@ const selectedReducer = (
 export default combineReducers({
   configuration: configurationReducer,
   table: tableReducer,
-  selected: selectedReducer
+  selected: selectedReducer,
+  history: HistoryReducer
 });

@@ -35,7 +35,7 @@ class DrawerContainer extends Component {
     let drawerContents = [
       this.props.rows[0] ? <ToolbarContainer /> : null,
       this.props.view ? viewLookup[this.props.view] : null,
-      this.props.history.property ? <HistoryDetailsContainer /> : null
+      this.props.history ? <HistoryDetailsContainer /> : null
     ];
 
     return (

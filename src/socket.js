@@ -13,6 +13,10 @@ socket.on("POPULATE_TABLE", allRows => {
   store.dispatch({ type: "POPULATE_TABLE", allRows });
 });
 
+socket.on("POPULATE_HISTORY", allRows => {
+  store.dispatch({ type: "POPULATE_HISTORY", allRows });
+});
+
 socket.on("UPDATE_ROW", ({ id, changes }) => {
   store.dispatch({ type: "UPDATE_ROW", id, changes });
 });

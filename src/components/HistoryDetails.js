@@ -7,17 +7,6 @@ import Table, {
 } from "material-ui/Table";
 
 class HistoryDetails extends Component {
-  componentDidMount() {
-    this.props.getHistory(this.props.id, this.props.history.property);
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      this.props.id !== prevProps.id ||
-      this.props.history.property !== prevProps.history.property
-    )
-      this.props.getHistory(this.props.id, this.props.history.property);
-  }
-
   render() {
     return (
       <Table>
@@ -29,7 +18,7 @@ class HistoryDetails extends Component {
         </TableHead>
 
         <TableBody>
-          {this.props.history.values.map(value => (
+          {this.props.values.map(value => (
             <TableRow
               key={value[0]}
               style={{ height: "36px", fontSize: "0.75rem" }}

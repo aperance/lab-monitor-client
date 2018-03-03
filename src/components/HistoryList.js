@@ -7,7 +7,7 @@ class HistoryList extends Component {
     return (
       <div>
         <List>
-          {Object.keys(this.props.propertyList).map(property => (
+          {this.props.propertyList.map(property => (
             <ListItem
               button
               onClick={e => this.props.handleClick(e, property)}
