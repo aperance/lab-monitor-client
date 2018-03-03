@@ -38,25 +38,18 @@ class DrawerContainer extends Component {
       this.props.history ? <HistoryDetailsContainer /> : null
     ];
 
-    return (
-      <div>
-        {drawerContents.map((child, index) => {
-          return (
-            <div
-              key={index}
-              style={{
-                ...baseStyles,
-                right:
-                  offsets[drawerContents.filter(x => x).length][index] + "px",
-                width: widths[index] + "px"
-              }}
-            >
-              {child}
-            </div>
-          );
-        })}
+    return drawerContents.map((child, index) => (
+      <div
+        key={index}
+        style={{
+          ...baseStyles,
+          right: offsets[drawerContents.filter(x => x).length][index] + "px",
+          width: widths[index] + "px"
+        }}
+      >
+        {child}
       </div>
-    );
+    ));
   }
 }
 
