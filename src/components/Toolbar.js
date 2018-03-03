@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import List from "material-ui/List";
 import Divider from "material-ui/Divider";
 import ToolbarItem from "./ToolbarItem.js";
-import { requestAction } from "../socket.js";
 
 class Toolbar extends Component {
   render() {
@@ -55,21 +54,27 @@ class Toolbar extends Component {
             icon="delete"
             chevron={false}
             selected={false}
-            onClick={e => requestAction(this.props.selected.rows, "deleteLogs")}
+            onClick={e =>
+              this.props.requestAction(this.props.selected.rows, "deleteLogs")
+            }
           />
           <ToolbarItem
             name="Clean Start"
             icon="refresh"
             chevron={false}
             selected={false}
-            onClick={e => requestAction(this.props.selected.rows, "cleanStart")}
+            onClick={e =>
+              this.props.requestAction(this.props.selected.rows, "cleanStart")
+            }
           />
           <ToolbarItem
             name="RAM Clear"
             icon="memory"
             chevron={false}
             selected={false}
-            onClick={e => requestAction(this.props.selected.rows, "ramClear")}
+            onClick={e =>
+              this.props.requestAction(this.props.selected.rows, "ramClear")
+            }
           />
         </List>
       </div>

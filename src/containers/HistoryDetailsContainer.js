@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import HistoryDetails from "../components/HistoryDetails";
+import socket from "../socket.js";
 
 const mapStateToProps = state => {
   return {
@@ -8,4 +9,20 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(HistoryDetails);
+const mapDispatchToProps = dispatch => {
+  return {
+    getHistory: (id, property) => {
+      socket.emit("GET_HISTORY", id, property, response => {
+        console.log(response);
+        dispatch({
+          type: "HISTORY_POPULATE",
+          id,
+          property,
+          values: response
+        });
+      });
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryDetails);

@@ -5,18 +5,17 @@ import Table, {
   TableHead,
   TableRow
 } from "material-ui/Table";
-import { getHistory } from "../socket.js";
 
 class HistoryDetails extends Component {
   componentDidMount() {
-    getHistory(this.props.id, this.props.history.property);
+    this.props.getHistory(this.props.id, this.props.history.property);
   }
   componentDidUpdate(prevProps, prevState) {
     if (
       this.props.id !== prevProps.id ||
       this.props.history.property !== prevProps.history.property
     )
-      getHistory(this.props.id, this.props.history.property);
+      this.props.getHistory(this.props.id, this.props.history.property);
   }
 
   render() {
