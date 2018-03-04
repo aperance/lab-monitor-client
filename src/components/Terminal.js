@@ -16,7 +16,7 @@ class Terminal extends Component {
           fontSize: "0.825rem"
         }}
       >
-        <pre style={{ padding: "10px 10px 10px 10px" }}>
+        <pre style={{ padding: "10px 10px 10px 10px", whiteSpace: "pre-wrap" }}>
           {this.props.output}
         </pre>
       </Paper>
