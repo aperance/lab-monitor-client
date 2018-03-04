@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./components/NavBar";
 import AssetTableContainer from "./containers/AssetTableContainer";
-import DrawerContainer from "./DrawerContainer";
+import DrawersContainer from "./containers/DrawersContainer";
 import LogLevelContainer from "./containers/LogLevelContainer";
 
 class Layout extends Component {
@@ -11,7 +11,7 @@ class Layout extends Component {
         <NavBar />
         <div style={{ paddingTop: "64px" }}>
           <AssetTableContainer />
-          <DrawerContainer />
+          <DrawersContainer />
         </div>
         <LogLevelContainer />
       </div>

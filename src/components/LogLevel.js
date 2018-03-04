@@ -26,7 +26,9 @@ class LogLevel extends Component {
                 style={{ width: "230px", marginRight: "32px" }}
               >
                 {this.props.namespaces.map(namespace => (
-                  <MenuItem value={namespace}>{namespace}</MenuItem>
+                  <MenuItem key={namespace} value={namespace}>
+                    {namespace}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -40,7 +42,9 @@ class LogLevel extends Component {
                 style={{ width: "90px" }}
               >
                 {this.props.levels.map(level => (
-                  <MenuItem value={level}>{level}</MenuItem>
+                  <MenuItem key={level} value={level}>
+                    {level}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
