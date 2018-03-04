@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import "./index.css";
 import Layout from "./Layout";
 import store from "./store.js";
 import {} from "./socket.js";
