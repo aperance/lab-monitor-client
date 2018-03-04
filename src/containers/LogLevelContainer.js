@@ -5,8 +5,12 @@ import socket from "../socket.js";
 
 const mapStateToProps = state => {
   return {
-    levels: state.configuration.logLevel.level || [],
-    namespaces: state.configuration.logLevel.namespace || [],
+    levels: state.configuration.logLevel
+      ? state.configuration.logLevel.level
+      : [],
+    namespaces: state.configuration.logLevel
+      ? state.configuration.logLevel.namespace
+      : [],
     open: state.dialog.logLevel,
     targets: state.selected.rows
   };
