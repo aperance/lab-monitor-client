@@ -75,10 +75,20 @@ const dialogReducer = (state = { logLevel: false }, actions) => {
   }
 };
 
+const psToolsReducer = (state = { response: null }, actions) => {
+  switch (actions.type) {
+    case "PSTOOLS_RESPONSE":
+      return { ...state, response: actions.response };
+    default:
+      return { ...state };
+  }
+};
+
 export default combineReducers({
   configuration: configurationReducer,
   table: tableReducer,
   selected: selectedReducer,
   history: historyReducer,
-  dialog: dialogReducer
+  dialog: dialogReducer,
+  psTools: psToolsReducer
 });

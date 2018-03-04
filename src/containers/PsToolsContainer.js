@@ -1,10 +1,24 @@
 import { connect } from "react-redux";
+import { psToolsResponse } from "../actions";
 import PsTools from "../components/PsTools";
+import socket from "../socket.js";
 
 const mapStateToProps = state => {
   return {
-    url: "http://" + state.selected.rows[0] + state.configuration.statePath
+    target: state.selected.rows[0],
+    presets: state.configuration.psTools,
+    response: state.psTools.response
   };
 };
 
-export default connect(mapStateToProps)(PsTools);
+const mapDispatchToProps = dispatch => {
+  return {
+    sendCommand: (target, { mode, cmd }) => {
+      socket.emit("PSTOOLS", target, mode, cmd, response =>
+        dispatch(psToolsResponse(response))
+      );
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PsTools);

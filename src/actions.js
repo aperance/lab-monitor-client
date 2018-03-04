@@ -17,3 +17,7 @@ export const historySelect = property => {
 export const dialogVisibility = object => {
   return { type: "DIALOG_VISIBILITY", object };
 };
+
+export const psToolsResponse = response => {
+  return { type: "PSTOOLS_RESPONSE", response };
+};
