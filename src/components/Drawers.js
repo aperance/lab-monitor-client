@@ -22,10 +22,11 @@ class Drawers extends Component {
       <div
         key={index}
         style={{
-          position: "fixed",
-          height: "calc(100% - 64px)",
           width: widths[index] + "px",
           right: this.props.offsetCalc(widths)[index] + "px",
+
+          position: "fixed",
+          height: "calc(100% - 64px)",
           top: "64px",
           transition: ".5s",
           backgroundColor: "rgba(255, 255, 255, 1)",
