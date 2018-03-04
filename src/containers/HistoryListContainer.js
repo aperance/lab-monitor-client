@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { historySelect } from "../actions";
 import HistoryList from "../components/HistoryList";
 
 const mapStateToProps = state => {
@@ -13,11 +14,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleClick: (e, property) => {
-      dispatch({
-        type: "HISTORY_SELECT",
-        property
-      });
+    handleClick: property => {
+      dispatch(historySelect(property));
     }
   };
 };

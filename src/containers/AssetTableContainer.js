@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { singleRowSelect, multiRowSelect } from "../actions";
 import AssetTable from "../components/AssetTable";
 
 const mapStateToProps = state => {
@@ -11,17 +12,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleRowClick: (e, rowKey) => {
-      if (e.altKey || e.ctrlKey)
-        dispatch({
-          type: "MULTI_ROW_SELECT",
-          row: rowKey
-        });
-      else
-        dispatch({
-          type: "SINGLE_ROW_SELECT",
-          row: rowKey
-        });
+    handleRowClick: (e, id) => {
+      if (e.altKey || e.ctrlKey) dispatch(multiRowSelect(id));
+      else dispatch(singleRowSelect(id));
     }
   };
 };

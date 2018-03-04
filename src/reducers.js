@@ -68,7 +68,7 @@ const historyReducer = (state = {}, actions) => {
 
 const dialogReducer = (state = { logLevel: false }, actions) => {
   switch (actions.type) {
-    case "OPEN_DIALOG":
+    case "DIALOG_VISIBILITY":
       return { ...state, ...actions.object };
     default:
       return { ...state };

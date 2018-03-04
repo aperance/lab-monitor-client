@@ -18,7 +18,7 @@ class HistoryList extends Component {
           {this.state.properties.map(property => (
             <ListItem
               button
-              onClick={e => this.props.handleClick(e, property)}
+              onClick={e => this.props.handleClick(property)}
               divider={true}
               key={property}
               style={

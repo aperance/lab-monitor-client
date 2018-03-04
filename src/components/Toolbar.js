@@ -14,28 +14,28 @@ class Toolbar extends Component {
               icon="list"
               chevron={true}
               selected={this.props.view === "statePage"}
-              onClick={e => this.props.handleClick(e, "statePage")}
+              onClick={e => this.props.handleViewClick("statePage")}
             />
             <ToolbarItem
               name="Logs"
               icon="description"
               chevron={true}
               selected={this.props.view === "logsPage"}
-              onClick={e => this.props.handleClick(e, "logsPage")}
+              onClick={e => this.props.handleViewClick("logsPage")}
             />
             <ToolbarItem
               name="History"
               icon="history"
               chevron={true}
               selected={this.props.view === "history"}
-              onClick={e => this.props.handleClick(e, "history")}
+              onClick={e => this.props.handleViewClick("history")}
             />
             <ToolbarItem
               name="PSTools"
               icon="laptop_windows"
               chevron={true}
               selected={this.props.view === "psTools"}
-              onClick={e => this.props.handleClick(e, "psTools")}
+              onClick={e => this.props.handleViewClick("psTools")}
             />
           </div>
         )}
@@ -44,25 +44,31 @@ class Toolbar extends Component {
           name="Log Level"
           icon="settings"
           chevron={false}
-          onClick={e => this.props.openLogLevel(e)}
+          onClick={e => this.props.openLogLevel()}
         />
         <ToolbarItem
           name="Delete Logs"
           icon="delete"
           chevron={false}
-          onClick={e => this.props.requestAction(this.props.rows, "deleteLogs")}
+          onClick={e =>
+            this.props.handleActionClick(this.props.rows, "deleteLogs")
+          }
         />
         <ToolbarItem
           name="Clean Start"
           icon="refresh"
           chevron={false}
-          onClick={e => this.props.requestAction(this.props.rows, "cleanStart")}
+          onClick={e =>
+            this.props.handleActionClick(this.props.rows, "cleanStart")
+          }
         />
         <ToolbarItem
           name="RAM Clear"
           icon="memory"
           chevron={false}
-          onClick={e => this.props.requestAction(this.props.rows, "ramClear")}
+          onClick={e =>
+            this.props.handleActionClick(this.props.rows, "ramClear")
+          }
         />
       </List>
     );

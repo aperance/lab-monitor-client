@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { viewSelect, dialogVisibility } from "../actions";
 import Toolbar from "../components/Toolbar";
 import socket from "../socket.js";
 
@@ -11,22 +12,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleClick: (e, selectedView) => {
-      dispatch({
-        type: "VIEW_SELECT",
-        view: selectedView
-      });
-    },
-    openLogLevel: e => {
-      dispatch({
-        type: "OPEN_DIALOG",
-        object: { logLevel: true }
-      });
-    },
-    requestAction: (targets, type) => {
+    handleViewClick: selectedView => dispatch(viewSelect(selectedView)),
+    openLogLevel: () => dispatch(dialogVisibility({ logLevel: true })),
+    handleActionClick: (targets, type) => {
       console.log(targets);
       console.log(type);
-
       socket.emit("REQUEST_ACTION", targets, type, {}, response =>
         console.log(response)
       );
