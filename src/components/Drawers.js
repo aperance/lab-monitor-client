@@ -26,6 +26,7 @@ class Drawers extends Component {
           right: this.props.offsetCalc(widths)[index] + "px",
 
           position: "fixed",
+          overflowY: index ? "scroll" : "hidden",
           height: "calc(100% - 64px)",
           top: "64px",
           transition: ".5s",

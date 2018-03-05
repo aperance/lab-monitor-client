@@ -13,32 +13,31 @@ class HistoryList extends Component {
   }
   render() {
     return (
-      <div>
-        <List>
-          {this.state.properties.map(property => (
-            <ListItem
-              button
-              onClick={e => this.props.handleClick(property)}
-              divider={true}
-              key={property}
-              style={
-                property === this.props.selectedProperty
-                  ? { backgroundColor: "rgba(0, 0, 0, 0.04)" }
-                  : null
-              }
-            >
-              <ListItemText
-                disableTypography={true}
-                style={{ fontSize: "0.75rem" }}
-                primary={property}
-              />
-              <ListItemIcon>
-                <Icon style={{ marginRight: "0px" }}>navigate_next</Icon>
-              </ListItemIcon>
-            </ListItem>
-          ))}
-        </List>
-      </div>
+      <List>
+        {this.state.properties.map(property => (
+          <ListItem
+            button
+            dense={true}
+            onClick={e => this.props.handleClick(property)}
+            divider={true}
+            key={property}
+            style={
+              property === this.props.selectedProperty
+                ? { backgroundColor: "rgba(0, 0, 0, 0.04)" }
+                : null
+            }
+          >
+            <ListItemText
+              disableTypography={true}
+              style={{ fontSize: "0.75rem" }}
+              primary={property}
+            />
+            <ListItemIcon>
+              <Icon style={{ marginRight: "0px" }}>navigate_next</Icon>
+            </ListItemIcon>
+          </ListItem>
+        ))}
+      </List>
     );
   }
 }
