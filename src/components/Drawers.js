@@ -14,7 +14,7 @@ const viewLookup = {
   historyDetails: <HistoryDetailsContainer />
 };
 
-const widths = [200, 600, 400];
+const widths = [175, 600, 400];
 
 class Drawers extends Component {
   render() {

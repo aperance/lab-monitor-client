@@ -14,16 +14,38 @@ class ToolbarItem extends Component {
       >
         <ListItem button onClick={this.props.onClick}>
           <ListItemIcon>
-            <Icon style={{ marginRight: "0px" }}>{this.props.icon}</Icon>
+            <Icon
+              style={{
+                marginRight: "0px",
+                height: "auto",
+                width: "auto",
+                fontSize: "1.25rem"
+              }}
+            >
+              {this.props.icon}
+            </Icon>
           </ListItemIcon>
           <ListItemText
             primary={this.props.name}
             disableTypography={true}
-            style={{ color: "rgba(0, 0, 0, 0.54)" }}
+            style={{
+              paddingLeft: "12px",
+              color: "rgba(0, 0, 0, 0.54)",
+              fontSize: "0.9rem"
+            }}
           />
           {this.props.chevron && (
             <ListItemIcon>
-              <Icon style={{ marginRight: "0px" }}>navigate_next</Icon>
+              <Icon
+                style={{
+                  marginRight: "0px",
+                  height: "auto",
+                  width: "auto",
+                  fontSize: "1.25rem"
+                }}
+              >
+                navigate_next
+              </Icon>
             </ListItemIcon>
           )}
         </ListItem>

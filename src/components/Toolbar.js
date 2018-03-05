@@ -37,9 +37,10 @@ class Toolbar extends Component {
               selected={this.props.view === "psTools"}
               onClick={e => this.props.handleViewClick("psTools")}
             />
+            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
           </div>
         )}
-        <Divider />
+
         <ToolbarItem
           name="Log Level"
           icon="settings"
