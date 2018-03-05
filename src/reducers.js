@@ -19,7 +19,7 @@ const tableReducer = (state = {}, actions) => {
     case "UPDATE_ROW":
       return {
         ...state,
-        [actions.id]: { ...state[actions.id], ...actions.changes }
+        [actions.id]: { ...state[actions.id], ...actions.state }
       };
     default:
       return { ...state };
@@ -61,6 +61,18 @@ const historyReducer = (state = {}, actions) => {
   switch (actions.type) {
     case "POPULATE_HISTORY":
       return { ...actions.allRows };
+    case "UPDATE_ROW":
+      return {
+        ...state,
+        [actions.id]: actions.history.reduce(
+          (acc, [key, newRecord]) => {
+            if (!acc[key]) acc[key] = [];
+            acc[key] = [newRecord, ...acc[key]];
+            return acc;
+          },
+          { ...state[actions.id] }
+        )
+      };
     default:
       return { ...state };
   }
