@@ -5,20 +5,16 @@ const socket = io("http://localhost:8080");
 //const socket = io("http://10.80.146.4:8080");
 console.log("Websocket connected");
 
-socket.on("SET_CONFIGURATION", configuration => {
-  store.dispatch({ type: "SET_CONFIGURATION", configuration });
+socket.on("CONFIGURATION", configuration => {
+  store.dispatch({ type: "CONFIGURATION", configuration });
 });
 
-socket.on("POPULATE_TABLE", allRows => {
-  store.dispatch({ type: "POPULATE_TABLE", allRows });
+socket.on("DEVICE_DATA_ALL", ({ state, history }) => {
+  store.dispatch({ type: "DEVICE_DATA_ALL", state, history });
 });
 
-socket.on("POPULATE_HISTORY", allRows => {
-  store.dispatch({ type: "POPULATE_HISTORY", allRows });
-});
-
-socket.on("UPDATE_ROW", ({ id, state, history }) => {
-  store.dispatch({ type: "UPDATE_ROW", id, state, history });
+socket.on("DEVICE_DATA_UPDATE", ({ id, state, history }) => {
+  store.dispatch({ type: "DEVICE_DATA_UPDATE", id, state, history });
 });
 
 export default socket;

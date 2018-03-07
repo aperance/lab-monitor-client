@@ -5,7 +5,7 @@ const configurationReducer = (
   actions
 ) => {
   switch (actions.type) {
-    case "SET_CONFIGURATION":
+    case "CONFIGURATION":
       return { ...actions.configuration };
     default:
       return { ...state };
@@ -14,9 +14,9 @@ const configurationReducer = (
 
 const tableReducer = (state = {}, actions) => {
   switch (actions.type) {
-    case "POPULATE_TABLE":
-      return { ...actions.allRows };
-    case "UPDATE_ROW":
+    case "DEVICE_DATA_ALL":
+      return { ...actions.state };
+    case "DEVICE_DATA_UPDATE":
       return {
         ...state,
         [actions.id]: { ...state[actions.id], ...actions.state }
@@ -59,9 +59,9 @@ const selectedReducer = (
 
 const historyReducer = (state = {}, actions) => {
   switch (actions.type) {
-    case "POPULATE_HISTORY":
-      return { ...actions.allRows };
-    case "UPDATE_ROW":
+    case "DEVICE_DATA_ALL":
+      return { ...actions.history };
+    case "DEVICE_DATA_UPDATE":
       return {
         ...state,
         [actions.id]: actions.history.reduce(
