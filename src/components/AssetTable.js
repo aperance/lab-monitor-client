@@ -8,7 +8,7 @@ import Table, {
 import { withStyles } from "material-ui/styles";
 
 const styles = theme => ({
-  root: {
+  table: {
     whiteSpace: "nowrap",
     "& thead > tr": { height: "48px" },
     "& th": { paddingRight: "12px" },
@@ -20,7 +20,7 @@ const styles = theme => ({
 class AssetTable extends Component {
   render() {
     return (
-      <Table className={this.props.classes.root}>
+      <Table className={this.props.classes.table}>
         <TableHead>
           <TableRow>
             {this.props.columns &&

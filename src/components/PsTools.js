@@ -12,15 +12,12 @@ const styles = theme => ({
     margin: "24px 32px 0px 32px",
     "& form": { display: "flex", flexWrap: "wrap", marginTop: "16px" },
     "& label": { fontSize: "0.825rem" },
-    "& button": { margin: "8px 0px 8px" }
+    "& button": { margin: "8px 0px 8px" },
+    "& input": { fontSize: ["0.825rem", "!important"] }
   },
   presetsInput: { width: "100%" },
   modeInput: { width: "76px", marginRight: "16px" },
-  cmdInput: {
-    width: "calc(100% - 164px)",
-    marginRight: "8px",
-    "& input": { fontSize: "0.825rem" }
-  },
+  cmdInput: { width: "calc(100% - 164px)", marginRight: "8px" },
   text: { fontSize: "0.825rem" }
 });
 
@@ -81,7 +78,6 @@ class PsTools extends Component {
           <FormControl className={classes.cmdInput}>
             <InputLabel htmlFor="name-input">Command</InputLabel>
             <Input
-              className={classes.text}
               id="cmd"
               value={this.state.cmd}
               onChange={e => this.setState({ cmd: e.target.value, preset: "" })}
