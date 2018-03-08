@@ -5,36 +5,41 @@ import Table, {
   TableHead,
   TableRow
 } from "material-ui/Table";
+import { withStyles } from "material-ui/styles";
+
+const styles = theme => ({
+  root: {
+    whiteSpace: "nowrap",
+    "& thead > tr": { height: "48px" },
+    "& th": { paddingRight: "12px" },
+    "& tbody > tr": { height: "36px" },
+    "& td": { fontSize: "0.75rem", paddingRight: "12px" }
+  }
+});
 
 class AssetTable extends Component {
   render() {
     return (
-      <Table style={{ whiteSpace: "nowrap" }}>
+      <Table className={this.props.classes.root}>
         <TableHead>
-          <TableRow style={{ height: "48px" }}>
+          <TableRow>
             {this.props.columns &&
               this.props.columns.map(column => (
-                <TableCell key={column.title} style={{ paddingRight: "12px" }}>
-                  {column.title}
-                </TableCell>
+                <TableCell key={column.title}>{column.title}</TableCell>
               ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {Object.keys(this.props.tableData).map(rowKey => (
             <TableRow
-              hover
-              onClick={e => this.props.handleRowClick(e.nativeEvent, rowKey)}
               key={rowKey}
+              hover
               selected={this.props.selected.includes(rowKey)}
-              style={{ height: "36px" }}
+              onClick={e => this.props.handleRowClick(e.nativeEvent, rowKey)}
             >
               {this.props.columns &&
                 this.props.columns.map(column => (
-                  <TableCell
-                    key={rowKey + column.property}
-                    style={{ fontSize: "0.75rem", paddingRight: "12px" }}
-                  >
+                  <TableCell key={rowKey + column.property}>
                     {this.props.tableData[rowKey][column.property]}
                   </TableCell>
                 ))}
@@ -46,4 +51,4 @@ class AssetTable extends Component {
   }
 }
 
-export default AssetTable;
+export default withStyles(styles)(AssetTable);

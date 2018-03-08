@@ -4,6 +4,22 @@ import HistoryListContainer from "../containers/HistoryListContainer";
 import HistoryDetailsContainer from "../containers/HistoryDetailsContainer";
 import WebPageContainer from "../containers/WebPageContainer";
 import PsToolsContainer from "../containers/PsToolsContainer";
+import { withStyles } from "material-ui/styles";
+
+const styles = theme => ({
+  drawer: {
+    position: "fixed",
+    height: "calc(100% - 64px)",
+    top: "64px",
+    transition: ".5s",
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    boxShadow: [
+      "-2px 0px 4px -1px rgba(0, 0, 0, 0.2)",
+      "-4px 0px 5px 0px rgba(0, 0, 0, 0.14)",
+      "-1px 0px 10px 0px rgba(0, 0, 0, 0.12)"
+    ]
+  }
+});
 
 const viewLookup = {
   toolbar: <ToolbarContainer />,
@@ -21,18 +37,11 @@ class Drawers extends Component {
     return this.props.drawerContents.map((child, index) => (
       <div
         key={index}
+        className={this.props.classes.drawer}
         style={{
           width: widths[index] + "px",
           right: this.props.offsetCalc(widths)[index] + "px",
-
-          position: "fixed",
-          overflowY: index ? "scroll" : "hidden",
-          height: "calc(100% - 64px)",
-          top: "64px",
-          transition: ".5s",
-          backgroundColor: "rgba(255, 255, 255, 1)",
-          boxShadow:
-            "-2px 0px 4px -1px rgba(0, 0, 0, 0.2), -4px 0px 5px 0px rgba(0, 0, 0, 0.14), -1px 0px 10px 0px rgba(0, 0, 0, 0.12)"
+          overflowY: index ? "scroll" : "hidden"
         }}
       >
         {viewLookup[child]}
@@ -41,4 +50,4 @@ class Drawers extends Component {
   }
 }
 
-export default Drawers;
+export default withStyles(styles)(Drawers);

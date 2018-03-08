@@ -5,8 +5,24 @@ import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
 import Button from "material-ui/Button";
 import Terminal from "./Terminal";
+import { withStyles } from "material-ui/styles";
 
-const fontSize = { fontSize: "0.825rem" };
+const styles = theme => ({
+  container: {
+    margin: "24px 32px 0px 32px",
+    "& form": { display: "flex", flexWrap: "wrap", marginTop: "16px" },
+    "& label": { fontSize: "0.825rem" },
+    "& button": { margin: "8px 0px 8px" }
+  },
+  presetsInput: { width: "100%" },
+  modeInput: { width: "76px", marginRight: "16px" },
+  cmdInput: {
+    width: "calc(100% - 164px)",
+    marginRight: "8px",
+    "& input": { fontSize: "0.825rem" }
+  },
+  text: { fontSize: "0.825rem" }
+});
 
 class PsTools extends Component {
   constructor(props) {
@@ -15,14 +31,15 @@ class PsTools extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div style={{ margin: "24px 32px 0px 32px" }}>
-        <form style={{ display: "flex", flexWrap: "wrap", marginTop: "16px" }}>
-          <FormControl style={{ width: "100%" }}>
-            <InputLabel style={fontSize}>Load Preset Command</InputLabel>
+      <div className={classes.container}>
+        <form>
+          <FormControl className={classes.presetsInput}>
+            <InputLabel>Load Preset Command</InputLabel>
             <Select
+              className={classes.text}
               input={<Input id="presets" />}
-              style={fontSize}
               value={this.state.preset}
               onChange={e =>
                 this.setState({
@@ -33,7 +50,7 @@ class PsTools extends Component {
               }
             >
               {Object.keys(this.props.presets).map(preset => (
-                <MenuItem key={preset} value={preset} style={fontSize}>
+                <MenuItem className={classes.text} key={preset} value={preset}>
                   {this.props.presets[preset].name}
                 </MenuItem>
               ))}
@@ -41,34 +58,30 @@ class PsTools extends Component {
           </FormControl>
         </form>
 
-        <form style={{ display: "flex", flexWrap: "wrap", marginTop: "16px" }}>
-          <FormControl style={{ width: "76px", marginRight: "16px" }}>
-            <InputLabel style={fontSize}>Mode</InputLabel>
+        <form>
+          <FormControl className={classes.modeInput}>
+            <InputLabel>Mode</InputLabel>
             <Select
+              className={classes.text}
               input={<Input id="mode" />}
-              style={fontSize}
               value={this.state.mode}
               onChange={e =>
                 this.setState({ mode: e.target.value, preset: "" })
               }
             >
-              <MenuItem value="psExec" style={fontSize}>
+              <MenuItem className={classes.text} value="psExec">
                 PSExec
               </MenuItem>
-              <MenuItem value="psKill" style={fontSize}>
+              <MenuItem className={classes.text} value="psKill">
                 PSKill
               </MenuItem>
             </Select>
           </FormControl>
 
-          <FormControl
-            style={{ width: "calc(100% - 164px)", marginRight: "8px" }}
-          >
-            <InputLabel htmlFor="name-input" style={fontSize}>
-              Command
-            </InputLabel>
+          <FormControl className={classes.cmdInput}>
+            <InputLabel htmlFor="name-input">Command</InputLabel>
             <Input
-              style={fontSize}
+              className={classes.text}
               id="cmd"
               value={this.state.cmd}
               onChange={e => this.setState({ cmd: e.target.value, preset: "" })}
@@ -78,7 +91,6 @@ class PsTools extends Component {
           <Button
             size="small"
             onClick={e => this.props.sendCommand(this.props.target, this.state)}
-            style={{ margin: "8px 0px 8px" }}
           >
             Send
           </Button>
@@ -89,4 +101,4 @@ class PsTools extends Component {
   }
 }
 
-export default PsTools;
+export default withStyles(styles)(PsTools);

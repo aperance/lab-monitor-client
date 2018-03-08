@@ -1,5 +1,21 @@
 import React, { Component } from "react";
 import List, { ListItem } from "material-ui/List";
+import { withStyles } from "material-ui/styles";
+
+const styles = theme => ({
+  container: { flex: "1 1 auto" },
+  primaryText: {
+    fontSize: "0.75rem",
+    margin: "0",
+    minHeight: "14px"
+  },
+  secondaryText: {
+    fontSize: "0.75rem",
+    fontWeight: "300",
+    color: "darkgray",
+    margin: "0"
+  }
+});
 
 class HistoryDetails extends Component {
   render() {
@@ -7,17 +23,9 @@ class HistoryDetails extends Component {
       <List>
         {this.props.values.map(value => (
           <ListItem divider={true} key={value[0]}>
-            <div style={{ fontSize: "0.75rem", flex: "1 1 auto" }}>
-              <p style={{ margin: "0", minHeight: "14px" }}>{value[1]}</p>
-              <p
-                style={{
-                  margin: "0",
-                  color: "darkgray",
-                  fontWeight: "300"
-                }}
-              >
-                {value[0]}
-              </p>
+            <div className={this.props.classes.container}>
+              <p className={this.props.classes.primaryText}>{value[1]}</p>
+              <p className={this.props.classes.secondaryText}>{value[0]}</p>
             </div>
           </ListItem>
         ))}
@@ -26,4 +34,4 @@ class HistoryDetails extends Component {
   }
 }
 
-export default HistoryDetails;
+export default withStyles(styles)(HistoryDetails);
