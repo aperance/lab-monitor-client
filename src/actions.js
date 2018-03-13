@@ -21,3 +21,7 @@ export const dialogVisibility = object => {
 export const psToolsResponse = response => {
   return { type: "PSTOOLS_RESPONSE", response };
 };
+
+export const filterSelect = (property, option) => {
+  return { type: "FILTER_SELECT", property, option };
+};

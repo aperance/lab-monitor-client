@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 const configurationReducer = (
-  state = { columns: [], logLevel: { level: [], namespace: [] } },
+  state = { columns: [], filters: [], logLevel: { level: [], namespace: [] } },
   actions
 ) => {
   switch (actions.type) {
@@ -87,6 +87,19 @@ const dialogReducer = (state = { logLevel: false }, actions) => {
   }
 };
 
+const filterReducer = (state = {}, actions) => {
+  switch (actions.type) {
+    case "FILTER_SELECT":
+      const newArray = state[actions.property] || [];
+      const currentIndex = newArray.indexOf(actions.option);
+      if (currentIndex === -1) newArray.push(actions.option);
+      else newArray.splice(currentIndex, 1);
+      return { ...state, [actions.property]: [...newArray] };
+    default:
+      return { ...state };
+  }
+};
+
 const psToolsReducer = (state = { response: null }, actions) => {
   switch (actions.type) {
     case "PSTOOLS_RESPONSE":
@@ -102,5 +115,6 @@ export default combineReducers({
   selected: selectedReducer,
   history: historyReducer,
   dialog: dialogReducer,
+  filter: filterReducer,
   psTools: psToolsReducer
 });
