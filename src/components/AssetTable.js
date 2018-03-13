@@ -55,17 +55,17 @@ class AssetTable extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(this.props.tableData).map(rowKey => (
+          {this.props.tableData.map(([rowId, rowData]) => (
             <TableRow
-              key={rowKey}
+              key={rowId}
               hover
-              selected={this.props.selected.includes(rowKey)}
-              onClick={e => this.props.handleRowClick(e.nativeEvent, rowKey)}
+              selected={this.props.selected.includes(rowId)}
+              onClick={e => this.props.handleRowClick(e.nativeEvent, rowId)}
             >
               {this.props.columns &&
                 this.props.columns.map(column => (
-                  <TableCell key={rowKey + column.property}>
-                    {this.props.tableData[rowKey][column.property]}
+                  <TableCell key={rowId + column.property}>
+                    {rowData[column.property]}
                   </TableCell>
                 ))}
             </TableRow>

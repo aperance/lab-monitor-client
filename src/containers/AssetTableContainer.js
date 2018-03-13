@@ -5,15 +5,14 @@ import AssetTable from "../components/AssetTable";
 const mapStateToProps = state => {
   return {
     columns: state.configuration.columns,
-    tableData: state.table,
     selected: state.selected.rows,
-    filterOptions: state.configuration.columns.reduce((acc, column) => {
-      acc[column.property] = new Set();
-      Object.values(state.table).forEach(rowValues => {
-        acc[column.property].add(rowValues[column.property]);
-      });
-      return acc;
-    }, {})
+    tableData: Object.entries(state.table).filter(([rowId, rowData]) => {
+      return Object.entries(state.filter).reduce((acc, [property, allowed]) => {
+        return (
+          acc && (allowed.length === 0 || allowed.includes(rowData[property]))
+        );
+      }, true);
+    })
   };
 };
 
