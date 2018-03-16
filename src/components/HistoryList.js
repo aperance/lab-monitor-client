@@ -15,7 +15,7 @@ class HistoryList extends Component {
   render() {
     return (
       <List
-        width={600}
+        width={800}
         rowHeight={40}
         height={window.innerHeight - 64}
         rowCount={this.props.properties.length}
