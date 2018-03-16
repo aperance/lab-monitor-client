@@ -11,7 +11,7 @@ class Toolbar extends Component {
           <div>
             <ToolbarItem
               name="State"
-              icon="list"
+              icon="toc"
               chevron={true}
               selected={this.props.view === "statePage"}
               onClick={e => this.props.handleViewClick("statePage")}
@@ -32,10 +32,17 @@ class Toolbar extends Component {
             />
             <ToolbarItem
               name="PSTools"
-              icon="laptop_windows"
+              icon="code"
               chevron={true}
               selected={this.props.view === "psTools"}
               onClick={e => this.props.handleViewClick("psTools")}
+            />
+            <ToolbarItem
+              name="VNC"
+              icon="picture_in_picture"
+              chevron={true}
+              selected={this.props.view === "vnc"}
+              onClick={e => this.props.handleViewClick("vnc")}
             />
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
           </div>
