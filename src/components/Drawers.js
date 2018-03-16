@@ -4,6 +4,7 @@ import HistoryListContainer from "../containers/HistoryListContainer";
 import HistoryDetailsContainer from "../containers/HistoryDetailsContainer";
 import WebPageContainer from "../containers/WebPageContainer";
 import PsToolsContainer from "../containers/PsToolsContainer";
+import VncContainer from "../containers/VncContainer";
 import { withStyles } from "material-ui/styles";
 
 const styles = theme => ({
@@ -27,10 +28,11 @@ const viewLookup = {
   logsPage: <WebPageContainer />,
   statePage: <WebPageContainer />,
   psTools: <PsToolsContainer />,
+  vnc: <VncContainer />,
   historyDetails: <HistoryDetailsContainer />
 };
 
-const widths = [175, 600, 400];
+const widths = [175, 800, 400];
 
 class Drawers extends Component {
   render() {
@@ -41,7 +43,7 @@ class Drawers extends Component {
         style={{
           width: widths[index] + "px",
           right: this.props.offsetCalc(widths)[index] + "px",
-          overflowY: index ? "scroll" : "hidden"
+          overflowY: "hidden"
         }}
       >
         {viewLookup[child]}
