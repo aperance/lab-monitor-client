@@ -25,3 +25,27 @@ export const psToolsResponse = response => {
 export const filterSelect = (property, option) => {
   return { type: "FILTER_SELECT", property, option };
 };
+
+export const configuration = ({ configuration }) => {
+  return {
+    type: "CONFIGURATION",
+    configuration
+  };
+};
+
+export const deviceDataAll = ({ state, history }) => {
+  return {
+    type: "DEVICE_DATA_ALL",
+    state,
+    history
+  };
+};
+
+export const deviceDataUpdate = ({ id, state, history }) => {
+  return {
+    type: "DEVICE_DATA_UPDATE",
+    id,
+    state,
+    history
+  };
+};

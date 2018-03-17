@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { psToolsResponse } from "../actions";
 import PsTools from "../components/PsTools";
-import socket from "../socket.js";
+import websocket from "../websocket.js";
 
 const mapStateToProps = state => {
   return {
@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     sendCommand: (target, { mode, cmd }) => {
-      socket.emit("PSTOOLS", target, mode, cmd, response =>
+      websocket.emit("PSTOOLS", target, mode, cmd, response =>
         dispatch(psToolsResponse(response))
       );
     }

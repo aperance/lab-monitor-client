@@ -6,6 +6,7 @@ import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
 import Button from "material-ui/Button";
 import { withStyles } from "material-ui/styles";
+import { sendAction } from "../websocket.js";
 
 const styles = theme => ({
   form: { display: "flex", flexWrap: "wrap" },
@@ -61,11 +62,8 @@ class LogLevel extends Component {
         <DialogActions>
           <Button
             onClick={e => {
-              this.props.sendLogLevel(
-                this.props.targets,
-                "logLevel",
-                this.state
-              );
+              sendAction(this.props.targets, "logLevel", this.state);
+              this.props.cancelLogLevel();
             }}
             color="primary"
           >

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import List from "material-ui/List";
 import Divider from "material-ui/Divider";
 import ToolbarItem from "./ToolbarItem.js";
+import { sendAction } from "../websocket.js";
 
 class Toolbar extends Component {
   render() {
@@ -58,25 +59,19 @@ class Toolbar extends Component {
           name="Delete Logs"
           icon="delete"
           chevron={false}
-          onClick={e =>
-            this.props.handleActionClick(this.props.rows, "deleteLogs")
-          }
+          onClick={e => sendAction(this.props.rows, "deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
           icon="refresh"
           chevron={false}
-          onClick={e =>
-            this.props.handleActionClick(this.props.rows, "cleanStart")
-          }
+          onClick={e => sendAction(this.props.rows, "cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
           icon="memory"
           chevron={false}
-          onClick={e =>
-            this.props.handleActionClick(this.props.rows, "ramClear")
-          }
+          onClick={e => sendAction(this.props.rows, "ramClear")}
         />
       </List>
     );
