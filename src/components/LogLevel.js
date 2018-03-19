@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+import { withStyles } from "material-ui/styles";
 import Dialog, { DialogActions, DialogContent } from "material-ui/Dialog";
 import Input, { InputLabel } from "material-ui/Input";
 import { MenuItem } from "material-ui/Menu";
 import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
 import Button from "material-ui/Button";
-import { withStyles } from "material-ui/styles";
-import { sendAction } from "../websocket.js";
+import { sendDeviceAction } from "../websocket.js";
 
 const styles = theme => ({
   form: { display: "flex", flexWrap: "wrap" },
@@ -62,7 +62,7 @@ class LogLevel extends Component {
         <DialogActions>
           <Button
             onClick={e => {
-              sendAction(this.props.targets, "logLevel", this.state);
+              sendDeviceAction(this.props.targets, "logLevel", this.state);
               this.props.cancelLogLevel();
             }}
             color="primary"

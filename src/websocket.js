@@ -20,6 +20,12 @@ socket.addEventListener("message", message => {
     case "DEVICE_DATA_UPDATE":
       store.dispatch(deviceDataUpdate(data));
       break;
+    case "DEVICE_ACTION_RESPONSE":
+      console.log(data);
+      break;
+    case "PSTOOLS_COMMAND_RESPONSE":
+      console.log(data);
+      break;
     default:
       break;
   }
@@ -27,8 +33,12 @@ socket.addEventListener("message", message => {
 
 export default socket;
 
-export const sendAction = (targets, action, parameters = {}) => {
+export const sendDeviceAction = (targets, action, parameters = {}) => {
   socket.send(
     JSON.stringify({ type: "DEVICE_ACTION", targets, action, parameters })
   );
+};
+
+export const sendPsToolsCommand = (target, { mode, cmd }) => {
+  socket.send(JSON.stringify({ type: "PSTOOLS_COMMAND", target, mode, cmd }));
 };

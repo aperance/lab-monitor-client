@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { withStyles } from "material-ui/styles";
 import Input, { InputLabel } from "material-ui/Input";
 import { MenuItem } from "material-ui/Menu";
 import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
 import Button from "material-ui/Button";
 import Terminal from "./Terminal";
-import { withStyles } from "material-ui/styles";
+import { sendPsToolsCommand } from "../websocket.js";
 
 const styles = theme => ({
   container: {
@@ -86,7 +87,7 @@ class PsTools extends Component {
 
           <Button
             size="small"
-            onClick={e => this.props.sendCommand(this.props.target, this.state)}
+            onClick={e => sendPsToolsCommand(this.props.target, this.state)}
           >
             Send
           </Button>
