@@ -2,14 +2,18 @@ import { connect } from "react-redux";
 import WebPage from "../components/WebPage";
 
 const mapStateToProps = state => {
-  switch (state.selected.view) {
+  switch (state.userSelection.view) {
     case "statePage":
       return {
-        url: "http://" + state.selected.rows[0] + state.configuration.statePath
+        url:
+          "http://" +
+          state.userSelection.rows[0] +
+          state.configuration.statePath
       };
     case "logsPage":
       return {
-        url: "http://" + state.selected.rows[0] + state.configuration.logsPath
+        url:
+          "http://" + state.userSelection.rows[0] + state.configuration.logsPath
       };
     default:
       return {

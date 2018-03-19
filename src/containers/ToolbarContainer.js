@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
-import { viewSelect, dialogVisibility } from "../actions";
+import { viewSelect, dialogVisibility } from "../actions/actionCreators";
 import Toolbar from "../components/Toolbar";
 
 const mapStateToProps = state => {
   return {
-    rows: state.selected.rows,
-    view: state.selected.view
+    rows: state.userSelection.rows,
+    view: state.userSelection.view
   };
 };
 

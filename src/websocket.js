@@ -1,5 +1,9 @@
 import store from "./store.js";
-import { configuration, deviceDataAll, deviceDataUpdate } from "./actions.js";
+import {
+  configuration,
+  deviceDataAll,
+  deviceDataUpdate
+} from "./actions/actionCreators";
 
 const socket = new WebSocket("ws://localhost:4000/data");
 console.log("Websocket connected");

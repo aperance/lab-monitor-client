@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { filterSelect } from "../actions";
+import { filterSelect } from "../actions/actionCreators";
 import FilterBar from "../components/FilterBar";
 
 const mapStateToProps = state => {

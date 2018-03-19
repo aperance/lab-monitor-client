@@ -2,12 +2,12 @@ import { connect } from "react-redux";
 import Vnc from "../components/Vnc";
 
 const mapStateToProps = state => {
-  if (state.selected.rows.length === 1)
+  if (state.userSelection.rows.length === 1)
     return {
       url:
         state.configuration.vnc.proxyUrl +
         "?ip=" +
-        state.selected.rows[0] +
+        state.userSelection.rows[0] +
         "&port=" +
         state.configuration.vnc.port,
       password: state.configuration.vnc.password

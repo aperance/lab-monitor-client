@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
-import { psToolsResponse } from "../actions";
+import { psToolsResponse } from "../actions/actionCreators";
 import PsTools from "../components/PsTools";
 import websocket from "../websocket.js";
 
 const mapStateToProps = state => {
   return {
-    target: state.selected.rows[0],
+    target: state.userSelection.rows[0],
     presets: state.configuration.psTools,
     response: state.psTools.response
   };

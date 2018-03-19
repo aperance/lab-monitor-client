@@ -9,9 +9,9 @@ const mapStateToProps = state => {
     x => [x[1] + x[2], x[2], 0]
   ];
   const drawerContents = [
-    state.selected.rows[0] ? "toolbar" : null,
-    state.selected.view ? state.selected.view : null,
-    state.selected.history ? "historyDetails" : null
+    state.userSelection.rows[0] ? "toolbar" : null,
+    state.userSelection.view ? state.userSelection.view : null,
+    state.userSelection.history ? "historyDetails" : null
   ];
   return {
     drawerContents,

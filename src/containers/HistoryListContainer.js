@@ -1,14 +1,14 @@
 import { connect } from "react-redux";
-import { historySelect } from "../actions";
+import { historySelect } from "../actions/actionCreators";
 import HistoryList from "../components/HistoryList";
 
 const mapStateToProps = state => {
   return {
     properties:
-      state.selected.rows.length === 1
-        ? Object.keys(state.history[state.selected.rows[0]])
+      state.userSelection.rows.length === 1
+        ? Object.keys(state.historyData[state.userSelection.rows[0]])
         : [],
-    selectedProperty: state.selected.history
+    selectedProperty: state.userSelection.history
   };
 };
 

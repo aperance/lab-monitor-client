@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { dialogVisibility } from "../actions";
+import { dialogVisibility } from "../actions/actionCreators";
 import LogLevel from "../components/LogLevel";
 
 const mapStateToProps = state => {
@@ -11,7 +11,7 @@ const mapStateToProps = state => {
       ? state.configuration.logLevel.namespace
       : [],
     open: state.dialog.logLevel,
-    targets: state.selected.rows
+    targets: state.userSelection.rows
   };
 };
 
