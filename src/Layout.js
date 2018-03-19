@@ -4,6 +4,7 @@ import AssetTableContainer from "./containers/AssetTableContainer";
 import DrawersContainer from "./containers/DrawersContainer";
 import LogLevelContainer from "./containers/LogLevelContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
+import ActionResponseContainer from "./containers/ActionResponseContainer";
 
 class Layout extends Component {
   render() {
@@ -16,6 +17,7 @@ class Layout extends Component {
           <DrawersContainer />
         </div>
         <LogLevelContainer />
+        <ActionResponseContainer />
       </div>
     );
   }

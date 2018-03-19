@@ -8,7 +8,9 @@ import {
   HISTORY_SELECT,
   DIALOG_VISIBILITY,
   PSTOOLS_RESPONSE,
-  FILTER_SELECT
+  FILTER_SELECT,
+  ACTION_RESPONSE_SET,
+  ACTION_RESPONSE_CLEAR
 } from "./actionTypes";
 
 export const configuration = ({ configuration }) => {
@@ -49,4 +51,12 @@ export const psToolsResponse = response => {
 
 export const filterSelect = (property, option) => {
   return { type: FILTER_SELECT, property, option };
+};
+
+export const actionResponseSet = response => {
+  return { type: ACTION_RESPONSE_SET, response };
+};
+
+export const actionResponseClear = () => {
+  return { type: ACTION_RESPONSE_CLEAR };
 };

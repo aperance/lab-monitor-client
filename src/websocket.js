@@ -2,7 +2,8 @@ import store from "./store.js";
 import {
   configuration,
   deviceDataAll,
-  deviceDataUpdate
+  deviceDataUpdate,
+  actionResponseSet
 } from "./actions/actionCreators";
 
 const socket = new WebSocket("ws://localhost:4000/data");
@@ -22,6 +23,7 @@ socket.addEventListener("message", message => {
       break;
     case "DEVICE_ACTION_RESPONSE":
       console.log(data);
+      store.dispatch(actionResponseSet(data.result));
       break;
     case "PSTOOLS_COMMAND_RESPONSE":
       console.log(data);
