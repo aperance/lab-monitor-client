@@ -1,5 +1,10 @@
 import store from "./store.js";
 import {
+  CONFIGURATION,
+  DEVICE_DATA_ALL,
+  DEVICE_DATA_UPDATE
+} from "./actions/actionTypes";
+import {
   configuration,
   deviceDataAll,
   deviceDataUpdate
@@ -11,13 +16,13 @@ console.log("Websocket connected");
 socket.addEventListener("message", message => {
   const data = JSON.parse(message.data);
   switch (data.type) {
-    case "CONFIGURATION":
+    case CONFIGURATION:
       store.dispatch(configuration(data));
       break;
-    case "DEVICE_DATA_ALL":
+    case DEVICE_DATA_ALL:
       store.dispatch(deviceDataAll(data));
       break;
-    case "DEVICE_DATA_UPDATE":
+    case DEVICE_DATA_UPDATE:
       store.dispatch(deviceDataUpdate(data));
       break;
     default:
