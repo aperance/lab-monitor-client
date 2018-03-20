@@ -92,7 +92,7 @@ class PsTools extends Component {
             Send
           </Button>
         </form>
-        <Terminal output={this.props.response} />
+        <Terminal output={this.props.result} />
       </div>
     );
   }

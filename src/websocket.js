@@ -3,10 +3,13 @@ import {
   configuration,
   deviceDataAll,
   deviceDataUpdate,
+  resetAll,
+  psToolsResponse,
   actionResponseSet
 } from "./actions/actionCreators";
 
-const socket = new WebSocket("ws://localhost:4000/data");
+//const socket = new WebSocket("ws://localhost:4000/data");
+const socket = new WebSocket("ws://10.80.132.129:4000/data");
 console.log("Websocket connected");
 
 socket.addEventListener("message", message => {
@@ -22,15 +25,19 @@ socket.addEventListener("message", message => {
       store.dispatch(deviceDataUpdate(data));
       break;
     case "DEVICE_ACTION_RESPONSE":
-      console.log(data);
       store.dispatch(actionResponseSet(data.result));
       break;
     case "PSTOOLS_COMMAND_RESPONSE":
-      console.log(data);
+      store.dispatch(psToolsResponse(data.result));
       break;
     default:
       break;
   }
+});
+
+socket.addEventListener("close", () => {
+  console.log("websocket closed");
+  store.dispatch(resetAll());
 });
 
 export default socket;
@@ -42,5 +49,7 @@ export const sendDeviceAction = (targets, action, parameters = {}) => {
 };
 
 export const sendPsToolsCommand = (target, { mode, cmd }) => {
+  console.log("Sending PSTools Command");
+
   socket.send(JSON.stringify({ type: "PSTOOLS_COMMAND", target, mode, cmd }));
 };

@@ -6,7 +6,6 @@ import Table, {
   TableHead,
   TableRow
 } from "material-ui/Table";
-//import Icon from "material-ui/Icon";
 
 const styles = theme => ({
   table: {
@@ -30,16 +29,6 @@ const styles = theme => ({
 });
 
 class AssetTable extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     filters: this.props.columns.reduce((acc, { property }) => {
-  //       acc[property] = { anchorEl: null, filterSlected: null };
-  //       return acc;
-  //     }, {})
-  //   };
-  // }
-
   render() {
     return (
       <Table className={this.props.classes.table}>
@@ -47,10 +36,7 @@ class AssetTable extends Component {
           <TableRow>
             {this.props.columns &&
               this.props.columns.map(column => (
-                <TableCell key={column.title}>
-                  {column.title}
-                  {/* <Icon className={this.props.classes.icon}>filter_list</Icon> */}
-                </TableCell>
+                <TableCell key={column.title}>{column.title}</TableCell>
               ))}
           </TableRow>
         </TableHead>

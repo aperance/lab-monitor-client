@@ -1,4 +1,8 @@
-import { DEVICE_DATA_ALL, DEVICE_DATA_UPDATE } from "../actions/actionTypes";
+import {
+  DEVICE_DATA_ALL,
+  DEVICE_DATA_UPDATE,
+  RESET_ALL
+} from "../actions/actionTypes";
 
 const initialState = {};
 
@@ -6,6 +10,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case DEVICE_DATA_ALL:
       return { ...action.history };
+
     case DEVICE_DATA_UPDATE:
       return {
         ...state,
@@ -18,6 +23,10 @@ export default (state = initialState, action) => {
           { ...state[action.id] }
         )
       };
+
+    case RESET_ALL:
+      return {};
+
     default:
       return { ...state };
   }

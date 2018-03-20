@@ -2,7 +2,8 @@ import {
   SINGLE_ROW_SELECT,
   MULTI_ROW_SELECT,
   VIEW_SELECT,
-  HISTORY_SELECT
+  HISTORY_SELECT,
+  RESET_ALL
 } from "../actions/actionTypes";
 
 const initialState = { rows: [], view: null, history: null };
@@ -28,6 +29,9 @@ export default (state = initialState, action) => {
     case HISTORY_SELECT:
       if (action.property === state.history) return { ...state, history: null };
       else return { ...state, history: action.property };
+
+    case RESET_ALL:
+      return { ...initialState };
 
     default:
       return { ...state };
