@@ -9,7 +9,7 @@ import {
 } from "./actions/actionCreators";
 
 //const socket = new WebSocket("ws://localhost:4000/data");
-const socket = new WebSocket("ws://10.80.132.129:4000/data");
+const socket = new WebSocket("ws://10.91.1.1:4000/data");
 console.log("Websocket connected");
 
 socket.addEventListener("message", message => {
