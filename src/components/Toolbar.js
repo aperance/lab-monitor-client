@@ -73,6 +73,12 @@ class Toolbar extends Component {
           chevron={false}
           onClick={e => sendDeviceAction(this.props.rows, "ramClear")}
         />
+        <ToolbarItem
+          name="Reset Display"
+          icon="desktop_windows"
+          chevron={false}
+          onClick={e => sendDeviceAction(this.props.rows, "resetDisplay")}
+        />
       </List>
     );
   }
