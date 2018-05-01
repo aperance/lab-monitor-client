@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import List from "material-ui/List";
 import Divider from "material-ui/Divider";
 import ToolbarItem from "./ToolbarItem.js";
-import { sendDeviceAction } from "../websocket.js";
+import socket from "../websocket.js";
 
 class Toolbar extends Component {
   render() {
@@ -59,25 +59,27 @@ class Toolbar extends Component {
           name="Delete Logs"
           icon="delete"
           chevron={false}
-          onClick={e => sendDeviceAction(this.props.rows, "deleteLogs")}
+          onClick={e => socket.sendDeviceAction(this.props.rows, "deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
           icon="refresh"
           chevron={false}
-          onClick={e => sendDeviceAction(this.props.rows, "cleanStart")}
+          onClick={e => socket.sendDeviceAction(this.props.rows, "cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
           icon="memory"
           chevron={false}
-          onClick={e => sendDeviceAction(this.props.rows, "ramClear")}
+          onClick={e => socket.sendDeviceAction(this.props.rows, "ramClear")}
         />
         <ToolbarItem
           name="Reset Display"
           icon="desktop_windows"
           chevron={false}
-          onClick={e => sendDeviceAction(this.props.rows, "resetDisplay")}
+          onClick={e =>
+            socket.sendDeviceAction(this.props.rows, "resetDisplay")
+          }
         />
       </List>
     );

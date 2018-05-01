@@ -8,48 +8,60 @@ import {
   actionResponseSet
 } from "./actions/actionCreators";
 
-//const socket = new WebSocket("ws://localhost:4000/data");
-const socket = new WebSocket("ws://10.91.1.1:4000/data");
-console.log("Websocket connected");
-
-socket.addEventListener("message", message => {
-  const data = JSON.parse(message.data);
-  switch (data.type) {
-    case "CONFIGURATION":
-      store.dispatch(configuration(data));
-      break;
-    case "DEVICE_DATA_ALL":
-      store.dispatch(deviceDataAll(data));
-      break;
-    case "DEVICE_DATA_UPDATE":
-      store.dispatch(deviceDataUpdate(data));
-      break;
-    case "DEVICE_ACTION_RESPONSE":
-      store.dispatch(actionResponseSet(data.result));
-      break;
-    case "PSTOOLS_COMMAND_RESPONSE":
-      store.dispatch(psToolsResponse(data.result));
-      break;
-    default:
-      break;
+class Socket {
+  constructor(url) {
+    this._socket = null;
+    this._url = url;
+    this._start();
   }
-});
 
-socket.addEventListener("close", () => {
-  console.log("websocket closed");
-  store.dispatch(resetAll());
-});
+  _start() {
+    this._socket = new WebSocket(this._url);
 
-export default socket;
+    this._socket.addEventListener("open", () => {
+      console.log("websocket connected");
+      this._socket.addEventListener("message", message => {
+        const data = JSON.parse(message.data);
+        switch (data.type) {
+          case "CONFIGURATION":
+            store.dispatch(configuration(data));
+            break;
+          case "DEVICE_DATA_ALL":
+            store.dispatch(deviceDataAll(data));
+            break;
+          case "DEVICE_DATA_UPDATE":
+            store.dispatch(deviceDataUpdate(data));
+            break;
+          case "DEVICE_ACTION_RESPONSE":
+            store.dispatch(actionResponseSet(data.result));
+            break;
+          case "PSTOOLS_COMMAND_RESPONSE":
+            store.dispatch(psToolsResponse(data.result));
+            break;
+          default:
+            break;
+        }
+      });
+    });
 
-export const sendDeviceAction = (targets, action, parameters = {}) => {
-  socket.send(
-    JSON.stringify({ type: "DEVICE_ACTION", targets, action, parameters })
-  );
-};
+    this._socket.addEventListener("close", () => {
+      console.log("websocket closed");
+      store.dispatch(resetAll());
+      setTimeout(this._start.bind(this), 5000);
+    });
+  }
 
-export const sendPsToolsCommand = (target, { mode, cmd }) => {
-  console.log("Sending PSTools Command");
+  sendDeviceAction(targets, action, parameters = {}) {
+    this._socket.send(
+      JSON.stringify({ type: "DEVICE_ACTION", targets, action, parameters })
+    );
+  }
 
-  socket.send(JSON.stringify({ type: "PSTOOLS_COMMAND", target, mode, cmd }));
-};
+  sendPsToolsCommand(target, { mode, cmd }) {
+    this._socket.send(
+      JSON.stringify({ type: "PSTOOLS_COMMAND", target, mode, cmd })
+    );
+  }
+}
+
+export default new Socket("ws://10.91.1.1:4000/data");
