@@ -50,7 +50,12 @@ class AssetTable extends Component {
             >
               {this.props.columns &&
                 this.props.columns.map(column => (
-                  <TableCell key={rowId + column.property}>
+                  <TableCell
+                    key={rowId + column.property}
+                    style={
+                      rowData.active ? { color: "black" } : { color: "red" }
+                    }
+                  >
                     {rowData[column.property]}
                   </TableCell>
                 ))}
