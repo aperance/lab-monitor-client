@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { List } from "react-virtualized";
-import { ListItem, ListItemText, ListItemIcon } from "material-ui/List";
-import { withStyles } from "material-ui/styles";
-import Icon from "material-ui/Icon";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import { withStyles } from "@material-ui/core/styles";
+import Icon from "@material-ui/core/Icon";
 
 const styles = theme => ({
   row: { backgroundColor: "white" },

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { ListItem, ListItemIcon, ListItemText } from "material-ui/List";
-import Icon from "material-ui/Icon";
-import { withStyles } from "material-ui/styles";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Icon from "@material-ui/core/Icon";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   selected: { backgroundColor: "rgba(0, 0, 0, 0.04)" },

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { withStyles } from "material-ui/styles";
-import Drawer from "material-ui/Drawer";
-import { FormLabel, FormControl, FormGroup } from "material-ui/Form";
+import { withStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup";
 import FilterBarItem from "./FilterBarItem";
 
 const styles = theme => ({

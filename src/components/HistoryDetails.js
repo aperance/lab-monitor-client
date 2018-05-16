@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import List, { ListItem } from "material-ui/List";
-import { withStyles } from "material-ui/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   container: { flex: "1 1 auto" },

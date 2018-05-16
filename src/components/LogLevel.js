@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { withStyles } from "material-ui/styles";
-import Dialog, { DialogActions, DialogContent } from "material-ui/Dialog";
-import Input, { InputLabel } from "material-ui/Input";
-import { MenuItem } from "material-ui/Menu";
-import { FormControl } from "material-ui/Form";
-import Select from "material-ui/Select";
-import Button from "material-ui/Button";
+import { withStyles } from "@material-ui/core/styles";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Dialog from "@material-ui/core/Dialog";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Button from "@material-ui/core/Button";
 import socket from "../websocket.js";
 
 const styles = theme => ({

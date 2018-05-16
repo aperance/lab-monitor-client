@@ -5,7 +5,7 @@ import HistoryDetailsContainer from "../containers/HistoryDetailsContainer";
 import WebPageContainer from "../containers/WebPageContainer";
 import PsToolsContainer from "../containers/PsToolsContainer";
 import VncContainer from "../containers/VncContainer";
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   drawer: {
