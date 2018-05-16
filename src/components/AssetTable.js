@@ -39,18 +39,14 @@ class AssetTable extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (!nextProps.tableData || !nextProps.columns[0]) return null;
-    else {
-      const sortBy = prevState.sortBy || nextProps.columns[0].property;
-      return {
-        sortedData: [...nextProps.tableData].sort((a, b) => {
-          if (a[1][sortBy] < b[1][sortBy]) return prevState.reverse ? 1 : -1;
-          else if (a[1][sortBy] > b[1][sortBy])
-            return prevState.reverse ? -1 : 1;
-          else return 0;
-        })
-      };
-    }
+    if (prevState.sortBy || !nextProps.columns[0]) return null;
+    else return { sortBy: nextProps.columns[0].property };
+  }
+
+  changeSorting(property) {
+    if (this.state.sortBy === property)
+      this.setState({ reverse: !this.state.reverse });
+    else this.setState({ sortBy: property });
   }
 
   render() {
@@ -60,31 +56,44 @@ class AssetTable extends Component {
           <TableRow>
             {this.props.columns &&
               this.props.columns.map(column => (
-                <TableCell key={column.title}>{column.title}</TableCell>
+                <TableCell
+                  key={column.title}
+                  onClick={() => this.changeSorting(column.property)}
+                >
+                  {column.title}
+                </TableCell>
               ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.state.sortedData.map(([rowId, rowData]) => (
-            <TableRow
-              key={rowId}
-              hover
-              selected={this.props.selected.includes(rowId)}
-              onClick={e => this.props.handleRowClick(e.nativeEvent, rowId)}
-            >
-              {this.props.columns &&
-                this.props.columns.map(column => (
-                  <TableCell
-                    key={rowId + column.property}
-                    style={
-                      rowData.active ? { color: "black" } : { color: "red" }
-                    }
-                  >
-                    {rowData[column.property]}
-                  </TableCell>
-                ))}
-            </TableRow>
-          ))}
+          {this.props.tableData
+            .sort((a, b) => {
+              if (a[1][this.state.sortBy] < b[1][this.state.sortBy])
+                return this.state.reverse ? 1 : -1;
+              else if (a[1][this.state.sortBy] > b[1][this.state.sortBy])
+                return this.state.reverse ? -1 : 1;
+              else return 0;
+            })
+            .map(([rowId, rowData]) => (
+              <TableRow
+                key={rowId}
+                hover
+                selected={this.props.selected.includes(rowId)}
+                onClick={e => this.props.handleRowClick(e.nativeEvent, rowId)}
+              >
+                {this.props.columns &&
+                  this.props.columns.map(column => (
+                    <TableCell
+                      key={rowId + column.property}
+                      style={
+                        rowData.active ? { color: "black" } : { color: "red" }
+                      }
+                    >
+                      {rowData[column.property]}
+                    </TableCell>
+                  ))}
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     );
