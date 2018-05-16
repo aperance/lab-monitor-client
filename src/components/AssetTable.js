@@ -29,6 +29,30 @@ const styles = theme => ({
 });
 
 class AssetTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sortBy: null,
+      reverse: false,
+      sortedData: []
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!nextProps.tableData || !nextProps.columns[0]) return null;
+    else {
+      const sortBy = prevState.sortBy || nextProps.columns[0].property;
+      return {
+        sortedData: [...nextProps.tableData].sort((a, b) => {
+          if (a[1][sortBy] < b[1][sortBy]) return prevState.reverse ? 1 : -1;
+          else if (a[1][sortBy] > b[1][sortBy])
+            return prevState.reverse ? -1 : 1;
+          else return 0;
+        })
+      };
+    }
+  }
+
   render() {
     return (
       <Table className={this.props.classes.table}>
@@ -41,7 +65,7 @@ class AssetTable extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.props.tableData.map(([rowId, rowData]) => (
+          {this.state.sortedData.map(([rowId, rowData]) => (
             <TableRow
               key={rowId}
               hover
