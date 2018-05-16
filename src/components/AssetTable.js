@@ -33,8 +33,7 @@ class AssetTable extends Component {
     super(props);
     this.state = {
       sortBy: null,
-      reverse: false,
-      sortedData: []
+      reverse: false
     };
   }
 
@@ -47,6 +46,14 @@ class AssetTable extends Component {
     if (this.state.sortBy === property)
       this.setState({ reverse: !this.state.reverse });
     else this.setState({ sortBy: property });
+  }
+
+  sortingAlgorithim(a, b) {
+    if (a[1][this.state.sortBy] < b[1][this.state.sortBy])
+      return this.state.reverse ? 1 : -1;
+    else if (a[1][this.state.sortBy] > b[1][this.state.sortBy])
+      return this.state.reverse ? -1 : 1;
+    else return 0;
   }
 
   render() {
@@ -65,15 +72,10 @@ class AssetTable extends Component {
               ))}
           </TableRow>
         </TableHead>
+
         <TableBody>
           {this.props.tableData
-            .sort((a, b) => {
-              if (a[1][this.state.sortBy] < b[1][this.state.sortBy])
-                return this.state.reverse ? 1 : -1;
-              else if (a[1][this.state.sortBy] > b[1][this.state.sortBy])
-                return this.state.reverse ? -1 : 1;
-              else return 0;
-            })
+            .sort(this.sortingAlgorithim.bind(this))
             .map(([rowId, rowData]) => (
               <TableRow
                 key={rowId}
