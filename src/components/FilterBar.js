@@ -19,7 +19,7 @@ const styles = theme => ({
     fontSize: "0.75rem",
     margin: "0px 8px 8px",
     fontWeight: 500,
-    color: "rgba(0, 0, 0, 0.54)"
+    color: "rgba(0, 0, 0, 0.7)"
   },
   formGroup: {
     margin: "4px 8px 16px 8px"
