@@ -5,6 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
 
 const styles = theme => ({
   table: {
@@ -44,15 +45,13 @@ class AssetTable extends Component {
   changeSorting(property) {
     if (this.state.sortBy === property)
       this.setState({ reverse: !this.state.reverse });
-    else this.setState({ sortBy: property });
+    else this.setState({ sortBy: property, reverse: false });
   }
 
-  sortingAlgorithim(a, b) {
-    if (a[1][this.state.sortBy] < b[1][this.state.sortBy])
-      return this.state.reverse ? 1 : -1;
-    else if (a[1][this.state.sortBy] > b[1][this.state.sortBy])
-      return this.state.reverse ? -1 : 1;
-    else return 0;
+  sortingAlgorithim(key1, key2) {
+    const value1 = key1[1][this.state.sortBy] || "";
+    const value2 = key2[1][this.state.sortBy] || "";
+    return this.state.reverse ? value1 < value2 : value1 > value2 ? 1 : -1;
   }
 
   render() {
@@ -62,11 +61,14 @@ class AssetTable extends Component {
           <TableRow>
             {this.props.columns &&
               this.props.columns.map(column => (
-                <TableCell
-                  key={column.title}
-                  onClick={() => this.changeSorting(column.property)}
-                >
-                  {column.title}
+                <TableCell key={column.title}>
+                  <TableSortLabel
+                    active={this.state.sortBy === column.property}
+                    direction={this.state.reverse ? "asc" : "desc"}
+                    onClick={() => this.changeSorting(column.property)}
+                  >
+                    {column.title}
+                  </TableSortLabel>
                 </TableCell>
               ))}
           </TableRow>
