@@ -13,6 +13,9 @@ const styles = theme => ({
     fontWeight: 400
   },
   checkbox: {
+    "& svg": {
+      width: "0.9rem"
+    },
     fontSize: "1.0rem",
     width: "24px",
     height: "18px"
@@ -28,6 +31,7 @@ class FilterBarItem extends Component {
         control={
           <Checkbox
             className={this.props.classes.checkbox}
+            color="primary"
             checked={
               this.props.selected.hasOwnProperty(this.props.property) &&
               this.props.selected[this.props.property].includes(

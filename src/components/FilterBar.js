@@ -10,7 +10,8 @@ const styles = theme => ({
   drawerPaper: {
     position: "relative",
     zIndex: 0,
-    paddingTop: "16px",
+    paddingTop: "20px",
+    paddingLeft: "8px",
     width: "auto",
     height: "calc(100vh - 80px)"
   },
@@ -21,7 +22,7 @@ const styles = theme => ({
     color: "rgba(0, 0, 0, 0.54)"
   },
   formGroup: {
-    margin: "4px 16px 16px 8px"
+    margin: "4px 8px 16px 8px"
   }
 });
 
@@ -40,7 +41,7 @@ class FilterBar extends Component {
               <div key={filter.property}>
                 <FormLabel
                   className={this.props.classes.formLabel}
-                  classes={{ focused: this.props.classes.formLabel }}
+                  focused={false}
                 >
                   {filter.title}
                 </FormLabel>
