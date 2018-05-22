@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import RFB from "../../node_modules/@novnc/novnc/core/rfb.js";
 
 class Vnc extends Component {
@@ -14,7 +14,7 @@ class Vnc extends Component {
   }
 
   componentWillUnmount() {
-    this.rfb.disconnect();
+    if (this.rfb) this.rfb.disconnect();
   }
 
   componentDidUpdate(prevProps) {
@@ -45,8 +45,13 @@ class Vnc extends Component {
   render() {
     return (
       <div style={{ height: "100%" }}>
-        {this.state.status === "pending" && <CircularProgress />}
-        {this.state.status === "error" && <p>Connection Failed</p>}
+        {this.state.status === "pending" && <LinearProgress />}
+        {this.state.status === "error" && (
+          <pre style={{ paddingLeft: "16px", color: "#f44336" }}>
+            Connection Failed. Please ensure that VNC server is running on the
+            remote device.
+          </pre>
+        )}
         <div
           id="vnc"
           style={{
