@@ -6,21 +6,18 @@ import TableRow from "@material-ui/core/TableRow";
 class AssetTableBody extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     return {
       tableData: Object.entries(nextProps.tableData)
         .filter(([rowId, rowData]) => {
-          return Object.entries(nextProps.filters || {}).reduce(
-            (acc, [property, allowed]) => {
-              return (
-                acc &&
-                (allowed.length === 0 || allowed.includes(rowData[property]))
-              );
-            },
-            true
-          );
+          return Object.entries(nextProps.filters || {})
+            .map(([property, allowed]) => {
+              return allowed.includes(rowData[property]) || !allowed.length;
+            })
+            .reduce((acc, result) => acc && result, true);
         })
         .sort((key1, key2) => {
           const prop = nextProps.sort.by;
