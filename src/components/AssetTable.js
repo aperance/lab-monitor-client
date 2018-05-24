@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
+import FilterBar from "./FilterBar";
+import AssetTableHead from "./AssetTableHead";
+import AssetTableBody from "./AssetTableBody";
 
 const styles = theme => ({
   table: {
@@ -32,73 +30,65 @@ class AssetTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortBy: null,
-      reverse: false
+      sort: {
+        by: null,
+        reverse: false
+      },
+      selectedFilters: {}
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.sortBy || !nextProps.columns[0]) return null;
-    else return { sortBy: nextProps.columns[0].property };
+    if (!prevState.sort.by && nextProps.columns[0])
+      return { sort: { by: nextProps.columns[0].property, reverse: false } };
+    else return null;
   }
 
   changeSorting(property) {
-    if (this.state.sortBy === property)
-      this.setState({ reverse: !this.state.reverse });
-    else this.setState({ sortBy: property, reverse: false });
+    this.setState({
+      sort: {
+        by: property,
+        reverse:
+          this.state.sort.by === property ? !this.state.sort.reverse : false
+      }
+    });
   }
 
-  sortingAlgorithim(key1, key2) {
-    const value1 = key1[1][this.state.sortBy] || "";
-    const value2 = key2[1][this.state.sortBy] || "";
-    return this.state.reverse ? value1 < value2 : value1 > value2 ? 1 : -1;
+  changeFiltering(property, option) {
+    const newArray = this.state.selectedFilters[property] || [];
+    const currentIndex = newArray.indexOf(option);
+    currentIndex === -1
+      ? newArray.push(option)
+      : newArray.splice(currentIndex, 1);
+    this.setState({
+      selectedFilters: { ...this.state.selectedFilters, [property]: newArray }
+    });
   }
 
   render() {
     return (
-      <Table className={this.props.classes.table}>
-        <TableHead>
-          <TableRow>
-            {this.props.columns &&
-              this.props.columns.map(column => (
-                <TableCell key={column.title}>
-                  <TableSortLabel
-                    active={this.state.sortBy === column.property}
-                    direction={this.state.reverse ? "asc" : "desc"}
-                    onClick={() => this.changeSorting(column.property)}
-                  >
-                    {column.title}
-                  </TableSortLabel>
-                </TableCell>
-              ))}
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {this.props.tableData
-            .sort(this.sortingAlgorithim.bind(this))
-            .map(([rowId, rowData]) => (
-              <TableRow
-                key={rowId}
-                hover
-                selected={this.props.selected.includes(rowId)}
-                onClick={e => this.props.handleRowClick(e.nativeEvent, rowId)}
-              >
-                {this.props.columns &&
-                  this.props.columns.map(column => (
-                    <TableCell
-                      key={rowId + column.property}
-                      style={
-                        rowData.active ? { color: "black" } : { color: "red" }
-                      }
-                    >
-                      {rowData[column.property]}
-                    </TableCell>
-                  ))}
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+      <div style={{ paddingTop: "64px", display: "flex" }}>
+        <FilterBar
+          filters={this.props.filters}
+          selected={this.state.selectedFilters}
+          handleCheckboxClick={this.changeFiltering.bind(this)}
+        />
+        <Table className={this.props.classes.table}>
+          <AssetTableHead
+            columns={this.props.columns}
+            sort={this.state.sort}
+            changeSorting={this.changeSorting.bind(this)}
+          />
+          <AssetTableBody
+            columns={this.props.columns}
+            tableData={this.props.tableData}
+            selected={this.props.selected}
+            handleRowClick={this.props.handleRowClick}
+            sort={this.state.sort}
+            filters={this.state.selectedFilters}
+          />
+        </Table>
+      </div>
     );
   }
 }

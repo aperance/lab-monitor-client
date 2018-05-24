@@ -52,7 +52,7 @@ class FilterBar extends Component {
                         key={option}
                         option={option}
                         property={filter.property}
-                        selected={this.props.selectedFilters}
+                        selected={this.props.selected}
                         handleCheckboxClick={this.props.handleCheckboxClick}
                       />
                     );

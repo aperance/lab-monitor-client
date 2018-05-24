@@ -9,7 +9,6 @@ import {
   HISTORY_SELECT,
   DIALOG_VISIBILITY,
   PSTOOLS_RESPONSE,
-  FILTER_SELECT,
   ACTION_RESPONSE_SET,
   ACTION_RESPONSE_CLEAR
 } from "./actionTypes";
@@ -52,10 +51,6 @@ export const dialogVisibility = object => {
 
 export const psToolsResponse = result => {
   return { type: PSTOOLS_RESPONSE, result };
-};
-
-export const filterSelect = (property, option) => {
-  return { type: FILTER_SELECT, property, option };
 };
 
 export const actionResponseSet = response => {

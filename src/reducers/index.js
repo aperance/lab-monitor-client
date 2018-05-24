@@ -4,7 +4,6 @@ import tableDataReducer from "./tableDataReducer";
 import userSelectionReducer from "./userSelectionReducer";
 import historyDataReducer from "./historyDataReducer";
 import dialogReducer from "./dialogReducer";
-import filterReducer from "./filterReducer";
 import psToolsReducer from "./psToolsReducer";
 import actionResponseReducer from "./actionResponseReducer";
 
@@ -14,7 +13,6 @@ export default combineReducers({
   userSelection: userSelectionReducer,
   historyData: historyDataReducer,
   dialog: dialogReducer,
-  filter: filterReducer,
   psTools: psToolsReducer,
   actionResponse: actionResponseReducer
 });
