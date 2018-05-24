@@ -23,13 +23,10 @@ class AssetTableBody extends Component {
           );
         })
         .sort((key1, key2) => {
-          const value1 = key1[1][nextProps.sort.by] || "";
-          const value2 = key2[1][nextProps.sort.by] || "";
-          return nextProps.sort.reverse
-            ? value1 < value2
-            : value1 > value2
-              ? 1
-              : -1;
+          const prop = nextProps.sort.by;
+          let result = (key1[1][prop] || "") > (key2[1][prop] || "");
+          if (nextProps.sort.reverse) result = !result;
+          return result ? 1 : -1;
         })
     };
   }
