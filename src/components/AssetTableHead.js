@@ -9,6 +9,7 @@ class AssetTableHead extends Component {
     return (
       <TableHead>
         <TableRow>
+          <TableCell key="status" />
           {this.props.columns &&
             this.props.columns.map(column => (
               <TableCell key={column.title}>
