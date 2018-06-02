@@ -10,9 +10,14 @@ const styles = theme => ({
     whiteSpace: "nowrap",
     margin: "0px 8px",
     "& thead > tr": { height: "48px" },
-    "& th": { paddingRight: "12px", paddingLeft: "12px" },
+    "& th": { paddingRight: "4px", paddingLeft: "12px" },
     "& tbody > tr": { height: "36px" },
-    "& td": { fontSize: "0.75rem", paddingRight: "24px", paddingLeft: "12px" }
+    "& td": {
+      fontSize: "0.75rem",
+      paddingRight: "24px",
+      paddingLeft: "12px",
+      paddingBottom: "2px"
+    }
   },
   button: {
     padding: "0px 4px 4px 4px",
