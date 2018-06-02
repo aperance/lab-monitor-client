@@ -6,13 +6,14 @@ import WebPageContainer from "../containers/WebPageContainer";
 import PsToolsContainer from "../containers/PsToolsContainer";
 import VncContainer from "../containers/VncContainer";
 import { withStyles } from "@material-ui/core/styles";
+import Icon from "@material-ui/core/Icon";
 
 const styles = theme => ({
   drawer: {
     position: "fixed",
     height: "calc(100% - 64px)",
     top: "64px",
-    transition: ".5s",
+    overflowY: "hidden",
     backgroundColor: "rgba(255, 255, 255, 1)",
     boxShadow: [
       "-2px 0px 4px -1px rgba(0, 0, 0, 0.2)",
@@ -32,23 +33,60 @@ const viewLookup = {
   historyDetails: <HistoryDetailsContainer />
 };
 
-const widths = [175, 800, 400];
+//const widths = [175, 800, 400];
 
 class Drawers extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { widths: { 0: 175, 1: 600, 2: 400 }, startX: null };
+  }
+
+  changeWidth(currentX) {
+    if (this.state.startX) {
+      this.setState({
+        widths: {
+          ...this.state.widths,
+          1: Math.max(this.state.widths[1] + this.state.startX - currentX, 400)
+        },
+        startX: Math.min(currentX, window.screen.width - 398)
+      });
+    }
+  }
+
   render() {
-    return this.props.drawerContents.map((child, index) => (
+    return (
       <div
-        key={index}
-        className={this.props.classes.drawer}
-        style={{
-          width: widths[index] + "px",
-          right: this.props.offsetCalc(widths)[index] + "px",
-          overflowY: "hidden"
-        }}
+        onMouseUp={e => this.setState({ startX: null })}
+        onMouseLeave={e => this.setState({ startX: null })}
+        onMouseMove={e => this.changeWidth(e.screenX)}
       >
-        {viewLookup[child]}
+        {this.props.drawerContents.map((child, index) => (
+          <div
+            key={index}
+            className={this.props.classes.drawer}
+            style={{
+              width: this.state.widths[index] + "px",
+              right: this.props.offsetCalc(this.state.widths)[index] + "px",
+              transition: this.state.startX ? "0s" : ".5s"
+            }}
+          >
+            {index !== 1 ? (
+              viewLookup[child]
+            ) : (
+              <div style={{ display: "flex", height: "100%" }}>
+                <div
+                  style={{ color: "rgba(0, 0, 0, 0.54)", alignSelf: "stretch" }}
+                  onMouseDown={e => this.setState({ startX: e.screenX })}
+                >
+                  <Icon>drag_indicator</Icon>
+                </div>
+                <div style={{ flexGrow: 5 }}>{viewLookup[child]}</div>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-    ));
+    );
   }
 }
 
