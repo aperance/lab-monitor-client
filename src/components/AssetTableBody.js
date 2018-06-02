@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import Icon from "@material-ui/core/Icon";
+import StatusIndicator from "./StatusIndicator.js";
 
 class AssetTableBody extends Component {
   constructor(props) {
@@ -41,15 +41,16 @@ class AssetTableBody extends Component {
           >
             <TableCell
               key={rowId + "status"}
-              style={
-                rowData.active
-                  ? { color: "mediumseagreen" }
-                  : { color: "crimson" }
-              }
+              // style={
+              //   rowData.active
+              //     ? { color: "mediumseagreen" }
+              //     : { color: "crimson" }
+              // }
             >
-              <Icon style={{ verticalAlign: "middle", fontSize: "16px" }}>
-                lens
-              </Icon>
+              <StatusIndicator
+                timestamp={rowData.timestamp}
+                active={rowData.timestamp}
+              />
             </TableCell>
             {this.props.columns &&
               this.props.columns.map(column => (
