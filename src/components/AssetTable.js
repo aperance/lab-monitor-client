@@ -44,6 +44,8 @@ class AssetTable extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    // Use first column as default sort by property.
+    // Only set if not already set, and column data is known.
     if (!prevState.sort.by && nextProps.columns[0])
       return { sort: { by: nextProps.columns[0].property, reverse: false } };
     else return null;
@@ -70,6 +72,23 @@ class AssetTable extends Component {
     });
   }
 
+  sortAndFilter(tableData) {
+    return Object.entries(tableData)
+      .filter(([rowId, rowData]) => {
+        return Object.entries(this.state.selectedFilters)
+          .map(([property, allowed]) => {
+            return allowed.includes(rowData[property]) || !allowed.length;
+          })
+          .reduce((acc, result) => acc && result, true);
+      })
+      .sort((key1, key2) => {
+        const prop = this.state.sort.by;
+        let result = (key1[1][prop] || "") > (key2[1][prop] || "");
+        if (this.state.sort.reverse) result = !result;
+        return result ? 1 : -1;
+      });
+  }
+
   render() {
     return (
       <div style={{ paddingTop: "64px", display: "flex" }}>
@@ -86,11 +105,9 @@ class AssetTable extends Component {
           />
           <AssetTableBody
             columns={this.props.columns}
-            tableData={this.props.tableData}
+            tableData={this.sortAndFilter(this.props.tableData)}
             selected={this.props.selected}
             handleRowClick={this.props.handleRowClick}
-            sort={this.state.sort}
-            filters={this.state.selectedFilters}
           />
         </Table>
       </div>
