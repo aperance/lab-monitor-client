@@ -75,7 +75,11 @@ class Drawers extends Component {
             ) : (
               <div style={{ display: "flex", height: "100%" }}>
                 <div
-                  style={{ color: "rgba(0, 0, 0, 0.54)", alignSelf: "stretch" }}
+                  style={{
+                    color: "rgba(0, 0, 0, 0.54)",
+                    alignSelf: "stretch",
+                    cursor: "col-resize"
+                  }}
                   onMouseDown={e => this.setState({ startX: e.screenX })}
                 >
                   <Icon>drag_indicator</Icon>

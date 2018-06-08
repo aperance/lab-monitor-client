@@ -11,7 +11,7 @@ const styles = theme => ({
     margin: "0px 8px",
     "& thead > tr": { height: "48px" },
     "& th": { paddingRight: "4px", paddingLeft: "12px" },
-    "& tbody > tr": { height: "36px" },
+    "& tbody > tr": { height: "36px", cursor: "pointer", userSelect: "none" },
     "& td": {
       fontSize: "0.75rem",
       paddingRight: "24px",
