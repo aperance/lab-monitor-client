@@ -17,13 +17,11 @@ class StatusIndicator extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.timestamp !== this.props.timestamp) {
-      if (!this.state.animate) {
-        setTimeout(() => {
-          this.setState({ animate: false });
-        }, 500);
-        this.setState({ animate: true });
-      }
+    if (!this.state.animate && prevProps.timestamp !== this.props.timestamp) {
+      setTimeout(() => {
+        this.setState({ animate: false });
+      }, 500);
+      this.setState({ animate: true });
     }
   }
 
@@ -32,7 +30,7 @@ class StatusIndicator extends Component {
       <Icon
         classes={this.props.classes}
         style={{
-          opacity: this.state.animate ? 0.65 : 1,
+          opacity: this.state.animate ? 0.5 : 1,
           color: this.props.active ? "mediumseagreen" : "crimson"
         }}
       >
