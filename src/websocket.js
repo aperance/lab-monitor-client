@@ -51,6 +51,10 @@ class Socket {
     });
   }
 
+  sendRefreshDevice(targets) {
+    this._socket.send(JSON.stringify({ type: "REFRESH_DEVICE", targets }));
+  }
+
   sendDeviceAction(targets, action, parameters = {}) {
     this._socket.send(
       JSON.stringify({ type: "DEVICE_ACTION", targets, action, parameters })

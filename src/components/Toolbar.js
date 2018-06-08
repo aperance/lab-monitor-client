@@ -9,7 +9,7 @@ class Toolbar extends Component {
     return (
       <List>
         {this.props.rows.length === 1 && (
-          <div>
+          <>
             <ToolbarItem
               name="State"
               icon="toc"
@@ -46,7 +46,7 @@ class Toolbar extends Component {
               onClick={e => this.props.handleViewClick("vnc")}
             />
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
-          </div>
+          </>
         )}
 
         <ToolbarItem
@@ -80,6 +80,13 @@ class Toolbar extends Component {
           onClick={e =>
             socket.sendDeviceAction(this.props.rows, "resetDisplay")
           }
+        />
+        <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+        <ToolbarItem
+          name="Refresh Monitoring"
+          icon="refresh"
+          chevron={false}
+          onClick={e => socket.sendRefreshDevice(this.props.rows)}
         />
       </List>
     );
