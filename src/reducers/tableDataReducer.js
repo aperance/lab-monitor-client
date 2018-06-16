@@ -13,7 +13,10 @@ export default (state = initialState, action) => {
     case DEVICE_DATA_UPDATE:
       return {
         ...state,
-        [action.id]: { ...state[action.id], ...action.state }
+        [action.id]: {
+          ...state[action.id],
+          ...action.state
+        }
       };
     case RESET_ALL:
       return {};

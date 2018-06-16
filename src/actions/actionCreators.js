@@ -1,5 +1,4 @@
 import {
-  CONFIGURATION,
   DEVICE_DATA_ALL,
   DEVICE_DATA_UPDATE,
   RESET_ALL,
@@ -12,10 +11,6 @@ import {
   ACTION_RESPONSE_SET,
   ACTION_RESPONSE_CLEAR
 } from "./actionTypes";
-
-export const configuration = ({ configuration }) => {
-  return { type: CONFIGURATION, configuration };
-};
 
 export const deviceDataAll = ({ state, history }) => {
   return { type: DEVICE_DATA_ALL, state, history };
@@ -49,12 +44,12 @@ export const dialogVisibility = object => {
   return { type: DIALOG_VISIBILITY, object };
 };
 
-export const psToolsResponse = result => {
+export const psToolsResponse = ({ result }) => {
   return { type: PSTOOLS_RESPONSE, result };
 };
 
-export const actionResponseSet = response => {
-  return { type: ACTION_RESPONSE_SET, response };
+export const actionResponseSet = ({ result }) => {
+  return { type: ACTION_RESPONSE_SET, result };
 };
 
 export const actionResponseClear = () => {

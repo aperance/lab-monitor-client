@@ -1,6 +1,5 @@
 import store from "./store.js";
 import {
-  configuration,
   deviceDataAll,
   deviceDataUpdate,
   resetAll,
@@ -23,20 +22,17 @@ class Socket {
       this._socket.addEventListener("message", message => {
         const data = JSON.parse(message.data);
         switch (data.type) {
-          case "CONFIGURATION":
-            store.dispatch(configuration(data));
-            break;
           case "DEVICE_DATA_ALL":
-            store.dispatch(deviceDataAll(data));
+            store.dispatch(deviceDataAll(data.message));
             break;
           case "DEVICE_DATA_UPDATE":
-            store.dispatch(deviceDataUpdate(data));
+            store.dispatch(deviceDataUpdate(data.message));
             break;
           case "DEVICE_ACTION_RESPONSE":
-            store.dispatch(actionResponseSet(data.result));
+            store.dispatch(actionResponseSet(data.message));
             break;
           case "PSTOOLS_COMMAND_RESPONSE":
-            store.dispatch(psToolsResponse(data.result));
+            store.dispatch(psToolsResponse(data.message));
             break;
           default:
             break;
