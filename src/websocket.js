@@ -20,19 +20,19 @@ class Socket {
     this._socket.addEventListener("open", () => {
       console.log("websocket connected");
       this._socket.addEventListener("message", message => {
-        const data = JSON.parse(message.data);
-        switch (data.type) {
+        const { type, payload } = JSON.parse(message.data);
+        switch (type) {
           case "DEVICE_DATA_ALL":
-            store.dispatch(deviceDataAll(data.message));
+            store.dispatch(deviceDataAll(payload));
             break;
           case "DEVICE_DATA_UPDATE":
-            store.dispatch(deviceDataUpdate(data.message));
+            store.dispatch(deviceDataUpdate(payload));
             break;
           case "DEVICE_ACTION_RESPONSE":
-            store.dispatch(actionResponseSet(data.message));
+            store.dispatch(actionResponseSet(payload));
             break;
           case "PSTOOLS_COMMAND_RESPONSE":
-            store.dispatch(psToolsResponse(data.message));
+            store.dispatch(psToolsResponse(payload));
             break;
           default:
             break;
@@ -48,18 +48,26 @@ class Socket {
   }
 
   sendRefreshDevice(targets) {
-    this._socket.send(JSON.stringify({ type: "REFRESH_DEVICE", targets }));
+    this._socket.send(
+      JSON.stringify({ type: "REFRESH_DEVICE", payload: { targets } })
+    );
   }
 
   sendDeviceAction(targets, action, parameters = {}) {
     this._socket.send(
-      JSON.stringify({ type: "DEVICE_ACTION", targets, action, parameters })
+      JSON.stringify({
+        type: "DEVICE_ACTION",
+        payload: { targets, action, parameters }
+      })
     );
   }
 
   sendPsToolsCommand(target, { mode, cmd }) {
     this._socket.send(
-      JSON.stringify({ type: "PSTOOLS_COMMAND", target, mode, cmd })
+      JSON.stringify({
+        type: "PSTOOLS_COMMAND",
+        payload: { target, mode, cmd }
+      })
     );
   }
 }
