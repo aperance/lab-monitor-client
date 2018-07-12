@@ -48,7 +48,7 @@ export const psToolsResponse = ({ result }) => {
   return { type: PSTOOLS_RESPONSE, result };
 };
 
-export const actionResponseSet = ({ result }) => {
+export const actionResponseSet = result => {
   return { type: ACTION_RESPONSE_SET, result };
 };
 

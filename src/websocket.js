@@ -20,6 +20,8 @@ class Socket {
     this._socket.addEventListener("open", () => {
       console.log("websocket connected");
       this._socket.addEventListener("message", message => {
+        console.log(message.data);
+
         const { type, payload } = JSON.parse(message.data);
         switch (type) {
           case "DEVICE_DATA_ALL":
@@ -29,7 +31,9 @@ class Socket {
             store.dispatch(deviceDataUpdate(payload));
             break;
           case "DEVICE_ACTION_RESPONSE":
-            store.dispatch(actionResponseSet(payload));
+            if (payload.err) console.log(payload.err);
+            if (payload.results)
+              store.dispatch(actionResponseSet(payload.results));
             break;
           case "PSTOOLS_COMMAND_RESPONSE":
             store.dispatch(psToolsResponse(payload));
@@ -57,7 +61,7 @@ class Socket {
     this._socket.send(
       JSON.stringify({
         type: "DEVICE_ACTION",
-        payload: { targets, action, parameters }
+        payload: { targets, type: action, parameters }
       })
     );
   }
