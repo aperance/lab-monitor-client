@@ -18,7 +18,7 @@ class AssetTableBody extends Component {
             <TableCell key={rowId + "status"}>
               <StatusIndicator
                 timestamp={rowData.timestamp}
-                active={rowData.timestamp}
+                status={rowData.status}
               />
             </TableCell>
             {this.props.columns &&

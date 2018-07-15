@@ -10,6 +10,13 @@ const styles = theme => ({
   }
 });
 
+const colorLookup = {
+  CONNECTED: "mediumseagreen",
+  RETRY: "mediumseagreen",
+  DISCONNECTED: "rgb(239, 239, 35)",
+  INACTIVE: "crimson"
+};
+
 class StatusIndicator extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +38,7 @@ class StatusIndicator extends Component {
         classes={this.props.classes}
         style={{
           opacity: this.state.animate ? 0.5 : 1,
-          color: this.props.active ? "mediumseagreen" : "crimson"
+          color: colorLookup[this.props.status]
         }}
       >
         lens
