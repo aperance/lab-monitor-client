@@ -70,7 +70,7 @@ class Socket {
     this._socket.send(
       JSON.stringify({
         type: "PSTOOLS_COMMAND",
-        payload: { target, mode, cmd }
+        payload: { target, mode, argument: cmd }
       })
     );
   }
