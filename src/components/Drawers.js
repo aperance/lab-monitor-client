@@ -11,8 +11,8 @@ import Icon from "@material-ui/core/Icon";
 const styles = theme => ({
   drawer: {
     position: "fixed",
-    height: "calc(100% - 64px)",
-    top: "64px",
+    height: "calc(100% - 0px)",
+    top: "0px",
     overflowY: "hidden",
     backgroundColor: "rgba(255, 255, 255, 1)",
     boxShadow: [
@@ -38,7 +38,7 @@ const viewLookup = {
 class Drawers extends Component {
   constructor(props) {
     super(props);
-    this.state = { widths: { 0: 175, 1: 600, 2: 400 }, startX: null };
+    this.state = { widths: { 0: 200, 1: 600, 2: 400 }, startX: null };
   }
 
   changeWidth(currentX) {

@@ -14,7 +14,6 @@ const styles = theme => ({
     fontSize: "1.25rem"
   },
   text: {
-    paddingLeft: "12px",
     fontSize: "0.9rem",
     color: "rgba(0, 0, 0, 0.54)"
   }

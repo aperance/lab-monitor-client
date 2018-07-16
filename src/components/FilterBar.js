@@ -11,9 +11,10 @@ const styles = theme => ({
     position: "relative",
     zIndex: 0,
     paddingTop: "20px",
-    paddingLeft: "8px",
+    paddingLeft: "12px",
+    paddingRight: "12px",
     width: "auto",
-    height: "calc(100vh - 80px)"
+    height: "calc(100vh - 100px)"
   },
   formLabel: {
     fontSize: "0.75rem",

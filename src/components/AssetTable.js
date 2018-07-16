@@ -6,18 +6,10 @@ import AssetTableHead from "./AssetTableHead";
 import AssetTableBody from "./AssetTableBody";
 
 const styles = theme => ({
+  root: { paddingTop: "68px", display: "flex", overflowX: "hidden" },
   table: {
     whiteSpace: "nowrap",
-    margin: "0px 8px",
-    "& thead > tr": { height: "48px" },
-    "& th": { paddingRight: "4px", paddingLeft: "12px" },
-    "& tbody > tr": { height: "36px", cursor: "pointer", userSelect: "none" },
-    "& td": {
-      fontSize: "0.75rem",
-      paddingRight: "24px",
-      paddingLeft: "12px",
-      paddingBottom: "2px"
-    }
+    margin: "0px 16px"
   },
   button: {
     padding: "0px 4px 4px 4px",
@@ -91,7 +83,7 @@ class AssetTable extends Component {
 
   render() {
     return (
-      <div style={{ paddingTop: "64px", display: "flex" }}>
+      <div className={this.props.classes.root}>
         <FilterBar
           filters={this.props.filters}
           selected={this.state.selectedFilters}
