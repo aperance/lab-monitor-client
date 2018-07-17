@@ -33,20 +33,20 @@ class FilterBarItem extends Component {
             className={this.props.classes.checkbox}
             color="primary"
             checked={
-              this.props.selected.hasOwnProperty(this.props.property) &&
-              this.props.selected[this.props.property].includes(
-                this.props.option
+              this.props.selectedFilters.hasOwnProperty(this.props.property) &&
+              this.props.selectedFilters[this.props.property].includes(
+                this.props.regex
               )
             }
             onClick={e =>
               this.props.handleCheckboxClick(
                 this.props.property,
-                this.props.option
+                this.props.regex
               )
             }
           />
         }
-        label={this.props.option}
+        label={this.props.label}
       />
     );
   }

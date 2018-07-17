@@ -53,26 +53,26 @@ class AssetTable extends Component {
     });
   }
 
-  changeFiltering(property, option) {
-    const newArray = this.state.selectedFilters[property] || [];
-    const currentIndex = newArray.indexOf(option);
+  changeFiltering(property, regex) {
+    const regexArray = this.state.selectedFilters[property] || [];
+    const currentIndex = regexArray.indexOf(regex);
     currentIndex === -1
-      ? newArray.push(option)
-      : newArray.splice(currentIndex, 1);
+      ? regexArray.push(regex)
+      : regexArray.splice(currentIndex, 1);
     this.setState({
-      selectedFilters: { ...this.state.selectedFilters, [property]: newArray }
+      selectedFilters: { ...this.state.selectedFilters, [property]: regexArray }
     });
   }
 
   sortAndFilter(tableData) {
     return Object.entries(tableData)
-      .filter(([rowId, rowData]) => {
-        return Object.entries(this.state.selectedFilters)
-          .map(([property, allowed]) => {
-            return allowed.includes(rowData[property]) || !allowed.length;
-          })
-          .reduce((acc, result) => acc && result, true);
-      })
+      .filter(([rowId, rowData]) =>
+        Object.entries(this.state.selectedFilters).every(
+          ([property, regexArray]) =>
+            !regexArray.every(regex => !rowData[property].match(regex)) ||
+            regexArray.length === 0
+        )
+      )
       .sort((key1, key2) => {
         const prop = this.state.sort.by;
         let result = (key1[1][prop] || "") > (key2[1][prop] || "");
@@ -86,7 +86,7 @@ class AssetTable extends Component {
       <div className={this.props.classes.root}>
         <FilterBar
           filters={this.props.filters}
-          selected={this.state.selectedFilters}
+          selectedFilters={this.state.selectedFilters}
           handleCheckboxClick={this.changeFiltering.bind(this)}
         />
         <Table className={this.props.classes.table}>

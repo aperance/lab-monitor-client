@@ -47,13 +47,14 @@ class FilterBar extends Component {
                   {filter.title}
                 </FormLabel>
                 <FormGroup className={this.props.classes.formGroup}>
-                  {filter.options.map(option => {
+                  {Object.entries(filter.options).map(([label, regex]) => {
                     return (
                       <FilterBarItem
-                        key={option}
-                        option={option}
+                        key={label}
+                        label={label}
+                        regex={regex}
                         property={filter.property}
-                        selected={this.props.selected}
+                        selectedFilters={this.props.selectedFilters}
                         handleCheckboxClick={this.props.handleCheckboxClick}
                       />
                     );
