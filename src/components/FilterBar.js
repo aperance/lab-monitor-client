@@ -1,20 +1,15 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FilterBarItem from "./FilterBarItem";
 
 const styles = theme => ({
-  drawerPaper: {
-    position: "relative",
-    zIndex: 0,
+  root: {
     paddingTop: "20px",
     paddingLeft: "12px",
-    paddingRight: "12px",
-    width: "auto",
-    height: "calc(100vh - 100px)"
+    paddingRight: "12px"
   },
   formLabel: {
     fontSize: "0.75rem",
@@ -30,41 +25,34 @@ const styles = theme => ({
 class FilterBar extends Component {
   render() {
     return (
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: this.props.classes.drawerPaper
-        }}
-      >
-        <FormControl>
-          {this.props.filters.map(filter => {
-            return (
-              <div key={filter.property}>
-                <FormLabel
-                  className={this.props.classes.formLabel}
-                  focused={false}
-                >
-                  {filter.title}
-                </FormLabel>
-                <FormGroup className={this.props.classes.formGroup}>
-                  {Object.entries(filter.options).map(([label, regex]) => {
-                    return (
-                      <FilterBarItem
-                        key={label}
-                        label={label}
-                        regex={regex}
-                        property={filter.property}
-                        selectedFilters={this.props.selectedFilters}
-                        handleCheckboxClick={this.props.handleCheckboxClick}
-                      />
-                    );
-                  })}
-                </FormGroup>
-              </div>
-            );
-          })}
-        </FormControl>
-      </Drawer>
+      <FormControl className={this.props.classes.root}>
+        {this.props.filters.map(filter => {
+          return (
+            <div key={filter.property}>
+              <FormLabel
+                className={this.props.classes.formLabel}
+                focused={false}
+              >
+                {filter.title}
+              </FormLabel>
+              <FormGroup className={this.props.classes.formGroup}>
+                {Object.entries(filter.options).map(([label, regex]) => {
+                  return (
+                    <FilterBarItem
+                      key={label}
+                      label={label}
+                      regex={regex}
+                      property={filter.property}
+                      selectedFilters={this.props.selectedFilters}
+                      handleCheckboxClick={this.props.handleCheckboxClick}
+                    />
+                  );
+                })}
+              </FormGroup>
+            </div>
+          );
+        })}
+      </FormControl>
     );
   }
 }

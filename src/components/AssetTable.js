@@ -6,9 +6,29 @@ import AssetTableHead from "./AssetTableHead";
 import AssetTableBody from "./AssetTableBody";
 
 const styles = theme => ({
-  root: { paddingTop: "68px", display: "flex", overflowX: "hidden" },
+  root: {
+    height: "calc(100vh - 80px)",
+    padding: "68px 0px 12px 0px",
+    display: "grid",
+    overflowX: "hidden",
+    gridTemplateColumns: "min-content auto",
+    gridTemplateRows: "max-content auto",
+    alignItems: "stretch"
+  },
+  filterBar: {
+    gridColumn: "1 / 2",
+    gridRow: "1 / 3",
+    borderRight: "1px solid rgba(0, 0, 0, 0.12)"
+  },
   table: {
+    gridColumn: "2 / 3",
+    gridRow: "1 / 2",
     whiteSpace: "nowrap",
+    margin: "0px 16px"
+  },
+  belowTable: {
+    gridColumn: "2 / 3",
+    gridRow: "2 / 3",
     margin: "0px 16px"
   },
   button: {
@@ -84,11 +104,13 @@ class AssetTable extends Component {
   render() {
     return (
       <div className={this.props.classes.root}>
-        <FilterBar
-          filters={this.props.filters}
-          selectedFilters={this.state.selectedFilters}
-          handleCheckboxClick={this.changeFiltering.bind(this)}
-        />
+        <div className={this.props.classes.filterBar}>
+          <FilterBar
+            filters={this.props.filters}
+            selectedFilters={this.state.selectedFilters}
+            handleCheckboxClick={this.changeFiltering.bind(this)}
+          />
+        </div>
         <Table className={this.props.classes.table}>
           <AssetTableHead
             columns={this.props.columns}
@@ -102,6 +124,11 @@ class AssetTable extends Component {
             handleRowClick={this.props.handleRowClick}
           />
         </Table>
+
+        <div
+          className={this.props.classes.belowTable}
+          onClick={e => this.props.handleRowClick(e.nativeEvent, null)}
+        />
       </div>
     );
   }

@@ -11,7 +11,10 @@ const initialState = { rows: [], view: null, history: null };
 export default (state = initialState, action) => {
   switch (action.type) {
     case SINGLE_ROW_SELECT:
-      if (state.rows.length === 1 && state.rows.indexOf(action.row) === 0)
+      if (
+        action.row === null ||
+        (state.rows.length === 1 && state.rows.indexOf(action.row) === 0)
+      )
         return { rows: [], view: null, history: null };
       else return { ...state, rows: [action.row] };
 
