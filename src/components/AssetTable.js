@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
 import FilterBar from "./FilterBar";
 import AssetTableHead from "./AssetTableHead";
-import AssetTableBody from "./AssetTableBody";
+import AssetTableRow from "./AssetTableRow";
 
 const styles = theme => ({
   root: {
@@ -117,12 +118,19 @@ class AssetTable extends Component {
             sort={this.state.sort}
             changeSorting={this.changeSorting.bind(this)}
           />
-          <AssetTableBody
-            columns={this.props.columns}
-            tableData={this.sortAndFilter(this.props.tableData)}
-            selected={this.props.selected}
-            handleRowClick={this.props.handleRowClick}
-          />
+          <TableBody>
+            {this.sortAndFilter(this.props.tableData).map(
+              ([rowId, rowData]) => (
+                <AssetTableRow
+                  key={rowId}
+                  columns={this.props.columns}
+                  rowData={rowData}
+                  selected={this.props.selected.includes(rowId)}
+                  handleRowClick={e => this.props.handleRowClick(e, rowId)}
+                />
+              )
+            )}
+          </TableBody>
         </Table>
 
         <div
