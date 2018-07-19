@@ -14,6 +14,15 @@ const styles = theme => ({
       "-4px 0px 5px 0px rgba(0, 0, 0, 0.14)",
       "-1px 0px 10px 0px rgba(0, 0, 0, 0.12)"
     ]
+  },
+  dragBar: {
+    position: "fixed",
+    height: "calc(100% - 0px)",
+    width: "10px",
+    top: "0px",
+    zIndex: 5,
+    cursor: "col-resize",
+    backgroundColor: "rgba(0, 0, 0, 0.21)"
   }
 });
 
@@ -24,8 +33,8 @@ class Drawers extends Component {
       subViewWidth,
       classes,
       children,
-      transition,
-      onClick
+      isDragging,
+      startDrag
     } = this.props;
     return (
       <div>
@@ -34,23 +43,18 @@ class Drawers extends Component {
           style={{
             width: "200px",
             right: [-200, 0, subViewWidth][visible] + "px",
-            transition: transition
+            transition: isDragging ? "0s" : ".5s"
           }}
         >
           {children[0]}
         </div>
         <div
-          className={classes.drawer}
+          className={classes.dragBar}
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0.21)",
-            alignSelf: "stretch",
-            cursor: "col-resize",
-            width: "10px",
             right: [-200, 0, subViewWidth][visible] - 5 + "px",
-            transition: transition,
-            zIndex: 5
+            transition: isDragging ? "0s" : ".5s"
           }}
-          onMouseDown={onClick}
+          onMouseDown={startDrag}
         >
           <Icon>drag_indicator</Icon>
         </div>
@@ -59,7 +63,7 @@ class Drawers extends Component {
           style={{
             width: subViewWidth + "px",
             right: [-(200 + subViewWidth), -subViewWidth, 0][visible] + "px",
-            transition: transition
+            transition: isDragging ? "0s" : ".5s"
           }}
         >
           {this.props.children[1]}

@@ -30,17 +30,13 @@ const viewLookup = {
 class DrawerContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { subViewWidth: 600, startX: null };
+    this.state = { subViewWidth: 600, isDragging: false };
   }
 
-  changeWidth(currentX) {
-    if (this.state.startX) {
+  changeWidth(e) {
+    if (this.state.isDragging) {
       this.setState({
-        subViewWidth: Math.max(
-          this.state.subViewWidth + this.state.startX - currentX,
-          400
-        ),
-        startX: Math.min(currentX, window.screen.width - 398)
+        subViewWidth: Math.max(window.innerWidth - e.pageX, 400)
       });
     }
   }
@@ -48,15 +44,15 @@ class DrawerContainer extends Component {
   render() {
     return (
       <div
-        onMouseUp={e => this.setState({ startX: null })}
-        onMouseLeave={e => this.setState({ startX: null })}
-        onMouseMove={e => this.changeWidth(e.screenX)}
+        onMouseUp={() => this.setState({ isDragging: false })}
+        onMouseLeave={() => this.setState({ isDragging: false })}
+        onMouseMove={e => this.changeWidth(e)}
       >
         <Drawers
           subViewWidth={this.state.subViewWidth}
           visible={this.props.drawersVisible}
-          transition={this.state.startX ? "0s" : ".5s"}
-          onClick={e => this.setState({ startX: e.screenX })}
+          isDragging={this.state.isDragging}
+          startDrag={() => this.setState({ isDragging: true })}
         >
           <ToolbarContainer />
           {viewLookup[this.props.subView]}
