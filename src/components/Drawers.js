@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import ToolbarContainer from "../containers/ToolbarContainer";
-import HistoryListContainer from "../containers/HistoryListContainer";
-import HistoryDetailsContainer from "../containers/HistoryDetailsContainer";
-import WebPageContainer from "../containers/WebPageContainer";
-import PsToolsContainer from "../containers/PsToolsContainer";
-import VncContainer from "../containers/VncContainer";
-import { withStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   drawer: {
@@ -23,72 +17,53 @@ const styles = theme => ({
   }
 });
 
-const viewLookup = {
-  toolbar: <ToolbarContainer />,
-  history: <HistoryListContainer />,
-  logsPage: <WebPageContainer />,
-  statePage: <WebPageContainer />,
-  psTools: <PsToolsContainer />,
-  vnc: <VncContainer />,
-  historyDetails: <HistoryDetailsContainer />
-};
-
-//const widths = [175, 800, 400];
-
 class Drawers extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { widths: { 0: 200, 1: 600, 2: 400 }, startX: null };
-  }
-
-  changeWidth(currentX) {
-    if (this.state.startX) {
-      this.setState({
-        widths: {
-          ...this.state.widths,
-          1: Math.max(this.state.widths[1] + this.state.startX - currentX, 400)
-        },
-        startX: Math.min(currentX, window.screen.width - 398)
-      });
-    }
-  }
-
   render() {
+    const {
+      visible,
+      subViewWidth,
+      classes,
+      children,
+      transition,
+      onClick
+    } = this.props;
     return (
-      <div
-        onMouseUp={e => this.setState({ startX: null })}
-        onMouseLeave={e => this.setState({ startX: null })}
-        onMouseMove={e => this.changeWidth(e.screenX)}
-      >
-        {this.props.drawerContents.map((child, index) => (
-          <div
-            key={index}
-            className={this.props.classes.drawer}
-            style={{
-              width: this.state.widths[index] + "px",
-              right: this.props.offsetCalc(this.state.widths)[index] + "px",
-              transition: this.state.startX ? "0s" : ".5s"
-            }}
-          >
-            {index !== 1 ? (
-              viewLookup[child]
-            ) : (
-              <div style={{ display: "flex", height: "100%" }}>
-                <div
-                  style={{
-                    color: "rgba(0, 0, 0, 0.54)",
-                    alignSelf: "stretch",
-                    cursor: "col-resize"
-                  }}
-                  onMouseDown={e => this.setState({ startX: e.screenX })}
-                >
-                  <Icon>drag_indicator</Icon>
-                </div>
-                <div style={{ flexGrow: 5 }}>{viewLookup[child]}</div>
-              </div>
-            )}
-          </div>
-        ))}
+      <div>
+        <div
+          className={classes.drawer}
+          style={{
+            width: "200px",
+            right: [-200, 0, subViewWidth][visible] + "px",
+            transition: transition
+          }}
+        >
+          {children[0]}
+        </div>
+        <div
+          className={classes.drawer}
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0.21)",
+            alignSelf: "stretch",
+            cursor: "col-resize",
+            width: "10px",
+            right: [-200, 0, subViewWidth][visible] - 5 + "px",
+            transition: transition,
+            zIndex: 5
+          }}
+          onMouseDown={onClick}
+        >
+          <Icon>drag_indicator</Icon>
+        </div>
+        <div
+          className={classes.drawer}
+          style={{
+            width: subViewWidth + "px",
+            right: [-(200 + subViewWidth), -subViewWidth, 0][visible] + "px",
+            transition: transition
+          }}
+        >
+          {this.props.children[1]}
+        </div>
       </div>
     );
   }
