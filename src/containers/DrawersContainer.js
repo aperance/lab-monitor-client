@@ -50,7 +50,7 @@ class DrawerContainer extends Component {
       >
         <Drawers
           subViewWidth={this.state.subViewWidth}
-          visible={this.props.drawersVisible}
+          drawersVisible={this.props.drawersVisible}
           isDragging={this.state.isDragging}
           startDrag={() => this.setState({ isDragging: true })}
         >

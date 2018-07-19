@@ -21,15 +21,20 @@ const styles = theme => ({
     width: "10px",
     top: "0px",
     zIndex: 5,
-    cursor: "col-resize",
-    backgroundColor: "rgba(0, 0, 0, 0.21)"
+    cursor: "col-resize"
+  },
+  icon: {
+    position: "absolute",
+    top: "45%",
+    marginLeft: "3px",
+    fontSize: "13px"
   }
 });
 
 class Drawers extends Component {
   render() {
     const {
-      visible,
+      drawersVisible,
       subViewWidth,
       classes,
       children,
@@ -42,7 +47,7 @@ class Drawers extends Component {
           className={classes.drawer}
           style={{
             width: "200px",
-            right: [-200, 0, subViewWidth][visible] + "px",
+            right: [-200, 0, subViewWidth][drawersVisible] + "px",
             transition: isDragging ? "0s" : ".5s"
           }}
         >
@@ -51,22 +56,23 @@ class Drawers extends Component {
         <div
           className={classes.dragBar}
           style={{
-            right: [-200, 0, subViewWidth][visible] - 5 + "px",
+            right: [-200, 0, subViewWidth][drawersVisible] - 5 + "px",
             transition: isDragging ? "0s" : ".5s"
           }}
           onMouseDown={startDrag}
         >
-          <Icon>drag_indicator</Icon>
+          <Icon className={classes.icon}>drag_indicator</Icon>
         </div>
         <div
           className={classes.drawer}
           style={{
             width: subViewWidth + "px",
-            right: [-(200 + subViewWidth), -subViewWidth, 0][visible] + "px",
+            right:
+              [-(200 + subViewWidth), -subViewWidth, 0][drawersVisible] + "px",
             transition: isDragging ? "0s" : ".5s"
           }}
         >
-          {this.props.children[1]}
+          {children[1]}
         </div>
       </div>
     );
