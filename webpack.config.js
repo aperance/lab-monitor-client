@@ -18,7 +18,7 @@ module.exports = {
   devServer: {
     compress: true,
     hot: true,
-    host: "10.91.1.1",
+    //host: "10.91.1.1",
     port: 3000
   },
 
@@ -34,10 +34,10 @@ module.exports = {
   module: {
     rules: [
       // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+      //{ test: /\.tsx?$/, loader: "awesome-typescript-loader" },
 
       {
-        test: /\.js$/,
+        test: /\.(tsx?)|(js)$/,
         exclude: /node_modules/,
         loader: "babel-loader"
       },
