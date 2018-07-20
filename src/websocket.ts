@@ -1,25 +1,51 @@
-import store from "./store.js";
 import {
+  actionResponseSet,
   deviceDataAll,
   deviceDataUpdate,
-  resetAll,
   psToolsResponse,
-  actionResponseSet
+  resetAll
 } from "./actions/actionCreators";
+import store from "./store";
 
 class Socket {
-  constructor(url) {
-    this._socket = null;
-    this._url = url;
-    this._start();
+  private socket: WebSocket;
+
+  constructor(url: string) {
+    this.socket = new WebSocket(url);
+    this.start();
   }
 
-  _start() {
-    this._socket = new WebSocket(this._url);
+  public sendRefreshDevice(targets: string[]) {
+    this.socket.send(
+      JSON.stringify({ type: "REFRESH_DEVICE", payload: { targets } })
+    );
+  }
 
-    this._socket.addEventListener("open", () => {
+  public sendDeviceAction(targets: string[], action: string, parameters = {}) {
+    this.socket.send(
+      JSON.stringify({
+        type: "DEVICE_ACTION",
+        payload: { targets, type: action, parameters }
+      })
+    );
+  }
+
+  public sendPsToolsCommand(
+    target: string[],
+    { mode, cmd }: { mode: string; cmd: string }
+  ) {
+    this.socket.send(
+      JSON.stringify({
+        type: "PSTOOLS_COMMAND",
+        payload: { target, mode, argument: cmd }
+      })
+    );
+  }
+
+  private start() {
+    this.socket.addEventListener("open", () => {
       console.log("websocket connected");
-      this._socket.addEventListener("message", message => {
+      this.socket.addEventListener("message", message => {
         console.log(message.data);
 
         const { type, payload } = JSON.parse(message.data);
@@ -44,35 +70,11 @@ class Socket {
       });
     });
 
-    this._socket.addEventListener("close", () => {
+    this.socket.addEventListener("close", () => {
       console.log("websocket closed");
       store.dispatch(resetAll());
-      setTimeout(this._start.bind(this), 5000);
+      setTimeout(this.start.bind(this), 5000);
     });
-  }
-
-  sendRefreshDevice(targets) {
-    this._socket.send(
-      JSON.stringify({ type: "REFRESH_DEVICE", payload: { targets } })
-    );
-  }
-
-  sendDeviceAction(targets, action, parameters = {}) {
-    this._socket.send(
-      JSON.stringify({
-        type: "DEVICE_ACTION",
-        payload: { targets, type: action, parameters }
-      })
-    );
-  }
-
-  sendPsToolsCommand(target, { mode, cmd }) {
-    this._socket.send(
-      JSON.stringify({
-        type: "PSTOOLS_COMMAND",
-        payload: { target, mode, argument: cmd }
-      })
-    );
   }
 }
 

@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import Layout from "./Layout";
-import store from "./store.js";
-import {} from "./websocket.js";
+import store from "./store";
+import {} from "./websocket";
 
 const theme = createMuiTheme({
   palette: { primary: blue },

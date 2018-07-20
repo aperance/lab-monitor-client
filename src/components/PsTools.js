@@ -7,7 +7,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Terminal from "./Terminal";
-import socket from "../websocket.js";
+import socket from "../websocket.ts";
 
 const styles = theme => ({
   container: {
