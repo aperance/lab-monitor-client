@@ -7,6 +7,7 @@ import dialogReducer from "./dialogReducer";
 import psToolsReducer from "./psToolsReducer";
 import actionResponseReducer from "./actionResponseReducer";
 
+// @ts-ignore
 export default combineReducers({
   configuration: configurationReducer,
   tableData: tableDataReducer,
