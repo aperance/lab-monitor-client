@@ -5,9 +5,23 @@ import {
   VIEW_SELECT
 } from "../actions/actionTypes";
 
-const initialState = { result: null };
+interface IResult {
+  err: Error | null;
+  result: string | null;
+}
 
-export default (state = initialState, action) => {
+interface IState {
+  result: IResult | null;
+}
+
+interface IAction {
+  type: string;
+  result: IResult;
+}
+
+const initialState: IState = { result: null };
+
+export default (state = initialState, action: IAction) => {
   switch (action.type) {
     case PSTOOLS_RESPONSE:
       return { ...state, result: action.result };

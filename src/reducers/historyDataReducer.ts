@@ -4,9 +4,19 @@ import {
   RESET_ALL
 } from "../actions/actionTypes";
 
-const initialState = {};
+interface IState {
+  [x: string]: any;
+}
 
-export default (state = initialState, action) => {
+interface IAction {
+  type: string;
+  id: string;
+  history: Array<[string, string]>;
+}
+
+const initialState: IState = {};
+
+export default (state = initialState, action: IAction) => {
   switch (action.type) {
     case DEVICE_DATA_ALL:
       return { ...action.history };
