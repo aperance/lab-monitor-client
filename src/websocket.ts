@@ -63,26 +63,57 @@ class Socket {
       console.log("websocket connected");
       this.socket.addEventListener("message", message => {
         console.log(message.data);
-
         const { type, payload } = JSON.parse(message.data);
+        if (
+          typeof type !== "string" ||
+          typeof payload !== "object" ||
+          payload === null
+        ) {
+          console.error("WS message received with unexpected structure.");
+          return;
+        }
         switch (type) {
           case MessageType.DeviceDataAll:
-            store.dispatch(deviceDataAll(payload));
+            if (
+              typeof payload.state !== "object" ||
+              typeof payload.history !== "object"
+            )
+              console.error("Inavlid device data: " + payload);
+            else store.dispatch(deviceDataAll(payload.state, payload.history));
             break;
           case MessageType.DeviceDataUpdate:
-            store.dispatch(deviceDataUpdate(payload));
+            if (
+              typeof payload.id !== "string" ||
+              typeof payload.state !== "object" ||
+              typeof payload.history !== "object"
+            )
+              console.error("Inavlid device data: " + payload);
+            else
+              store.dispatch(
+                deviceDataUpdate(payload.id, payload.state, payload.history)
+              );
             break;
           case MessageType.DeviceActionResponse:
-            if (payload.err) console.log(payload.err);
-            if (payload.results)
-              store.dispatch(actionResponseSet(payload.err, payload.results));
+            if (
+              (payload.err !== null && payload.err !== Error) ||
+              payload.result === undefined
+            )
+              console.error("Inavlid device action response: " + payload);
+            else store.dispatch(actionResponseSet(payload.err, payload.result));
             break;
           case MessageType.PsToolsCommandResponse:
-            store.dispatch(psToolsResponse(payload.err, payload.result));
+            if (
+              (payload.err !== null && payload.err !== Error) ||
+              (payload.result !== null && typeof payload.result !== "string")
+            )
+              console.error("Inavlid psTools response: " + payload);
+            else store.dispatch(psToolsResponse(payload.err, payload.result));
             break;
           default:
+            console.error("Invalid WS message type specified");
             break;
         }
+        if (payload.err) console.log(payload.err);
       });
     });
 
