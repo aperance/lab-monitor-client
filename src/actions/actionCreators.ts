@@ -13,18 +13,18 @@ import {
   IActionResponseClear
 } from "./actionTypes";
 
-export const deviceDataAll = ({
-  state,
-  history
-}: any): IDeviceDataAllAction => {
+export const deviceDataAll = (
+  state: any,
+  history: any
+): IDeviceDataAllAction => {
   return { type: Actions.DEVICE_DATA_ALL, state, history };
 };
 
-export const deviceDataUpdate = ({
-  id,
-  state,
-  history
-}: any): IDeviceDataUpdateAction => {
+export const deviceDataUpdate = (
+  id: string,
+  state: any,
+  history: any
+): IDeviceDataUpdateAction => {
   return { type: Actions.DEVICE_DATA_UPDATE, id, state, history };
 };
 
