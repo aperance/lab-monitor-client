@@ -25,7 +25,8 @@ class AssetTable extends Component {
         <Table>
           <AssetTableHead
             columns={this.props.columns}
-            sort={this.props.sort}
+            sortProperty={this.props.sortProperty}
+            sortDirection={this.props.sortDirection}
             changeSorting={this.props.changeSorting}
           />
           <TableBody>

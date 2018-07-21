@@ -25,28 +25,31 @@ class AssetTableContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sort: {
-        by: null,
-        reverse: false
-      }
+      sortProperty: null,
+      sortDirection: "desc"
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     // Use first column as default sort by property.
     // Only set if not already set, and column data is known.
-    if (!prevState.sort.by && nextProps.columns[0])
-      return { sort: { by: nextProps.columns[0].property, reverse: false } };
+    if (!prevState.sortProperty && nextProps.columns[0])
+      return {
+        sortProperty: nextProps.columns[0].property,
+        sortDirection: "desc"
+      };
     else return null;
   }
 
   changeSorting(property) {
     this.setState({
-      sort: {
-        by: property,
-        reverse:
-          this.state.sort.by === property ? !this.state.sort.reverse : false
-      }
+      sortProperty: property,
+      sortDirection:
+        this.state.sortProperty !== property
+          ? "desc"
+          : this.state.sortDirection === "desc"
+            ? "asc"
+            : "desc"
     });
   }
 
@@ -60,9 +63,9 @@ class AssetTableContainer extends Component {
         )
       )
       .sort((key1, key2) => {
-        const prop = this.state.sort.by;
+        const prop = this.state.sortProperty;
         let result = (key1[1][prop] || "") > (key2[1][prop] || "");
-        if (this.state.sort.reverse) result = !result;
+        if (this.state.sortDirection === "asc") result = !result;
         return result ? 1 : -1;
       });
   }
@@ -73,7 +76,8 @@ class AssetTableContainer extends Component {
         tableData={this.sortAndFilter(this.props.tableData)}
         columns={this.props.columns}
         selected={this.props.selected}
-        sort={this.state.sort}
+        sortProperty={this.state.sortProperty}
+        sortDirection={this.state.sortDirection}
         changeSorting={this.changeSorting.bind(this)}
         handleRowClick={this.props.handleRowClick.bind(this)}
       />
