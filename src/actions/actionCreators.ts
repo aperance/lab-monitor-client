@@ -14,16 +14,24 @@ import {
 } from "./actionTypes";
 
 export const deviceDataAll = (
-  state: any,
-  history: any
+  state: {
+    [id: string]: {
+      [property: string]: string;
+    };
+  },
+  history: {
+    [id: string]: {
+      [property: string]: Array<[string, string | null]>;
+    };
+  }
 ): IDeviceDataAllAction => {
   return { type: Actions.DEVICE_DATA_ALL, state, history };
 };
 
 export const deviceDataUpdate = (
   id: string,
-  state: any,
-  history: any
+  state: { [property: string]: string | null },
+  history: Array<[string, [string, string | null]]>
 ): IDeviceDataUpdateAction => {
   return { type: Actions.DEVICE_DATA_UPDATE, id, state, history };
 };
