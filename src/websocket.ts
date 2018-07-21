@@ -119,20 +119,15 @@ class Socket {
    *
    */
   private deviceDataAllHandler(data: any) {
-    const isValid = Object.values(data).every(oneDeep => {
+    const isValidState = Object.values(data.state).every(oneDeep => {
       if (typeof oneDeep !== "object") return false;
-
       return Object.values(oneDeep).every(twoDeep => {
-        if (typeof twoDeep !== "object") return false;
-
-        return Object.values(twoDeep).every(threeDeep => {
-          if (typeof threeDeep !== "string") return false;
-          else return true;
-        });
+        if (typeof twoDeep !== "string") return false;
+        else return true;
       });
     });
 
-    if (isValid) store.dispatch(deviceDataAll(data.state, data.history));
+    if (isValidState) store.dispatch(deviceDataAll(data.state, data.history));
     else console.error("Invalid device data received.");
   }
 
@@ -140,13 +135,14 @@ class Socket {
    *
    */
   private deviceDataUpdateHandler(data: any) {
-    if (
-      typeof data.id !== "string" ||
-      typeof data.state !== "object" ||
-      typeof data.history !== "object"
-    )
-      console.error("Inavlid device data: " + data);
-    else store.dispatch(deviceDataUpdate(data.id, data.state, data.history));
+    // if (
+    //   typeof data.id !== "string" ||
+    //   typeof data.state !== "object" ||
+    //   typeof data.history !== "object"
+    // )
+    //   console.error("Inavlid device data: " + data);
+    // else
+    store.dispatch(deviceDataUpdate(data.id, data.state, data.history));
   }
 
   /**
