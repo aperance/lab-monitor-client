@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = theme => ({
   drawer: {
     position: "fixed",
-    height: "calc(100% - 0px)",
+    height: "100%",
     top: "0px",
     overflowY: "hidden",
     backgroundColor: "rgba(255, 255, 255, 1)",
@@ -17,7 +17,7 @@ const styles = theme => ({
   },
   dragBar: {
     position: "fixed",
-    height: "calc(100% - 0px)",
+    height: "100%",
     width: "10px",
     top: "0px",
     zIndex: 5,
