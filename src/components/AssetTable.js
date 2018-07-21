@@ -2,35 +2,24 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import FilterBar from "./FilterBar";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
 
 const styles = theme => ({
   root: {
-    height: "calc(100vh - 80px)",
-    padding: "68px 0px 12px 0px",
-    display: "grid",
+    height: "100%",
     overflowX: "hidden",
-    gridTemplateColumns: "min-content auto",
-    gridTemplateRows: "max-content auto",
-    alignItems: "stretch"
-  },
-  filterBar: {
-    gridColumn: "1 / 2",
-    gridRow: "1 / 3",
-    borderRight: "1px solid rgba(0, 0, 0, 0.12)"
+    display: "flex",
+    flexDirection: "column"
   },
   table: {
-    gridColumn: "2 / 3",
-    gridRow: "1 / 2",
     whiteSpace: "nowrap",
-    margin: "0px 16px"
+    margin: "0px 16px",
+    flex: 0
   },
   belowTable: {
-    gridColumn: "2 / 3",
-    gridRow: "2 / 3",
-    margin: "0px 16px"
+    margin: "0px 16px",
+    flex: 1
   },
   button: {
     padding: "0px 4px 4px 4px",
@@ -51,8 +40,7 @@ class AssetTable extends Component {
       sort: {
         by: null,
         reverse: false
-      },
-      selectedFilters: {}
+      }
     };
   }
 
@@ -74,21 +62,10 @@ class AssetTable extends Component {
     });
   }
 
-  changeFiltering(property, regex) {
-    const regexArray = this.state.selectedFilters[property] || [];
-    const currentIndex = regexArray.indexOf(regex);
-    currentIndex === -1
-      ? regexArray.push(regex)
-      : regexArray.splice(currentIndex, 1);
-    this.setState({
-      selectedFilters: { ...this.state.selectedFilters, [property]: regexArray }
-    });
-  }
-
   sortAndFilter(tableData) {
     return Object.entries(tableData)
       .filter(([rowId, rowData]) =>
-        Object.entries(this.state.selectedFilters).every(
+        Object.entries(this.props.selectedFilters).every(
           ([property, regexArray]) =>
             !regexArray.every(regex => !rowData[property].match(regex)) ||
             regexArray.length === 0
@@ -105,13 +82,6 @@ class AssetTable extends Component {
   render() {
     return (
       <div className={this.props.classes.root}>
-        <div className={this.props.classes.filterBar}>
-          <FilterBar
-            filters={this.props.filters}
-            selectedFilters={this.state.selectedFilters}
-            handleCheckboxClick={this.changeFiltering.bind(this)}
-          />
-        </div>
         <Table className={this.props.classes.table}>
           <AssetTableHead
             columns={this.props.columns}

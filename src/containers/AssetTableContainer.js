@@ -5,7 +5,7 @@ import AssetTable from "../components/AssetTable";
 const mapStateToProps = state => {
   return {
     columns: state.configuration.columns,
-    filters: state.configuration.filters,
+    selectedFilters: state.userSelection.filters,
     selected: state.userSelection.rows,
     tableData: state.tableData
   };
@@ -20,4 +20,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssetTable);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AssetTable);

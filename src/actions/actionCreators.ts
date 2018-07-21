@@ -7,6 +7,7 @@ import {
   IMultiRowSelectAction,
   IViewSelectAction,
   IHistorySelectAction,
+  IFilterSelectAction,
   IPsToolsResponseAction,
   IDialogVisibilityAction,
   IActionResponseSet,
@@ -54,6 +55,13 @@ export const viewSelect = (view: string): IViewSelectAction => {
 
 export const historySelect = (property: string): IHistorySelectAction => {
   return { type: Actions.HISTORY_SELECT, property };
+};
+
+export const filterSelect = (
+  property: string,
+  regex: string
+): IFilterSelectAction => {
+  return { type: Actions.FILTER_SELECT, property, regex };
 };
 
 export const dialogVisibility = ({

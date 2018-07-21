@@ -17,9 +17,12 @@ const styles = theme => ({
 
 class AssetTableRow extends Component {
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.rowData.timestamp !== nextProps.rowData.timestamp) {
+    if (
+      this.props.rowData.timestamp !== nextProps.rowData.timestamp ||
+      this.props.selected !== nextProps.selected
+    )
       return true;
-    } else return false;
+    else return false;
   }
 
   render() {

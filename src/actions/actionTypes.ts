@@ -15,6 +15,7 @@ export enum Actions {
   MULTI_ROW_SELECT = "MULTI_ROW_SELECT",
   VIEW_SELECT = "VIEW_SELECT",
   HISTORY_SELECT = "HISTORY_SELECT",
+  FILTER_SELECT = "FILTER_SELECT",
   DIALOG_VISIBILITY = "DIALOG_VISIBILITY",
   PSTOOLS_RESPONSE = "PSTOOLS_RESPONSE",
   DEVICE_DATA_ALL = "DEVICE_DATA_ALL",
@@ -69,6 +70,12 @@ export interface IHistorySelectAction {
   readonly property: string;
 }
 
+export interface IFilterSelectAction {
+  readonly type: Actions.FILTER_SELECT;
+  readonly property: string;
+  readonly regex: string;
+}
+
 export interface IPsToolsResponseAction {
   readonly type: Actions.PSTOOLS_RESPONSE;
   readonly err: Error | null;
@@ -98,6 +105,7 @@ export type IAction =
   | IMultiRowSelectAction
   | IViewSelectAction
   | IHistorySelectAction
+  | IFilterSelectAction
   | IPsToolsResponseAction
   | IDialogVisibilityAction
   | IActionResponseSet
