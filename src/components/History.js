@@ -21,7 +21,7 @@ class HistoryList extends Component {
           <List
             width={width}
             rowHeight={40}
-            height={window.innerHeight - 64}
+            height={window.innerHeight}
             rowCount={this.props.properties.length}
             rowRenderer={({ key, index, isScrolling, isVisible, style }) => (
               <ListItem

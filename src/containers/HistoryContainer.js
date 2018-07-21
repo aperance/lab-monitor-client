@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { historySelect } from "../actions/actionCreators";
-import HistoryList from "../components/HistoryList";
+import History from "../components/History";
 
 const mapStateToProps = state => {
   return {
@@ -8,7 +8,13 @@ const mapStateToProps = state => {
       state.userSelection.rows.length === 1
         ? Object.keys(state.historyData[state.userSelection.rows[0]])
         : [],
-    selectedProperty: state.userSelection.history
+    selectedProperty: state.userSelection.history,
+    selectedData:
+      state.userSelection.rows.length === 1
+        ? state.historyData[state.userSelection.rows[0]][
+            state.userSelection.history
+          ]
+        : []
   };
 };
 
@@ -20,4 +26,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HistoryList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(History);

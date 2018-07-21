@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Drawers from "../components/Drawers";
 import ToolbarContainer from "../containers/ToolbarContainer";
-import HistoryListContainer from "../containers/HistoryListContainer";
+import HistoryContainer from "../containers/HistoryContainer";
 import WebPageContainer from "../containers/WebPageContainer";
 import PsToolsContainer from "../containers/PsToolsContainer";
 import VncContainer from "../containers/VncContainer";
@@ -20,7 +20,7 @@ const mapStateToProps = state => {
 };
 
 const viewLookup = {
-  history: <HistoryListContainer />,
+  history: <HistoryContainer />,
   logsPage: <WebPageContainer />,
   statePage: <WebPageContainer />,
   psTools: <PsToolsContainer />,
