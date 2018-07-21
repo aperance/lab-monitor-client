@@ -1,20 +1,15 @@
-import { DIALOG_VISIBILITY } from "../actions/actionTypes";
+import { Actions, IAction } from "../actions/actionTypes";
 
 interface IState {
   logLevel: boolean;
 }
 
-interface IAction {
-  type: string;
-  object: any;
-}
+const initialState = { logLevel: false };
 
-const initialState: IState = { logLevel: false };
-
-export default (state = initialState, action: IAction) => {
+export default (state: IState = initialState, action: IAction) => {
   switch (action.type) {
-    case DIALOG_VISIBILITY:
-      return { ...state, ...action.object };
+    case Actions.DIALOG_VISIBILITY:
+      return { ...state, logLevel: action.logLevel };
     default:
       return { ...state };
   }

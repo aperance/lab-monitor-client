@@ -7,6 +7,25 @@ import {
 } from "./actions/actionCreators";
 import store from "./store";
 
+interface IMessage {
+  type: MessageType;
+  payload: {
+    [key: string]: any;
+  };
+}
+
+enum MessageType {
+  DeviceDataAll = "DEVICE_DATA_ALL",
+  DeviceDataUpdate = "DEVICE_DATA_UPDATE",
+  RefreshDevice = "REFRESH_DEVICE",
+  DeviceAction = "DEVICE_ACTION",
+  DeviceActionResponse = "DEVICE_ACTION_RESPONSE",
+  PsToolsCommand = "PSTOOLS_COMMAND",
+  PsToolsCommandResponse = "PSTOOLS_COMMAND_RESPONSE",
+  UserDialog = "USER_DIALOG",
+  Error = "ERROR"
+}
+
 class Socket {
   private socket: WebSocket;
 
@@ -16,30 +35,27 @@ class Socket {
   }
 
   public sendRefreshDevice(targets: string[]) {
-    this.socket.send(
-      JSON.stringify({ type: "REFRESH_DEVICE", payload: { targets } })
-    );
+    this.sendToServer({
+      type: MessageType.RefreshDevice,
+      payload: { targets }
+    });
   }
 
   public sendDeviceAction(targets: string[], action: string, parameters = {}) {
-    this.socket.send(
-      JSON.stringify({
-        type: "DEVICE_ACTION",
-        payload: { targets, type: action, parameters }
-      })
-    );
+    this.sendToServer({
+      type: MessageType.DeviceAction,
+      payload: { targets, type: action, parameters }
+    });
   }
 
   public sendPsToolsCommand(
     target: string[],
     { mode, cmd }: { mode: string; cmd: string }
   ) {
-    this.socket.send(
-      JSON.stringify({
-        type: "PSTOOLS_COMMAND",
-        payload: { target, mode, argument: cmd }
-      })
-    );
+    this.sendToServer({
+      type: MessageType.PsToolsCommand,
+      payload: { target, mode, argument: cmd }
+    });
   }
 
   private start() {
@@ -50,19 +66,19 @@ class Socket {
 
         const { type, payload } = JSON.parse(message.data);
         switch (type) {
-          case "DEVICE_DATA_ALL":
+          case MessageType.DeviceDataAll:
             store.dispatch(deviceDataAll(payload));
             break;
-          case "DEVICE_DATA_UPDATE":
+          case MessageType.DeviceDataUpdate:
             store.dispatch(deviceDataUpdate(payload));
             break;
-          case "DEVICE_ACTION_RESPONSE":
+          case MessageType.DeviceActionResponse:
             if (payload.err) console.log(payload.err);
             if (payload.results)
-              store.dispatch(actionResponseSet(payload.results));
+              store.dispatch(actionResponseSet(payload.err, payload.results));
             break;
-          case "PSTOOLS_COMMAND_RESPONSE":
-            store.dispatch(psToolsResponse(payload));
+          case MessageType.PsToolsCommandResponse:
+            store.dispatch(psToolsResponse(payload.err, payload.result));
             break;
           default:
             break;
@@ -75,6 +91,10 @@ class Socket {
       store.dispatch(resetAll());
       setTimeout(this.start.bind(this), 5000);
     });
+  }
+
+  private sendToServer(message: IMessage) {
+    this.socket.send(JSON.stringify(message));
   }
 }
 

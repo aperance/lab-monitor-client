@@ -1,31 +1,19 @@
-import {
-  PSTOOLS_RESPONSE,
-  SINGLE_ROW_SELECT,
-  MULTI_ROW_SELECT,
-  VIEW_SELECT
-} from "../actions/actionTypes";
+import { Actions, IAction } from "../actions/actionTypes";
 
-interface IResult {
+interface IState {
   err: Error | null;
   result: string | null;
 }
 
-interface IState {
-  result: IResult | null;
-}
+const initialState = { result: null, err: null };
 
-interface IAction {
-  type: string;
-  result: IResult;
-}
-
-const initialState: IState = { result: null };
-
-export default (state = initialState, action: IAction) => {
+export default (state: IState = initialState, action: IAction) => {
   switch (action.type) {
-    case PSTOOLS_RESPONSE:
+    case Actions.PSTOOLS_RESPONSE:
       return { ...state, result: action.result };
-    case SINGLE_ROW_SELECT || MULTI_ROW_SELECT || VIEW_SELECT:
+    case Actions.SINGLE_ROW_SELECT ||
+      Actions.MULTI_ROW_SELECT ||
+      Actions.VIEW_SELECT:
       return { ...initialState };
     default:
       return { ...state };

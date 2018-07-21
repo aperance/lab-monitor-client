@@ -1,27 +1,19 @@
-import {
-  DEVICE_DATA_ALL,
-  DEVICE_DATA_UPDATE,
-  RESET_ALL
-} from "../actions/actionTypes";
+import { Actions, IAction } from "../actions/actionTypes";
 
 interface IState {
-  [x: string]: any;
+  [id: string]: {
+    [property: string]: Array<[string, string | null]>;
+  };
 }
 
-interface IAction {
-  type: string;
-  id: string;
-  history: Array<[string, string]>;
-}
+const initialState = {};
 
-const initialState: IState = {};
-
-export default (state = initialState, action: IAction) => {
+export default (state: IState = initialState, action: IAction) => {
   switch (action.type) {
-    case DEVICE_DATA_ALL:
+    case Actions.DEVICE_DATA_ALL:
       return { ...action.history };
 
-    case DEVICE_DATA_UPDATE:
+    case Actions.DEVICE_DATA_UPDATE:
       return {
         ...state,
         [action.id]: action.history.reduce(
@@ -34,7 +26,7 @@ export default (state = initialState, action: IAction) => {
         )
       };
 
-    case RESET_ALL:
+    case Actions.RESET_ALL:
       return {};
 
     default:
