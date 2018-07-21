@@ -8,13 +8,29 @@ import AssetTableRow from "./AssetTableRow";
 const styles = theme => ({
   root: {
     height: "100%",
+    overflowX: "hidden",
     display: "flex",
-    flexDirection: "column",
-    margin: "0px 16px",
-    whiteSpace: "nowrap"
+    flexDirection: "column"
   },
-  table: { flex: 0 },
-  belowTable: { flex: 1 }
+  table: {
+    whiteSpace: "nowrap",
+    margin: "0px 16px",
+    flex: 0
+  },
+  belowTable: {
+    margin: "0px 16px",
+    flex: 1
+  },
+  button: {
+    padding: "0px 4px 4px 4px",
+    minWidth: "12px",
+    minHeight: "12px"
+  },
+  icon: {
+    height: "auto",
+    width: "auto",
+    fontSize: "0.75rem"
+  }
 });
 
 class AssetTable extends Component {

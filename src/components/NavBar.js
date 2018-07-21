@@ -9,7 +9,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 const styles = theme => ({
   root: {
     backgroundColor: "white",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.12)"
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+    zIndex: 0
   },
   icon: {
     marginLeft: -12,
@@ -23,7 +24,7 @@ class NavBar extends Component {
       <AppBar
         position="fixed"
         color="default"
-        elevation={0}
+        elevation="0"
         className={this.props.classes.root}
       >
         <Toolbar style={{ minHeight: "56px" }}>
