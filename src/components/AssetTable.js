@@ -8,28 +8,13 @@ import AssetTableRow from "./AssetTableRow";
 const styles = theme => ({
   root: {
     height: "100%",
-    overflowX: "hidden",
     display: "flex",
-    flexDirection: "column"
-  },
-  table: {
+    flexDirection: "column",
     whiteSpace: "nowrap",
-    margin: "0px 16px",
-    flex: 0
+    margin: "0px 16px"
   },
   belowTable: {
-    margin: "0px 16px",
     flex: 1
-  },
-  button: {
-    padding: "0px 4px 4px 4px",
-    minWidth: "12px",
-    minHeight: "12px"
-  },
-  icon: {
-    height: "auto",
-    width: "auto",
-    fontSize: "0.75rem"
   }
 });
 
@@ -37,7 +22,7 @@ class AssetTable extends Component {
   render() {
     return (
       <div className={this.props.classes.root}>
-        <Table className={this.props.classes.table}>
+        <Table>
           <AssetTableHead
             columns={this.props.columns}
             sort={this.props.sort}

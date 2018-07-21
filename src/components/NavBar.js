@@ -24,7 +24,7 @@ class NavBar extends Component {
       <AppBar
         position="fixed"
         color="default"
-        elevation="0"
+        elevation={0}
         className={this.props.classes.root}
       >
         <Toolbar style={{ minHeight: "56px" }}>
