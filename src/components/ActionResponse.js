@@ -12,6 +12,11 @@ const styles = theme => ({
 });
 
 class ActionResponse extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.visible !== nextProps.visible) return true;
+    else return false;
+  }
+
   render() {
     const { classes } = this.props;
     return (
