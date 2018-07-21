@@ -11,6 +11,15 @@ const styles = theme => ({
 });
 
 class AssetTableHead extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.sortProperty !== nextProps.sortProperty ||
+      this.props.sortDirection !== nextProps.sortDirection
+    )
+      return true;
+    else return false;
+  }
+
   render() {
     return (
       <TableHead>
@@ -20,8 +29,8 @@ class AssetTableHead extends Component {
             this.props.columns.map(column => (
               <TableCell key={column.title} className={this.props.classes.cell}>
                 <TableSortLabel
-                  active={this.props.sort.by === column.property}
-                  direction={this.props.sort.reverse ? "asc" : "desc"}
+                  active={this.props.sortProperty === column.property}
+                  direction={this.props.sortDirection}
                   onClick={() => this.props.changeSorting(column.property)}
                 >
                   {column.title}
