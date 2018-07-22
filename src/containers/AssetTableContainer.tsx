@@ -1,9 +1,30 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 import { singleRowSelect, multiRowSelect } from "../actions/actionCreators";
 import AssetTable from "../components/AssetTable";
 
-const mapStateToProps = state => {
+interface ITableData {
+  [id: string]: {
+    [property: string]: string | null;
+  };
+}
+
+interface IState {
+  sortProperty: string | null;
+  sortDirection: string;
+}
+
+interface IProps {
+  columns: any;
+  selectedFilters: {
+    [property: string]: string[];
+  };
+  selected: any;
+  tableData: ITableData;
+  handleRowClick: (e: MouseEvent, id: string) => void;
+}
+
+const mapStateToProps = (state: any) => {
   return {
     columns: state.configuration.columns,
     selectedFilters: state.userSelection.filters,
@@ -12,25 +33,28 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    handleRowClick: (e, id) => {
+    handleRowClick: (e: MouseEvent, id: string) => {
       if (e.altKey || e.ctrlKey) dispatch(multiRowSelect(id));
       else dispatch(singleRowSelect(id));
     }
   };
 };
 
-class AssetTableContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortProperty: null,
-      sortDirection: "desc"
-    };
-  }
+/**
+ *
+ */
+class AssetTableContainer extends React.Component<IProps, IState> {
+  public state: IState = {
+    sortProperty: null,
+    sortDirection: "desc"
+  };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
+  /**
+   *
+   */
+  public static getDerivedStateFromProps(nextProps: any, prevState: any) {
     // Use first column as default sort by property.
     // Only set if not already set, and column data is known.
     if (!prevState.sortProperty && nextProps.columns[0])
@@ -41,7 +65,10 @@ class AssetTableContainer extends Component {
     else return null;
   }
 
-  changeSorting(property) {
+  /**
+   *
+   */
+  public changeSorting(property: string) {
     this.setState({
       sortProperty: property,
       sortDirection:
@@ -53,24 +80,29 @@ class AssetTableContainer extends Component {
     });
   }
 
-  sortAndFilter(tableData) {
+  /**
+   *
+   */
+  public sortAndFilter(tableData: ITableData) {
     return Object.entries(tableData)
-      .filter(([rowId, rowData]) =>
+      .filter(([, rowData]) =>
         Object.entries(this.props.selectedFilters).every(
           ([property, regexArray]) =>
-            !regexArray.every(regex => !rowData[property].match(regex)) ||
-            regexArray.length === 0
+            !regexArray.every(
+              regex => !(rowData[property] || "").match(regex)
+            ) || regexArray.length === 0
         )
       )
       .sort((key1, key2) => {
         const prop = this.state.sortProperty;
+        if (prop === null) return 1;
         let result = (key1[1][prop] || "") > (key2[1][prop] || "");
         if (this.state.sortDirection === "asc") result = !result;
         return result ? 1 : -1;
       });
   }
 
-  render() {
+  public render() {
     return (
       <AssetTable
         tableData={this.sortAndFilter(this.props.tableData)}
