@@ -8,10 +8,9 @@ import Icon from "@material-ui/core/Icon";
 
 const styles = theme => ({
   row: {
-    backgroundColor: "white"
-  },
-  selectedRow: {
-    backgroundColor: "rgba(0, 0, 0, 0.04)"
+    backgroundColor: "white",
+    transitionProperty: "top, height",
+    transitionDuration: "0.4s"
   },
   text: { fontSize: "0.75rem" },
   icon: { marginRight: "0px" }
@@ -21,15 +20,10 @@ class HistoryItem extends Component {
   render() {
     return (
       <ListItem
-        button
         style={this.props.style}
         dense={true}
         divider={true}
-        className={
-          this.props.selected
-            ? this.props.classes.selectedRow
-            : this.props.classes.row
-        }
+        className={this.props.classes.row}
         onClick={e => this.props.handleClick(this.props.property)}
       >
         <ListItemText

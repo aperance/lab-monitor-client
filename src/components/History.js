@@ -24,9 +24,10 @@ class HistoryList extends Component {
         {({ height, width }) => (
           <Collection
             ref={ref => (this.collectionRef = ref)}
-            height={height}
+            height={height + 205}
             width={width}
-            cellCount={this.props.properties.length}
+            verticalOverscanSize={5}
+            cellCount={this.props.properties.length + 4}
             cellRenderer={({ key, index, isScrolling, style }) => (
               <HistoryItem
                 key={key}
@@ -43,9 +44,9 @@ class HistoryList extends Component {
                 index > this.props.selectedIndex;
               return {
                 x: 0,
-                y: isBelowSelected ? 41 * (index + 1) : 41 * index,
+                y: isBelowSelected ? 41 * (index + 4) : 41 * index,
                 width,
-                height: isSelected ? 82 : 41
+                height: isSelected ? 205 : 41
               };
             }}
           />
