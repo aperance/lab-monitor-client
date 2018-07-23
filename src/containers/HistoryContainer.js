@@ -3,12 +3,14 @@ import { historySelect } from "../actions/actionCreators";
 import History from "../components/History";
 
 const mapStateToProps = state => {
+  const properties =
+    state.userSelection.rows.length === 1
+      ? Object.keys(state.historyData[state.userSelection.rows[0]])
+      : [];
   return {
-    properties:
-      state.userSelection.rows.length === 1
-        ? Object.keys(state.historyData[state.userSelection.rows[0]])
-        : [],
+    properties,
     selectedProperty: state.userSelection.history,
+    selectedIndex: properties.indexOf(state.userSelection.history),
     selectedData:
       state.userSelection.rows.length === 1
         ? state.historyData[state.userSelection.rows[0]][

@@ -1,53 +1,53 @@
 import React, { Component } from "react";
-import { List, AutoSizer } from "react-virtualized";
+import { Collection, List, AutoSizer } from "react-virtualized";
+import HistoryItem from "./HistoryItem";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { withStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 
-const styles = theme => ({
-  row: { backgroundColor: "white" },
-  selectedRow: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
-  text: { fontSize: "0.75rem" },
-  icon: { marginRight: "0px" }
-});
+const styles = theme => ({});
 
 class HistoryList extends Component {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    this.recomputeCells();
+  }
+
+  recomputeCells() {
+    this.collectionRef && this.collectionRef.recomputeCellSizesAndPositions();
+  }
+
   render() {
     return (
-      <AutoSizer disableHeight>
-        {({ width }) => (
-          <List
+      <AutoSizer onResize={this.recomputeCells.bind(this)}>
+        {({ height, width }) => (
+          <Collection
+            ref={ref => (this.collectionRef = ref)}
+            height={height}
             width={width}
-            rowHeight={40}
-            height={window.innerHeight}
-            rowCount={this.props.properties.length}
-            rowRenderer={({ key, index, isScrolling, isVisible, style }) => (
-              <ListItem
-                button
-                style={style}
+            cellCount={this.props.properties.length}
+            cellRenderer={({ key, index, isScrolling, style }) => (
+              <HistoryItem
                 key={key}
-                dense={true}
-                divider={true}
-                className={
-                  this.props.properties[index] !== this.props.selectedProperty
-                    ? this.props.classes.row
-                    : this.props.classes.selectedRow
-                }
-                onClick={e =>
-                  this.props.handleClick(this.props.properties[index])
-                }
-              >
-                <ListItemText
-                  classes={{ primary: this.props.classes.text }}
-                  primary={this.props.properties[index]}
-                />
-                <ListItemIcon className={this.props.classes.icon}>
-                  <Icon>navigate_next</Icon>
-                </ListItemIcon>
-              </ListItem>
+                style={style}
+                property={this.props.properties[index]}
+                selected={this.props.selectedIndex === index}
+                handleClick={this.props.handleClick}
+              />
             )}
+            cellSizeAndPositionGetter={({ index }) => {
+              const isSelected = this.props.selectedIndex === index;
+              const isBelowSelected =
+                this.props.selectedIndex !== -1 &&
+                index > this.props.selectedIndex;
+              return {
+                x: 0,
+                y: isBelowSelected ? 41 * (index + 1) : 41 * index,
+                width,
+                height: isSelected ? 82 : 41
+              };
+            }}
           />
         )}
       </AutoSizer>
