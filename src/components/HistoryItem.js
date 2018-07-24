@@ -7,33 +7,57 @@ import { withStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 
 const styles = theme => ({
-  row: {
+  root: {
     backgroundColor: "white",
+    borderTop: "1px solid #0000001f",
+    marginRight: "15px",
+    marginLeft: "15px",
+    paddingRight: "10px",
+    paddingLeft: "10px",
     transitionProperty: "top, height",
-    transitionDuration: "0.4s"
+    transitionDuration: "0.4s",
+    color: "rgba(0, 0, 0, 0.8)"
   },
-  text: { fontSize: "0.75rem" },
-  icon: { marginRight: "0px" }
+  topRow: {
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  title: {
+    fontSize: "0.8rem",
+    lineHeight: "40px"
+  },
+  icon: {
+    lineHeight: "40px",
+    height: "40px",
+    fontSize: "1.25rem",
+    transitionProperty: "transform",
+    transitionDuration: "0.4s"
+  }
 });
 
 class HistoryItem extends Component {
   render() {
     return (
-      <ListItem
+      <div
         style={this.props.style}
-        dense={true}
-        divider={true}
-        className={this.props.classes.row}
+        className={this.props.classes.root}
         onClick={e => this.props.handleClick(this.props.property)}
       >
-        <ListItemText
-          classes={{ primary: this.props.classes.text }}
-          primary={this.props.property}
-        />
-        <ListItemIcon className={this.props.classes.icon}>
-          <Icon>navigate_next</Icon>
-        </ListItemIcon>
-      </ListItem>
+        <div className={this.props.classes.topRow}>
+          <span className={this.props.classes.title}>
+            {this.props.property}
+          </span>
+          <Icon
+            className={this.props.classes.icon}
+            style={this.props.selected ? { transform: "rotate(0.5turn)" } : {}}
+          >
+            expand_more
+          </Icon>
+        </div>
+        {this.props.selected && (
+          <div style={{ backgroundColor: "red", height: "100%" }}> </div>
+        )}
+      </div>
     );
   }
 }
