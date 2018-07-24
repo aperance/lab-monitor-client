@@ -24,7 +24,7 @@ class HistoryList extends Component {
         {({ height, width }) => (
           <Collection
             ref={ref => (this.collectionRef = ref)}
-            height={height + 205}
+            height={height + 200}
             width={width}
             verticalOverscanSize={5}
             cellCount={this.props.properties.length + 4}
@@ -44,9 +44,9 @@ class HistoryList extends Component {
                 index > this.props.selectedIndex;
               return {
                 x: 0,
-                y: isBelowSelected ? 41 * (index + 4) : 41 * index,
-                width,
-                height: isSelected ? 205 : 41
+                y: isBelowSelected ? 40 * (index + 4) : 40 * index,
+                width: width - 65,
+                height: isSelected ? 200 : 40
               };
             }}
           />
