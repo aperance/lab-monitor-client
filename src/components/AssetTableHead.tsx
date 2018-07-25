@@ -1,17 +1,27 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 
-const styles = theme => ({
+const styles = createStyles({
   row: { height: "48px" },
   cell: { paddingRight: "4px", paddingLeft: "12px" }
 });
 
-class AssetTableHead extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+interface Props extends WithStyles<typeof styles> {
+  columns: Array<{
+    title: string;
+    property: string;
+  }>;
+  sortProperty: string | null;
+  sortDirection: "asc" | "desc";
+  changeSorting: (property: string) => void;
+}
+
+class AssetTableHead extends React.Component<Props> {
+  public shouldComponentUpdate(nextProps: Props) {
     if (
       this.props.sortProperty !== nextProps.sortProperty ||
       this.props.sortDirection !== nextProps.sortDirection
@@ -20,7 +30,7 @@ class AssetTableHead extends Component {
     else return false;
   }
 
-  render() {
+  public render() {
     return (
       <TableHead>
         <TableRow className={this.props.classes.row}>

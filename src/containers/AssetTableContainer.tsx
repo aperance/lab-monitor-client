@@ -11,7 +11,7 @@ interface ITableData {
 
 interface IState {
   sortProperty: string | null;
-  sortDirection: string;
+  sortDirection: "asc" | "desc";
 }
 
 interface IProps {

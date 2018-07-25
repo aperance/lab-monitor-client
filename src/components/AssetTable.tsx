@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
 
-const styles = theme => ({
+const styles = createStyles({
   root: {
     height: "100%",
     display: "flex",
@@ -18,8 +18,28 @@ const styles = theme => ({
   }
 });
 
-class AssetTable extends Component {
-  render() {
+interface Props extends WithStyles<typeof styles> {
+  tableData: Array<
+    [
+      string, // id
+      {
+        [property: string]: string | null;
+      }
+    ]
+  >;
+  columns: Array<{
+    title: string;
+    property: string;
+  }>;
+  sortProperty: string | null;
+  sortDirection: "asc" | "desc";
+  selected: string[];
+  changeSorting: (property: string) => void;
+  handleRowClick: (e: MouseEvent, id: string | null) => void;
+}
+
+class AssetTable extends React.Component<Props> {
+  public render() {
     return (
       <div className={this.props.classes.root}>
         <Table>
@@ -36,7 +56,9 @@ class AssetTable extends Component {
                 columns={this.props.columns}
                 rowData={rowData}
                 selected={this.props.selected.includes(rowId)}
-                handleRowClick={e => this.props.handleRowClick(e, rowId)}
+                handleRowClick={(e: MouseEvent) =>
+                  this.props.handleRowClick(e, rowId)
+                }
               />
             ))}
           </TableBody>

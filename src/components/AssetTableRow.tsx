@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import StatusIndicator from "./StatusIndicator.js";
 
-const styles = theme => ({
+const styles = createStyles({
   row: { height: "36px", cursor: "pointer", userSelect: "none" },
   cell: {
     fontSize: "0.75rem",
@@ -15,8 +14,20 @@ const styles = theme => ({
   }
 });
 
-class AssetTableRow extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+interface Props extends WithStyles<typeof styles> {
+  rowData: {
+    [property: string]: string | null;
+  };
+  columns: Array<{
+    title: string;
+    property: string;
+  }>;
+  selected: boolean;
+  handleRowClick: (e: MouseEvent) => void;
+}
+
+class AssetTableRow extends React.Component<Props> {
+  public shouldComponentUpdate(nextProps: Props) {
     if (
       this.props.rowData.timestamp !== nextProps.rowData.timestamp ||
       this.props.selected !== nextProps.selected
@@ -25,7 +36,7 @@ class AssetTableRow extends Component {
     else return false;
   }
 
-  render() {
+  public render() {
     return (
       <TableRow
         hover
