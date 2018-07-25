@@ -9,7 +9,7 @@
     "trailing-comma": false,
     "ordered-imports": false,
     //"no-var-requires": false,
-    //"interface-name": false,
+    "interface-name": false,
     "object-literal-sort-keys": false,
     //"no-eval": false,
     //"one-line": false
