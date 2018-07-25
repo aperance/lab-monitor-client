@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { historySelect } from "../actions/actionCreators";
 import History from "../components/History";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   const properties =
     state.userSelection.rows.length === 1
       ? Object.keys(state.historyData[state.userSelection.rows[0]])
@@ -20,9 +20,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    handleClick: property => {
+    handleClick: (property: string) => {
       dispatch(historySelect(property));
     }
   };

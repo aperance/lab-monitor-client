@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import PsTools from "../components/PsTools";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   return {
     target: state.userSelection.rows[0],
     presets: state.configuration.psTools,

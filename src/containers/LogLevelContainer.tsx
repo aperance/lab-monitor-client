@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { dialogVisibility } from "../actions/actionCreators";
 import LogLevel from "../components/LogLevel";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   return {
     levels: state.configuration.logLevel
       ? state.configuration.logLevel.level
@@ -15,10 +15,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     cancelLogLevel: () => dispatch(dialogVisibility({ logLevel: false }))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogLevel);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LogLevel);
