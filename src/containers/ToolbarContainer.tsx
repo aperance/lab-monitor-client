@@ -2,18 +2,22 @@ import { connect } from "react-redux";
 import { viewSelect, dialogVisibility } from "../actions/actionCreators";
 import Toolbar from "../components/Toolbar";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   return {
     rows: state.userSelection.rows,
     view: state.userSelection.view
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    handleViewClick: selectedView => dispatch(viewSelect(selectedView)),
+    handleViewClick: (selectedView: string) =>
+      dispatch(viewSelect(selectedView)),
     openLogLevel: () => dispatch(dialogVisibility({ logLevel: true }))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Toolbar);

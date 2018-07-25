@@ -8,12 +8,10 @@ const styles = createStyles({
     height: "100%",
     top: "0px",
     overflowY: "hidden",
-    backgroundColor: "rgba(255, 255, 255, 1)"
-    // boxShadow: [
-    //   "-2px 0px 4px -1px rgba(0, 0, 0, 0.2)",
-    //   "-4px 0px 5px 0px rgba(0, 0, 0, 0.14)",
-    //   "-1px 0px 10px 0px rgba(0, 0, 0, 0.12)"
-    // ]
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    boxShadow: `-2px 0px 4px -1px rgba(0, 0, 0, 0.2),
+      -4px 0px 5px 0px rgba(0, 0, 0, 0.14),
+      -1px 0px 10px 0px rgba(0, 0, 0, 0.12)`
   },
   dragBar: {
     position: "fixed",

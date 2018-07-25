@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Icon from "@material-ui/core/Icon";
-import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = createStyles({
   selected: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
   icon: {
     marginRight: "0px",
@@ -19,10 +19,22 @@ const styles = theme => ({
   }
 });
 
-class ToolbarItem extends Component {
-  render() {
+interface Props extends WithStyles<typeof styles> {
+  name: string;
+  icon: string;
+  selected?: boolean;
+  chevron: boolean;
+  onClick: () => void;
+}
+
+class ToolbarItem extends React.Component<Props> {
+  public render() {
     return (
-      <div className={this.props.selected ? this.props.classes.selected : null}>
+      <div
+        className={
+          this.props.selected ? this.props.classes.selected : undefined
+        }
+      >
         <ListItem button onClick={this.props.onClick}>
           <ListItemIcon className={this.props.classes.icon}>
             <Icon>{this.props.icon}</Icon>

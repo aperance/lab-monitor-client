@@ -1,11 +1,18 @@
-import React, { Component } from "react";
+import * as React from "react";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import ToolbarItem from "./ToolbarItem.js";
-import socket from "../websocket.ts";
+import ToolbarItem from "./ToolbarItem";
+import socket from "../websocket";
 
-class Toolbar extends Component {
-  render() {
+interface Props {
+  view: string | null;
+  rows: string[];
+  handleViewClick: (view: string) => null;
+  openLogLevel: () => void;
+}
+
+class Toolbar extends React.Component<Props> {
+  public render() {
     return (
       <List>
         {this.props.rows.length === 1 && (
@@ -15,35 +22,35 @@ class Toolbar extends Component {
               icon="toc"
               chevron={true}
               selected={this.props.view === "statePage"}
-              onClick={e => this.props.handleViewClick("statePage")}
+              onClick={() => this.props.handleViewClick("statePage")}
             />
             <ToolbarItem
               name="Logs"
               icon="description"
               chevron={true}
               selected={this.props.view === "logsPage"}
-              onClick={e => this.props.handleViewClick("logsPage")}
+              onClick={() => this.props.handleViewClick("logsPage")}
             />
             <ToolbarItem
               name="History"
               icon="history"
               chevron={true}
               selected={this.props.view === "history"}
-              onClick={e => this.props.handleViewClick("history")}
+              onClick={() => this.props.handleViewClick("history")}
             />
             <ToolbarItem
               name="PSTools"
               icon="code"
               chevron={true}
               selected={this.props.view === "psTools"}
-              onClick={e => this.props.handleViewClick("psTools")}
+              onClick={() => this.props.handleViewClick("psTools")}
             />
             <ToolbarItem
               name="VNC"
               icon="picture_in_picture"
               chevron={true}
               selected={this.props.view === "vnc"}
-              onClick={e => this.props.handleViewClick("vnc")}
+              onClick={() => this.props.handleViewClick("vnc")}
             />
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
           </>
@@ -53,31 +60,33 @@ class Toolbar extends Component {
           name="Log Level"
           icon="settings"
           chevron={false}
-          onClick={e => this.props.openLogLevel()}
+          onClick={() => this.props.openLogLevel()}
         />
         <ToolbarItem
           name="Delete Logs"
           icon="delete"
           chevron={false}
-          onClick={e => socket.sendDeviceAction(this.props.rows, "deleteLogs")}
+          onClick={() => socket.sendDeviceAction(this.props.rows, "deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
           icon="refresh"
           chevron={false}
-          onClick={e => socket.sendDeviceAction(this.props.rows, "cleanStart")}
+          onClick={() => socket.sendDeviceAction(this.props.rows, "cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
           icon="memory"
           chevron={false}
-          onClick={e => socket.sendDeviceAction(this.props.rows, "ramClear")}
+          onClick={(): void =>
+            socket.sendDeviceAction(this.props.rows, "ramClear")
+          }
         />
         <ToolbarItem
           name="Reset Display"
           icon="desktop_windows"
           chevron={false}
-          onClick={e =>
+          onClick={() =>
             socket.sendDeviceAction(this.props.rows, "resetDisplay")
           }
         />
@@ -86,7 +95,7 @@ class Toolbar extends Component {
           name="Refresh Monitoring"
           icon="refresh"
           chevron={false}
-          onClick={e => socket.sendRefreshDevice(this.props.rows)}
+          onClick={() => socket.sendRefreshDevice(this.props.rows)}
         />
       </List>
     );
