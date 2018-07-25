@@ -1,4 +1,5 @@
 import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import NavBar from "./components/NavBar";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
@@ -6,23 +7,29 @@ import DrawersContainer from "./containers/DrawersContainer";
 import LogLevelContainer from "./containers/LogLevelContainer";
 import ActionResponseContainer from "./containers/ActionResponseContainer";
 
-class Layout extends React.Component {
+const styles = createStyles({
+  root: {
+    height: "calc(100vh - 80px)",
+    paddingTop: "68px",
+    display: "flex",
+    overflowX: "hidden"
+  },
+  filter: { flex: 0, borderRight: "1px solid #0000001f" },
+  table: { flex: 1 }
+});
+
+interface Props extends WithStyles<typeof styles> {}
+
+class Layout extends React.Component<Props> {
   public render() {
     return (
       <div>
         <NavBar />
-        <div
-          style={{
-            height: "calc(100vh - 80px)",
-            paddingTop: "68px",
-            display: "flex",
-            overflowX: "hidden"
-          }}
-        >
-          <div style={{ flex: 0, borderRight: "1px solid #0000001f" }}>
+        <div className={this.props.classes.root}>
+          <div className={this.props.classes.filter}>
             <FilterBarContainer />
           </div>
-          <div style={{ flex: 1 }}>
+          <div className={this.props.classes.table}>
             <AssetTableContainer />
           </div>
         </div>
@@ -34,4 +41,4 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout;
+export default withStyles(styles)(Layout);
