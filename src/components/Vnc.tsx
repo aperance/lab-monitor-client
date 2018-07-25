@@ -1,27 +1,36 @@
-import React, { Component } from "react";
+import * as React from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import RFB from "../../node_modules/@novnc/novnc/core/rfb.js";
+// @ts-ignore
+import RFB from "../../node_modules/@novnc/novnc/core/rfb";
 
-class Vnc extends Component {
-  constructor(props) {
-    super(props);
-    this.rfb = null;
-    this.state = { status: "pending" };
-  }
+interface Props {
+  url: string;
+  password: string;
+}
 
-  componentDidMount() {
+interface State {
+  status: string;
+}
+
+class Vnc extends React.Component<Props, State> {
+  public rfb: any = null;
+  public state: State = {
+    status: "pending"
+  };
+
+  public componentDidMount() {
     this.connectVnc();
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     if (this.rfb) this.rfb.disconnect();
   }
 
-  componentDidUpdate(prevProps) {
+  public componentDidUpdate(prevProps: Props) {
     if (this.props.url !== prevProps.url) this.connectVnc();
   }
 
-  connectVnc() {
+  public connectVnc() {
     this.setState({ status: "pending" });
     if (this.rfb) this.rfb.disconnect();
     if (this.props.url) {
@@ -30,10 +39,10 @@ class Vnc extends Component {
       });
       this.rfb.scaleViewport = true;
       this.rfb.resizeSession = true;
-      this.rfb.addEventListener("connect", e => {
+      this.rfb.addEventListener("connect", () => {
         this.setState({ status: "connected" });
       });
-      this.rfb.addEventListener("disconnect", e => {
+      this.rfb.addEventListener("disconnect", (e: any) => {
         if (!e.detail.clean) {
           this.setState({ status: "error" });
           this.rfb = null;
@@ -42,7 +51,7 @@ class Vnc extends Component {
     }
   }
 
-  render() {
+  public render() {
     return (
       <div style={{ height: "100%" }}>
         {this.state.status === "pending" && <LinearProgress />}

@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = createStyles({
   paper: {
     height: "500px",
     width: "100%",
@@ -14,8 +14,12 @@ const styles = theme => ({
   pre: { padding: "10px 10px 10px 10px", whiteSpace: "pre-wrap" }
 });
 
-class Terminal extends Component {
-  render() {
+interface Props extends WithStyles<typeof styles> {
+  output: string;
+}
+
+class Terminal extends React.Component<Props> {
+  public render() {
     return (
       <Paper className={this.props.classes.paper} elevation={8} square={true}>
         <pre className={this.props.classes.pre}>{this.props.output}</pre>

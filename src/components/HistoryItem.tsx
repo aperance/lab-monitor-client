@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Collection, List, AutoSizer } from "react-virtualized";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// import { Collection, List, AutoSizer } from "react-virtualized";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemText from "@material-ui/core/ListItemText";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Icon from "@material-ui/core/Icon";
 
-const styles = theme => ({
+const styles = createStyles({
   root: {
     backgroundColor: "white",
     borderTop: "1px solid #0000001f",
@@ -35,13 +35,20 @@ const styles = theme => ({
   }
 });
 
-class HistoryItem extends Component {
-  render() {
+interface Props extends WithStyles<typeof styles> {
+  style: any;
+  selected: boolean;
+  property: string;
+  handleClick: (property: string) => void;
+}
+
+class HistoryItem extends React.Component<Props> {
+  public render() {
     return (
       <div
         style={this.props.style}
         className={this.props.classes.root}
-        onClick={e => this.props.handleClick(this.props.property)}
+        onClick={() => this.props.handleClick(this.props.property)}
       >
         <div className={this.props.classes.topRow}>
           <span className={this.props.classes.title}>

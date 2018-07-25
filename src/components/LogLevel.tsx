@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,21 +9,31 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import socket from "../websocket.ts";
+import socket from "../websocket";
 
-const styles = theme => ({
+const styles = createStyles({
   form: { display: "flex", flexWrap: "wrap" },
   selectNamespace: { width: "230px", marginRight: "32px" },
   selectLevel: { width: "90px" }
 });
 
-class LogLevel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { namespace: "", level: "" };
-  }
+interface Props extends WithStyles<typeof styles> {
+  open: boolean;
+  namespaces: string[];
+  levels: string[];
+  targets: string[];
+  cancelLogLevel: () => void;
+}
 
-  render() {
+interface State {
+  namespace: string;
+  level: string;
+}
+
+class LogLevel extends React.Component<Props, State> {
+  public state: State = { namespace: "", level: "" };
+
+  public render() {
     return (
       <Dialog open={this.props.open} onClose={this.props.cancelLogLevel}>
         <DialogContent>
@@ -64,7 +74,7 @@ class LogLevel extends Component {
 
         <DialogActions>
           <Button
-            onClick={e => {
+            onClick={() => {
               socket.sendDeviceAction(
                 this.props.targets,
                 "logLevel",

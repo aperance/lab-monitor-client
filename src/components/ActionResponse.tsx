@@ -1,23 +1,29 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
-const styles = theme => ({
-  close: {
-    width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4
-  }
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    close: {
+      width: theme.spacing.unit * 4,
+      height: theme.spacing.unit * 4
+    }
+  });
 
-class ActionResponse extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
+interface Props extends WithStyles<typeof styles> {
+  visible: boolean;
+  handleClose: () => void;
+}
+
+class ActionResponse extends React.Component<Props> {
+  public shouldComponentUpdate(nextProps: Props) {
     if (this.props.visible !== nextProps.visible) return true;
     else return false;
   }
 
-  render() {
+  public render() {
     const { classes } = this.props;
     return (
       <Snackbar

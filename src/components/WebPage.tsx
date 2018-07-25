@@ -1,7 +1,11 @@
-import React, { Component } from "react";
+import * as React from "react";
 
-class WebPage extends Component {
-  render() {
+interface Props {
+  url: string;
+}
+
+class WebPage extends React.Component<Props> {
+  public render() {
     return (
       <iframe
         src={this.props.url}

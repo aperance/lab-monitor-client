@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
-const styles = theme => ({
+const styles = createStyles({
   root: {
     backgroundColor: "white",
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -18,8 +18,10 @@ const styles = theme => ({
   }
 });
 
-class NavBar extends Component {
-  render() {
+interface Props extends WithStyles<typeof styles> {}
+
+class NavBar extends React.Component<Props> {
+  public render() {
     return (
       <AppBar
         position="fixed"

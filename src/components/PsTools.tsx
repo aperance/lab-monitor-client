@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -7,9 +7,10 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Terminal from "./Terminal";
-import socket from "../websocket.ts";
+import socket from "../websocket";
 
-const styles = theme => ({
+// @ts-ignore
+const styles = createStyles({
   container: {
     margin: "24px 32px 0px 32px",
     "& form": { display: "flex", flexWrap: "wrap", marginTop: "16px" },
@@ -23,13 +24,32 @@ const styles = theme => ({
   text: { fontSize: "0.825rem" }
 });
 
-class PsTools extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { preset: "", mode: "", cmd: "" };
-  }
+interface Props extends WithStyles<typeof styles> {
+  presets: {
+    [x: string]: {
+      name: string;
+      mode: string;
+      cmd: string;
+    };
+  };
+  target: string;
+  result: string;
+}
 
-  render() {
+interface State {
+  preset: string;
+  mode: string;
+  cmd: string;
+}
+
+class PsTools extends React.Component<Props, State> {
+  public state: State = {
+    preset: "",
+    mode: "",
+    cmd: ""
+  };
+
+  public render() {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
@@ -88,7 +108,7 @@ class PsTools extends Component {
 
           <Button
             size="small"
-            onClick={e =>
+            onClick={() =>
               socket.sendPsToolsCommand(this.props.target, this.state)
             }
           >

@@ -1,34 +1,46 @@
-import React, { Component } from "react";
-import { Collection, List, AutoSizer } from "react-virtualized";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+import { Collection, AutoSizer } from "react-virtualized";
 import HistoryItem from "./HistoryItem";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import { withStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
 
-const styles = theme => ({});
+const styles = createStyles({});
 
-class HistoryList extends Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
+interface Props extends WithStyles<typeof styles> {
+  properties: string[];
+  selectedIndex: number;
+  handleClick: (property: string) => void;
+}
+
+class HistoryList extends React.Component<Props> {
+  public collectionRef: any = null;
+
+  public componentDidUpdate() {
     this.recomputeCells();
   }
 
-  recomputeCells() {
-    this.collectionRef && this.collectionRef.recomputeCellSizesAndPositions();
+  public recomputeCells() {
+    if (this.collectionRef) this.collectionRef.recomputeCellSizesAndPositions();
   }
 
-  render() {
+  public render() {
     return (
       <AutoSizer onResize={this.recomputeCells.bind(this)}>
-        {({ height, width }) => (
+        {({ height, width }: any) => (
           <Collection
-            ref={ref => (this.collectionRef = ref)}
+            ref={(ref: any) => (this.collectionRef = ref)}
             height={height + 200}
             width={width}
             verticalOverscanSize={5}
             cellCount={this.props.properties.length + 4}
-            cellRenderer={({ key, index, isScrolling, style }) => (
+            cellRenderer={({
+              key,
+              index,
+              style
+            }: {
+              key: number;
+              index: number;
+              style: any;
+            }) => (
               <HistoryItem
                 key={key}
                 style={style}
@@ -37,7 +49,7 @@ class HistoryList extends Component {
                 handleClick={this.props.handleClick}
               />
             )}
-            cellSizeAndPositionGetter={({ index }) => {
+            cellSizeAndPositionGetter={({ index }: { index: number }) => {
               const isSelected = this.props.selectedIndex === index;
               const isBelowSelected =
                 this.props.selectedIndex !== -1 &&
