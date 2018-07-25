@@ -73,7 +73,7 @@ class Socket {
    *
    */
   public sendPsToolsCommand(
-    target: string[],
+    target: string,
     { mode, cmd }: { mode: string; cmd: string }
   ) {
     this.sendToServer({
