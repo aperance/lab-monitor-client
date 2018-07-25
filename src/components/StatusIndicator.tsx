@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 
-const styles = theme => ({
+const styles = createStyles({
   root: {
     fontSize: "15px",
     transition: "opacity 0.5s",
@@ -10,20 +10,26 @@ const styles = theme => ({
   }
 });
 
-const colorLookup = {
+const colorLookup: { [x: string]: string } = {
   CONNECTED: "mediumseagreen",
   RETRY: "mediumseagreen",
   DISCONNECTED: "rgb(239, 239, 35)",
   INACTIVE: "crimson"
 };
 
-class StatusIndicator extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { animate: false };
-  }
+interface Props extends WithStyles<typeof styles> {
+  timestamp: string | null;
+  status: string | null;
+}
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+interface State {
+  animate: boolean;
+}
+
+class StatusIndicator extends React.Component<Props, State> {
+  public state: State = { animate: false };
+
+  public componentDidUpdate(prevProps: Props) {
     if (!this.state.animate && prevProps.timestamp !== this.props.timestamp) {
       setTimeout(() => {
         this.setState({ animate: false });
@@ -32,13 +38,13 @@ class StatusIndicator extends Component {
     }
   }
 
-  render() {
+  public render() {
     return (
       <Icon
         classes={this.props.classes}
         style={{
           opacity: this.state.animate ? 0.5 : 1,
-          color: colorLookup[this.props.status]
+          color: colorLookup[this.props.status || "INACTIVE"]
         }}
       >
         lens

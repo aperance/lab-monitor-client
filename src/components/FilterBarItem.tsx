@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-const styles = theme => ({
+const styles = createStyles({
   formControlLabel: {
     marginLeft: "0px"
   },
@@ -22,8 +22,16 @@ const styles = theme => ({
   }
 });
 
-class FilterBarItem extends Component {
-  render() {
+interface Props extends WithStyles<typeof styles> {
+  selectedFilters: { [property: string]: string[] };
+  property: string;
+  regex: string;
+  label: string;
+  handleCheckboxClick: (property: string, regex: string) => void;
+}
+
+class FilterBarItem extends React.Component<Props> {
+  public render() {
     return (
       <FormControlLabel
         className={this.props.classes.formControlLabel}
@@ -38,7 +46,7 @@ class FilterBarItem extends Component {
                 this.props.regex
               )
             }
-            onClick={e =>
+            onClick={() =>
               this.props.handleCheckboxClick(
                 this.props.property,
                 this.props.regex

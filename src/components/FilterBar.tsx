@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FilterBarItem from "./FilterBarItem";
 
-const styles = theme => ({
+const styles = createStyles({
   root: {
     paddingTop: "20px",
     paddingLeft: "12px",
@@ -22,8 +22,22 @@ const styles = theme => ({
   }
 });
 
-class FilterBar extends Component {
-  render() {
+interface Filter {
+  property: string;
+  title: string;
+  options: {
+    [label: string]: string;
+  };
+}
+
+interface Props extends WithStyles<typeof styles> {
+  filters: Filter[];
+  selectedFilters: { [property: string]: string[] };
+  handleCheckboxClick: (property: string, regex: string) => void;
+}
+
+class FilterBar extends React.Component<Props> {
+  public render() {
     return (
       <FormControl className={this.props.classes.root}>
         {this.props.filters.map(filter => {

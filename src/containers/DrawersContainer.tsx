@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 import Drawers from "../components/Drawers";
 import ToolbarContainer from "../containers/ToolbarContainer";
@@ -7,7 +7,7 @@ import WebPageContainer from "../containers/WebPageContainer";
 import PsToolsContainer from "../containers/PsToolsContainer";
 import VncContainer from "../containers/VncContainer";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   return {
     drawersVisible:
       state.userSelection.rows[0] === undefined
@@ -19,7 +19,7 @@ const mapStateToProps = state => {
   };
 };
 
-const viewLookup = {
+const viewLookup: { [view: string]: any } = {
   history: <HistoryContainer />,
   logsPage: <WebPageContainer />,
   statePage: <WebPageContainer />,
@@ -27,13 +27,20 @@ const viewLookup = {
   vnc: <VncContainer />
 };
 
-class DrawerContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { subViewWidth: 600, isDragging: false };
-  }
+interface Props {
+  drawersVisible: number;
+  subView: string | null;
+}
 
-  changeWidth(e) {
+interface State {
+  subViewWidth: number;
+  isDragging: boolean;
+}
+
+class DrawerContainer extends React.Component<Props, State> {
+  public state: State = { subViewWidth: 600, isDragging: false };
+
+  public changeWidth(e: any) {
     if (this.state.isDragging) {
       this.setState({
         subViewWidth: Math.max(window.innerWidth - e.pageX, 400)
@@ -41,7 +48,7 @@ class DrawerContainer extends Component {
     }
   }
 
-  render() {
+  public render() {
     return (
       <div
         onMouseUp={() => this.setState({ isDragging: false })}
@@ -55,7 +62,7 @@ class DrawerContainer extends Component {
           startDrag={() => this.setState({ isDragging: true })}
         >
           <ToolbarContainer />
-          {viewLookup[this.props.subView]}
+          {this.props.subView && viewLookup[this.props.subView]}
         </Drawers>
       </div>
     );

@@ -2,7 +2,7 @@ import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import StatusIndicator from "./StatusIndicator.js";
+import StatusIndicator from "./StatusIndicator";
 
 const styles = createStyles({
   row: { height: "36px", cursor: "pointer", userSelect: "none" },

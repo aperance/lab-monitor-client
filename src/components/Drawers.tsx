@@ -1,19 +1,19 @@
-import React, { Component } from "react";
+import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = createStyles({
   drawer: {
     position: "fixed",
     height: "100%",
     top: "0px",
     overflowY: "hidden",
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    boxShadow: [
-      "-2px 0px 4px -1px rgba(0, 0, 0, 0.2)",
-      "-4px 0px 5px 0px rgba(0, 0, 0, 0.14)",
-      "-1px 0px 10px 0px rgba(0, 0, 0, 0.12)"
-    ]
+    backgroundColor: "rgba(255, 255, 255, 1)"
+    // boxShadow: [
+    //   "-2px 0px 4px -1px rgba(0, 0, 0, 0.2)",
+    //   "-4px 0px 5px 0px rgba(0, 0, 0, 0.14)",
+    //   "-1px 0px 10px 0px rgba(0, 0, 0, 0.12)"
+    // ]
   },
   dragBar: {
     position: "fixed",
@@ -31,48 +31,55 @@ const styles = theme => ({
   }
 });
 
-class Drawers extends Component {
-  render() {
-    const {
-      drawersVisible,
-      subViewWidth,
-      classes,
-      children,
-      isDragging,
-      startDrag
-    } = this.props;
+interface Props extends WithStyles<typeof styles> {
+  subViewWidth: number;
+  drawersVisible: number;
+  isDragging: boolean;
+  children: React.Component[];
+  startDrag: () => void;
+}
+
+class Drawers extends React.Component<Props> {
+  public render() {
     return (
       <div>
         <div
-          className={classes.drawer}
+          className={this.props.classes.drawer}
           style={{
             width: "200px",
-            right: [-200, 0, subViewWidth][drawersVisible] + "px",
-            transition: isDragging ? "0s" : ".5s"
-          }}
-        >
-          {children[0]}
-        </div>
-        <div
-          className={classes.dragBar}
-          style={{
-            right: [-200, 0, subViewWidth][drawersVisible] - 5 + "px",
-            transition: isDragging ? "0s" : ".5s"
-          }}
-          onMouseDown={startDrag}
-        >
-          <Icon className={classes.icon}>drag_indicator</Icon>
-        </div>
-        <div
-          className={classes.drawer}
-          style={{
-            width: subViewWidth + "px",
             right:
-              [-(200 + subViewWidth), -subViewWidth, 0][drawersVisible] + "px",
-            transition: isDragging ? "0s" : ".5s"
+              [-200, 0, this.props.subViewWidth][this.props.drawersVisible] +
+              "px",
+            transition: this.props.isDragging ? "0s" : ".5s"
           }}
         >
-          {children[1]}
+          {this.props.children[0]}
+        </div>
+        <div
+          className={this.props.classes.dragBar}
+          style={{
+            right:
+              [-200, 0, this.props.subViewWidth][this.props.drawersVisible] -
+              5 +
+              "px",
+            transition: this.props.isDragging ? "0s" : ".5s"
+          }}
+          onMouseDown={this.props.startDrag}
+        >
+          <Icon className={this.props.classes.icon}>drag_indicator</Icon>
+        </div>
+        <div
+          className={this.props.classes.drawer}
+          style={{
+            width: this.props.subViewWidth + "px",
+            right:
+              [-(200 + this.props.subViewWidth), -this.props.subViewWidth, 0][
+                this.props.drawersVisible
+              ] + "px",
+            transition: this.props.isDragging ? "0s" : ".5s"
+          }}
+        >
+          {this.props.children[1]}
         </div>
       </div>
     );
