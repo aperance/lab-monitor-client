@@ -28,6 +28,7 @@ class HistoryList extends React.Component<Props> {
         {({ height, width }: any) => (
           <Collection
             ref={(ref: any) => (this.collectionRef = ref)}
+            style={{ position: "absolute", right: "0px" }} // overwritten if through class
             height={height + 200}
             width={width}
             verticalOverscanSize={5}
