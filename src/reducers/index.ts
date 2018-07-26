@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { StoreState } from "../types";
 import configurationReducer from "./configurationReducer";
 import tableDataReducer from "./tableDataReducer";
 import userSelectionReducer from "./userSelectionReducer";
@@ -7,7 +8,7 @@ import dialogReducer from "./dialogReducer";
 import psToolsReducer from "./psToolsReducer";
 import actionResponseReducer from "./actionResponseReducer";
 
-export default combineReducers({
+export default combineReducers<StoreState>({
   configuration: configurationReducer,
   tableData: tableDataReducer,
   userSelection: userSelectionReducer,

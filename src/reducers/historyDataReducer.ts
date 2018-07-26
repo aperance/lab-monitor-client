@@ -1,14 +1,9 @@
 import { Actions, IAction } from "../actions/actionTypes";
-
-interface IState {
-  [id: string]: {
-    [property: string]: Array<[string, string | null]>;
-  };
-}
+import { HistoryDataState } from "../types";
 
 const initialState = {};
 
-export default (state: IState = initialState, action: IAction) => {
+export default (state: HistoryDataState = initialState, action: IAction) => {
   switch (action.type) {
     case Actions.DEVICE_DATA_ALL:
       return { ...action.history };

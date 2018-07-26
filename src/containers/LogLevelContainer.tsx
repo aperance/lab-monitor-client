@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
+import { StoreState } from "../types";
 import { dialogVisibility } from "../actions/actionCreators";
 import LogLevel from "../components/LogLevel";
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StoreState) => {
   return {
     levels: state.configuration.logLevel
       ? state.configuration.logLevel.level

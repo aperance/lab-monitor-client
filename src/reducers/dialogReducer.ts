@@ -1,12 +1,9 @@
 import { Actions, IAction } from "../actions/actionTypes";
-
-interface IState {
-  logLevel: boolean;
-}
+import { DialogState } from "../types";
 
 const initialState = { logLevel: false };
 
-export default (state: IState = initialState, action: IAction) => {
+export default (state: DialogState = initialState, action: IAction) => {
   switch (action.type) {
     case Actions.DIALOG_VISIBILITY:
       return { ...state, logLevel: action.logLevel };

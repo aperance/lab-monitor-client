@@ -1,13 +1,9 @@
 import { Actions, IAction } from "../actions/actionTypes";
-
-interface IState {
-  err: Error | null;
-  result: string | null;
-}
+import { PsToolsState } from "../types";
 
 const initialState = { result: null, err: null };
 
-export default (state: IState = initialState, action: IAction) => {
+export default (state: PsToolsState = initialState, action: IAction) => {
   switch (action.type) {
     case Actions.PSTOOLS_RESPONSE:
       return { ...state, result: action.result };

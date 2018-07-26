@@ -1,17 +1,9 @@
 import { Actions, IAction } from "../actions/actionTypes";
-
-interface IState {
-  rows: string[];
-  view: string | null;
-  history: string | null;
-  filters: {
-    [property: string]: string[];
-  };
-}
+import { UserSelectionState } from "../types";
 
 const initialState = { rows: [], view: null, history: null, filters: {} };
 
-export default (state: IState = initialState, action: IAction) => {
+export default (state: UserSelectionState = initialState, action: IAction) => {
   switch (action.type) {
     case Actions.SINGLE_ROW_SELECT:
       if (

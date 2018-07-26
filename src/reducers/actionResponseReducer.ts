@@ -1,15 +1,9 @@
 import { Actions, IAction } from "../actions/actionTypes";
+import { ActionResponseState } from "../types";
 
-interface IResult {
-  err: Error | null;
-  results: any[] | null;
-}
+const initialState: ActionResponseState = [];
 
-interface IState extends Array<IResult> {}
-
-const initialState: IState = [];
-
-export default (state = initialState, action: IAction) => {
+export default (state: ActionResponseState = initialState, action: IAction) => {
   switch (action.type) {
     case Actions.ACTION_RESPONSE_SET:
       return [action.result];

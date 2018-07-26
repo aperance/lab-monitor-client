@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
+import { StoreState } from "../types";
 import Vnc from "../components/Vnc";
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StoreState) => {
   if (state.userSelection.rows.length === 1)
     return {
       url:

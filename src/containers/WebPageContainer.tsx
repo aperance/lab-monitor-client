@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
+import { StoreState } from "../types";
 import WebPage from "../components/WebPage";
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StoreState) => {
   switch (state.userSelection.view) {
     case "statePage":
       return {

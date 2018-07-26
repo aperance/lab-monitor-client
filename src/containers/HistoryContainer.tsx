@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
+import { StoreState } from "../types";
 import { historySelect } from "../actions/actionCreators";
 import History from "../components/History";
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StoreState) => {
   const properties =
     state.userSelection.rows.length === 1
       ? Object.keys(state.historyData[state.userSelection.rows[0]])
@@ -10,9 +11,9 @@ const mapStateToProps = (state: any) => {
   return {
     properties,
     selectedProperty: state.userSelection.history,
-    selectedIndex: properties.indexOf(state.userSelection.history),
+    selectedIndex: properties.indexOf(state.userSelection.history || ""),
     selectedData:
-      state.userSelection.rows.length === 1
+      state.userSelection.history && state.userSelection.rows.length === 1
         ? state.historyData[state.userSelection.rows[0]][
             state.userSelection.history
           ]

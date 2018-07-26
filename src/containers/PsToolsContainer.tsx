@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
+import { StoreState } from "../types";
 import PsTools from "../components/PsTools";
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StoreState) => {
   return {
     target: state.userSelection.rows[0],
     presets: state.configuration.psTools,

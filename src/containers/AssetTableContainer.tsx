@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { StoreState } from "../types";
 import { singleRowSelect, multiRowSelect } from "../actions/actionCreators";
 import AssetTable from "../components/AssetTable";
 
@@ -24,7 +25,7 @@ interface IProps {
   handleRowClick: (e: MouseEvent, id: string) => void;
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StoreState) => {
   return {
     columns: state.configuration.columns,
     selectedFilters: state.userSelection.filters,

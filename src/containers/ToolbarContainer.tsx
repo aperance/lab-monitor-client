@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
+import { StoreState } from "../types";
 import { viewSelect, dialogVisibility } from "../actions/actionCreators";
 import Toolbar from "../components/Toolbar";
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StoreState) => {
   return {
     rows: state.userSelection.rows,
     view: state.userSelection.view

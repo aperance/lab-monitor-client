@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
+import { StoreState } from "../types";
 import { filterSelect } from "../actions/actionCreators";
 import FilterBar from "../components/FilterBar";
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: StoreState) => {
   return {
     filters: state.configuration.filters,
     selectedFilters: state.userSelection.filters
