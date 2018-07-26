@@ -1,14 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { StoreState } from "../types";
+import { StoreState, TableDataState } from "../types";
 import { singleRowSelect, multiRowSelect } from "../actions/actionCreators";
 import AssetTable from "../components/AssetTable";
-
-interface ITableData {
-  [id: string]: {
-    [property: string]: string | null;
-  };
-}
 
 interface IState {
   sortProperty: string | null;
@@ -16,12 +10,15 @@ interface IState {
 }
 
 interface IProps {
-  columns: any;
+  columns: Array<{
+    title: string;
+    property: string;
+  }>;
   selectedFilters: {
     [property: string]: string[];
   };
-  selected: any;
-  tableData: ITableData;
+  selected: string[];
+  tableData: TableDataState;
   handleRowClick: (e: MouseEvent, id: string) => void;
 }
 
@@ -55,7 +52,7 @@ class AssetTableContainer extends React.Component<IProps, IState> {
   /**
    *
    */
-  public static getDerivedStateFromProps(nextProps: any, prevState: any) {
+  public static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
     // Use first column as default sort by property.
     // Only set if not already set, and column data is known.
     if (!prevState.sortProperty && nextProps.columns[0])
@@ -84,7 +81,7 @@ class AssetTableContainer extends React.Component<IProps, IState> {
   /**
    *
    */
-  public sortAndFilter(tableData: ITableData) {
+  public sortAndFilter(tableData: TableDataState) {
     return Object.entries(tableData)
       .filter(([, rowData]) =>
         Object.entries(this.props.selectedFilters).every(
