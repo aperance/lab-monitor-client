@@ -149,9 +149,9 @@ class Socket {
    *
    */
   private deviceActionResponseHandler(data: any) {
-    if ((data.err !== null && data.err !== Error) || data.result === undefined)
+    if ((data.err !== null && data.err !== Error) || data.results === undefined)
       console.error("Inavlid device action response: " + data);
-    else store.dispatch(actionResponseSet(data.err, data.result));
+    else store.dispatch(actionResponseSet(data.err, data.results));
   }
 
   /**
