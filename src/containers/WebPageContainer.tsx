@@ -8,13 +8,17 @@ const mapStateToProps = (state: StoreState) => {
       return {
         url:
           "http://" +
-          state.userSelection.rows[0] +
-          state.configuration.statePath
+          state.configuration.httpProxy +
+          state.configuration.statePath +
+          state.userSelection.rows[0]
       };
     case "logsPage":
       return {
         url:
-          "http://" + state.userSelection.rows[0] + state.configuration.logsPath
+          "http://" +
+          state.configuration.httpProxy +
+          state.configuration.logsPath +
+          state.userSelection.rows[0]
       };
     default:
       return {
