@@ -1,9 +1,8 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-// import { Collection, List, AutoSizer } from "react-virtualized";
-// import ListItem from "@material-ui/core/ListItem";
-// import ListItemText from "@material-ui/core/ListItemText";
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Table from "@material-ui/core/Table";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
 import Icon from "@material-ui/core/Icon";
 
 const styles = createStyles({
@@ -32,13 +31,26 @@ const styles = createStyles({
     fontSize: "1.25rem",
     transitionProperty: "transform",
     transitionDuration: "0.4s"
+  },
+  table: { marginTop: "12px" },
+  row: {
+    fontSize: "0.75rem",
+    color: "rgba(0, 0, 0, 0.54)",
+    height: "24px",
+    display: "flex"
+  },
+  cell: {
+    borderBottom: "none",
+    padding: "4px 24px",
+    whiteSpace: "nowrap"
   }
 });
 
 interface Props extends WithStyles<typeof styles> {
   style: any;
-  selected: boolean;
+  isSelected: boolean;
   property: string;
+  historyData: Array<[string, string | null]> | null;
   handleClick: (property: string) => void;
 }
 
@@ -56,13 +68,36 @@ class HistoryItem extends React.Component<Props> {
           </span>
           <Icon
             className={this.props.classes.icon}
-            style={this.props.selected ? { transform: "rotate(0.5turn)" } : {}}
+            style={
+              this.props.isSelected ? { transform: "rotate(0.5turn)" } : {}
+            }
           >
             expand_more
           </Icon>
         </div>
-        {this.props.selected && (
-          <div style={{ backgroundColor: "red", height: "100%" }}> </div>
+        {this.props.isSelected && (
+          <div>
+            {this.props.historyData && (
+              <Table className={this.props.classes.table}>
+                {this.props.historyData.map(([key, value]) => (
+                  <TableRow classes={{ root: this.props.classes.row }}>
+                    <TableCell
+                      className={this.props.classes.cell}
+                      style={{ flexGrow: 0 }}
+                    >
+                      {key}
+                    </TableCell>
+                    <TableCell
+                      className={this.props.classes.cell}
+                      style={{ flexGrow: 1 }}
+                    >
+                      {value}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </Table>
+            )}
+          </div>
         )}
       </div>
     );

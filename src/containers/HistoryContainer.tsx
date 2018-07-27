@@ -10,7 +10,6 @@ const mapStateToProps = (state: StoreState) => {
       : [];
   return {
     properties,
-    selectedProperty: state.userSelection.history,
     selectedIndex: properties.indexOf(state.userSelection.history || ""),
     selectedData:
       state.userSelection.history && state.userSelection.rows.length === 1
