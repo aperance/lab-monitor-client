@@ -15,6 +15,7 @@ export default (state: HistoryDataState = initialState, action: IAction) => {
           (acc, [key, newRecord]) => {
             if (!acc[key]) acc[key] = [];
             acc[key] = [newRecord, ...acc[key]];
+            while (acc[key].length > 10) acc[key].pop();
             return acc;
           },
           { ...state[action.id] }
