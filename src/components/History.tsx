@@ -8,6 +8,7 @@ const styles = createStyles({});
 interface Props extends WithStyles<typeof styles> {
   properties: string[];
   selectedIndex: number;
+  selectedData: Array<[string, string | null]>;
   handleClick: (property: string) => void;
 }
 
@@ -29,10 +30,10 @@ class HistoryList extends React.Component<Props> {
           <Collection
             ref={(ref: any) => (this.collectionRef = ref)}
             style={{ position: "absolute", right: "0px" }} // overwritten if through class
-            height={height + 200}
+            height={height + 320}
             width={width}
             verticalOverscanSize={5}
-            cellCount={this.props.properties.length + 4}
+            cellCount={this.props.properties.length + 7}
             cellRenderer={({
               key,
               index,
@@ -46,7 +47,12 @@ class HistoryList extends React.Component<Props> {
                 key={key}
                 style={style}
                 property={this.props.properties[index]}
-                selected={this.props.selectedIndex === index}
+                isSelected={this.props.selectedIndex === index}
+                historyData={
+                  this.props.selectedIndex === index
+                    ? this.props.selectedData
+                    : null
+                }
                 handleClick={this.props.handleClick}
               />
             )}
@@ -57,9 +63,9 @@ class HistoryList extends React.Component<Props> {
                 index > this.props.selectedIndex;
               return {
                 x: 0,
-                y: isBelowSelected ? 40 * (index + 4) : 40 * index,
+                y: isBelowSelected ? 40 * (index + 7) : 40 * index,
                 width: width - 65,
-                height: isSelected ? 200 : 40
+                height: isSelected ? 320 : 40
               };
             }}
           />
