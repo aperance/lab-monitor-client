@@ -6,25 +6,14 @@ import {
   resetAll
 } from "./actions/actionCreators";
 import store from "./store";
-
-interface IMessage {
-  type: MessageType;
-  payload: {
-    [key: string]: any;
-  };
-}
-
-enum MessageType {
-  DeviceDataAll = "DEVICE_DATA_ALL",
-  DeviceDataUpdate = "DEVICE_DATA_UPDATE",
-  RefreshDevice = "REFRESH_DEVICE",
-  DeviceAction = "DEVICE_ACTION",
-  DeviceActionResponse = "DEVICE_ACTION_RESPONSE",
-  PsToolsCommand = "PSTOOLS_COMMAND",
-  PsToolsCommandResponse = "PSTOOLS_COMMAND_RESPONSE",
-  UserDialog = "USER_DIALOG",
-  Error = "ERROR"
-}
+import {
+  WsMessage,
+  WsMessageTypeKeys,
+  DeviceDataAll,
+  DeviceDataUpdate,
+  PsToolsResponse,
+  DeviceActionResponse
+} from "./types";
 
 /**
  *
@@ -38,7 +27,8 @@ class Socket {
     this.socket.addEventListener("open", () => {
       console.log("websocket connected");
       this.socket.addEventListener("message", message => {
-        this.messageHandler(message.data);
+        // @ts-ignore
+        this.messageHandler(JSON.parse(message.data) as unknown);
       });
     });
 
@@ -54,7 +44,7 @@ class Socket {
    */
   public sendRefreshDevice(targets: string[]) {
     this.sendToServer({
-      type: MessageType.RefreshDevice,
+      type: WsMessageTypeKeys.RefreshDevice,
       payload: { targets }
     });
   }
@@ -64,7 +54,7 @@ class Socket {
    */
   public sendDeviceAction(targets: string[], action: string, parameters = {}) {
     this.sendToServer({
-      type: MessageType.DeviceAction,
+      type: WsMessageTypeKeys.DeviceAction,
       payload: { targets, type: action, parameters }
     });
   }
@@ -77,7 +67,7 @@ class Socket {
     { mode, cmd }: { mode: string; cmd: string }
   ) {
     this.sendToServer({
-      type: MessageType.PsToolsCommand,
+      type: WsMessageTypeKeys.PsToolsCommand,
       payload: { target, mode, argument: cmd }
     });
   }
@@ -85,93 +75,86 @@ class Socket {
   /**
    *
    */
-  private messageHandler(message: any) {
+  private sendToServer(message: WsMessage) {
+    this.socket.send(JSON.stringify(message));
+  }
+
+  /**
+   *
+   */
+  // @ts-ignore
+  private messageHandler(message: unknown) {
     console.log(message);
-    const { type, payload } = JSON.parse(message);
-    if (
-      typeof type !== "string" ||
-      typeof payload !== "object" ||
-      payload === null
-    ) {
-      console.error("WS message received with unexpected structure.");
-      return;
-    }
+    if (!isWsMessage(message)) return;
+    const { type, payload } = message;
     switch (type) {
-      case MessageType.DeviceDataAll:
-        this.deviceDataAllHandler(payload);
+      case WsMessageTypeKeys.DeviceDataAll:
+        if (isDeviceDataAll(payload)) store.dispatch(deviceDataAll(payload));
         break;
-      case MessageType.DeviceDataUpdate:
-        this.deviceDataUpdateHandler(payload);
+      case WsMessageTypeKeys.DeviceDataUpdate:
+        if (isDeviceDataUpdate(payload))
+          store.dispatch(deviceDataUpdate(payload));
         break;
-      case MessageType.DeviceActionResponse:
-        this.deviceActionResponseHandler(payload);
+      case WsMessageTypeKeys.DeviceActionResponse:
+        if (isDeviceActionResponse(payload))
+          store.dispatch(actionResponseSet(payload));
         break;
-      case MessageType.PsToolsCommandResponse:
-        this.psToolsCommandResponseHandler(payload);
+      case WsMessageTypeKeys.PsToolsCommandResponse:
+        if (isPsToolsResponse(payload))
+          store.dispatch(psToolsResponse(payload));
         break;
       default:
         console.error("Invalid WS message type specified");
         break;
     }
   }
-
-  /**
-   *
-   */
-  private deviceDataAllHandler(data: any) {
-    const isValidState = Object.values(data.state).every(oneDeep => {
-      if (typeof oneDeep !== "object") return false;
-      return Object.values(oneDeep).every(twoDeep => {
-        if (typeof twoDeep !== "string") return false;
-        else return true;
-      });
-    });
-
-    if (isValidState) store.dispatch(deviceDataAll(data.state, data.history));
-    else console.error("Invalid device data received.");
-  }
-
-  /**
-   *
-   */
-  private deviceDataUpdateHandler(data: any) {
-    // if (
-    //   typeof data.id !== "string" ||
-    //   typeof data.state !== "object" ||
-    //   typeof data.history !== "object"
-    // )
-    //   console.error("Inavlid device data: " + data);
-    // else
-    store.dispatch(deviceDataUpdate(data.id, data.state, data.history));
-  }
-
-  /**
-   *
-   */
-  private deviceActionResponseHandler(data: any) {
-    if ((data.err !== null && data.err !== Error) || data.results === undefined)
-      console.error("Inavlid device action response: " + data);
-    else store.dispatch(actionResponseSet(data.err, data.results));
-  }
-
-  /**
-   *
-   */
-  private psToolsCommandResponseHandler(data: any) {
-    if (
-      (data.err !== null && data.err !== Error) ||
-      (data.result !== null && typeof data.result !== "string")
-    )
-      console.error("Inavlid psTools response: " + data);
-    else store.dispatch(psToolsResponse(data.err, data.result));
-  }
-
-  /**
-   *
-   */
-  private sendToServer(message: IMessage) {
-    this.socket.send(JSON.stringify(message));
-  }
 }
+
+const isWsMessage = (message: any): message is WsMessage => {
+  if (
+    typeof message.type === "string" &&
+    typeof message.payload === "object" &&
+    message.payload !== null
+  )
+    return true;
+  else {
+    console.error("WS message received with unexpected structure.");
+    return false;
+  }
+};
+
+const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
+  if (payload) return true;
+  else {
+    console.error("Invalid device data received.");
+    return false;
+  }
+};
+
+const isDeviceDataUpdate = (payload: any): payload is DeviceDataUpdate => {
+  if (payload) return true;
+  else {
+    console.error("Invalid device data received.");
+    return false;
+  }
+};
+
+const isPsToolsResponse = (payload: any): payload is PsToolsResponse => {
+  if (payload) return true;
+  else {
+    console.error("Invalid response received.");
+    return false;
+  }
+};
+
+const isDeviceActionResponse = (
+  payload: any
+): payload is DeviceActionResponse => {
+  if (payload) return true;
+  else {
+    console.error("Invalid response received.");
+    return false;
+  }
+};
 
 export default new Socket("ws://10.91.1.1:4000/data");

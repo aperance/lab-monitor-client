@@ -1,14 +1,13 @@
-import { Actions, IAction } from "../actions/actionTypes";
-import { HistoryDataState } from "../types";
+import { Actions, ActionTypeKeys, HistoryDataState } from "../types";
 
 const initialState = {};
 
-export default (state: HistoryDataState = initialState, action: IAction) => {
+export default (state: HistoryDataState = initialState, action: Actions) => {
   switch (action.type) {
-    case Actions.DEVICE_DATA_ALL:
+    case ActionTypeKeys.DEVICE_DATA_ALL:
       return { ...action.history };
 
-    case Actions.DEVICE_DATA_UPDATE:
+    case ActionTypeKeys.DEVICE_DATA_UPDATE:
       return {
         ...state,
         [action.id]: action.history.reduce(
@@ -21,7 +20,7 @@ export default (state: HistoryDataState = initialState, action: IAction) => {
         )
       };
 
-    case Actions.RESET_ALL:
+    case ActionTypeKeys.RESET_ALL:
       return {};
 
     default:

@@ -1,11 +1,10 @@
-import { Actions, IAction } from "../actions/actionTypes";
-import { UserSelectionState } from "../types";
+import { Actions, ActionTypeKeys, UserSelectionState } from "../types";
 
 const initialState = { rows: [], view: null, history: null, filters: {} };
 
-export default (state: UserSelectionState = initialState, action: IAction) => {
+export default (state: UserSelectionState = initialState, action: Actions) => {
   switch (action.type) {
-    case Actions.SINGLE_ROW_SELECT:
+    case ActionTypeKeys.SINGLE_ROW_SELECT:
       if (
         action.row === null ||
         (state.rows.length === 1 && state.rows.indexOf(action.row) === 0)
@@ -13,22 +12,22 @@ export default (state: UserSelectionState = initialState, action: IAction) => {
         return { ...state, rows: [], view: null, history: null };
       else return { ...state, rows: [action.row] };
 
-    case Actions.MULTI_ROW_SELECT:
+    case ActionTypeKeys.MULTI_ROW_SELECT:
       const rows: string[] = [...state.rows];
       if (rows.indexOf(action.row) === -1) rows.push(action.row);
       else rows.splice(rows.indexOf(action.row), 1);
       return { ...state, rows, view: null, history: null };
 
-    case Actions.VIEW_SELECT:
+    case ActionTypeKeys.VIEW_SELECT:
       if (action.view === state.view || state.rows.length !== 1)
         return { ...state, view: null, history: null };
       else return { ...state, view: action.view, history: null };
 
-    case Actions.HISTORY_SELECT:
+    case ActionTypeKeys.HISTORY_SELECT:
       if (action.property === state.history) return { ...state, history: null };
       else return { ...state, history: action.property };
 
-    case Actions.FILTER_SELECT:
+    case ActionTypeKeys.FILTER_SELECT:
       const regexArray = state.filters[action.property] || [];
       const currentIndex = regexArray.indexOf(action.regex);
       currentIndex === -1
@@ -39,7 +38,7 @@ export default (state: UserSelectionState = initialState, action: IAction) => {
         filters: { ...state.filters, [action.property]: regexArray }
       };
 
-    case Actions.RESET_ALL:
+    case ActionTypeKeys.RESET_ALL:
       return { ...initialState };
 
     default:

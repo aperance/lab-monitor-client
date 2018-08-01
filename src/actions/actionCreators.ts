@@ -1,91 +1,80 @@
 import {
-  Actions,
-  IDeviceDataAllAction,
-  IDeviceDataUpdateAction,
-  IResetAllAction,
-  ISingleRowSelectAction,
-  IMultiRowSelectAction,
-  IViewSelectAction,
-  IHistorySelectAction,
-  IFilterSelectAction,
-  IPsToolsResponseAction,
-  IDialogVisibilityAction,
-  IActionResponseSet,
-  IActionResponseClear
-} from "./actionTypes";
+  ActionTypeKeys,
+  DeviceDataAll,
+  DeviceDataAllAction,
+  DeviceDataUpdate,
+  DeviceDataUpdateAction,
+  PsToolsResponse,
+  PsToolsResponseAction,
+  DeviceActionResponse,
+  DeviceActionResponseSetAction,
+  DeviceActionResponseClearAction,
+  ResetAllAction,
+  SingleRowSelectAction,
+  MultiRowSelectAction,
+  ViewSelectAction,
+  HistorySelectAction,
+  FilterSelectAction,
+  DialogVisibilityAction
+} from "../types";
 
-export const deviceDataAll = (
-  state: {
-    [id: string]: {
-      [property: string]: string;
-    };
-  },
-  history: {
-    [id: string]: {
-      [property: string]: Array<[string, string | null]>;
-    };
-  }
-): IDeviceDataAllAction => {
-  return { type: Actions.DEVICE_DATA_ALL, state, history };
+export const deviceDataAll = (payload: DeviceDataAll): DeviceDataAllAction => {
+  return { ...payload, type: ActionTypeKeys.DEVICE_DATA_ALL };
 };
 
 export const deviceDataUpdate = (
-  id: string,
-  state: { [property: string]: string | null },
-  history: Array<[string, [string, string | null]]>
-): IDeviceDataUpdateAction => {
-  return { type: Actions.DEVICE_DATA_UPDATE, id, state, history };
+  payload: DeviceDataUpdate
+): DeviceDataUpdateAction => {
+  return { ...payload, type: ActionTypeKeys.DEVICE_DATA_UPDATE };
 };
 
-export const resetAll = (): IResetAllAction => {
-  return { type: Actions.RESET_ALL };
+export const psToolsResponse = (
+  payload: PsToolsResponse
+): PsToolsResponseAction => {
+  return { ...payload, type: ActionTypeKeys.PSTOOLS_RESPONSE };
 };
 
-export const singleRowSelect = (row: string): ISingleRowSelectAction => {
-  return { type: Actions.SINGLE_ROW_SELECT, row };
+export const actionResponseSet = (
+  payload: DeviceActionResponse
+): DeviceActionResponseSetAction => {
+  return { ...payload, type: ActionTypeKeys.ACTION_RESPONSE_SET };
 };
 
-export const multiRowSelect = (row: string): IMultiRowSelectAction => {
-  return { type: Actions.MULTI_ROW_SELECT, row };
+export const actionResponseClear = (): DeviceActionResponseClearAction => {
+  return { type: ActionTypeKeys.ACTION_RESPONSE_CLEAR };
 };
 
-export const viewSelect = (view: string): IViewSelectAction => {
-  return { type: Actions.VIEW_SELECT, view };
+export const resetAll = (): ResetAllAction => {
+  return { type: ActionTypeKeys.RESET_ALL };
 };
 
-export const historySelect = (property: string): IHistorySelectAction => {
-  return { type: Actions.HISTORY_SELECT, property };
+export const singleRowSelect = (row: string): SingleRowSelectAction => {
+  return { type: ActionTypeKeys.SINGLE_ROW_SELECT, row };
+};
+
+export const multiRowSelect = (row: string): MultiRowSelectAction => {
+  return { type: ActionTypeKeys.MULTI_ROW_SELECT, row };
+};
+
+export const viewSelect = (view: string): ViewSelectAction => {
+  return { type: ActionTypeKeys.VIEW_SELECT, view };
+};
+
+export const historySelect = (property: string): HistorySelectAction => {
+  return { type: ActionTypeKeys.HISTORY_SELECT, property };
 };
 
 export const filterSelect = (
   property: string,
   regex: string
-): IFilterSelectAction => {
-  return { type: Actions.FILTER_SELECT, property, regex };
+): FilterSelectAction => {
+  return { type: ActionTypeKeys.FILTER_SELECT, property, regex };
 };
 
 export const dialogVisibility = ({
   logLevel
 }: {
   logLevel: boolean;
-}): IDialogVisibilityAction => {
-  return { type: Actions.DIALOG_VISIBILITY, logLevel };
-};
-
-export const psToolsResponse = (
-  err: Error,
-  result: string
-): IPsToolsResponseAction => {
-  return { type: Actions.PSTOOLS_RESPONSE, result, err };
-};
-
-export const actionResponseSet = (
-  err: Error,
-  result: any
-): IActionResponseSet => {
-  return { type: Actions.ACTION_RESPONSE_SET, err, result };
-};
-
-export const actionResponseClear = (): IActionResponseClear => {
-  return { type: Actions.ACTION_RESPONSE_CLEAR };
+}): DialogVisibilityAction => {
+  return { type: ActionTypeKeys.DIALOG_VISIBILITY, logLevel };
 };

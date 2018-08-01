@@ -1,13 +1,12 @@
-import { Actions, IAction } from "../actions/actionTypes";
-import { TableDataState } from "../types";
+import { Actions, ActionTypeKeys, TableDataState } from "../types";
 
 const initialState = {};
 
-export default (state: TableDataState = initialState, action: IAction) => {
+export default (state: TableDataState = initialState, action: Actions) => {
   switch (action.type) {
-    case Actions.DEVICE_DATA_ALL:
+    case ActionTypeKeys.DEVICE_DATA_ALL:
       return { ...action.state };
-    case Actions.DEVICE_DATA_UPDATE:
+    case ActionTypeKeys.DEVICE_DATA_UPDATE:
       return {
         ...state,
         [action.id]: {
@@ -15,7 +14,7 @@ export default (state: TableDataState = initialState, action: IAction) => {
           ...action.state
         }
       };
-    case Actions.RESET_ALL:
+    case ActionTypeKeys.RESET_ALL:
       return {} as TableDataState;
     default:
       return { ...state };
