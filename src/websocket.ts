@@ -1,4 +1,4 @@
-/** @module websocket */
+/** @module WebSocket */
 
 import {
   WsMessage,
