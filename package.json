@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^1.4.0",
+    "@material-ui/core": "^1.4.2",
     "@material-ui/icons": "^1.1.0",
     "@novnc/novnc": "^1.0.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-virtualized": "^9.20.1",
@@ -20,14 +20,14 @@
     "start": "node_modules/.bin/webpack-dev-server --hot"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.54",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
-    "@babel/preset-env": "^7.0.0-beta.54",
-    "@babel/preset-react": "^7.0.0-beta.54",
-    "@babel/preset-typescript": "^7.0.0-beta.54",
-    "@types/react": "^16.4.6",
+    "@babel/core": "^7.0.0-beta.55",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.55",
+    "@babel/preset-env": "^7.0.0-beta.55",
+    "@babel/preset-react": "^7.0.0-beta.55",
+    "@babel/preset-typescript": "^7.0.0-beta.55",
+    "@types/react": "^16.4.7",
     "@types/react-dom": "^16.0.6",
-    "@types/react-redux": "^6.0.4",
+    "@types/react-redux": "^6.0.5",
     "@types/react-virtualized": "^9.18.5",
     "@types/redux": "^3.6.0",
     "@types/redux-logger": "^3.0.6",
@@ -37,9 +37,9 @@
     "source-map-loader": "^0.2.3",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1",
-    "webpack": "^4.16.1",
+    "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.5"
   },
   "browserslist": {
     "development": [
