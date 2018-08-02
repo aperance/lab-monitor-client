@@ -33,7 +33,7 @@ interface Props extends WithStyles<typeof styles> {
     };
   };
   target: string;
-  result: string;
+  result?: string;
 }
 
 interface State {

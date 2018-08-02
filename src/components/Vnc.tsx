@@ -4,8 +4,8 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import RFB from "../../node_modules/@novnc/novnc/core/rfb";
 
 interface Props {
-  url: string;
-  password: string;
+  url: string | null;
+  password: string | null;
 }
 
 interface State {

@@ -15,7 +15,7 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  output: string;
+  output?: string;
 }
 
 class Terminal extends React.Component<Props> {

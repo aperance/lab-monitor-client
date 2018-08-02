@@ -4,24 +4,6 @@ import { StoreState, TableDataState } from "../types";
 import { singleRowSelect, multiRowSelect } from "../actions/actionCreators";
 import AssetTable from "../components/AssetTable";
 
-interface IState {
-  sortProperty: string | null;
-  sortDirection: "asc" | "desc";
-}
-
-interface IProps {
-  columns: Array<{
-    title: string;
-    property: string;
-  }>;
-  selectedFilters: {
-    [property: string]: string[];
-  };
-  selected: string[];
-  tableData: TableDataState;
-  handleRowClick: (e: MouseEvent, id: string) => void;
-}
-
 const mapStateToProps = (state: StoreState) => {
   return {
     columns: state.configuration.columns,
@@ -40,11 +22,26 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
+interface State {
+  sortProperty: string | null;
+  sortDirection: "asc" | "desc";
+}
+
+interface Props {
+  columns: any;
+  selectedFilters: {
+    [property: string]: string[];
+  };
+  selected: string[];
+  tableData: TableDataState;
+  handleRowClick: (e: MouseEvent, id: string) => void;
+}
+
 /**
  *
  */
-class AssetTableContainer extends React.Component<IProps, IState> {
-  public state: IState = {
+class AssetTableContainer extends React.Component<Props, State> {
+  public state: State = {
     sortProperty: null,
     sortDirection: "desc"
   };
@@ -52,7 +49,10 @@ class AssetTableContainer extends React.Component<IProps, IState> {
   /**
    *
    */
-  public static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
+  public static getDerivedStateFromProps(
+    nextProps: Props,
+    prevState: State
+  ): State {
     // Use first column as default sort by property.
     // Only set if not already set, and column data is known.
     if (!prevState.sortProperty && nextProps.columns[0])
@@ -60,7 +60,7 @@ class AssetTableContainer extends React.Component<IProps, IState> {
         sortProperty: nextProps.columns[0].property,
         sortDirection: "desc"
       };
-    else return null;
+    else return { ...prevState };
   }
 
   /**
@@ -118,4 +118,5 @@ class AssetTableContainer extends React.Component<IProps, IState> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
+  // @ts-ignore
 )(AssetTableContainer);

@@ -6,7 +6,7 @@ const mapStateToProps = (state: StoreState) => {
   return {
     target: state.userSelection.rows[0],
     presets: state.configuration.psTools,
-    result: state.psTools.result
+    result: state.psTools.result || undefined
   };
 };
 
