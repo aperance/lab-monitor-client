@@ -1,13 +1,13 @@
 /** @module WebSocket */
 
+import { WsMessage, WsMessageTypeKeys } from "./types";
 import {
-  WsMessage,
-  WsMessageTypeKeys,
-  DeviceDataAll,
-  DeviceDataUpdate,
-  PsToolsResponse,
-  DeviceActionResponse
-} from "./types";
+  isWsMessage,
+  isDeviceDataAll,
+  isDeviceDataUpdate,
+  isDeviceActionResponse,
+  isPsToolsResponse
+} from "./typeGuards";
 import {
   actionResponseSet,
   deviceDataAll,
@@ -139,88 +139,5 @@ class Socket {
     }
   }
 }
-
-/**
- * Type Guards
- */
-
-/**
- * Type guard for WsMessage interface
- *
- * @param {any} message
- * @returns {boolean}
- */
-const isWsMessage = (message: any): message is WsMessage => {
-  if (
-    typeof message.type === "string" &&
-    typeof message.payload === "object" &&
-    message.payload !== null
-  )
-    return true;
-  else {
-    console.error("WS message received with unexpected structure.");
-    return false;
-  }
-};
-
-// TODO: Complete type guards
-
-/**
- * Type guard for DeviceDataAll interface
- *
- * @param {any} payload
- * @returns {boolean}
- */
-const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
-  if (payload) return true;
-  else {
-    console.error("Invalid device data received.");
-    return false;
-  }
-};
-
-/**
- * Type guard for DeviceDataUpdate interface
- *
- * @param {any} payload
- * @returns {boolean}
- */
-const isDeviceDataUpdate = (payload: any): payload is DeviceDataUpdate => {
-  if (payload) return true;
-  else {
-    console.error("Invalid device data received.");
-    return false;
-  }
-};
-
-/**
- * Type guard for PsToolsResponse interface
- *
- * @param {any} payload
- * @returns {boolean}
- */
-const isPsToolsResponse = (payload: any): payload is PsToolsResponse => {
-  if (payload) return true;
-  else {
-    console.error("Invalid response received.");
-    return false;
-  }
-};
-
-/**
- * Type guard for DeviceActionResponse interface
- *
- * @param {any} payload
- * @returns {boolean}
- */
-const isDeviceActionResponse = (
-  payload: any
-): payload is DeviceActionResponse => {
-  if (payload) return true;
-  else {
-    console.error("Invalid response received.");
-    return false;
-  }
-};
 
 export default new Socket("ws://10.91.1.1:4000/data");
