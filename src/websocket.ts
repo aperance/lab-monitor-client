@@ -1,11 +1,5 @@
-import {
-  actionResponseSet,
-  deviceDataAll,
-  deviceDataUpdate,
-  psToolsResponse,
-  resetAll
-} from "./actions/actionCreators";
-import store from "./store";
+/** @module websocket */
+
 import {
   WsMessage,
   WsMessageTypeKeys,
@@ -14,33 +8,57 @@ import {
   PsToolsResponse,
   DeviceActionResponse
 } from "./types";
+import {
+  actionResponseSet,
+  deviceDataAll,
+  deviceDataUpdate,
+  psToolsResponse,
+  resetAll
+} from "./actions/actionCreators";
+import store from "./store";
 
 /**
+ * Establishes websocket connection to serve, and handles inbound and
+ * outbound communication.
  *
+ * @param {string} url
  */
 class Socket {
-  private socket: WebSocket;
+  private socket: WebSocket | null = null;
+  private url: string;
 
   constructor(url: string) {
-    this.socket = new WebSocket(url);
+    this.url = url;
+    this.connect();
+  }
+
+  /**
+   * Connect (or reconnect) to websocket server.
+   */
+  public connect() {
+    this.socket = new WebSocket(this.url);
 
     this.socket.addEventListener("open", () => {
       console.log("websocket connected");
-      this.socket.addEventListener("message", message => {
-        // @ts-ignore
-        this.messageHandler(JSON.parse(message.data) as unknown);
-      });
+
+      if (this.socket)
+        this.socket.addEventListener("message", message => {
+          // @ts-ignore
+          this.messageHandler(JSON.parse(message.data) as unknown);
+        });
     });
 
     this.socket.addEventListener("close", () => {
-      console.log("websocket closed");
+      console.log("websocket closed. Retrying in 5 sec...");
       store.dispatch(resetAll());
-      // setTimeout(this.start.bind(this), 5000);
+      setTimeout(this.connect.bind(this), 5000);
     });
   }
 
   /**
+   * Public method to trigger refresh of device tracking by server.
    *
+   * @param {string[]} targets
    */
   public sendRefreshDevice(targets: string[]) {
     this.sendToServer({
@@ -50,7 +68,11 @@ class Socket {
   }
 
   /**
+   * Public method to send action request to device via websocket server.
    *
+   * @param {string[]} targets
+   * @param {string} action
+   * @param {object} parameters
    */
   public sendDeviceAction(targets: string[], action: string, parameters = {}) {
     this.sendToServer({
@@ -60,7 +82,11 @@ class Socket {
   }
 
   /**
+   * Public method to send PsTools command to device via websocket server.
    *
+   * @param {string} target
+   * @param {string} mode
+   * @param {string} cmd
    */
   public sendPsToolsCommand(
     target: string,
@@ -73,14 +99,18 @@ class Socket {
   }
 
   /**
+   * Stringify and emit message object to websocket server.
    *
+   * @param {WsMessage} message
    */
   private sendToServer(message: WsMessage) {
-    this.socket.send(JSON.stringify(message));
+    if (this.socket) this.socket.send(JSON.stringify(message));
   }
 
   /**
+   * Determine redux action to be dispatched based on an incoming websocket message.
    *
+   * @param {unknown} message
    */
   // @ts-ignore
   private messageHandler(message: unknown) {
@@ -110,6 +140,16 @@ class Socket {
   }
 }
 
+/**
+ * Type Guards
+ */
+
+/**
+ * Type guard for WsMessage interface
+ *
+ * @param {any} message
+ * @returns {boolean}
+ */
 const isWsMessage = (message: any): message is WsMessage => {
   if (
     typeof message.type === "string" &&
@@ -123,6 +163,14 @@ const isWsMessage = (message: any): message is WsMessage => {
   }
 };
 
+// TODO: Complete type guards
+
+/**
+ * Type guard for DeviceDataAll interface
+ *
+ * @param {any} payload
+ * @returns {boolean}
+ */
 const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
   if (payload) return true;
   else {
@@ -131,6 +179,12 @@ const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
   }
 };
 
+/**
+ * Type guard for DeviceDataUpdate interface
+ *
+ * @param {any} payload
+ * @returns {boolean}
+ */
 const isDeviceDataUpdate = (payload: any): payload is DeviceDataUpdate => {
   if (payload) return true;
   else {
@@ -139,6 +193,12 @@ const isDeviceDataUpdate = (payload: any): payload is DeviceDataUpdate => {
   }
 };
 
+/**
+ * Type guard for PsToolsResponse interface
+ *
+ * @param {any} payload
+ * @returns {boolean}
+ */
 const isPsToolsResponse = (payload: any): payload is PsToolsResponse => {
   if (payload) return true;
   else {
@@ -147,6 +207,12 @@ const isPsToolsResponse = (payload: any): payload is PsToolsResponse => {
   }
 };
 
+/**
+ * Type guard for DeviceActionResponse interface
+ *
+ * @param {any} payload
+ * @returns {boolean}
+ */
 const isDeviceActionResponse = (
   payload: any
 ): payload is DeviceActionResponse => {
