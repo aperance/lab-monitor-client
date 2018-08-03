@@ -14,6 +14,7 @@ import {
  */
 export const isWsMessage = (message: any): message is WsMessage => {
   if (
+    JSON.stringify(Object.keys(message).sort()) === '["payload","type"]' &&
     typeof message.type === "string" &&
     typeof message.payload === "object" &&
     message.payload !== null
@@ -34,7 +35,18 @@ export const isWsMessage = (message: any): message is WsMessage => {
  * @returns {boolean}
  */
 export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
-  if (payload) return true;
+  if (
+    JSON.stringify(Object.keys(payload).sort()) === '["history","state"]' &&
+    typeof payload.history === "object" &&
+    typeof payload.state === "object" &&
+    (payload.history !== null && payload.state !== null) &&
+    (!Array.isArray(payload.history) && !Array.isArray(payload.state)) &&
+    Object.values(payload.state).length !== 0 &&
+    Object.values(payload.state).every(
+      x => typeof x === "object" && x !== null && !Array.isArray(x)
+    )
+  )
+    return true;
   else {
     console.error("Invalid device data received.");
     return false;
