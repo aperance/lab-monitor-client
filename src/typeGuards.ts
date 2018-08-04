@@ -56,6 +56,7 @@ export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
                 Array.isArray(record) &&
                 record.length === 2 &&
                 typeof record[0] === "string" &&
+                record[0] !== "" &&
                 (typeof record[1] === "string" || record[1] === null)
             )
         )
@@ -79,7 +80,33 @@ export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
 export const isDeviceDataUpdate = (
   payload: any
 ): payload is DeviceDataUpdate => {
-  if (payload) return true;
+  if (
+    JSON.stringify(Object.keys(payload).sort()) ===
+      '["history","id","state"]' &&
+    typeof payload.id === "string" &&
+    payload.id !== "" &&
+    /** Validate contents of state object */
+    isNonEmptyObject(payload.state) &&
+    Object.values(payload.state).every(
+      byProperty => typeof byProperty === "string" || byProperty === null
+    ) &&
+    /** Validate contents of history object */
+    Array.isArray(payload.history) &&
+    payload.history.length !== 0 &&
+    payload.history.every(
+      (byProperty: any) =>
+        Array.isArray(byProperty) &&
+        byProperty.length === 2 &&
+        typeof byProperty[0] === "string" &&
+        byProperty[0] !== "" &&
+        Array.isArray(byProperty[1]) &&
+        byProperty[1].length === 2 &&
+        typeof byProperty[1][0] === "string" &&
+        byProperty[1][0] !== "" &&
+        (typeof byProperty[1][1] === "string" || byProperty[1][1] === null)
+    )
+  )
+    return true;
   else {
     console.error("Invalid device data received.");
     return false;
