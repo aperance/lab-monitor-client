@@ -18,7 +18,9 @@
   "scripts": {
     "tsc": "node_modules/.bin/tsc",
     "test": "node_modules/.bin/jest",
-    "start": "node_modules/.bin/webpack-dev-server --hot"
+    "coverage": "node_modules/.bin/jest --coverage",
+    "start": "node_modules/.bin/webpack-dev-server --hot",
+    "build": "node_modules/.bin/webpack"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.55",
