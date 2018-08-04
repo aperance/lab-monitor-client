@@ -69,8 +69,6 @@ export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
   }
 };
 
-// TODO: Complete type guards
-
 /**
  * Type guard for DeviceDataUpdate interface
  *
@@ -97,12 +95,16 @@ export const isDeviceDataUpdate = (
       (byProperty: any) =>
         Array.isArray(byProperty) &&
         byProperty.length === 2 &&
+        /** Validate property */
         typeof byProperty[0] === "string" &&
         byProperty[0] !== "" &&
+        /** Validate record array */
         Array.isArray(byProperty[1]) &&
         byProperty[1].length === 2 &&
+        /** Validate timestamp */
         typeof byProperty[1][0] === "string" &&
         byProperty[1][0] !== "" &&
+        /** Validate value */
         (typeof byProperty[1][1] === "string" || byProperty[1][1] === null)
     )
   )
@@ -112,6 +114,8 @@ export const isDeviceDataUpdate = (
     return false;
   }
 };
+
+// TODO: Complete type guards
 
 /**
  * Type guard for PsToolsResponse interface
