@@ -59,7 +59,7 @@
     ]
   },
   "jest": {
-    "verbose": true,
+    "verbose": false,
     "testURL": "http://localhost/",
     "roots": [
       "<rootDir>/src"
