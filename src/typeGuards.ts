@@ -14,10 +14,10 @@ import {
  */
 export const isWsMessage = (message: any): message is WsMessage => {
   if (
+    isNonEmptyObject(message) &&
     JSON.stringify(Object.keys(message).sort()) === '["payload","type"]' &&
-    typeof message.type === "string" &&
-    typeof message.payload === "object" &&
-    message.payload !== null
+    isNonEmptyObject(message.payload) &&
+    typeof message.type === "string"
   )
     return true;
   else {
@@ -25,8 +25,6 @@ export const isWsMessage = (message: any): message is WsMessage => {
     return false;
   }
 };
-
-// TODO: Complete type guards
 
 /**
  * Type guard for DeviceDataAll interface
@@ -37,13 +35,30 @@ export const isWsMessage = (message: any): message is WsMessage => {
 export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
   if (
     JSON.stringify(Object.keys(payload).sort()) === '["history","state"]' &&
-    typeof payload.history === "object" &&
-    typeof payload.state === "object" &&
-    (payload.history !== null && payload.state !== null) &&
-    (!Array.isArray(payload.history) && !Array.isArray(payload.state)) &&
-    Object.values(payload.state).length !== 0 &&
+    /** Validate contents of state object */
+    isNonEmptyObject(payload.state) &&
     Object.values(payload.state).every(
-      x => typeof x === "object" && x !== null && !Array.isArray(x)
+      byId =>
+        isNonEmptyObject(byId) &&
+        Object.values(byId).every(byProperty => typeof byProperty === "string")
+    ) &&
+    /** Validate contents of history object */
+    isNonEmptyObject(payload.history) &&
+    Object.values(payload.history).every(
+      byId =>
+        isNonEmptyObject(byId) &&
+        Object.values(byId).every(
+          byProperty =>
+            Array.isArray(byProperty) &&
+            byProperty.length !== 0 &&
+            byProperty.every(
+              record =>
+                Array.isArray(record) &&
+                record.length === 2 &&
+                typeof record[0] === "string" &&
+                (typeof record[1] === "string" || record[1] === null)
+            )
+        )
     )
   )
     return true;
@@ -52,6 +67,8 @@ export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
     return false;
   }
 };
+
+// TODO: Complete type guards
 
 /**
  * Type guard for DeviceDataUpdate interface
@@ -98,3 +115,9 @@ export const isDeviceActionResponse = (
     return false;
   }
 };
+
+const isNonEmptyObject = (x: any) =>
+  typeof x === "object" &&
+  x !== null &&
+  !Array.isArray(x) &&
+  Object.values(x).length !== 0;
