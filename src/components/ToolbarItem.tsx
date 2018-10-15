@@ -21,9 +21,9 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {
   name: string;
-  icon: string;
+  leftIcon: string;
+  rightIcon?: string;
   selected?: boolean;
-  chevron: boolean;
   onClick: () => void;
 }
 
@@ -37,15 +37,15 @@ class ToolbarItem extends React.Component<Props> {
       >
         <ListItem button onClick={this.props.onClick}>
           <ListItemIcon className={this.props.classes.icon}>
-            <Icon>{this.props.icon}</Icon>
+            <Icon>{this.props.leftIcon}</Icon>
           </ListItemIcon>
           <ListItemText
             classes={{ primary: this.props.classes.text }}
             primary={this.props.name}
           />
-          {this.props.chevron && (
+          {this.props.rightIcon && (
             <ListItemIcon className={this.props.classes.icon}>
-              <Icon>navigate_next</Icon>
+              <Icon>{this.props.rightIcon}</Icon>
             </ListItemIcon>
           )}
         </ListItem>

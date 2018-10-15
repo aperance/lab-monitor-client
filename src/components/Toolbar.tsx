@@ -7,6 +7,7 @@ import socket from "../websocket";
 interface Props {
   view: string | null;
   rows: string[];
+  logsUrl: string;
   handleViewClick: (view: string) => null;
   openLogLevel: () => void;
 }
@@ -19,38 +20,38 @@ class Toolbar extends React.Component<Props> {
           <>
             <ToolbarItem
               name="State"
-              icon="toc"
-              chevron={true}
+              leftIcon="toc"
+              rightIcon="navigate_next"
               selected={this.props.view === "statePage"}
               onClick={() => this.props.handleViewClick("statePage")}
             />
             <ToolbarItem
-              name="Logs"
-              icon="description"
-              chevron={true}
-              selected={this.props.view === "logsPage"}
-              onClick={() => this.props.handleViewClick("logsPage")}
-            />
-            <ToolbarItem
               name="History"
-              icon="history"
-              chevron={true}
+              leftIcon="history"
+              rightIcon="navigate_next"
               selected={this.props.view === "history"}
               onClick={() => this.props.handleViewClick("history")}
             />
             <ToolbarItem
               name="PSTools"
-              icon="code"
-              chevron={true}
+              leftIcon="code"
+              rightIcon="navigate_next"
               selected={this.props.view === "psTools"}
               onClick={() => this.props.handleViewClick("psTools")}
             />
             <ToolbarItem
               name="VNC"
-              icon="picture_in_picture"
-              chevron={true}
+              leftIcon="picture_in_picture"
+              rightIcon="navigate_next"
               selected={this.props.view === "vnc"}
               onClick={() => this.props.handleViewClick("vnc")}
+            />
+            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+            <ToolbarItem
+              name="Logs"
+              leftIcon="description"
+              rightIcon="open_in_new"
+              onClick={() => window.open(this.props.logsUrl, "_blank")}
             />
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
           </>
@@ -58,34 +59,29 @@ class Toolbar extends React.Component<Props> {
 
         <ToolbarItem
           name="Log Level"
-          icon="settings"
-          chevron={false}
+          leftIcon="settings"
           onClick={() => this.props.openLogLevel()}
         />
         <ToolbarItem
           name="Delete Logs"
-          icon="delete"
-          chevron={false}
+          leftIcon="delete"
           onClick={() => socket.sendDeviceAction(this.props.rows, "deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
-          icon="refresh"
-          chevron={false}
+          leftIcon="refresh"
           onClick={() => socket.sendDeviceAction(this.props.rows, "cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
-          icon="memory"
-          chevron={false}
+          leftIcon="memory"
           onClick={(): void =>
             socket.sendDeviceAction(this.props.rows, "ramClear")
           }
         />
         <ToolbarItem
           name="Reset Display"
-          icon="desktop_windows"
-          chevron={false}
+          leftIcon="desktop_windows"
           onClick={() =>
             socket.sendDeviceAction(this.props.rows, "resetDisplay")
           }
@@ -93,8 +89,7 @@ class Toolbar extends React.Component<Props> {
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Refresh Monitoring"
-          icon="refresh"
-          chevron={false}
+          leftIcon="refresh"
           onClick={() => socket.sendRefreshDevice(this.props.rows)}
         />
       </List>
