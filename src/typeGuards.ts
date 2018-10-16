@@ -90,7 +90,6 @@ export const isDeviceDataUpdate = (
     ) &&
     /** Validate contents of history object */
     Array.isArray(payload.history) &&
-    payload.history.length !== 0 &&
     payload.history.every(
       (byProperty: any) =>
         Array.isArray(byProperty) &&
