@@ -3,13 +3,14 @@ import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import FilterBarItem from "./FilterBarItem";
 
 const styles = createStyles({
   root: {
-    paddingTop: "20px",
-    paddingLeft: "12px",
-    paddingRight: "12px"
+    padding: "20px 12px 20px 12px",
+    height: "calc(100% - 40px)"
   },
   formLabel: {
     fontSize: "0.75rem",
@@ -19,6 +20,18 @@ const styles = createStyles({
   },
   formGroup: {
     margin: "4px 8px 16px 8px"
+  },
+  switchForm: {
+    transform: "scale(0.75)",
+    margin: 0,
+    position: "absolute",
+    bottom: "8px",
+    left: "0px"
+  },
+  switchLabel: {
+    color: "rgba(0, 0, 0, 0.54)",
+    fontWeight: 400,
+    whiteSpace: "nowrap"
   }
 });
 
@@ -66,6 +79,17 @@ class FilterBar extends React.Component<Props> {
             </div>
           );
         })}
+        <FormControlLabel
+          classes={{
+            root: this.props.classes.switchForm,
+            label: this.props.classes.switchLabel
+          }}
+          control={
+            <Switch checked={true} color="primary" disableRipple={true} />
+          }
+          label="Disable Proxy"
+          labelPlacement="start"
+        />
       </FormControl>
     );
   }
