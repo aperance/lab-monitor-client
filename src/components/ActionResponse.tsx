@@ -13,15 +13,15 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
-  visible: boolean;
+  message: string | null;
   handleClose: () => void;
 }
 
 class ActionResponse extends React.Component<Props> {
-  public shouldComponentUpdate(nextProps: Props) {
-    if (this.props.visible !== nextProps.visible) return true;
-    else return false;
-  }
+  // public shouldComponentUpdate(nextProps: Props) {
+  //   if (this.props.visible !== nextProps.visible) return true;
+  //   else return false;
+  // }
 
   public render() {
     const { classes } = this.props;
@@ -31,10 +31,10 @@ class ActionResponse extends React.Component<Props> {
           vertical: "bottom",
           horizontal: "center"
         }}
-        open={this.props.visible}
+        open={this.props.message ? true : false}
         autoHideDuration={6000}
         onClose={this.props.handleClose}
-        message={<span id="message-id">MESSAGE</span>}
+        message={<span id="message-id">{this.props.message}</span>}
         action={
           <IconButton
             color="inherit"

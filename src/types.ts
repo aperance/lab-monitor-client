@@ -44,7 +44,10 @@ export interface PsToolsResponse {
 
 export interface DeviceActionResponse {
   readonly err: Error | null;
-  readonly result: any;
+  readonly results: Array<{
+    err: Error | null;
+    success: boolean;
+  }> | null;
 }
 
 /** Redux Action Types */
@@ -135,11 +138,10 @@ export type Actions =
 
 /** Redux State Types */
 
-export interface ActionResponseState
-  extends Array<{
-      err: Error | null;
-      results: any[] | null;
-    }> {}
+export interface ActionResponseState {
+  err: Error | null;
+  results: any[] | null;
+}
 
 export interface DialogState {
   logLevel: boolean;

@@ -1,14 +1,14 @@
 import { Actions, ActionTypeKeys, ActionResponseState } from "../types";
 
-const initialState: ActionResponseState = [];
+const initialState: ActionResponseState = { err: null, results: null };
 
 export default (state: ActionResponseState = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.ACTION_RESPONSE_SET:
-      return [action.result];
+      return { err: action.err, results: action.results };
     case ActionTypeKeys.ACTION_RESPONSE_CLEAR:
-      return [];
+      return { err: null, results: null };
     default:
-      return [...state];
+      return { ...state };
   }
 };
