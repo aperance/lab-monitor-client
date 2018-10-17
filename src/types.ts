@@ -58,6 +58,7 @@ export enum ActionTypeKeys {
   VIEW_SELECT = "VIEW_SELECT",
   HISTORY_SELECT = "HISTORY_SELECT",
   FILTER_SELECT = "FILTER_SELECT",
+  PROXY_TOGGLE = "PROXY_TOGGLE",
   DIALOG_VISIBILITY = "DIALOG_VISIBILITY",
   PSTOOLS_RESPONSE = "PSTOOLS_RESPONSE",
   DEVICE_DATA_ALL = "DEVICE_DATA_ALL",
@@ -105,6 +106,10 @@ export interface FilterSelectAction {
   readonly regex: string;
 }
 
+export interface ProxyToggleAction {
+  readonly type: ActionTypeKeys.PROXY_TOGGLE;
+}
+
 export interface PsToolsResponseAction extends PsToolsResponse {
   readonly type: ActionTypeKeys.PSTOOLS_RESPONSE;
 }
@@ -131,6 +136,7 @@ export type Actions =
   | ViewSelectAction
   | HistorySelectAction
   | FilterSelectAction
+  | ProxyToggleAction
   | PsToolsResponseAction
   | DialogVisibilityAction
   | DeviceActionResponseSetAction
@@ -171,6 +177,7 @@ export interface UserSelectionState {
   filters: {
     [property: string]: string[];
   };
+  proxy: boolean;
 }
 
 export interface StoreState {

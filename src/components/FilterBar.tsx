@@ -46,7 +46,9 @@ interface Filter {
 interface Props extends WithStyles<typeof styles> {
   filters: Filter[];
   selectedFilters: { [property: string]: string[] };
+  proxyEnabled: boolean;
   handleCheckboxClick: (property: string, regex: string) => void;
+  handleProxyClick: () => void;
 }
 
 class FilterBar extends React.Component<Props> {
@@ -85,7 +87,12 @@ class FilterBar extends React.Component<Props> {
             label: this.props.classes.switchLabel
           }}
           control={
-            <Switch checked={true} color="primary" disableRipple={true} />
+            <Switch
+              checked={!this.props.proxyEnabled}
+              color="primary"
+              disableRipple={true}
+              onClick={this.props.handleProxyClick}
+            />
           }
           label="Disable Proxy"
           labelPlacement="start"

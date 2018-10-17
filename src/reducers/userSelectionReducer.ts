@@ -1,6 +1,12 @@
 import { Actions, ActionTypeKeys, UserSelectionState } from "../types";
 
-const initialState = { rows: [], view: null, history: null, filters: {} };
+const initialState = {
+  rows: [],
+  view: null,
+  history: null,
+  filters: {},
+  proxy: true
+};
 
 export default (state: UserSelectionState = initialState, action: Actions) => {
   switch (action.type) {
@@ -37,6 +43,9 @@ export default (state: UserSelectionState = initialState, action: Actions) => {
         ...state,
         filters: { ...state.filters, [action.property]: regexArray }
       };
+
+    case ActionTypeKeys.PROXY_TOGGLE:
+      return { ...state, proxy: !state.proxy };
 
     case ActionTypeKeys.RESET_ALL:
       return { ...initialState };

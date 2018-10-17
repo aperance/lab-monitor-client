@@ -15,6 +15,7 @@ import {
   ViewSelectAction,
   HistorySelectAction,
   FilterSelectAction,
+  ProxyToggleAction,
   DialogVisibilityAction
 } from "../types";
 
@@ -69,6 +70,10 @@ export const filterSelect = (
   regex: string
 ): FilterSelectAction => {
   return { type: ActionTypeKeys.FILTER_SELECT, property, regex };
+};
+
+export const proxyToggle = (): ProxyToggleAction => {
+  return { type: ActionTypeKeys.PROXY_TOGGLE };
 };
 
 export const dialogVisibility = ({
