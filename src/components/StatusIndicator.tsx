@@ -27,15 +27,20 @@ interface State {
 }
 
 class StatusIndicator extends React.Component<Props, State> {
+  public timeoutId?: NodeJS.Timer;
   public state: State = { animate: false };
 
   public componentDidUpdate(prevProps: Props) {
     if (!this.state.animate && prevProps.timestamp !== this.props.timestamp) {
-      setTimeout(() => {
+      this.timeoutId = setTimeout(() => {
         this.setState({ animate: false });
       }, 500);
       this.setState({ animate: true });
     }
+  }
+
+  public componentWillUnmount() {
+    if (this.timeoutId) clearTimeout(this.timeoutId);
   }
 
   public render() {
