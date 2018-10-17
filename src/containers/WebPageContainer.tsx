@@ -3,13 +3,17 @@ import { StoreState } from "../types";
 import WebPage from "../components/WebPage";
 
 const mapStateToProps = (state: StoreState) => {
-  return {
-    url:
-      "http://" +
+  let url = "http://";
+  if (state.userSelection.proxy)
+    url +=
       state.configuration.httpProxy +
       state.configuration.statePath +
-      state.userSelection.rows[0]
-  };
+      "&target=" +
+      state.userSelection.rows[0];
+  else
+    url +=
+      state.userSelection.rows[0] + ":8001" + state.configuration.statePath;
+  return { url };
 };
 
 export default connect(mapStateToProps)(WebPage);

@@ -4,14 +4,20 @@ import { viewSelect, dialogVisibility } from "../actions/actionCreators";
 import Toolbar from "../components/Toolbar";
 
 const mapStateToProps = (state: StoreState) => {
+  let logsUrl = "http://";
+  if (state.userSelection.proxy)
+    logsUrl +=
+      state.configuration.httpProxy +
+      state.configuration.logsPath +
+      "?target=" +
+      state.userSelection.rows[0];
+  else
+    logsUrl +=
+      state.userSelection.rows[0] + ":8001" + state.configuration.logsPath;
   return {
     rows: state.userSelection.rows,
     view: state.userSelection.view,
-    logsUrl:
-      "http://" +
-      state.configuration.httpProxy +
-      state.configuration.logsPath +
-      state.userSelection.rows[0]
+    logsUrl
   };
 };
 
