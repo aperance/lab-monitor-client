@@ -43,17 +43,20 @@ class Socket {
       console.log("websocket connected");
 
       if (this.socket)
-        this.socket.addEventListener("message", message => {
-          // @ts-ignore
+        this.socket.onmessage = message => {
           this.messageHandler(JSON.parse(message.data) as unknown);
-        });
+        };
     });
 
-    this.socket.addEventListener("close", () => {
-      console.log("websocket closed. Retrying in 5 sec...");
+    this.socket.onclose = () => {
       store.dispatch(resetAll());
+      store.dispatch(
+        errorMessageSet({
+          err: new Error("Disconnected from server")
+        })
+      );
       setTimeout(this.connect.bind(this), 5000);
-    });
+    };
   }
 
   /**
