@@ -13,6 +13,7 @@ import {
   deviceDataAll,
   deviceDataUpdate,
   psToolsResponse,
+  errorMessageSet,
   resetAll
 } from "./actions/actionCreators";
 import store from "./store";
@@ -134,7 +135,11 @@ class Socket {
           store.dispatch(psToolsResponse(payload));
         break;
       default:
-        console.error("Invalid WS message type specified");
+        store.dispatch(
+          errorMessageSet({
+            err: new Error("Invalid WS message type specified")
+          })
+        );
         break;
     }
   }

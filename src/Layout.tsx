@@ -5,6 +5,7 @@ import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
 import DrawersContainer from "./containers/DrawersContainer";
 import LogLevelContainer from "./containers/LogLevelContainer";
+import ErrorMessageContainer from "./containers/ErrorMessageContainer";
 import ActionResponseContainer from "./containers/ActionResponseContainer";
 
 const styles = createStyles({
@@ -35,6 +36,7 @@ class Layout extends React.Component<Props> {
         </div>
         <DrawersContainer />
         <LogLevelContainer />
+        <ErrorMessageContainer />
         <ActionResponseContainer />
       </div>
     );
