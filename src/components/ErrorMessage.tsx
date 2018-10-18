@@ -20,7 +20,7 @@ class ErrorMessage extends React.Component<Props> {
         <Dialog open={true} onClose={this.props.handleClose}>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {this.props.message.stack}
+              {this.props.message.name + ": " + this.props.message.message}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
