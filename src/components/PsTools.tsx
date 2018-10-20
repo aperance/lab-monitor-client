@@ -7,15 +7,15 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Terminal from "./Terminal";
-import socket from "../websocket";
+import { sendPsToolsCommand } from "../messageHandler";
 
-// @ts-ignore
 const styles = createStyles({
   container: {
     margin: "24px 32px 0px 32px",
     "& form": { display: "flex", flexWrap: "wrap", marginTop: "16px" },
     "& label": { fontSize: "0.825rem" },
     "& button": { margin: "8px 0px 8px" },
+    // @ts-ignore
     "& input": { fontSize: ["0.825rem", "!important"] }
   },
   presetsInput: { width: "100%" },
@@ -108,9 +108,7 @@ class PsTools extends React.Component<Props, State> {
 
           <Button
             size="small"
-            onClick={() =>
-              socket.sendPsToolsCommand(this.props.target, this.state)
-            }
+            onClick={() => sendPsToolsCommand(this.props.target, this.state)}
           >
             Send
           </Button>

@@ -9,7 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import socket from "../websocket";
+import { sendDeviceAction } from "../messageHandler";
 
 const styles = createStyles({
   form: { display: "flex", flexWrap: "wrap" },
@@ -75,11 +75,7 @@ class LogLevel extends React.Component<Props, State> {
         <DialogActions>
           <Button
             onClick={() => {
-              socket.sendDeviceAction(
-                this.props.targets,
-                "logLevel",
-                this.state
-              );
+              sendDeviceAction(this.props.targets, "logLevel", this.state);
               this.props.cancelLogLevel();
             }}
             color="primary"

@@ -2,7 +2,7 @@ import * as React from "react";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ToolbarItem from "./ToolbarItem";
-import socket from "../websocket";
+import { sendDeviceAction, sendRefreshDevice } from "../messageHandler";
 
 interface Props {
   view: string | null;
@@ -65,32 +65,28 @@ class Toolbar extends React.Component<Props> {
         <ToolbarItem
           name="Delete Logs"
           leftIcon="delete"
-          onClick={() => socket.sendDeviceAction(this.props.rows, "deleteLogs")}
+          onClick={() => sendDeviceAction(this.props.rows, "deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
           leftIcon="refresh"
-          onClick={() => socket.sendDeviceAction(this.props.rows, "cleanStart")}
+          onClick={() => sendDeviceAction(this.props.rows, "cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
           leftIcon="memory"
-          onClick={(): void =>
-            socket.sendDeviceAction(this.props.rows, "ramClear")
-          }
+          onClick={(): void => sendDeviceAction(this.props.rows, "ramClear")}
         />
         <ToolbarItem
           name="Reset Display"
           leftIcon="desktop_windows"
-          onClick={() =>
-            socket.sendDeviceAction(this.props.rows, "resetDisplay")
-          }
+          onClick={() => sendDeviceAction(this.props.rows, "resetDisplay")}
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Refresh Monitoring"
           leftIcon="refresh"
-          onClick={() => socket.sendRefreshDevice(this.props.rows)}
+          onClick={() => sendRefreshDevice(this.props.rows)}
         />
       </List>
     );
