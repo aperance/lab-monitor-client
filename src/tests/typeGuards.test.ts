@@ -286,7 +286,7 @@ describe("isDeviceDataUpdate type guard", () => {
   });
 
   describe("history field validation", () => {
-    test.each([undefined, null, 0, {}, { x: {} }, [], true, false, "x"])(
+    test.each([undefined, null, 0, {}, { x: {} }, true, false, "x"])(
       "rejects %p",
       x => {
         const payload = {
