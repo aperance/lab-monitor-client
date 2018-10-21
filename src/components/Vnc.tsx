@@ -39,6 +39,9 @@ class Vnc extends React.Component<Props, State> {
       });
       this.rfb.scaleViewport = true;
       this.rfb.resizeSession = true;
+      this.rfb.clipViewport = false;
+      this.rfb.dragViewport = false;
+      this.rfb.showDotCursor = true;
       this.rfb.addEventListener("connect", () => {
         this.setState({ status: "connected" });
       });
