@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { StoreState, TableDataState } from "../types";
+import { StoreState, RowData } from "../types";
 import { singleRowSelect, multiRowSelect } from "../actions/actionCreators";
 import AssetTable from "../components/AssetTable";
 
@@ -9,7 +9,7 @@ const mapStateToProps = (state: StoreState) => {
     columns: state.configuration.columns,
     selectedFilters: state.userSelection.filters,
     selected: state.userSelection.rows,
-    tableData: state.tableData
+    tableData: Object.entries(state.tableData)
   };
 };
 
@@ -28,12 +28,18 @@ interface State {
 }
 
 interface Props {
-  columns: any;
+  columns: Array<{
+    property: string;
+    title: string;
+    replace?: {
+      [replacement: string]: string;
+    };
+  }>;
   selectedFilters: {
     [property: string]: string[];
   };
   selected: string[];
-  tableData: TableDataState;
+  tableData: RowData[];
   handleRowClick: (e: MouseEvent, id: string) => void;
 }
 
@@ -81,8 +87,28 @@ class AssetTableContainer extends React.Component<Props, State> {
   /**
    *
    */
-  public sortAndFilter(tableData: TableDataState) {
-    return Object.entries(tableData)
+  public findAndReplace(tableData: RowData[]) {
+    const columnsToModify = this.props.columns.filter(
+      x => typeof x.replace !== "undefined"
+    );
+    return tableData.map(([id, rowData]) => {
+      columnsToModify.forEach(({ property, replace }) => {
+        if (replace && rowData[property] !== null) {
+          Object.entries(replace).forEach(([replacement, matcher]) => {
+            if ((rowData[property] as string).match(matcher))
+              rowData[property] = replacement;
+          });
+        }
+      });
+      return [id, rowData] as RowData;
+    });
+  }
+
+  /**
+   *
+   */
+  public sortAndFilter(tableData: RowData[]) {
+    return tableData
       .filter(([, rowData]) =>
         Object.entries(this.props.selectedFilters).every(
           ([property, regexArray]) =>
@@ -103,7 +129,9 @@ class AssetTableContainer extends React.Component<Props, State> {
   public render() {
     return (
       <AssetTable
-        tableData={this.sortAndFilter(this.props.tableData)}
+        tableData={this.sortAndFilter(
+          this.findAndReplace(this.props.tableData)
+        )}
         columns={this.props.columns}
         selected={this.props.selected}
         sortProperty={this.state.sortProperty}

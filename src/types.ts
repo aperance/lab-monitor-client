@@ -56,6 +56,8 @@ export interface ErrorMessage {
   readonly err: Error | null;
 }
 
+export type RowData = [string, { [x: string]: string | null }];
+
 /** Redux Action Types */
 
 export enum ActionTypeKeys {
