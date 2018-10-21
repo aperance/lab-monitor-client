@@ -1,5 +1,9 @@
 import * as React from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Button from "@material-ui/core/Button";
+import ExpandIcon from "@material-ui/icons/Fullscreen";
+import ShrinkIcon from "@material-ui/icons/FullscreenExit";
+import SaveIcon from "@material-ui/icons/GetApp";
 // @ts-ignore
 import RFB from "../../node_modules/@novnc/novnc/core/rfb";
 
@@ -10,12 +14,14 @@ interface Props {
 
 interface State {
   status: string;
+  scale: boolean;
 }
 
 class Vnc extends React.Component<Props, State> {
   public rfb: any = null;
   public state: State = {
-    status: "pending"
+    status: "pending",
+    scale: true
   };
 
   public componentDidMount() {
@@ -26,8 +32,10 @@ class Vnc extends React.Component<Props, State> {
     if (this.rfb) this.rfb.disconnect();
   }
 
-  public componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     if (this.props.url !== prevProps.url) this.connectVnc();
+    if (this.state.scale !== prevState.scale) this.connectVnc();
+    console.log("VNC UPDATED");
   }
 
   public connectVnc() {
@@ -37,7 +45,7 @@ class Vnc extends React.Component<Props, State> {
       this.rfb = new RFB(document.getElementById("vnc"), this.props.url, {
         credentials: { password: this.props.password }
       });
-      this.rfb.scaleViewport = true;
+      this.rfb.scaleViewport = this.state.scale;
       this.rfb.resizeSession = true;
       this.rfb.clipViewport = false;
       this.rfb.dragViewport = false;
@@ -64,6 +72,38 @@ class Vnc extends React.Component<Props, State> {
             remote device.
           </pre>
         )}
+        <Button
+          variant="fab"
+          mini={true}
+          style={{
+            position: "absolute",
+            right: "12px",
+            top: "12px",
+            backgroundColor: "white",
+            opacity: 0.5
+          }}
+          onClick={() => this.setState({ scale: !this.state.scale })}
+        >
+          {this.state.scale ? <ExpandIcon /> : <ShrinkIcon />}
+        </Button>
+        <Button
+          variant="fab"
+          mini={true}
+          style={{
+            position: "absolute",
+            right: "12px",
+            top: "64px",
+            backgroundColor: "white",
+            opacity: 0.5
+          }}
+          href={URL.createObjectURL(
+            new Blob(["abcdef\ndlakfl\njwehjk"], { type: "text/plain" })
+          )}
+          download="test.vnc"
+          target="_blank"
+        >
+          <SaveIcon />
+        </Button>
         <div
           id="vnc"
           style={{
