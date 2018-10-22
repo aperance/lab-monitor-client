@@ -10,6 +10,7 @@ interface Props {
   changeScale: () => void;
   scale: boolean;
   target: any;
+  fileContents?: string;
 }
 
 class Vnc extends React.Component<Props> {
@@ -47,9 +48,12 @@ class Vnc extends React.Component<Props> {
             backgroundColor: "white",
             opacity: 0.5
           }}
-          href={URL.createObjectURL(
-            new Blob(["abcdef\ndlakfl\njwehjk"], { type: "text/plain" })
-          )}
+          href={
+            this.props.fileContents &&
+            URL.createObjectURL(
+              new Blob([this.props.fileContents], { type: "text/plain" })
+            )
+          }
           download="test.vnc"
           target="_blank"
         >

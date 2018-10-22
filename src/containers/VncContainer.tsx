@@ -14,14 +14,20 @@ const mapStateToProps = (state: StoreState) => {
         state.userSelection.rows[0] +
         "&port=" +
         state.configuration.vnc.port,
-      password: state.configuration.vnc.password as string
+      password: state.configuration.vnc.password as string,
+      fileContents:
+        `[connection]\n` +
+        `host=${state.userSelection.rows[0]}\n` +
+        `port=${state.configuration.vnc.port}\n` +
+        `password=${state.configuration.vnc.passwordEncrypted}`
     };
-  else return { url: null, password: null };
+  else return {};
 };
 
 interface Props {
-  url: string | null;
-  password: string | null;
+  url?: string;
+  password?: string;
+  fileContents?: string;
 }
 
 interface State {
@@ -70,6 +76,7 @@ class VncContainer extends React.Component<Props, State> {
           this.setState({ scale: !this.state.scale });
         }}
         target={() => <span id="vnc" />}
+        fileContents={this.props.fileContents}
       />
     );
   }

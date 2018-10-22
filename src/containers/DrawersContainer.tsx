@@ -39,7 +39,7 @@ interface State {
 }
 
 class DrawerContainer extends React.Component<Props, State> {
-  public state: State = { subViewWidth: 600, isDragging: false };
+  public state: State = { subViewWidth: 1024, isDragging: false };
 
   public changeWidth(e: any) {
     if (this.state.isDragging) {
