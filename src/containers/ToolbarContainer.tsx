@@ -17,7 +17,12 @@ const mapStateToProps = (state: StoreState) => {
   return {
     rows: state.userSelection.rows,
     view: state.userSelection.view,
-    logsUrl
+    logsUrl,
+    fileContents:
+      `[connection]\n` +
+      `host=${state.userSelection.rows[0]}\n` +
+      `port=${state.configuration.vnc.port}\n` +
+      `password=${state.configuration.vnc.passwordEncrypted}`
   };
 };
 

@@ -7,7 +7,8 @@ import { sendDeviceAction, sendRefreshDevice } from "../messageHandler";
 interface Props {
   view: string | null;
   rows: string[];
-  logsUrl: string;
+  logsUrl?: string;
+  fileContents?: string;
   handleViewClick: (view: string) => null;
   openLogLevel: () => void;
 }
@@ -51,8 +52,13 @@ class Toolbar extends React.Component<Props> {
               name="Logs"
               leftIcon="description"
               rightIcon="open_in_new"
-              onClick={() => window.open(this.props.logsUrl, "_blank")}
-            />
+              onClick={() => {
+                const link = document.getElementById("logsLink");
+                if (link !== null) link.click();
+              }}
+            >
+              <a id="logsLink" href={this.props.logsUrl} target="_blank" />
+            </ToolbarItem>
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
           </>
         )}
@@ -82,6 +88,28 @@ class Toolbar extends React.Component<Props> {
           leftIcon="desktop_windows"
           onClick={() => sendDeviceAction(this.props.rows, "resetDisplay")}
         />
+        <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+        <ToolbarItem
+          name="Shared Drives"
+          leftIcon="folder"
+          rightIcon="get_app"
+          onClick={() => {
+            const link = document.getElementById("downloadLink");
+            if (link !== null) link.click();
+          }}
+        >
+          <a
+            id="downloadLink"
+            href={
+              this.props.fileContents &&
+              URL.createObjectURL(
+                new Blob([this.props.fileContents], { type: "text/plain" })
+              )
+            }
+            target="_blank"
+            download="test.bat"
+          />
+        </ToolbarItem>
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Refresh Monitoring"

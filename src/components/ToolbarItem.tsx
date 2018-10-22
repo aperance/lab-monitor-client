@@ -49,6 +49,7 @@ class ToolbarItem extends React.Component<Props> {
             </ListItemIcon>
           )}
         </ListItem>
+        {this.props.children}
       </div>
     );
   }
