@@ -19,10 +19,11 @@ const mapStateToProps = (state: StoreState) => {
     view: state.userSelection.view,
     logsUrl,
     fileContents:
-      `[connection]\n` +
-      `host=${state.userSelection.rows[0]}\n` +
-      `port=${state.configuration.vnc.port}\n` +
-      `password=${state.configuration.vnc.passwordEncrypted}`
+      `net use \\\\${state.userSelection.rows[0]} ` +
+      `/user:${state.configuration.vnc.username} ` +
+      `${state.configuration.vnc.password} ` +
+      `/PERSISTENT:NO\n` +
+      `start \\\\${state.userSelection.rows[0]}`
   };
 };
 
