@@ -7,14 +7,18 @@ import Icon from "@material-ui/core/Icon";
 
 const styles = createStyles({
   selected: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
+  root: {
+    paddingLeft: "20px",
+    paddingRight: "20px"
+  },
   icon: {
     marginRight: "0px",
     height: "auto",
     width: "auto",
-    fontSize: "1.25rem"
+    fontSize: "1.2rem"
   },
   text: {
-    fontSize: "0.9rem",
+    fontSize: "0.8rem",
     color: "rgba(0, 0, 0, 0.54)"
   }
 });
@@ -35,7 +39,11 @@ class ToolbarItem extends React.Component<Props> {
           this.props.selected ? this.props.classes.selected : undefined
         }
       >
-        <ListItem button onClick={this.props.onClick}>
+        <ListItem
+          button
+          onClick={this.props.onClick}
+          className={this.props.classes.root}
+        >
           <ListItemIcon className={this.props.classes.icon}>
             <Icon>{this.props.leftIcon}</Icon>
           </ListItemIcon>
