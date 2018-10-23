@@ -20,14 +20,6 @@ const mapStateToProps = (state: StoreState) => {
   };
 };
 
-const viewLookup: { [view: string]: any } = {
-  history: <HistoryContainer />,
-  logsPage: <WebPageContainer />,
-  statePage: <WebPageContainer />,
-  psTools: <PsToolsContainer />,
-  vnc: <VncContainer />
-};
-
 interface Props {
   drawersVisible: number;
   subView: string | null;
@@ -39,7 +31,7 @@ interface State {
 }
 
 class DrawerContainer extends React.Component<Props, State> {
-  public state: State = { subViewWidth: 1024, isDragging: false };
+  public state: State = { subViewWidth: 800, isDragging: false };
 
   public changeWidth(e: any) {
     if (this.state.isDragging) {
@@ -63,7 +55,21 @@ class DrawerContainer extends React.Component<Props, State> {
           startDrag={() => this.setState({ isDragging: true })}
         >
           <ToolbarContainer />
-          {this.props.subView && viewLookup[this.props.subView]}
+          {this.props.subView &&
+            ((): any => {
+              switch (this.props.subView) {
+                case "history":
+                  return <HistoryContainer />;
+                case "statePage":
+                  return !this.state.isDragging ? <WebPageContainer /> : null;
+                case "psTools":
+                  return <PsToolsContainer />;
+                case "vnc":
+                  return !this.state.isDragging ? <VncContainer /> : null;
+                default:
+                  return null;
+              }
+            })()}
         </Drawers>
       </div>
     );
