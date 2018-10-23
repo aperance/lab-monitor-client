@@ -6,8 +6,8 @@ import OpenIcon from "@material-ui/icons/OpenInNew";
 const styles = createStyles({
   button: {
     position: "absolute",
-    right: "12px",
-    top: "12px",
+    right: "18px",
+    top: "18px",
     backgroundColor: "white",
     opacity: 0.5
   }
