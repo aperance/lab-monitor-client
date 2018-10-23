@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { StoreState } from "../types";
+import { errorMessageSet } from "../actions/actionCreators";
 import Vnc from "../components/Vnc";
 // @ts-ignore
 import RFB from "../../node_modules/@novnc/novnc/core/rfb";
@@ -24,10 +25,17 @@ const mapStateToProps = (state: StoreState) => {
   else return {};
 };
 
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    handleError: (err: Error) => dispatch(errorMessageSet({ err }))
+  };
+};
+
 interface Props {
   url?: string;
   password?: string;
   fileContents?: string;
+  handleError: (err: Error) => void;
 }
 
 interface State {
@@ -53,9 +61,6 @@ class VncContainer extends React.Component<Props, State> {
   }
 
   public componentWillUnmount() {
-    clearTimeout(this.timer);
-    this.rfb.removeEventListener("connect", this.connectHandler);
-    this.rfb.removeEventListener("disconnect", this.disconnectHandler);
     this.disconnectVnc();
   }
 
@@ -72,16 +77,24 @@ class VncContainer extends React.Component<Props, State> {
   }
 
   public disconnectVnc() {
+    clearTimeout(this.timer);
     if (this.rfb) {
+      this.rfb.removeEventListener("connect", this.connectHandler);
+      this.rfb.removeEventListener("disconnect", this.disconnectHandler);
       if (this.rfb._rfb_connection_state !== "disconnected")
         this.rfb.disconnect();
       this.rfb = null;
     }
+    this.setState({ connected: false });
   }
 
   public connectHandler = () => this.setState({ connected: true });
 
-  public disconnectHandler = () => this.setState({ connected: false });
+  public disconnectHandler = (e: any) => {
+    this.setState({ connected: false });
+    this.props.handleError(Error("VNC connection failed."));
+    // tslint:disable-next-line:semicolon
+  };
 
   public render() {
     return (
@@ -98,4 +111,7 @@ class VncContainer extends React.Component<Props, State> {
   }
 }
 
-export default connect(mapStateToProps)(VncContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(VncContainer);
