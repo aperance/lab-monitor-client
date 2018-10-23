@@ -49,6 +49,28 @@ class Toolbar extends React.Component<Props> {
             />
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
             <ToolbarItem
+              name="Shared Drives"
+              leftIcon="folder"
+              rightIcon="get_app"
+              onClick={() => {
+                const link = document.getElementById("downloadLink");
+                if (link !== null) link.click();
+              }}
+            >
+              <a
+                id="downloadLink"
+                href={
+                  this.props.fileContents &&
+                  URL.createObjectURL(
+                    new Blob([this.props.fileContents], { type: "text/plain" })
+                  )
+                }
+                target="_blank"
+                download="test.bat"
+              />
+            </ToolbarItem>
+            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+            <ToolbarItem
               name="Logs"
               leftIcon="description"
               rightIcon="open_in_new"
@@ -90,29 +112,7 @@ class Toolbar extends React.Component<Props> {
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
-          name="Shared Drives"
-          leftIcon="folder"
-          rightIcon="get_app"
-          onClick={() => {
-            const link = document.getElementById("downloadLink");
-            if (link !== null) link.click();
-          }}
-        >
-          <a
-            id="downloadLink"
-            href={
-              this.props.fileContents &&
-              URL.createObjectURL(
-                new Blob([this.props.fileContents], { type: "text/plain" })
-              )
-            }
-            target="_blank"
-            download="test.bat"
-          />
-        </ToolbarItem>
-        <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
-        <ToolbarItem
-          name="Refresh Monitoring"
+          name="Force Refresh"
           leftIcon="refresh"
           onClick={() => sendRefreshDevice(this.props.rows)}
         />
