@@ -54,6 +54,8 @@ class VncContainer extends React.Component<Props, State> {
 
   public componentWillUnmount() {
     clearTimeout(this.timer);
+    this.rfb.removeEventListener("connect", this.connectHandler);
+    this.rfb.removeEventListener("disconnect", this.disconnectHandler);
     this.disconnectVnc();
   }
 
@@ -71,8 +73,6 @@ class VncContainer extends React.Component<Props, State> {
 
   public disconnectVnc() {
     if (this.rfb) {
-      this.rfb.removeEventListener("connect", this.connectHandler);
-      this.rfb.removeEventListener("disconnect", this.disconnectHandler);
       if (this.rfb._rfb_connection_state !== "disconnected")
         this.rfb.disconnect();
       this.rfb = null;
