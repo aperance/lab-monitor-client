@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
+import RfbHandler from "./RfbHandler";
 
 const styles = createStyles({
   root: { height: "100%" },
@@ -25,48 +26,58 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  connected: boolean;
-  changeScale: () => void;
-  scale: boolean;
-  target: any;
+  url?: string;
+  password?: string;
   fileContents?: string;
+  handleError: (err: Error) => void;
 }
 
 class Vnc extends React.Component<Props> {
   public render() {
     return (
-      <>
-        {!this.props.connected && <LinearProgress />}
-        <div
-          className={this.props.classes.root}
-          style={{ visibility: this.props.connected ? "visible" : "hidden" }}
-        >
-          {this.props.target()}
-          <Button
-            variant="fab"
-            mini={true}
-            className={this.props.classes.buttonOne}
-            onClick={() => this.props.changeScale()}
-          >
-            {this.props.scale ? <ExpandIcon /> : <ShrinkIcon />}
-          </Button>
-          <Button
-            variant="fab"
-            mini={true}
-            className={this.props.classes.buttonTwo}
-            href={
-              this.props.fileContents &&
-              URL.createObjectURL(
-                new Blob([this.props.fileContents], { type: "text/plain" })
-              )
-            }
-            download="test.vnc"
-            target="_blank"
-          >
-            <SaveIcon />
-          </Button>
-        </div>
-      </>
+      <RfbHandler
+        url={this.props.url}
+        password={this.props.password}
+        fileContents={this.props.fileContents}
+        handleError={this.props.handleError}
+      >
+        {injectedProps => (
+          <>
+            {!injectedProps.connected && <LinearProgress />}
+            <div
+              className={this.props.classes.root}
+              style={{
+                visibility: injectedProps.connected ? "visible" : "hidden"
+              }}
+            >
+              {injectedProps.targetElement}
+              <Button
+                variant="fab"
+                mini={true}
+                className={this.props.classes.buttonOne}
+                onClick={injectedProps.changeScale}
+              >
+                {injectedProps.scale ? <ExpandIcon /> : <ShrinkIcon />}
+              </Button>
+              <Button
+                variant="fab"
+                mini={true}
+                className={this.props.classes.buttonTwo}
+                href={
+                  this.props.fileContents &&
+                  URL.createObjectURL(
+                    new Blob([this.props.fileContents], { type: "text/plain" })
+                  )
+                }
+                download="test.vnc"
+                target="_blank"
+              >
+                <SaveIcon />
+              </Button>
+            </div>
+          </>
+        )}
+      </RfbHandler>
     );
   }
 }
