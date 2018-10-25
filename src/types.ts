@@ -1,6 +1,7 @@
 /** WebSocket Message Types */
 
 export enum WsMessageTypeKeys {
+  Configuration = "CONFIGURATION",
   DeviceDataAll = "DEVICE_DATA_ALL",
   DeviceDataUpdate = "DEVICE_DATA_UPDATE",
   RefreshDevice = "REFRESH_DEVICE",
@@ -69,6 +70,7 @@ export enum ActionTypeKeys {
   PROXY_TOGGLE = "PROXY_TOGGLE",
   DIALOG_VISIBILITY = "DIALOG_VISIBILITY",
   PSTOOLS_RESPONSE = "PSTOOLS_RESPONSE",
+  CONFIGURATION = "CONFIGURATION",
   DEVICE_DATA_ALL = "DEVICE_DATA_ALL",
   DEVICE_DATA_UPDATE = "DEVICE_DATA_UPDATE",
   RESET_ALL = "RESET_ALL",
@@ -76,6 +78,11 @@ export enum ActionTypeKeys {
   ACTION_RESPONSE_CLEAR = "ACTION_RESPONSE_CLEAR",
   ERROR_MESSAGE_SET = "ERROR_MESSAGE_SET",
   ERROR_MESSAGE_CLEAR = "ERROR_MESSAGE_CLEAR"
+}
+
+export interface ConfigurationAction {
+  readonly type: ActionTypeKeys.CONFIGURATION;
+  readonly configuration: any;
 }
 
 export interface DeviceDataAllAction extends DeviceDataAll {
@@ -146,6 +153,7 @@ export interface ErrorMessageClearAction {
 }
 
 export type Actions =
+  | ConfigurationAction
   | DeviceDataAllAction
   | DeviceDataUpdateAction
   | ResetAllAction

@@ -22,6 +22,10 @@ import {
   DialogVisibilityAction
 } from "../types";
 
+export const configuration = (payload: any): any => {
+  return { configuration: { ...payload }, type: ActionTypeKeys.CONFIGURATION };
+};
+
 export const deviceDataAll = (payload: DeviceDataAll): DeviceDataAllAction => {
   return { ...payload, type: ActionTypeKeys.DEVICE_DATA_ALL };
 };

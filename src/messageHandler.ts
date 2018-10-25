@@ -8,6 +8,7 @@ import {
 } from "./typeGuards";
 import {
   actionResponseSet,
+  configuration,
   deviceDataAll,
   deviceDataUpdate,
   psToolsResponse,
@@ -27,6 +28,9 @@ export const inboundMessageRouter = (message: unknown) => {
   if (!isWsMessage(message)) return;
   const { type, payload } = message;
   switch (type) {
+    case WsMessageTypeKeys.Configuration:
+      store.dispatch(configuration(payload));
+      break;
     case WsMessageTypeKeys.DeviceDataAll:
       if (isDeviceDataAll(payload)) store.dispatch(deviceDataAll(payload));
       break;
