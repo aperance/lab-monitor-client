@@ -1,6 +1,9 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { StoreState } from "./types";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import NavBar from "./components/NavBar";
+import Spinner from "./components/Spinner";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
 import DrawersContainer from "./containers/DrawersContainer";
@@ -19,28 +22,44 @@ const styles = createStyles({
   table: { flex: 1 }
 });
 
-interface Props extends WithStyles<typeof styles> {}
+const mapStateToProps = (state: StoreState) => {
+  return {
+    dataReceived:
+      Object.keys(state.configuration).length !== 0 &&
+      Object.keys(state.tableData).length !== 0
+  };
+};
+
+interface Props extends WithStyles<typeof styles> {
+  dataReceived: boolean;
+}
 
 class Layout extends React.Component<Props> {
   public render() {
     return (
-      <div>
+      <>
         <NavBar />
-        <div className={this.props.classes.root}>
-          <div className={this.props.classes.filter}>
-            <FilterBarContainer />
-          </div>
-          <div className={this.props.classes.table}>
-            <AssetTableContainer />
-          </div>
-        </div>
-        <DrawersContainer />
-        <LogLevelContainer />
+        {!this.props.dataReceived ? (
+          <Spinner />
+        ) : (
+          <>
+            <div className={this.props.classes.root}>
+              <div className={this.props.classes.filter}>
+                <FilterBarContainer />
+              </div>
+              <div className={this.props.classes.table}>
+                <AssetTableContainer />
+              </div>
+            </div>
+            <DrawersContainer />
+            <LogLevelContainer />
+          </>
+        )}
         <ErrorMessageContainer />
         <ActionResponseContainer />
-      </div>
+      </>
     );
   }
 }
 
-export default withStyles(styles)(Layout);
+export default withStyles(styles)(connect(mapStateToProps)(Layout));
