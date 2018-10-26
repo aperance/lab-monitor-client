@@ -51,55 +51,48 @@ interface Props extends WithStyles<typeof styles> {
   handleProxyClick: () => void;
 }
 
-class FilterBar extends React.Component<Props> {
-  public render() {
-    return (
-      <FormControl className={this.props.classes.root}>
-        {this.props.filters.map(filter => {
-          return (
-            <div key={filter.property}>
-              <FormLabel
-                className={this.props.classes.formLabel}
-                focused={false}
-              >
-                {filter.title}
-              </FormLabel>
-              <FormGroup className={this.props.classes.formGroup}>
-                {Object.entries(filter.options).map(([label, regex]) => {
-                  return (
-                    <FilterBarItem
-                      key={label}
-                      label={label}
-                      regex={regex}
-                      property={filter.property}
-                      selectedFilters={this.props.selectedFilters}
-                      handleCheckboxClick={this.props.handleCheckboxClick}
-                    />
-                  );
-                })}
-              </FormGroup>
-            </div>
-          );
-        })}
-        <FormControlLabel
-          classes={{
-            root: this.props.classes.switchForm,
-            label: this.props.classes.switchLabel
-          }}
-          control={
-            <Switch
-              checked={!this.props.proxyEnabled}
-              color="primary"
-              disableRipple={true}
-              onClick={this.props.handleProxyClick}
-            />
-          }
-          label="Disable Proxy"
-          labelPlacement="start"
+const FilterBar: React.SFC<Props> = (props: Props) => (
+  <FormControl className={props.classes.root}>
+    {props.filters.map(filter => {
+      return (
+        <div key={filter.property}>
+          <FormLabel className={props.classes.formLabel} focused={false}>
+            {filter.title}
+          </FormLabel>
+          <FormGroup className={props.classes.formGroup}>
+            {Object.entries(filter.options).map(([label, regex]) => {
+              return (
+                <FilterBarItem
+                  key={label}
+                  label={label}
+                  regex={regex}
+                  property={filter.property}
+                  selectedFilters={props.selectedFilters}
+                  handleCheckboxClick={props.handleCheckboxClick}
+                />
+              );
+            })}
+          </FormGroup>
+        </div>
+      );
+    })}
+    <FormControlLabel
+      classes={{
+        root: props.classes.switchForm,
+        label: props.classes.switchLabel
+      }}
+      control={
+        <Switch
+          checked={!props.proxyEnabled}
+          color="primary"
+          disableRipple={true}
+          onClick={props.handleProxyClick}
         />
-      </FormControl>
-    );
-  }
-}
+      }
+      label="Disable Proxy"
+      labelPlacement="start"
+    />
+  </FormControl>
+);
 
 export default withStyles(styles)(FilterBar);

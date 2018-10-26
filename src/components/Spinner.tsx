@@ -13,14 +13,10 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {}
 
-class Spinner extends React.Component<Props> {
-  public render() {
-    return (
-      <span className={this.props.classes.root}>
-        <CircularProgress size={60} />
-      </span>
-    );
-  }
-}
+const Spinner: React.SFC<Props> = (props: Props) => (
+  <span className={props.classes.root}>
+    <CircularProgress size={60} />
+  </span>
+);
 
 export default withStyles(styles)(Spinner);

@@ -30,34 +30,23 @@ interface Props extends WithStyles<typeof styles> {
   handleCheckboxClick: (property: string, regex: string) => void;
 }
 
-class FilterBarItem extends React.Component<Props> {
-  public render() {
-    return (
-      <FormControlLabel
-        className={this.props.classes.formControlLabel}
-        classes={{ label: this.props.classes.label }}
-        control={
-          <Checkbox
-            className={this.props.classes.checkbox}
-            color="primary"
-            checked={
-              this.props.selectedFilters.hasOwnProperty(this.props.property) &&
-              this.props.selectedFilters[this.props.property].includes(
-                this.props.regex
-              )
-            }
-            onClick={() =>
-              this.props.handleCheckboxClick(
-                this.props.property,
-                this.props.regex
-              )
-            }
-          />
+const FilterBarItem: React.SFC<Props> = (props: Props) => (
+  <FormControlLabel
+    className={props.classes.formControlLabel}
+    classes={{ label: props.classes.label }}
+    control={
+      <Checkbox
+        className={props.classes.checkbox}
+        color="primary"
+        checked={
+          props.selectedFilters.hasOwnProperty(props.property) &&
+          props.selectedFilters[props.property].includes(props.regex)
         }
-        label={this.props.label}
+        onClick={() => props.handleCheckboxClick(props.property, props.regex)}
       />
-    );
-  }
-}
+    }
+    label={props.label}
+  />
+);
 
 export default withStyles(styles)(FilterBarItem);

@@ -17,36 +17,26 @@ interface Props extends WithStyles<typeof styles> {
   handleClose: () => void;
 }
 
-class ActionResponse extends React.Component<Props> {
-  // public shouldComponentUpdate(nextProps: Props) {
-  //   if (this.props.visible !== nextProps.visible) return true;
-  //   else return false;
-  // }
-
-  public render() {
-    const { classes } = this.props;
-    return (
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center"
-        }}
-        open={this.props.message ? true : false}
-        autoHideDuration={6000}
-        onClose={this.props.handleClose}
-        message={<span id="message-id">{this.props.message}</span>}
-        action={
-          <IconButton
-            color="inherit"
-            className={classes.close}
-            onClick={this.props.handleClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        }
-      />
-    );
-  }
-}
+const ActionResponse: React.SFC<Props> = (props: Props) => (
+  <Snackbar
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "center"
+    }}
+    open={props.message ? true : false}
+    autoHideDuration={6000}
+    onClose={props.handleClose}
+    message={<span id="message-id">{props.message}</span>}
+    action={
+      <IconButton
+        color="inherit"
+        className={props.classes.close}
+        onClick={props.handleClose}
+      >
+        <CloseIcon />
+      </IconButton>
+    }
+  />
+);
 
 export default withStyles(styles)(ActionResponse);

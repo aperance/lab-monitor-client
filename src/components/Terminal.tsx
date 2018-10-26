@@ -18,14 +18,10 @@ interface Props extends WithStyles<typeof styles> {
   output?: string;
 }
 
-class Terminal extends React.Component<Props> {
-  public render() {
-    return (
-      <Paper className={this.props.classes.paper} elevation={8} square={true}>
-        <pre className={this.props.classes.pre}>{this.props.output}</pre>
-      </Paper>
-    );
-  }
-}
+const Terminal: React.SFC<Props> = (props: Props) => (
+  <Paper className={props.classes.paper} elevation={8} square={true}>
+    <pre className={props.classes.pre}>{props.output}</pre>
+  </Paper>
+);
 
 export default withStyles(styles)(Terminal);

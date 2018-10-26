@@ -40,78 +40,69 @@ interface Props extends WithStyles<typeof styles> {
   drawersVisible: number;
 }
 
-class Drawers extends React.Component<Props> {
-  public render() {
-    return (
-      <MouseTracker>
-        {injectedProps => (
-          <>
-            <div
-              className={this.props.classes.drawer}
-              style={{
-                width: "200px",
-                right:
-                  [-200, 0, injectedProps.subViewWidth][
-                    this.props.drawersVisible
-                  ] + "px",
-                transition: injectedProps.isDragging ? "0s" : ".5s"
-              }}
-            >
-              <ToolbarContainer />
-            </div>
-            <div
-              className={this.props.classes.dragBar}
-              style={{
-                right:
-                  [-200, 0, injectedProps.subViewWidth][
-                    this.props.drawersVisible
-                  ] -
-                  5 +
-                  "px",
-                transition: injectedProps.isDragging ? "0s" : ".5s"
-              }}
-              onMouseDown={injectedProps.startDrag}
-            >
-              <Icon className={this.props.classes.icon}>drag_indicator</Icon>
-            </div>
-            <div
-              className={this.props.classes.drawer}
-              style={{
-                width: injectedProps.subViewWidth + "px",
-                right:
-                  [
-                    -(200 + injectedProps.subViewWidth),
-                    -injectedProps.subViewWidth,
-                    0
-                  ][this.props.drawersVisible] + "px",
-                transition: injectedProps.isDragging ? "0s" : ".5s"
-              }}
-            >
-              {this.props.subView &&
-                ((): any => {
-                  switch (this.props.subView) {
-                    case "history":
-                      return <HistoryContainer />;
-                    case "statePage":
-                      return !injectedProps.isDragging ? (
-                        <WebPageContainer />
-                      ) : null;
-                    case "psTools":
-                      return <PsToolsContainer />;
-                    case "vnc":
-                      return !injectedProps.isDragging ? (
-                        <VncContainer />
-                      ) : null;
-                    default:
-                      return null;
-                  }
-                })()}
-            </div>
-          </>
-        )}
-      </MouseTracker>
-    );
-  }
-}
+const Drawers: React.SFC<Props> = (props: Props) => (
+  <MouseTracker>
+    {injectedProps => (
+      <>
+        <div
+          className={props.classes.drawer}
+          style={{
+            width: "200px",
+            right:
+              [-200, 0, injectedProps.subViewWidth][props.drawersVisible] +
+              "px",
+            transition: injectedProps.isDragging ? "0s" : ".5s"
+          }}
+        >
+          <ToolbarContainer />
+        </div>
+        <div
+          className={props.classes.dragBar}
+          style={{
+            right:
+              [-200, 0, injectedProps.subViewWidth][props.drawersVisible] -
+              5 +
+              "px",
+            transition: injectedProps.isDragging ? "0s" : ".5s"
+          }}
+          onMouseDown={injectedProps.startDrag}
+        >
+          <Icon className={props.classes.icon}>drag_indicator</Icon>
+        </div>
+        <div
+          className={props.classes.drawer}
+          style={{
+            width: injectedProps.subViewWidth + "px",
+            right:
+              [
+                -(200 + injectedProps.subViewWidth),
+                -injectedProps.subViewWidth,
+                0
+              ][props.drawersVisible] + "px",
+            transition: injectedProps.isDragging ? "0s" : ".5s"
+          }}
+        >
+          {props.subView &&
+            ((): any => {
+              switch (props.subView) {
+                case "history":
+                  return <HistoryContainer />;
+                case "statePage":
+                  return !injectedProps.isDragging ? (
+                    <WebPageContainer />
+                  ) : null;
+                case "psTools":
+                  return <PsToolsContainer />;
+                case "vnc":
+                  return !injectedProps.isDragging ? <VncContainer /> : null;
+                default:
+                  return null;
+              }
+            })()}
+        </div>
+      </>
+    )}
+  </MouseTracker>
+);
 
 export default withStyles(styles)(Drawers);

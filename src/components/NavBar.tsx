@@ -20,26 +20,22 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {}
 
-class NavBar extends React.Component<Props> {
-  public render() {
-    return (
-      <AppBar
-        position="fixed"
-        color="default"
-        elevation={0}
-        className={this.props.classes.root}
-      >
-        <Toolbar style={{ minHeight: "56px" }}>
-          <IconButton color="inherit" className={this.props.classes.icon}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="title" color="inherit">
-            Lab Monitor
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    );
-  }
-}
+const NavBar: React.SFC<Props> = (props: Props) => (
+  <AppBar
+    position="fixed"
+    color="default"
+    elevation={0}
+    className={props.classes.root}
+  >
+    <Toolbar style={{ minHeight: "56px" }}>
+      <IconButton color="inherit" className={props.classes.icon}>
+        <MenuIcon />
+      </IconButton>
+      <Typography variant="title" color="inherit">
+        Lab Monitor
+      </Typography>
+    </Toolbar>
+  </AppBar>
+);
 
 export default withStyles(styles)(NavBar);

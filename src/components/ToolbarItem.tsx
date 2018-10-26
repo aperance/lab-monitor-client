@@ -29,38 +29,27 @@ interface Props extends WithStyles<typeof styles> {
   rightIcon?: string;
   selected?: boolean;
   onClick: () => void;
+  children: JSX.Element;
 }
 
-class ToolbarItem extends React.Component<Props> {
-  public render() {
-    return (
-      <div
-        className={
-          this.props.selected ? this.props.classes.selected : undefined
-        }
-      >
-        <ListItem
-          button
-          onClick={this.props.onClick}
-          className={this.props.classes.root}
-        >
-          <ListItemIcon className={this.props.classes.icon}>
-            <Icon>{this.props.leftIcon}</Icon>
-          </ListItemIcon>
-          <ListItemText
-            classes={{ primary: this.props.classes.text }}
-            primary={this.props.name}
-          />
-          {this.props.rightIcon && (
-            <ListItemIcon className={this.props.classes.icon}>
-              <Icon>{this.props.rightIcon}</Icon>
-            </ListItemIcon>
-          )}
-        </ListItem>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+const ToolbarItem: React.SFC<Props> = (props: Props) => (
+  <div className={props.selected ? props.classes.selected : undefined}>
+    <ListItem button onClick={props.onClick} className={props.classes.root}>
+      <ListItemIcon className={props.classes.icon}>
+        <Icon>{props.leftIcon}</Icon>
+      </ListItemIcon>
+      <ListItemText
+        classes={{ primary: props.classes.text }}
+        primary={props.name}
+      />
+      {props.rightIcon && (
+        <ListItemIcon className={props.classes.icon}>
+          <Icon>{props.rightIcon}</Icon>
+        </ListItemIcon>
+      )}
+    </ListItem>
+    {props.children}
+  </div>
+);
 
 export default withStyles(styles)(ToolbarItem);

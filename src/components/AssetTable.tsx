@@ -38,39 +38,33 @@ interface Props extends WithStyles<typeof styles> {
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
-class AssetTable extends React.Component<Props> {
-  public render() {
-    return (
-      <div className={this.props.classes.root}>
-        <Table>
-          <AssetTableHead
-            columns={this.props.columns}
-            sortProperty={this.props.sortProperty}
-            sortDirection={this.props.sortDirection}
-            changeSorting={this.props.changeSorting}
+const AssetTable: React.SFC<Props> = (props: Props) => (
+  <div className={props.classes.root}>
+    <Table>
+      <AssetTableHead
+        columns={props.columns}
+        sortProperty={props.sortProperty}
+        sortDirection={props.sortDirection}
+        changeSorting={props.changeSorting}
+      />
+      <TableBody>
+        {props.tableData.map(([rowId, rowData]) => (
+          <AssetTableRow
+            key={rowId}
+            columns={props.columns}
+            rowData={rowData}
+            selected={props.selected.includes(rowId)}
+            handleRowClick={(e: MouseEvent) => props.handleRowClick(e, rowId)}
           />
-          <TableBody>
-            {this.props.tableData.map(([rowId, rowData]) => (
-              <AssetTableRow
-                key={rowId}
-                columns={this.props.columns}
-                rowData={rowData}
-                selected={this.props.selected.includes(rowId)}
-                handleRowClick={(e: MouseEvent) =>
-                  this.props.handleRowClick(e, rowId)
-                }
-              />
-            ))}
-          </TableBody>
-        </Table>
+        ))}
+      </TableBody>
+    </Table>
 
-        <div
-          className={this.props.classes.belowTable}
-          onClick={e => this.props.handleRowClick(e.nativeEvent, null)}
-        />
-      </div>
-    );
-  }
-}
+    <div
+      className={props.classes.belowTable}
+      onClick={e => props.handleRowClick(e.nativeEvent, null)}
+    />
+  </div>
+);
 
 export default withStyles(styles)(AssetTable);

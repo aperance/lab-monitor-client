@@ -54,54 +54,46 @@ interface Props extends WithStyles<typeof styles> {
   handleClick: (property: string) => void;
 }
 
-class HistoryItem extends React.Component<Props> {
-  public render() {
-    return (
-      <div
-        style={this.props.style}
-        className={this.props.classes.root}
-        onClick={() => this.props.handleClick(this.props.property)}
+const HistoryItem: React.SFC<Props> = (props: Props) => (
+  <div
+    style={props.style}
+    className={props.classes.root}
+    onClick={() => props.handleClick(props.property)}
+  >
+    <div className={props.classes.topRow}>
+      <span className={props.classes.title}>{props.property}</span>
+      <Icon
+        className={props.classes.icon}
+        style={props.isSelected ? { transform: "rotate(0.5turn)" } : {}}
       >
-        <div className={this.props.classes.topRow}>
-          <span className={this.props.classes.title}>
-            {this.props.property}
-          </span>
-          <Icon
-            className={this.props.classes.icon}
-            style={
-              this.props.isSelected ? { transform: "rotate(0.5turn)" } : {}
-            }
-          >
-            expand_more
-          </Icon>
-        </div>
-        {this.props.isSelected && (
-          <div>
-            {this.props.historyData && (
-              <Table className={this.props.classes.table}>
-                {this.props.historyData.map(([key, value]) => (
-                  <TableRow classes={{ root: this.props.classes.row }}>
-                    <TableCell
-                      className={this.props.classes.cell}
-                      style={{ flexGrow: 0 }}
-                    >
-                      {key}
-                    </TableCell>
-                    <TableCell
-                      className={this.props.classes.cell}
-                      style={{ flexGrow: 1 }}
-                    >
-                      {value}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </Table>
-            )}
-          </div>
+        expand_more
+      </Icon>
+    </div>
+    {props.isSelected && (
+      <div>
+        {props.historyData && (
+          <Table className={props.classes.table}>
+            {props.historyData.map(([key, value]) => (
+              <TableRow classes={{ root: props.classes.row }}>
+                <TableCell
+                  className={props.classes.cell}
+                  style={{ flexGrow: 0 }}
+                >
+                  {key}
+                </TableCell>
+                <TableCell
+                  className={props.classes.cell}
+                  style={{ flexGrow: 1 }}
+                >
+                  {value}
+                </TableCell>
+              </TableRow>
+            ))}
+          </Table>
         )}
       </div>
-    );
-  }
-}
+    )}
+  </div>
+);
 
 export default withStyles(styles)(HistoryItem);

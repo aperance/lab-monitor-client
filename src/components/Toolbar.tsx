@@ -13,112 +13,108 @@ interface Props {
   openLogLevel: () => void;
 }
 
-class Toolbar extends React.Component<Props> {
-  public render() {
-    return (
-      <List>
-        {this.props.rows.length === 1 && (
-          <>
-            <ToolbarItem
-              name="State"
-              leftIcon="toc"
-              rightIcon="navigate_next"
-              selected={this.props.view === "statePage"}
-              onClick={() => this.props.handleViewClick("statePage")}
-            />
-            <ToolbarItem
-              name="History"
-              leftIcon="history"
-              rightIcon="navigate_next"
-              selected={this.props.view === "history"}
-              onClick={() => this.props.handleViewClick("history")}
-            />
-            <ToolbarItem
-              name="PSTools"
-              leftIcon="code"
-              rightIcon="navigate_next"
-              selected={this.props.view === "psTools"}
-              onClick={() => this.props.handleViewClick("psTools")}
-            />
-            <ToolbarItem
-              name="VNC"
-              leftIcon="picture_in_picture"
-              rightIcon="navigate_next"
-              selected={this.props.view === "vnc"}
-              onClick={() => this.props.handleViewClick("vnc")}
-            />
-            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
-            <ToolbarItem
-              name="Shared Drives"
-              leftIcon="folder"
-              rightIcon="get_app"
-              onClick={() => {
-                const link = document.getElementById("downloadLink");
-                if (link !== null) link.click();
-              }}
-            >
-              <a
-                id="downloadLink"
-                href={
-                  this.props.fileContents &&
-                  URL.createObjectURL(
-                    new Blob([this.props.fileContents], { type: "text/plain" })
-                  )
-                }
-                target="_blank"
-                download="test.bat"
-              />
-            </ToolbarItem>
-            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
-            <ToolbarItem
-              name="Logs"
-              leftIcon="description"
-              rightIcon="open_in_new"
-              onClick={() => {
-                const link = document.getElementById("logsLink");
-                if (link !== null) link.click();
-              }}
-            >
-              <a id="logsLink" href={this.props.logsUrl} target="_blank" />
-            </ToolbarItem>
-            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
-          </>
-        )}
-
+const Toolbar: React.SFC<Props> = (props: Props) => (
+  <List>
+    {props.rows.length === 1 && (
+      <>
         <ToolbarItem
-          name="Log Level"
-          leftIcon="settings"
-          onClick={() => this.props.openLogLevel()}
+          name="State"
+          leftIcon="toc"
+          rightIcon="navigate_next"
+          selected={props.view === "statePage"}
+          onClick={() => props.handleViewClick("statePage")}
         />
         <ToolbarItem
-          name="Delete Logs"
-          leftIcon="delete"
-          onClick={() => sendDeviceAction(this.props.rows, "deleteLogs")}
+          name="History"
+          leftIcon="history"
+          rightIcon="navigate_next"
+          selected={props.view === "history"}
+          onClick={() => props.handleViewClick("history")}
         />
         <ToolbarItem
-          name="Clean Start"
-          leftIcon="refresh"
-          onClick={() => sendDeviceAction(this.props.rows, "cleanStart")}
+          name="PSTools"
+          leftIcon="code"
+          rightIcon="navigate_next"
+          selected={props.view === "psTools"}
+          onClick={() => props.handleViewClick("psTools")}
         />
         <ToolbarItem
-          name="RAM Clear"
-          leftIcon="memory"
-          onClick={(): void => sendDeviceAction(this.props.rows, "ramClear")}
-        />
-        <ToolbarItem
-          name="Reset Display"
-          leftIcon="desktop_windows"
-          onClick={() => sendDeviceAction(this.props.rows, "resetDisplay")}
+          name="VNC"
+          leftIcon="picture_in_picture"
+          rightIcon="navigate_next"
+          selected={props.view === "vnc"}
+          onClick={() => props.handleViewClick("vnc")}
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
-          name="Force Refresh"
-          leftIcon="refresh"
-          onClick={() => sendRefreshDevice(this.props.rows)}
-        />
-      </List>
-    );
-  }
-}
+          name="Shared Drives"
+          leftIcon="folder"
+          rightIcon="get_app"
+          onClick={() => {
+            const link = document.getElementById("downloadLink");
+            if (link !== null) link.click();
+          }}
+        >
+          <a
+            id="downloadLink"
+            href={
+              props.fileContents &&
+              URL.createObjectURL(
+                new Blob([props.fileContents], { type: "text/plain" })
+              )
+            }
+            target="_blank"
+            download="test.bat"
+          />
+        </ToolbarItem>
+        <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+        <ToolbarItem
+          name="Logs"
+          leftIcon="description"
+          rightIcon="open_in_new"
+          onClick={() => {
+            const link = document.getElementById("logsLink");
+            if (link !== null) link.click();
+          }}
+        >
+          <a id="logsLink" href={props.logsUrl} target="_blank" />
+        </ToolbarItem>
+        <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+      </>
+    )}
+
+    <ToolbarItem
+      name="Log Level"
+      leftIcon="settings"
+      onClick={() => props.openLogLevel()}
+    />
+    <ToolbarItem
+      name="Delete Logs"
+      leftIcon="delete"
+      onClick={() => sendDeviceAction(props.rows, "deleteLogs")}
+    />
+    <ToolbarItem
+      name="Clean Start"
+      leftIcon="refresh"
+      onClick={() => sendDeviceAction(props.rows, "cleanStart")}
+    />
+    <ToolbarItem
+      name="RAM Clear"
+      leftIcon="memory"
+      onClick={(): void => sendDeviceAction(props.rows, "ramClear")}
+    />
+    <ToolbarItem
+      name="Reset Display"
+      leftIcon="desktop_windows"
+      onClick={() => sendDeviceAction(props.rows, "resetDisplay")}
+    />
+    <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+    <ToolbarItem
+      name="Force Refresh"
+      leftIcon="refresh"
+      onClick={() => sendRefreshDevice(props.rows)}
+    />
+  </List>
+);
 
 export default Toolbar;

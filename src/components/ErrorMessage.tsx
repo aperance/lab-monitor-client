@@ -13,27 +13,20 @@ interface Props extends WithStyles<typeof styles> {
   handleClose: () => void;
 }
 
-class ErrorMessage extends React.Component<Props> {
-  public render() {
-    return (
-      this.props.message && (
-        <Dialog open={true} onClose={this.props.handleClose}>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <pre>
-                {this.props.message.name + ": " + this.props.message.message}
-              </pre>
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.props.handleClose} color="primary" autoFocus>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )
-    );
-  }
-}
+const ErrorMessage: React.SFC<Props> = (props: Props) =>
+  props.message && (
+    <Dialog open={true} onClose={props.handleClose}>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          <pre>{props.message.name + ": " + props.message.message}</pre>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={props.handleClose} color="primary" autoFocus>
+          OK
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
 export default withStyles(styles)(ErrorMessage);
