@@ -15,7 +15,7 @@ interface Props {
 
 const Toolbar: React.SFC<Props> = (props: Props) => (
   <List>
-    {props.rows.length === 1 && (
+    {props.rows.length <= 1 && (
       <>
         <ToolbarItem
           name="State"
