@@ -32,7 +32,7 @@ interface Props extends WithStyles<typeof styles> {
   handleError: (err: Error) => void;
 }
 
-const Vnc: React.SFC<Props> = (props: Props) => (
+const Vnc = (props: Props) => (
   <RfbHandler
     url={props.url}
     password={props.password}

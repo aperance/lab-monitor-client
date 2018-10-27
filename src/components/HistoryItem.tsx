@@ -54,7 +54,7 @@ interface Props extends WithStyles<typeof styles> {
   handleClick: (property: string) => void;
 }
 
-const HistoryItem: React.SFC<Props> = (props: Props) => (
+const HistoryItem = (props: Props) => (
   <div
     style={props.style}
     className={props.classes.root}

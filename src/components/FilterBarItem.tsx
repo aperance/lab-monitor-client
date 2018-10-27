@@ -30,7 +30,7 @@ interface Props extends WithStyles<typeof styles> {
   handleCheckboxClick: (property: string, regex: string) => void;
 }
 
-const FilterBarItem: React.SFC<Props> = (props: Props) => (
+const FilterBarItem = (props: Props) => (
   <FormControlLabel
     className={props.classes.formControlLabel}
     classes={{ label: props.classes.label }}

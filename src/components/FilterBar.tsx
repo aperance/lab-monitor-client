@@ -51,7 +51,7 @@ interface Props extends WithStyles<typeof styles> {
   handleProxyClick: () => void;
 }
 
-const FilterBar: React.SFC<Props> = (props: Props) => (
+const FilterBar = (props: Props) => (
   <FormControl className={props.classes.root}>
     {props.filters.map(filter => {
       return (

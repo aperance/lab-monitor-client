@@ -20,7 +20,7 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {}
 
-const NavBar: React.SFC<Props> = (props: Props) => (
+const NavBar = (props: Props) => (
   <AppBar
     position="fixed"
     color="default"

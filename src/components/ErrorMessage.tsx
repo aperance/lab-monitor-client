@@ -13,7 +13,7 @@ interface Props extends WithStyles<typeof styles> {
   handleClose: () => void;
 }
 
-const ErrorMessage: React.SFC<Props> = (props: Props) =>
+const ErrorMessage = (props: Props) =>
   props.message && (
     <Dialog open={true} onClose={props.handleClose}>
       <DialogContent>

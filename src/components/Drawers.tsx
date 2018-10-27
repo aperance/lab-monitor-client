@@ -40,7 +40,7 @@ interface Props extends WithStyles<typeof styles> {
   drawersVisible: number;
 }
 
-const Drawers: React.SFC<Props> = (props: Props) => (
+const Drawers = (props: Props) => (
   <MouseTracker>
     {injectedProps => (
       <>

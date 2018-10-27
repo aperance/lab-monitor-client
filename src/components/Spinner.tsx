@@ -13,7 +13,7 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {}
 
-const Spinner: React.SFC<Props> = (props: Props) => (
+const Spinner = (props: Props) => (
   <span className={props.classes.root}>
     <CircularProgress size={60} />
   </span>

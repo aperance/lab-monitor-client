@@ -17,7 +17,7 @@ interface Props extends WithStyles<typeof styles> {
   handleClose: () => void;
 }
 
-const ActionResponse: React.SFC<Props> = (props: Props) => (
+const ActionResponse = (props: Props) => (
   <Snackbar
     anchorOrigin={{
       vertical: "bottom",

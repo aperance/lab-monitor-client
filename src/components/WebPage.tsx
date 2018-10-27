@@ -17,7 +17,7 @@ interface Props extends WithStyles<typeof styles> {
   url: string | null;
 }
 
-const WebPage: React.SFC<Props> = (props: Props) => {
+const WebPage = (props: Props) => {
   return (
     <>
       {props.url && (

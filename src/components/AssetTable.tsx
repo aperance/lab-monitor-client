@@ -38,7 +38,7 @@ interface Props extends WithStyles<typeof styles> {
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
-const AssetTable: React.SFC<Props> = (props: Props) => (
+const AssetTable = (props: Props) => (
   <div className={props.classes.root}>
     <Table>
       <AssetTableHead

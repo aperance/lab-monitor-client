@@ -13,7 +13,7 @@ interface Props {
   openLogLevel: () => void;
 }
 
-const Toolbar: React.SFC<Props> = (props: Props) => (
+const Toolbar = (props: Props) => (
   <List>
     {props.rows.length <= 1 && (
       <>

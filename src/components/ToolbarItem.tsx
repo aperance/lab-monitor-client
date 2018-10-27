@@ -32,7 +32,7 @@ interface Props extends WithStyles<typeof styles> {
   children: JSX.Element;
 }
 
-const ToolbarItem: React.SFC<Props> = (props: Props) => (
+const ToolbarItem = (props: Props) => (
   <div className={props.selected ? props.classes.selected : undefined}>
     <ListItem button onClick={props.onClick} className={props.classes.root}>
       <ListItemIcon className={props.classes.icon}>
