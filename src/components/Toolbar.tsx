@@ -2,7 +2,11 @@ import * as React from "react";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ToolbarItem from "./ToolbarItem";
-import { sendDeviceAction, sendRefreshDevice } from "../messageHandler";
+import {
+  sendDeviceAction,
+  sendRefreshDevice,
+  sendClearDevice
+} from "../messageHandler";
 
 interface Props {
   view: string | null;
@@ -19,7 +23,7 @@ const Toolbar = (props: Props) => (
       <>
         <ToolbarItem
           name="State"
-          leftIcon="toc"
+          leftIcon="list_alt"
           rightIcon="navigate_next"
           selected={props.view === "statePage"}
           onClick={() => props.handleViewClick("statePage")}
@@ -70,7 +74,7 @@ const Toolbar = (props: Props) => (
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Logs"
-          leftIcon="description"
+          leftIcon="subject"
           rightIcon="open_in_new"
           onClick={() => {
             const link = document.getElementById("logsLink");
@@ -90,12 +94,12 @@ const Toolbar = (props: Props) => (
     />
     <ToolbarItem
       name="Delete Logs"
-      leftIcon="delete"
+      leftIcon="delete_sweep"
       onClick={() => sendDeviceAction(props.rows, "deleteLogs")}
     />
     <ToolbarItem
       name="Clean Start"
-      leftIcon="refresh"
+      leftIcon="power_settings_new"
       onClick={() => sendDeviceAction(props.rows, "cleanStart")}
     />
     <ToolbarItem
@@ -113,6 +117,11 @@ const Toolbar = (props: Props) => (
       name="Force Refresh"
       leftIcon="refresh"
       onClick={() => sendRefreshDevice(props.rows)}
+    />
+    <ToolbarItem
+      name="Clear Record"
+      leftIcon="delete"
+      onClick={() => sendClearDevice(props.rows)}
     />
   </List>
 );
