@@ -68,6 +68,18 @@ export const sendRefreshDevice = (targets: string[]) => {
 };
 
 /**
+ * Public method to trigger removal of device in server records.
+ *
+ * @param {string[]} targets
+ */
+export const sendClearDevice = (targets: string[]) => {
+  websocket.sendToServer({
+    type: WsMessageTypeKeys.RefreshDevice,
+    payload: { targets }
+  });
+};
+
+/**
  * Public method to send action request to device via websocket server.
  *
  * @param {string[]} targets
