@@ -89,7 +89,7 @@ const Toolbar = (props: Props) => (
 
     <ToolbarItem
       name="Log Level"
-      leftIcon="settings"
+      leftIcon="tune"
       onClick={() => props.openLogLevel()}
     />
     <ToolbarItem
