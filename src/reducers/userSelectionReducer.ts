@@ -41,6 +41,9 @@ export default (state: UserSelectionState = initialState, action: Actions) => {
         : regexArray.splice(currentIndex, 1);
       return {
         ...state,
+        rows: [],
+        view: null,
+        history: null,
         filters: { ...state.filters, [action.property]: regexArray }
       };
 
