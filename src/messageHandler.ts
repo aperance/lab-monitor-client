@@ -74,7 +74,7 @@ export const sendRefreshDevice = (targets: string[]) => {
  */
 export const sendClearDevice = (targets: string[]) => {
   websocket.sendToServer({
-    type: WsMessageTypeKeys.RefreshDevice,
+    type: WsMessageTypeKeys.ClearDevice,
     payload: { targets }
   });
 };

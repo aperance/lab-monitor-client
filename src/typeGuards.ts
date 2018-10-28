@@ -84,28 +84,30 @@ export const isDeviceDataUpdate = (
     typeof payload.id === "string" &&
     payload.id !== "" &&
     /** Validate contents of state object */
-    isNonEmptyObject(payload.state) &&
-    Object.values(payload.state).every(
-      byProperty => typeof byProperty === "string" || byProperty === null
-    ) &&
+    (payload.state === null ||
+      (isNonEmptyObject(payload.state) &&
+        Object.values(payload.state).every(
+          byProperty => typeof byProperty === "string" || byProperty === null
+        ))) &&
     /** Validate contents of history object */
-    Array.isArray(payload.history) &&
-    payload.history.every(
-      (byProperty: any) =>
-        Array.isArray(byProperty) &&
-        byProperty.length === 2 &&
-        /** Validate property */
-        typeof byProperty[0] === "string" &&
-        byProperty[0] !== "" &&
-        /** Validate record array */
-        Array.isArray(byProperty[1]) &&
-        byProperty[1].length === 2 &&
-        /** Validate timestamp */
-        typeof byProperty[1][0] === "string" &&
-        byProperty[1][0] !== "" &&
-        /** Validate value */
-        (typeof byProperty[1][1] === "string" || byProperty[1][1] === null)
-    )
+    (payload.history === null ||
+      (Array.isArray(payload.history) &&
+        payload.history.every(
+          (byProperty: any) =>
+            Array.isArray(byProperty) &&
+            byProperty.length === 2 &&
+            /** Validate property */
+            typeof byProperty[0] === "string" &&
+            byProperty[0] !== "" &&
+            /** Validate record array */
+            Array.isArray(byProperty[1]) &&
+            byProperty[1].length === 2 &&
+            /** Validate timestamp */
+            typeof byProperty[1][0] === "string" &&
+            byProperty[1][0] !== "" &&
+            /** Validate value */
+            (typeof byProperty[1][1] === "string" || byProperty[1][1] === null)
+        )))
   )
     return true;
   else {
