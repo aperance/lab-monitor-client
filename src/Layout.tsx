@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { StoreState } from "./types";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import NavBar from "./components/NavBar";
+import NavBarContainer from "./containers/NavBarContainer";
 import Spinner from "./components/Spinner";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
@@ -38,7 +38,7 @@ class Layout extends React.Component<Props> {
   public render() {
     return (
       <>
-        <NavBar />
+        <NavBarContainer />
         {!this.props.dataReceived ? (
           <Spinner />
         ) : (

@@ -3,8 +3,6 @@ import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 
 const styles = createStyles({
   root: {
@@ -12,13 +10,16 @@ const styles = createStyles({
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
     zIndex: 0
   },
-  icon: {
-    marginLeft: -12,
-    marginRight: 20
+  toolbar: { minHeight: "56px" },
+  title: {
+    flexGrow: 1,
+    color: "rgba(0, 0, 0, 0.75)"
   }
 });
 
-interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {
+  title: string;
+}
 
 const NavBar = (props: Props) => (
   <AppBar
@@ -27,12 +28,13 @@ const NavBar = (props: Props) => (
     elevation={0}
     className={props.classes.root}
   >
-    <Toolbar style={{ minHeight: "56px" }}>
-      <IconButton color="inherit" className={props.classes.icon}>
-        <MenuIcon />
-      </IconButton>
-      <Typography variant="title" color="inherit">
-        Lab Monitor
+    <Toolbar className={props.classes.toolbar}>
+      <Typography
+        variant="title"
+        color="inherit"
+        className={props.classes.title}
+      >
+        {props.title}
       </Typography>
     </Toolbar>
   </AppBar>
