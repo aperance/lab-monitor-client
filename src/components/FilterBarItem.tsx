@@ -5,7 +5,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 const styles = createStyles({
   formControlLabel: {
-    marginLeft: "0px"
+    marginLeft: "0px",
+    marginRight: "0px"
   },
   label: {
     fontSize: "0.75rem",

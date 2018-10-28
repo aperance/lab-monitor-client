@@ -9,7 +9,7 @@ import FilterBarItem from "./FilterBarItem";
 
 const styles = createStyles({
   root: {
-    padding: "20px 12px 20px 16px",
+    padding: "20px 20px 20px 16px",
     height: "calc(100% - 40px)"
   },
   formLabel: {
