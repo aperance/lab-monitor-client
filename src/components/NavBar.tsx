@@ -13,7 +13,8 @@ const styles = createStyles({
   toolbar: { minHeight: "56px" },
   title: {
     flexGrow: 1,
-    color: "rgba(0, 0, 0, 0.75)"
+    color: "rgba(0, 0, 0, 0.75)",
+    fontSize: "1.2rem"
   }
 });
 
