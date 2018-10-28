@@ -47,6 +47,11 @@ export default (state: UserSelectionState = initialState, action: Actions) => {
     case ActionTypeKeys.PROXY_TOGGLE:
       return { ...state, proxy: !state.proxy };
 
+    case ActionTypeKeys.DEVICE_DATA_UPDATE:
+      if (action.state === null)
+        return { ...state, rows: state.rows.filter(x => x !== action.id) };
+      else return { ...state };
+
     case ActionTypeKeys.RESET_ALL:
       return { ...initialState };
 
