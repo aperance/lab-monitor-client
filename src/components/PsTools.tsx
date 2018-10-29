@@ -1,4 +1,6 @@
 import * as React from "react";
+// @ts-ignore
+import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -36,87 +38,78 @@ interface Props extends WithStyles<typeof styles> {
   result?: string;
 }
 
-interface State {
-  preset: string;
-  mode: string;
-  cmd: string;
-}
+function PsTools(props: Props) {
+  const [preset, setPreset] = useState("");
+  const [mode, setMode] = useState("");
+  const [cmd, setCmd] = useState("");
 
-class PsTools extends React.Component<Props, State> {
-  public state: State = {
-    preset: "",
-    mode: "",
-    cmd: ""
-  };
-
-  public render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.container}>
-        <form>
-          <FormControl className={classes.presetsInput}>
-            <InputLabel>Load Preset Command</InputLabel>
-            <Select
-              className={classes.text}
-              input={<Input id="presets" />}
-              value={this.state.preset}
-              onChange={e =>
-                this.setState({
-                  preset: e.target.value,
-                  mode: this.props.presets[e.target.value].mode,
-                  cmd: this.props.presets[e.target.value].cmd
-                })
-              }
-            >
-              {Object.keys(this.props.presets).map(preset => (
-                <MenuItem className={classes.text} key={preset} value={preset}>
-                  {this.props.presets[preset].name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </form>
-
-        <form>
-          <FormControl className={classes.modeInput}>
-            <InputLabel>Mode</InputLabel>
-            <Select
-              className={classes.text}
-              input={<Input id="mode" />}
-              value={this.state.mode}
-              onChange={e =>
-                this.setState({ mode: e.target.value, preset: "" })
-              }
-            >
-              <MenuItem className={classes.text} value="psExec">
-                PSExec
-              </MenuItem>
-              <MenuItem className={classes.text} value="psKill">
-                PSKill
-              </MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl className={classes.cmdInput}>
-            <InputLabel htmlFor="name-input">Command</InputLabel>
-            <Input
-              id="cmd"
-              value={this.state.cmd}
-              onChange={e => this.setState({ cmd: e.target.value, preset: "" })}
-            />
-          </FormControl>
-
-          <Button
-            size="small"
-            onClick={() => sendPsToolsCommand(this.props.target, this.state)}
+  return (
+    <div className={props.classes.container}>
+      <form>
+        <FormControl className={props.classes.presetsInput}>
+          <InputLabel>Load Preset Command</InputLabel>
+          <Select
+            className={props.classes.text}
+            input={<Input id="presets" />}
+            value={preset}
+            onChange={e => {
+              setPreset(e.target.value);
+              setMode(props.presets[e.target.value].mode);
+              setCmd(props.presets[e.target.value].cmd);
+            }}
           >
-            Send
-          </Button>
-        </form>
-        <Terminal output={this.props.result} />
-      </div>
-    );
-  }
+            {Object.keys(props.presets).map(x => (
+              <MenuItem className={props.classes.text} key={x} value={x}>
+                {props.presets[x].name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </form>
+
+      <form>
+        <FormControl className={props.classes.modeInput}>
+          <InputLabel>Mode</InputLabel>
+          <Select
+            className={props.classes.text}
+            input={<Input id="mode" />}
+            value={mode}
+            onChange={e => {
+              setPreset("");
+              setMode(e.target.value);
+            }}
+          >
+            <MenuItem className={props.classes.text} value="psExec">
+              PSExec
+            </MenuItem>
+            <MenuItem className={props.classes.text} value="psKill">
+              PSKill
+            </MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl className={props.classes.cmdInput}>
+          <InputLabel htmlFor="name-input">Command</InputLabel>
+          <Input
+            id="cmd"
+            value={cmd}
+            onChange={e => {
+              setPreset("");
+              setCmd(e.target.value);
+            }}
+          />
+        </FormControl>
+
+        <Button
+          size="small"
+          onClick={() => sendPsToolsCommand(props.target, { mode, cmd })}
+        >
+          Send
+        </Button>
+      </form>
+      <Terminal output={props.result} />
+    </div>
+  );
 }
 
 export default withStyles(styles)(PsTools);
