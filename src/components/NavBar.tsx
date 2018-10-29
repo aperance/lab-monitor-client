@@ -52,6 +52,8 @@ function NavBar(props: Props) {
         <Menu
           id="menu-appbar"
           anchorEl={anchor}
+          open={anchor ? true : false}
+          onClose={() => setAnchor(null)}
           anchorOrigin={{
             vertical: "top",
             horizontal: "right"
@@ -60,8 +62,6 @@ function NavBar(props: Props) {
             vertical: "top",
             horizontal: "right"
           }}
-          open={anchor}
-          onClose={() => setAnchor(null)}
         >
           <MenuItem onClick={() => setAnchor(null)}>Test</MenuItem>
           <MenuItem onClick={() => setAnchor(null)}>Test</MenuItem>
