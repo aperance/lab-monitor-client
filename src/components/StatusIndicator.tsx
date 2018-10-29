@@ -1,4 +1,6 @@
 import * as React from "react";
+// @ts-ignore
+import { useState, useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 
@@ -22,40 +24,34 @@ interface Props extends WithStyles<typeof styles> {
   status: string | null;
 }
 
-interface State {
-  animate: boolean;
-}
+const StatusIndicator = (props: Props) => {
+  const [initialized, setInitialized] = useState(false);
+  const [animate, setAnimate] = useState(false);
 
-class StatusIndicator extends React.Component<Props, State> {
-  public timeoutId?: NodeJS.Timer;
-  public state: State = { animate: false };
+  useEffect(
+    () => {
+      if (initialized) {
+        setAnimate(true);
+        const id = setTimeout(() => {
+          setAnimate(false);
+        }, 500);
+        return () => clearTimeout(id);
+      } else setInitialized(true);
+    },
+    [props.timestamp, props.status]
+  );
 
-  public componentDidUpdate(prevProps: Props) {
-    if (!this.state.animate && prevProps.timestamp !== this.props.timestamp) {
-      this.timeoutId = setTimeout(() => {
-        this.setState({ animate: false });
-      }, 500);
-      this.setState({ animate: true });
-    }
-  }
-
-  public componentWillUnmount() {
-    if (this.timeoutId) clearTimeout(this.timeoutId);
-  }
-
-  public render() {
-    return (
-      <Icon
-        classes={this.props.classes}
-        style={{
-          opacity: this.state.animate ? 0.5 : 1,
-          color: colorLookup[this.props.status || "INACTIVE"]
-        }}
-      >
-        lens
-      </Icon>
-    );
-  }
-}
+  return (
+    <Icon
+      classes={props.classes}
+      style={{
+        opacity: animate ? 0.5 : 1,
+        color: colorLookup[props.status || "INACTIVE"]
+      }}
+    >
+      lens
+    </Icon>
+  );
+};
 
 export default withStyles(styles)(StatusIndicator);
