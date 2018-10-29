@@ -32,7 +32,7 @@ interface Props extends WithStyles<typeof styles> {
   rightIcon?: string;
   selected?: boolean;
   onClick: () => void;
-  children: JSX.Element;
+  children?: JSX.Element;
 }
 
 function ToolbarItem(props: Props) {
