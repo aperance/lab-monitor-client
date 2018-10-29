@@ -13,9 +13,11 @@ const styles = createStyles({
   },
   icon: {
     marginRight: "0px",
-    height: "auto",
-    width: "auto",
-    fontSize: "1.2rem"
+    "& span": {
+      height: "auto",
+      width: "auto",
+      fontSize: "1.2rem"
+    }
   },
   text: {
     fontSize: "0.8rem",

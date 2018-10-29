@@ -10,7 +10,7 @@ import { errorMessageSet } from "./actions/actionCreators";
 
 const theme = createMuiTheme({
   palette: { primary: blue },
-  typography: { title: { fontWeight: 400 } }
+  typography: { useNextVariants: true, h6: { fontWeight: 400 } }
 });
 
 ReactDOM.render(

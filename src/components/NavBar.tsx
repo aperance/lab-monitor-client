@@ -32,7 +32,7 @@ function NavBar(props: Props) {
     >
       <Toolbar className={props.classes.toolbar}>
         <Typography
-          variant="title"
+          variant="h6"
           color="inherit"
           className={props.classes.title}
         >

@@ -19,7 +19,8 @@ const styles = createStyles({
     },
     fontSize: "1.0rem",
     width: "24px",
-    height: "18px"
+    height: "18px",
+    padding: "0px"
   }
 });
 
