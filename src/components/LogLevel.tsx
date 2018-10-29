@@ -1,4 +1,6 @@
 import * as React from "react";
+// @ts-ignore
+import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -25,67 +27,61 @@ interface Props extends WithStyles<typeof styles> {
   cancelLogLevel: () => void;
 }
 
-interface State {
-  namespace: string;
-  level: string;
-}
+function LogLevel(props: Props) {
+  const [namespace, setNamespace] = useState("");
+  const [level, setLevel] = useState("");
 
-class LogLevel extends React.Component<Props, State> {
-  public state: State = { namespace: "", level: "" };
+  return (
+    <Dialog open={props.open} onClose={props.cancelLogLevel}>
+      <DialogContent>
+        <form className={props.classes.form}>
+          <FormControl>
+            <InputLabel>Namespace</InputLabel>
+            <Select
+              className={props.classes.selectNamespace}
+              value={namespace}
+              onChange={e => setNamespace(e.target.value)}
+              input={<Input id="namespace" />}
+            >
+              {props.namespaces.map(x => (
+                <MenuItem key={x} value={x}>
+                  {x}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-  public render() {
-    return (
-      <Dialog open={this.props.open} onClose={this.props.cancelLogLevel}>
-        <DialogContent>
-          <form className={this.props.classes.form}>
-            <FormControl>
-              <InputLabel>Namespace</InputLabel>
-              <Select
-                className={this.props.classes.selectNamespace}
-                value={this.state.namespace}
-                onChange={e => this.setState({ namespace: e.target.value })}
-                input={<Input id="namespace" />}
-              >
-                {this.props.namespaces.map(namespace => (
-                  <MenuItem key={namespace} value={namespace}>
-                    {namespace}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <FormControl>
+            <InputLabel>Level</InputLabel>
+            <Select
+              className={props.classes.selectLevel}
+              value={level}
+              onChange={e => setLevel(e.target.value)}
+              input={<Input id="level" />}
+            >
+              {props.levels.map(x => (
+                <MenuItem key={x} value={x}>
+                  {x}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </form>
+      </DialogContent>
 
-            <FormControl>
-              <InputLabel>Level</InputLabel>
-              <Select
-                className={this.props.classes.selectLevel}
-                value={this.state.level}
-                onChange={e => this.setState({ level: e.target.value })}
-                input={<Input id="level" />}
-              >
-                {this.props.levels.map(level => (
-                  <MenuItem key={level} value={level}>
-                    {level}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </form>
-        </DialogContent>
-
-        <DialogActions>
-          <Button
-            onClick={() => {
-              sendDeviceAction(this.props.targets, "logLevel", this.state);
-              this.props.cancelLogLevel();
-            }}
-            color="primary"
-          >
-            Send
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
+      <DialogActions>
+        <Button
+          onClick={() => {
+            sendDeviceAction(props.targets, "logLevel", { namespace, level });
+            props.cancelLogLevel();
+          }}
+          color="primary"
+        >
+          Send
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 }
 
 export default withStyles(styles)(LogLevel);
