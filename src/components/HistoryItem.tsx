@@ -54,46 +54,48 @@ interface Props extends WithStyles<typeof styles> {
   handleClick: (property: string) => void;
 }
 
-const HistoryItem = (props: Props) => (
-  <div
-    style={props.style}
-    className={props.classes.root}
-    onClick={() => props.handleClick(props.property)}
-  >
-    <div className={props.classes.topRow}>
-      <span className={props.classes.title}>{props.property}</span>
-      <Icon
-        className={props.classes.icon}
-        style={props.isSelected ? { transform: "rotate(0.5turn)" } : {}}
-      >
-        expand_more
-      </Icon>
-    </div>
-    {props.isSelected && (
-      <div>
-        {props.historyData && (
-          <Table className={props.classes.table}>
-            {props.historyData.map(([key, value]) => (
-              <TableRow classes={{ root: props.classes.row }}>
-                <TableCell
-                  className={props.classes.cell}
-                  style={{ flexGrow: 0 }}
-                >
-                  {key}
-                </TableCell>
-                <TableCell
-                  className={props.classes.cell}
-                  style={{ flexGrow: 1 }}
-                >
-                  {value}
-                </TableCell>
-              </TableRow>
-            ))}
-          </Table>
-        )}
+function HistoryItem(props: Props) {
+  return (
+    <div
+      style={props.style}
+      className={props.classes.root}
+      onClick={() => props.handleClick(props.property)}
+    >
+      <div className={props.classes.topRow}>
+        <span className={props.classes.title}>{props.property}</span>
+        <Icon
+          className={props.classes.icon}
+          style={props.isSelected ? { transform: "rotate(0.5turn)" } : {}}
+        >
+          expand_more
+        </Icon>
       </div>
-    )}
-  </div>
-);
+      {props.isSelected && (
+        <div>
+          {props.historyData && (
+            <Table className={props.classes.table}>
+              {props.historyData.map(([key, value]) => (
+                <TableRow classes={{ root: props.classes.row }}>
+                  <TableCell
+                    className={props.classes.cell}
+                    style={{ flexGrow: 0 }}
+                  >
+                    {key}
+                  </TableCell>
+                  <TableCell
+                    className={props.classes.cell}
+                    style={{ flexGrow: 1 }}
+                  >
+                    {value}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </Table>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default withStyles(styles)(HistoryItem);

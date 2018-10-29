@@ -22,23 +22,25 @@ interface Props extends WithStyles<typeof styles> {
   title: string;
 }
 
-const NavBar = (props: Props) => (
-  <AppBar
-    position="fixed"
-    color="default"
-    elevation={0}
-    className={props.classes.root}
-  >
-    <Toolbar className={props.classes.toolbar}>
-      <Typography
-        variant="title"
-        color="inherit"
-        className={props.classes.title}
-      >
-        {props.title}
-      </Typography>
-    </Toolbar>
-  </AppBar>
-);
+function NavBar(props: Props) {
+  return (
+    <AppBar
+      position="fixed"
+      color="default"
+      elevation={0}
+      className={props.classes.root}
+    >
+      <Toolbar className={props.classes.toolbar}>
+        <Typography
+          variant="title"
+          color="inherit"
+          className={props.classes.title}
+        >
+          {props.title}
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
+}
 
 export default withStyles(styles)(NavBar);

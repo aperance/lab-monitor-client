@@ -38,33 +38,34 @@ interface Props extends WithStyles<typeof styles> {
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
-const AssetTable = (props: Props) => (
-  <div className={props.classes.root}>
-    <Table>
-      <AssetTableHead
-        columns={props.columns}
-        sortProperty={props.sortProperty}
-        sortDirection={props.sortDirection}
-        changeSorting={props.changeSorting}
+function AssetTable(props: Props) {
+  return (
+    <div className={props.classes.root}>
+      <Table>
+        <AssetTableHead
+          columns={props.columns}
+          sortProperty={props.sortProperty}
+          sortDirection={props.sortDirection}
+          changeSorting={props.changeSorting}
+        />
+        <TableBody>
+          {props.tableData.map(([rowId, rowData]) => (
+            <AssetTableRow
+              key={rowId}
+              columns={props.columns}
+              rowData={rowData}
+              selected={props.selected.includes(rowId)}
+              handleRowClick={(e: MouseEvent) => props.handleRowClick(e, rowId)}
+            />
+          ))}
+        </TableBody>
+      </Table>
+      <div
+        className={props.classes.belowTable}
+        onClick={e => props.handleRowClick(e.nativeEvent, null)}
       />
-      <TableBody>
-        {props.tableData.map(([rowId, rowData]) => (
-          <AssetTableRow
-            key={rowId}
-            columns={props.columns}
-            rowData={rowData}
-            selected={props.selected.includes(rowId)}
-            handleRowClick={(e: MouseEvent) => props.handleRowClick(e, rowId)}
-          />
-        ))}
-      </TableBody>
-    </Table>
-
-    <div
-      className={props.classes.belowTable}
-      onClick={e => props.handleRowClick(e.nativeEvent, null)}
-    />
-  </div>
-);
+    </div>
+  );
+}
 
 export default withStyles(styles)(AssetTable);

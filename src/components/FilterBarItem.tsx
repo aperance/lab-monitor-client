@@ -31,23 +31,25 @@ interface Props extends WithStyles<typeof styles> {
   handleCheckboxClick: (property: string, regex: string) => void;
 }
 
-const FilterBarItem = (props: Props) => (
-  <FormControlLabel
-    className={props.classes.formControlLabel}
-    classes={{ label: props.classes.label }}
-    control={
-      <Checkbox
-        className={props.classes.checkbox}
-        color="primary"
-        checked={
-          props.selectedFilters.hasOwnProperty(props.property) &&
-          props.selectedFilters[props.property].includes(props.regex)
-        }
-        onClick={() => props.handleCheckboxClick(props.property, props.regex)}
-      />
-    }
-    label={props.label}
-  />
-);
+function FilterBarItem(props: Props) {
+  return (
+    <FormControlLabel
+      className={props.classes.formControlLabel}
+      classes={{ label: props.classes.label }}
+      control={
+        <Checkbox
+          className={props.classes.checkbox}
+          color="primary"
+          checked={
+            props.selectedFilters.hasOwnProperty(props.property) &&
+            props.selectedFilters[props.property].includes(props.regex)
+          }
+          onClick={() => props.handleCheckboxClick(props.property, props.regex)}
+        />
+      }
+      label={props.label}
+    />
+  );
+}
 
 export default withStyles(styles)(FilterBarItem);

@@ -24,7 +24,7 @@ interface Props extends WithStyles<typeof styles> {
   status: string | null;
 }
 
-const StatusIndicator = (props: Props) => {
+function StatusIndicator(props: Props) {
   const [initialized, setInitialized] = useState(false);
   const [animate, setAnimate] = useState(false);
 
@@ -52,6 +52,6 @@ const StatusIndicator = (props: Props) => {
       lens
     </Icon>
   );
-};
+}
 
 export default withStyles(styles)(StatusIndicator);

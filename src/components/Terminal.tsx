@@ -18,10 +18,12 @@ interface Props extends WithStyles<typeof styles> {
   output?: string;
 }
 
-const Terminal = (props: Props) => (
-  <Paper className={props.classes.paper} elevation={8} square={true}>
-    <pre className={props.classes.pre}>{props.output}</pre>
-  </Paper>
-);
+function Terminal(props: Props) {
+  return (
+    <Paper className={props.classes.paper} elevation={8} square={true}>
+      <pre className={props.classes.pre}>{props.output}</pre>
+    </Paper>
+  );
+}
 
 export default withStyles(styles)(Terminal);

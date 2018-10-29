@@ -17,34 +17,30 @@ interface Props extends WithStyles<typeof styles> {
   url: string | null;
 }
 
-const WebPage = (props: Props) => {
-  return (
+function WebPage(props: Props) {
+  return props.url === null ? null : (
     <>
-      {props.url && (
-        <>
-          <Button
-            variant="fab"
-            mini={true}
-            className={props.classes.button}
-            href={props.url}
-            target="_blank"
-          >
-            <OpenIcon />
-          </Button>
-          <iframe
-            src={props.url}
-            id="qqq"
-            title="iframe"
-            width="100%"
-            height="100%"
-            style={{ borderWidth: "0px" }}
-          >
-            <p>Your browser does not support iframes.</p>
-          </iframe>
-        </>
-      )}
+      <Button
+        variant="fab"
+        mini={true}
+        className={props.classes.button}
+        href={props.url}
+        target="_blank"
+      >
+        <OpenIcon />
+      </Button>
+      <iframe
+        src={props.url}
+        id="qqq"
+        title="iframe"
+        width="100%"
+        height="100%"
+        style={{ borderWidth: "0px" }}
+      >
+        <p>Your browser does not support iframes.</p>
+      </iframe>
     </>
   );
-};
+}
 
 export default withStyles(styles)(WebPage);

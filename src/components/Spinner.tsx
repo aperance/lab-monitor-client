@@ -13,10 +13,12 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {}
 
-const Spinner = (props: Props) => (
-  <span className={props.classes.root}>
-    <CircularProgress size={60} />
-  </span>
-);
+function Spinner(props: Props) {
+  return (
+    <span className={props.classes.root}>
+      <CircularProgress size={60} />
+    </span>
+  );
+}
 
 export default withStyles(styles)(Spinner);

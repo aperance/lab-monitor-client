@@ -17,26 +17,28 @@ interface Props extends WithStyles<typeof styles> {
   handleClose: () => void;
 }
 
-const ActionResponse = (props: Props) => (
-  <Snackbar
-    anchorOrigin={{
-      vertical: "bottom",
-      horizontal: "center"
-    }}
-    open={props.message ? true : false}
-    autoHideDuration={6000}
-    onClose={props.handleClose}
-    message={<span id="message-id">{props.message}</span>}
-    action={
-      <IconButton
-        color="inherit"
-        className={props.classes.close}
-        onClick={props.handleClose}
-      >
-        <CloseIcon />
-      </IconButton>
-    }
-  />
-);
+function ActionResponse(props: Props) {
+  return (
+    <Snackbar
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "center"
+      }}
+      open={props.message ? true : false}
+      autoHideDuration={6000}
+      onClose={props.handleClose}
+      message={<span id="message-id">{props.message}</span>}
+      action={
+        <IconButton
+          color="inherit"
+          className={props.classes.close}
+          onClick={props.handleClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      }
+    />
+  );
+}
 
 export default withStyles(styles)(ActionResponse);
