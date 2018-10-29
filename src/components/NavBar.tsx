@@ -1,8 +1,14 @@
 import * as React from "react";
+// @ts-ignore
+import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import MenuIcon from "@material-ui/icons/MoreVert";
 
 const styles = createStyles({
   root: {
@@ -23,6 +29,8 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function NavBar(props: Props) {
+  const [anchor, setAnchor] = useState(null);
+
   return (
     <AppBar
       position="fixed"
@@ -38,6 +46,26 @@ function NavBar(props: Props) {
         >
           {props.title}
         </Typography>
+        <IconButton onClick={e => setAnchor(e.currentTarget)}>
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchor}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          open={anchor}
+          onClose={() => setAnchor(null)}
+        >
+          <MenuItem onClick={() => setAnchor(null)}>Test</MenuItem>
+          <MenuItem onClick={() => setAnchor(null)}>Test</MenuItem>
+        </Menu>
       </Toolbar>
     </AppBar>
   );
