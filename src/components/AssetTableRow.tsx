@@ -26,42 +26,38 @@ interface Props extends WithStyles<typeof styles> {
   handleRowClick: (e: MouseEvent) => void;
 }
 
-class AssetTableRow extends React.Component<Props> {
-  public shouldComponentUpdate(nextProps: Props) {
-    if (
-      this.props.rowData.timestamp !== nextProps.rowData.timestamp ||
-      this.props.selected !== nextProps.selected
-    )
-      return true;
-    else return false;
-  }
-
-  public render() {
-    return (
-      <TableRow
-        hover
-        className={this.props.classes.row}
-        selected={this.props.selected}
-        onClick={e => this.props.handleRowClick(e.nativeEvent)}
-      >
-        <TableCell className={this.props.classes.cell}>
-          <StatusIndicator
-            timestamp={this.props.rowData.timestamp}
-            status={this.props.rowData.status}
-          />
-        </TableCell>
-        {this.props.columns &&
-          this.props.columns.map(column => (
-            <TableCell
-              key={column.property}
-              className={this.props.classes.cell}
-            >
-              {this.props.rowData[column.property]}
-            </TableCell>
-          ))}
-      </TableRow>
-    );
-  }
+function preventRender(prevProps: Props, nextProps: Props) {
+  return (
+    prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
+    prevProps.selected === nextProps.selected
+  );
 }
 
-export default withStyles(styles)(AssetTableRow);
+function AssetTableRow(props: Props) {
+  return (
+    <TableRow
+      hover
+      className={props.classes.row}
+      selected={props.selected}
+      onClick={e => props.handleRowClick(e.nativeEvent)}
+    >
+      <TableCell className={props.classes.cell}>
+        <StatusIndicator
+          timestamp={props.rowData.timestamp}
+          status={props.rowData.status}
+        />
+      </TableCell>
+      {props.columns &&
+        props.columns.map(column => (
+          <TableCell key={column.property} className={props.classes.cell}>
+            {props.rowData[column.property]}
+          </TableCell>
+        ))}
+    </TableRow>
+  );
+}
+
+export default withStyles(styles)(
+  // @ts-ignore
+  React.memo(AssetTableRow, preventRender) as JSX.Element
+);

@@ -20,37 +20,36 @@ interface Props extends WithStyles<typeof styles> {
   changeSorting: (property: string) => void;
 }
 
-class AssetTableHead extends React.Component<Props> {
-  public shouldComponentUpdate(nextProps: Props) {
-    if (
-      this.props.sortProperty !== nextProps.sortProperty ||
-      this.props.sortDirection !== nextProps.sortDirection
-    )
-      return true;
-    else return false;
-  }
-
-  public render() {
-    return (
-      <TableHead>
-        <TableRow className={this.props.classes.row}>
-          <TableCell key="status" className={this.props.classes.cell} />
-          {this.props.columns &&
-            this.props.columns.map(column => (
-              <TableCell key={column.title} className={this.props.classes.cell}>
-                <TableSortLabel
-                  active={this.props.sortProperty === column.property}
-                  direction={this.props.sortDirection}
-                  onClick={() => this.props.changeSorting(column.property)}
-                >
-                  {column.title}
-                </TableSortLabel>
-              </TableCell>
-            ))}
-        </TableRow>
-      </TableHead>
-    );
-  }
+function preventRender(prevProps: Props, nextProps: Props) {
+  return (
+    prevProps.sortProperty === nextProps.sortProperty &&
+    prevProps.sortDirection === nextProps.sortDirection
+  );
 }
 
-export default withStyles(styles)(AssetTableHead);
+function AssetTableHead(props: Props) {
+  return (
+    <TableHead>
+      <TableRow className={props.classes.row}>
+        <TableCell key="status" className={props.classes.cell} />
+        {props.columns &&
+          props.columns.map(column => (
+            <TableCell key={column.title} className={props.classes.cell}>
+              <TableSortLabel
+                active={props.sortProperty === column.property}
+                direction={props.sortDirection}
+                onClick={() => props.changeSorting(column.property)}
+              >
+                {column.title}
+              </TableSortLabel>
+            </TableCell>
+          ))}
+      </TableRow>
+    </TableHead>
+  );
+}
+
+export default withStyles(styles)(
+  // @ts-ignore
+  React.memo(AssetTableHead, preventRender) as JSX.Element
+);
