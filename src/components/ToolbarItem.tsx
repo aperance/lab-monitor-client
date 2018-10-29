@@ -12,6 +12,7 @@ const styles = createStyles({
     paddingRight: "20px"
   },
   icon: {
+    // tslint:disable-next-line:object-literal-key-quotes
     marginRight: "0px",
     "& span": {
       height: "auto",

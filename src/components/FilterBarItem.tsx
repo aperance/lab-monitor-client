@@ -17,9 +17,13 @@ const styles = createStyles({
     "& svg": {
       width: "0.9rem"
     },
+    // tslint:disable-next-line:object-literal-key-quotes
     fontSize: "1.0rem",
+    // tslint:disable-next-line:object-literal-key-quotes
     width: "24px",
+    // tslint:disable-next-line:object-literal-key-quotes
     height: "18px",
+    // tslint:disable-next-line:object-literal-key-quotes
     padding: "0px"
   }
 });

@@ -13,6 +13,7 @@ import { sendPsToolsCommand } from "../messageHandler";
 
 const styles = createStyles({
   container: {
+    // tslint:disable-next-line:object-literal-key-quotes
     margin: "24px 32px 0px 32px",
     "& form": { display: "flex", flexWrap: "wrap", marginTop: "16px" },
     "& label": { fontSize: "0.825rem" },
