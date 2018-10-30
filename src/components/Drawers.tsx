@@ -75,21 +75,20 @@ function Drawers(props: Props) {
           transition: isDragging ? "0s" : ".5s"
         }}
       >
-        {props.subView &&
-          ((): any => {
-            switch (props.subView) {
-              case "history":
-                return <HistoryContainer />;
-              case "statePage":
-                return !isDragging ? <WebPageContainer /> : null;
-              case "psTools":
-                return <PsToolsContainer />;
-              case "vnc":
-                return !isDragging ? <VncContainer /> : null;
-              default:
-                return null;
-            }
-          })()}
+        {((): any => {
+          switch (props.subView) {
+            case "history":
+              return <HistoryContainer />;
+            case "statePage":
+              return !isDragging ? <WebPageContainer /> : null;
+            case "psTools":
+              return <PsToolsContainer />;
+            case "vnc":
+              return !isDragging ? <VncContainer /> : null;
+            default:
+              return null;
+          }
+        })()}
       </div>
     </div>
   );
