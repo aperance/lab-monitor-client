@@ -6,7 +6,7 @@ import RFB from "@novnc/novnc/core/rfb";
 
 type Vnc = [React.RefObject<HTMLSpanElement>, boolean, Error | null];
 
-export function useVnc(scaled: boolean, url?: string, password?: string) {
+export function useVnc(url: string, password: string, scaled: boolean) {
   const [connected, setConnected] = useState(false);
   const [error, setError] = useState(null);
   const targetRef: React.RefObject<HTMLSpanElement> = useRef();
