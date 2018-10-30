@@ -75,7 +75,7 @@ function Drawers(props: Props) {
           transition: isDragging ? "0s" : ".5s"
         }}
       >
-        {((): any => {
+        {(() => {
           switch (props.subView) {
             case "history":
               return <HistoryContainer />;
