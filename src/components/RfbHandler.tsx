@@ -3,7 +3,7 @@ import * as React from "react";
 import RFB from "@novnc/novnc/core/rfb";
 
 interface InjectedProps {
-  targetElement: JSX.Element;
+  targetRef: React.RefObject<HTMLSpanElement>;
   connected: boolean;
   scale: boolean;
   changeScale: any;
@@ -25,6 +25,7 @@ interface State {
 class RfbHandler extends React.Component<Props, State> {
   public rfb: any = null;
   public timer?: any;
+  public targetRef: React.RefObject<HTMLSpanElement> = React.createRef();
   public state: State = {
     connected: false,
     scale: true
@@ -46,7 +47,7 @@ class RfbHandler extends React.Component<Props, State> {
   public connectVnc() {
     this.disconnectVnc();
     this.timer = setTimeout(() => {
-      this.rfb = new RFB(document.getElementById("vnc"), this.props.url, {
+      this.rfb = new RFB(this.targetRef.current, this.props.url, {
         credentials: { password: this.props.password }
       });
       this.rfb.scaleViewport = this.state.scale;
@@ -77,7 +78,7 @@ class RfbHandler extends React.Component<Props, State> {
 
   public render() {
     return this.props.children({
-      targetElement: <span id="vnc" />,
+      targetRef: this.targetRef,
       connected: this.state.connected,
       scale: this.state.scale,
       changeScale: () => this.setState({ scale: !this.state.scale })

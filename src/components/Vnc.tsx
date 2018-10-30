@@ -49,7 +49,7 @@ function Vnc(props: Props) {
               visibility: injectedProps.connected ? "visible" : "hidden"
             }}
           >
-            {injectedProps.targetElement}
+            <span ref={injectedProps.targetRef} />
             <Button
               variant="fab"
               mini={true}
