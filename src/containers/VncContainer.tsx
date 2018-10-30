@@ -19,7 +19,7 @@ const mapStateToProps = (state: StoreState) => {
         `port=${state.configuration.vnc.port}\n` +
         `password=${state.configuration.vnc.passwordEncrypted}`
     };
-  else return {};
+  else return { url: "", password: "", fileContents: "" };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
