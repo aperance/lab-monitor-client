@@ -29,21 +29,21 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  url?: string;
-  password?: string;
-  fileContents?: string;
+  url: string;
+  password: string;
+  fileContents: string;
   handleError: (err: Error) => void;
 }
 
 function VncViewer(props: Props) {
   const [scaled, setScaled] = useState(true);
-  const [ref, connected, error] = useVnc(scaled, props.url, props.password);
+  const [ref, connected, error] = useVnc(props.url, props.password, scaled);
 
-  if (error) props.handleError(error);
+  if (error) throw error;
 
   return (
     <>
-      {!connected && !error && <LinearProgress />}
+      {!connected && <LinearProgress />}
       <div
         className={props.classes.root}
         style={{
