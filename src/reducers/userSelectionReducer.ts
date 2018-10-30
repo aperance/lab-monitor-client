@@ -20,7 +20,8 @@ export default (state: UserSelectionState = initialState, action: Actions) => {
 
     case ActionTypeKeys.MULTI_ROW_SELECT:
       const rows: string[] = [...state.rows];
-      if (rows.indexOf(action.row) === -1) rows.push(action.row);
+      if (action.row === null) return { ...state };
+      else if (rows.indexOf(action.row) === -1) rows.push(action.row);
       else rows.splice(rows.indexOf(action.row), 1);
       return { ...state, rows, view: null, history: null };
 
