@@ -66,11 +66,11 @@ export const resetAll = (): ResetAllAction => {
   return { type: ActionTypeKeys.RESET_ALL };
 };
 
-export const singleRowSelect = (row: string): SingleRowSelectAction => {
+export const singleRowSelect = (row: string | null): SingleRowSelectAction => {
   return { type: ActionTypeKeys.SINGLE_ROW_SELECT, row };
 };
 
-export const multiRowSelect = (row: string): MultiRowSelectAction => {
+export const multiRowSelect = (row: string | null): MultiRowSelectAction => {
   return { type: ActionTypeKeys.MULTI_ROW_SELECT, row };
 };
 

@@ -100,12 +100,12 @@ export interface ResetAllAction {
 
 export interface SingleRowSelectAction {
   readonly type: ActionTypeKeys.SINGLE_ROW_SELECT;
-  readonly row: string;
+  readonly row: string | null;
 }
 
 export interface MultiRowSelectAction {
   readonly type: ActionTypeKeys.MULTI_ROW_SELECT;
-  readonly row: string;
+  readonly row: string | null;
 }
 
 export interface ViewSelectAction {
