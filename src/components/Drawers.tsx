@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-import MouseTracker from "./MouseTracker";
+import { useMouseTracker } from "../hooks/useMouseTracker";
 import ToolbarContainer from "../containers/ToolbarContainer";
 import HistoryContainer from "../containers/HistoryContainer";
 import WebPageContainer from "../containers/WebPageContainer";
@@ -41,69 +41,57 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function Drawers(props: Props) {
+  const [ref, subViewWidth, isDragging, setDragging] = useMouseTracker();
+
   return (
-    <MouseTracker>
-      {injectedProps => (
-        <>
-          <div
-            className={props.classes.drawer}
-            style={{
-              width: "200px",
-              right:
-                [-200, 0, injectedProps.subViewWidth][props.drawersVisible] +
-                "px",
-              transition: injectedProps.isDragging ? "0s" : ".5s"
-            }}
-          >
-            <ToolbarContainer />
-          </div>
-          <div
-            className={props.classes.dragBar}
-            style={{
-              right:
-                [-200, 0, injectedProps.subViewWidth][props.drawersVisible] -
-                5 +
-                "px",
-              transition: injectedProps.isDragging ? "0s" : ".5s"
-            }}
-            onMouseDown={injectedProps.startDrag}
-          >
-            <Icon className={props.classes.icon}>drag_indicator</Icon>
-          </div>
-          <div
-            className={props.classes.drawer}
-            style={{
-              width: injectedProps.subViewWidth + "px",
-              right:
-                [
-                  -(200 + injectedProps.subViewWidth),
-                  -injectedProps.subViewWidth,
-                  0
-                ][props.drawersVisible] + "px",
-              transition: injectedProps.isDragging ? "0s" : ".5s"
-            }}
-          >
-            {props.subView &&
-              ((): any => {
-                switch (props.subView) {
-                  case "history":
-                    return <HistoryContainer />;
-                  case "statePage":
-                    return !injectedProps.isDragging ? (
-                      <WebPageContainer />
-                    ) : null;
-                  case "psTools":
-                    return <PsToolsContainer />;
-                  case "vnc":
-                    return !injectedProps.isDragging ? <VncContainer /> : null;
-                  default:
-                    return null;
-                }
-              })()}
-          </div>
-        </>
-      )}
-    </MouseTracker>
+    <div ref={ref}>
+      <div
+        className={props.classes.drawer}
+        style={{
+          width: "200px",
+          right: [-200, 0, subViewWidth][props.drawersVisible] + "px",
+          transition: isDragging ? "0s" : ".5s"
+        }}
+      >
+        <ToolbarContainer />
+      </div>
+      <div
+        className={props.classes.dragBar}
+        style={{
+          right: [-200, 0, subViewWidth][props.drawersVisible] - 5 + "px",
+          transition: isDragging ? "0s" : ".5s"
+        }}
+        onMouseDown={() => setDragging(true)}
+      >
+        <Icon className={props.classes.icon}>drag_indicator</Icon>
+      </div>
+      <div
+        className={props.classes.drawer}
+        style={{
+          width: subViewWidth + "px",
+          right:
+            [-(200 + subViewWidth), -subViewWidth, 0][props.drawersVisible] +
+            "px",
+          transition: isDragging ? "0s" : ".5s"
+        }}
+      >
+        {props.subView &&
+          ((): any => {
+            switch (props.subView) {
+              case "history":
+                return <HistoryContainer />;
+              case "statePage":
+                return !isDragging ? <WebPageContainer /> : null;
+              case "psTools":
+                return <PsToolsContainer />;
+              case "vnc":
+                return !isDragging ? <VncContainer /> : null;
+              default:
+                return null;
+            }
+          })()}
+      </div>
+    </div>
   );
 }
 
