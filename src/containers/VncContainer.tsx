@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StoreState } from "../types";
 import { errorMessageSet } from "../actions/actionCreators";
-import Vnc from "../components/Vnc";
+import VncViewer from "../components/VncViewer";
 
 const mapStateToProps = (state: StoreState) => {
   if (state.userSelection.rows.length === 1)
@@ -31,4 +31,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Vnc);
+)(VncViewer);
