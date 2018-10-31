@@ -1,9 +1,12 @@
 import * as React from "react";
+// @ts-ignore
+import { useState, useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
+import { RowData } from "../types";
 
 const styles = createStyles({
   root: {
@@ -19,37 +22,42 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  tableData: Array<
-    [
-      string, // id
-      {
-        [property: string]: string | null;
-      }
-    ]
-  >;
-  columns: Array<{
-    title: string;
-    property: string;
-  }>;
-  sortProperty: string | null;
-  sortDirection: "asc" | "desc";
+  tableData: RowData[];
+  columns: Array<{ title: string; property: string }>;
   selected: string[];
-  changeSorting: (property: string) => void;
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
 function AssetTable(props: Props) {
+  const [sortProperty, setSortProperty] = useState(null);
+  const [sortReverse, setSortReverse] = useState(false);
+
+  useEffect(() => {
+    setSortProperty(props.columns[0].property);
+  }, []);
+
+  const changeSorting = (property: string) => {
+    setSortProperty(property);
+    setSortReverse(sortProperty !== property ? false : !sortReverse);
+  };
+
+  const sortFunc = (key1: RowData, key2: RowData) => {
+    let result = (key1[1][sortProperty] || "") > (key2[1][sortProperty] || "");
+    if (sortReverse) result = !result;
+    return result ? 1 : -1;
+  };
+
   return (
     <div className={props.classes.root}>
       <Table>
         <AssetTableHead
           columns={props.columns}
-          sortProperty={props.sortProperty}
-          sortDirection={props.sortDirection}
-          changeSorting={props.changeSorting}
+          sortProperty={sortProperty}
+          sortDirection={sortReverse ? "asc" : "desc"}
+          changeSorting={changeSorting}
         />
         <TableBody>
-          {props.tableData.map(([rowId, rowData]) => (
+          {props.tableData.sort(sortFunc).map(([rowId, rowData]) => (
             <AssetTableRow
               key={rowId}
               columns={props.columns}
