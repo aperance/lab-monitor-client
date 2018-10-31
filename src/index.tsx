@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { WebsocketProvider } from "./Websocket";
+import WebsocketProvider from "./WebsocketProvider";
 import blue from "@material-ui/core/colors/blue";
 import Layout from "./Layout";
 import store from "./store";

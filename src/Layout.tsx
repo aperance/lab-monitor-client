@@ -12,7 +12,7 @@ import DrawersContainer from "./containers/DrawersContainer";
 import LogLevelContainer from "./containers/LogLevelContainer";
 import ErrorMessageContainer from "./containers/ErrorMessageContainer";
 import ActionResponseContainer from "./containers/ActionResponseContainer";
-import { WebsocketContext } from "./Websocket";
+import { WebsocketContext } from "./WebsocketProvider";
 
 const styles = createStyles({
   root: {
@@ -40,9 +40,9 @@ interface Props extends WithStyles<typeof styles> {
 const Layout = (props: Props) => {
   const { status } = useContext(WebsocketContext);
 
-  if (status === "disconnected") return <div>ERROR</div>;
+  if (status === "error") return <div>ERROR</div>;
 
-  if (!props.dataReceived) return <Spinner />;
+  if (status === "disconnected" || !props.dataReceived) return <Spinner />;
 
   return (
     <>

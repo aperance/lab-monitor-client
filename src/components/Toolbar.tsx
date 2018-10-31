@@ -4,7 +4,7 @@ import { useContext } from "react";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ToolbarItem from "./ToolbarItem";
-import { WebsocketContext } from "../Websocket";
+import { WebsocketContext } from "../WebsocketProvider";
 // import {
 //   sendDeviceAction,
 //   sendRefreshDevice,
