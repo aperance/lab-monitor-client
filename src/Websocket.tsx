@@ -21,42 +21,17 @@ export const WebsocketProvider = (props: Props) => {
       if (!socket.current || retry) {
         const ws = new WebSocket(props.url);
 
-        ws.addEventListener("open", () => {
-          setStatus("connected");
-          ws.onmessage = message => {
-            inboundMessageRouter(JSON.parse(message.data) as unknown);
-          };
-        });
+        ws.onopen = () => setStatus("connected");
+        ws.onmessage = x => inboundMessageRouter(JSON.parse(x.data) as unknown);
+        ws.onerror = () => setStatus("disconnected");
+        ws.onclose = () => setTimeout(() => setRetry(true), 5000);
 
-        ws.onclose = () => {
-          setStatus("disconnected");
-          setTimeout(() => setRetry(true), 5000);
-        };
-
-        socket.current = ws;
         setRetry(false);
+        socket.current = ws;
       }
     },
     [retry]
   );
-
-  // const connect = () => {
-  //   const ws = new WebSocket(props.url);
-
-  //   ws.addEventListener("open", () => {
-  //     setStatus("connected");
-  //     ws.onmessage = message => {
-  //       inboundMessageRouter(JSON.parse(message.data) as unknown);
-  //     };
-  //   });
-
-  //   ws.onclose = () => {
-  //     setStatus("disconnected");
-  //     setTimeout(() => setRetry(true), 5000);
-  //   };
-
-  //   return ws;
-  // };
 
   const sendToServer = (message: WsMessage) => {
     if (socket.current) {
