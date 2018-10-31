@@ -1,12 +1,7 @@
 import * as React from "react";
 // @ts-ignore
 import { useState } from "react";
-import {
-  createStyles,
-  WithStyles,
-  withStyles,
-  Hidden
-} from "@material-ui/core";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Button from "@material-ui/core/Button";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
