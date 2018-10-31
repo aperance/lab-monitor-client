@@ -1,4 +1,6 @@
 import * as React from "react";
+// @ts-ignore
+import { useContext } from "react";
 import { connect } from "react-redux";
 import { StoreState } from "./types";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
@@ -10,6 +12,7 @@ import DrawersContainer from "./containers/DrawersContainer";
 import LogLevelContainer from "./containers/LogLevelContainer";
 import ErrorMessageContainer from "./containers/ErrorMessageContainer";
 import ActionResponseContainer from "./containers/ActionResponseContainer";
+import { WebsocketContext } from "./Websocket";
 
 const styles = createStyles({
   root: {
@@ -34,32 +37,30 @@ interface Props extends WithStyles<typeof styles> {
   dataReceived: boolean;
 }
 
-class Layout extends React.Component<Props> {
-  public render() {
-    return (
-      <>
-        <NavBarContainer />
-        {!this.props.dataReceived ? (
-          <Spinner />
-        ) : (
-          <>
-            <div className={this.props.classes.root}>
-              <div className={this.props.classes.filter}>
-                <FilterBarContainer />
-              </div>
-              <div className={this.props.classes.table}>
-                <AssetTableContainer />
-              </div>
-            </div>
-            <DrawersContainer />
-            <LogLevelContainer />
-          </>
-        )}
-        <ErrorMessageContainer />
-        <ActionResponseContainer />
-      </>
-    );
-  }
-}
+const Layout = (props: Props) => {
+  const { status } = useContext(WebsocketContext);
+
+  if (status === "disconnected") return <div>ERROR</div>;
+
+  if (!props.dataReceived) return <Spinner />;
+
+  return (
+    <>
+      <NavBarContainer />
+      <div className={props.classes.root}>
+        <div className={props.classes.filter}>
+          <FilterBarContainer />
+        </div>
+        <div className={props.classes.table}>
+          <AssetTableContainer />
+        </div>
+      </div>
+      <DrawersContainer />
+      <LogLevelContainer />
+      <ErrorMessageContainer />
+      <ActionResponseContainer />
+    </>
+  );
+};
 
 export default withStyles(styles)(connect(mapStateToProps)(Layout));

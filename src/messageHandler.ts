@@ -15,7 +15,6 @@ import {
   errorMessageSet
 } from "./actions/actionCreators";
 import store from "./store";
-import websocket from "./websocket";
 
 /**
  * Determine redux action to be dispatched based on an incoming websocket message.
@@ -53,63 +52,4 @@ export const inboundMessageRouter = (message: unknown) => {
       );
       break;
   }
-};
-
-/**
- * Public method to trigger refresh of device tracking by server.
- *
- * @param {string[]} targets
- */
-export const sendRefreshDevice = (targets: string[]) => {
-  websocket.sendToServer({
-    type: WsMessageTypeKeys.RefreshDevice,
-    payload: { targets }
-  });
-};
-
-/**
- * Public method to trigger removal of device in server records.
- *
- * @param {string[]} targets
- */
-export const sendClearDevice = (targets: string[]) => {
-  websocket.sendToServer({
-    type: WsMessageTypeKeys.ClearDevice,
-    payload: { targets }
-  });
-};
-
-/**
- * Public method to send action request to device via websocket server.
- *
- * @param {string[]} targets
- * @param {string} action
- * @param {object} parameters
- */
-export const sendDeviceAction = (
-  targets: string[],
-  action: string,
-  parameters = {}
-) => {
-  websocket.sendToServer({
-    type: WsMessageTypeKeys.DeviceAction,
-    payload: { targets, type: action, parameters }
-  });
-};
-
-/**
- * Public method to send PsTools command to device via websocket server.
- *
- * @param {string} target
- * @param {string} mode
- * @param {string} cmd
- */
-export const sendPsToolsCommand = (
-  target: string,
-  { mode, cmd }: { mode: string; cmd: string }
-) => {
-  websocket.sendToServer({
-    type: WsMessageTypeKeys.PsToolsCommand,
-    payload: { target, mode, argument: cmd }
-  });
 };

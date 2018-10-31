@@ -1,6 +1,6 @@
 import * as React from "react";
 // @ts-ignore
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -9,7 +9,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Terminal from "./Terminal";
-import { sendPsToolsCommand } from "../messageHandler";
+import { WebsocketContext } from "../Websocket";
 
 const styles = createStyles({
   container: {
@@ -40,6 +40,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function PsTools(props: Props) {
+  const ws = useContext(WebsocketContext);
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");
@@ -103,7 +104,7 @@ function PsTools(props: Props) {
 
         <Button
           size="small"
-          onClick={() => sendPsToolsCommand(props.target, { mode, cmd })}
+          onClick={() => ws.sendPsToolsCommand(props.target, { mode, cmd })}
         >
           Send
         </Button>

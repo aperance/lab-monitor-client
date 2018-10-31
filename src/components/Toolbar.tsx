@@ -1,12 +1,15 @@
 import * as React from "react";
+// @ts-ignore
+import { useContext } from "react";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ToolbarItem from "./ToolbarItem";
-import {
-  sendDeviceAction,
-  sendRefreshDevice,
-  sendClearDevice
-} from "../messageHandler";
+import { WebsocketContext } from "../Websocket";
+// import {
+//   sendDeviceAction,
+//   sendRefreshDevice,
+//   sendClearDevice
+// } from "../messageHandler";
 
 interface Props {
   view: string | null;
@@ -18,6 +21,7 @@ interface Props {
 }
 
 function Toolbar(props: Props) {
+  const ws = useContext(WebsocketContext);
   return (
     <List>
       {props.rows.length <= 1 && (
@@ -96,33 +100,33 @@ function Toolbar(props: Props) {
       <ToolbarItem
         name="Delete Logs"
         leftIcon="delete_sweep"
-        onClick={() => sendDeviceAction(props.rows, "deleteLogs")}
+        onClick={() => ws.sendDeviceAction(props.rows, "deleteLogs")}
       />
       <ToolbarItem
         name="Clean Start"
         leftIcon="power_settings_new"
-        onClick={() => sendDeviceAction(props.rows, "cleanStart")}
+        onClick={() => ws.sendDeviceAction(props.rows, "cleanStart")}
       />
       <ToolbarItem
         name="RAM Clear"
         leftIcon="memory"
-        onClick={(): void => sendDeviceAction(props.rows, "ramClear")}
+        onClick={(): void => ws.sendDeviceAction(props.rows, "ramClear")}
       />
       <ToolbarItem
         name="Reset Display"
         leftIcon="desktop_windows"
-        onClick={() => sendDeviceAction(props.rows, "resetDisplay")}
+        onClick={() => ws.sendDeviceAction(props.rows, "resetDisplay")}
       />
       <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
       <ToolbarItem
         name="Force Refresh"
         leftIcon="refresh"
-        onClick={() => sendRefreshDevice(props.rows)}
+        onClick={() => ws.sendRefreshDevice(props.rows)}
       />
       <ToolbarItem
         name="Clear Record"
         leftIcon="delete"
-        onClick={() => sendClearDevice(props.rows)}
+        onClick={() => ws.sendClearDevice(props.rows)}
       />
     </List>
   );
