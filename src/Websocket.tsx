@@ -13,29 +13,50 @@ interface Props {
 
 export const WebsocketProvider = (props: Props) => {
   const [status, setStatus] = useState("connecting");
+  const [retry, setRetry] = useState(false);
   const socket = useRef(null);
 
-  useEffect(() => {
-    socket.current = connect();
-  }, []);
+  useEffect(
+    () => {
+      if (!socket.current || retry) {
+        const ws = new WebSocket(props.url);
 
-  const connect = () => {
-    const ws = new WebSocket(props.url);
+        ws.addEventListener("open", () => {
+          setStatus("connected");
+          ws.onmessage = message => {
+            inboundMessageRouter(JSON.parse(message.data) as unknown);
+          };
+        });
 
-    ws.addEventListener("open", () => {
-      setStatus("connected");
-      ws.onmessage = message => {
-        inboundMessageRouter(JSON.parse(message.data) as unknown);
-      };
-    });
+        ws.onclose = () => {
+          setStatus("disconnected");
+          setTimeout(() => setRetry(true), 5000);
+        };
 
-    ws.onclose = () => {
-      setStatus("disconnected");
-      setTimeout(connect, 5000);
-    };
+        socket.current = ws;
+        setRetry(false);
+      }
+    },
+    [retry]
+  );
 
-    return ws;
-  };
+  // const connect = () => {
+  //   const ws = new WebSocket(props.url);
+
+  //   ws.addEventListener("open", () => {
+  //     setStatus("connected");
+  //     ws.onmessage = message => {
+  //       inboundMessageRouter(JSON.parse(message.data) as unknown);
+  //     };
+  //   });
+
+  //   ws.onclose = () => {
+  //     setStatus("disconnected");
+  //     setTimeout(() => setRetry(true), 5000);
+  //   };
+
+  //   return ws;
+  // };
 
   const sendToServer = (message: WsMessage) => {
     if (socket.current) {
