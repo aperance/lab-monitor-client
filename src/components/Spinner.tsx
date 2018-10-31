@@ -14,6 +14,8 @@ const styles = createStyles({
 interface Props extends WithStyles<typeof styles> {}
 
 function Spinner(props: Props) {
+  console.log("SPINNER");
+
   return (
     <span className={props.classes.root}>
       <CircularProgress size={60} />
@@ -21,4 +23,7 @@ function Spinner(props: Props) {
   );
 }
 
-export default withStyles(styles)(Spinner);
+export default withStyles(styles)(
+  // @ts-ignore
+  React.memo(Spinner) as JSX.Element
+);
