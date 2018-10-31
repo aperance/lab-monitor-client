@@ -4,11 +4,10 @@ import { useState, useEffect, useRef } from "react";
 // @ts-ignore
 import RFB from "@novnc/novnc/core/rfb";
 
-type Vnc = [React.RefObject<HTMLSpanElement>, boolean, Error | null];
+type Vnc = [React.RefObject<HTMLSpanElement>, string];
 
 export function useVnc(url: string, password: string, scaled: boolean) {
-  const [connected, setConnected] = useState(false);
-  const [error, setError] = useState(null);
+  const [status, setStatus] = useState("disconnected");
   const targetRef: React.RefObject<HTMLSpanElement> = useRef();
 
   useEffect(
@@ -42,16 +41,11 @@ export function useVnc(url: string, password: string, scaled: boolean) {
       if (rfb._rfb_connection_state !== "disconnected") rfb.disconnect();
       rfb = null;
     }
-    setConnected(false);
-    setError(null);
+    setStatus("disconnected");
   };
 
-  const connectHandler = () => setConnected(true);
+  const connectHandler = () => setStatus("connected");
+  const disconnectHandler = () => setStatus("error");
 
-  const disconnectHandler = () => {
-    setConnected(false);
-    setError(Error("VNC connection failed."));
-  };
-
-  return [targetRef, connected, error] as Vnc;
+  return [targetRef, status] as Vnc;
 }

@@ -1,7 +1,12 @@
 import * as React from "react";
 // @ts-ignore
 import { useState } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+import {
+  createStyles,
+  WithStyles,
+  withStyles,
+  Hidden
+} from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Button from "@material-ui/core/Button";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
@@ -37,17 +42,16 @@ interface Props extends WithStyles<typeof styles> {
 
 function VncViewer(props: Props) {
   const [scaled, setScaled] = useState(true);
-  const [ref, connected, error] = useVnc(props.url, props.password, scaled);
-
-  if (error) throw error;
+  const [ref, status] = useVnc(props.url, props.password, scaled);
 
   return (
     <>
-      {!connected && <LinearProgress />}
+      {status === "disconnected" && <LinearProgress />}
+      {status === "error" && <pre>ERROR</pre>}
       <div
         className={props.classes.root}
         style={{
-          visibility: connected ? "visible" : "hidden"
+          visibility: status === "connected" ? "visible" : "hidden"
         }}
       >
         <span ref={ref} />
