@@ -11,10 +11,15 @@ import VncContainer from "../containers/VncContainer";
 import ErrorBoundary from "./ErrorBoundary";
 
 const styles = createStyles({
-  drawer: {
-    position: "fixed",
+  root: {
     height: "100%",
     top: "0px",
+    position: "fixed"
+  },
+  drawer: {
+    height: "100%",
+    top: "0px",
+    position: "absolute",
     overflowY: "hidden",
     backgroundColor: "rgba(255, 255, 255, 1)",
     boxShadow: `-2px 0px 4px -1px rgba(0, 0, 0, 0.2),
@@ -22,10 +27,11 @@ const styles = createStyles({
       -1px 0px 10px 0px rgba(0, 0, 0, 0.12)`
   },
   dragBar: {
-    position: "fixed",
     height: "100%",
     width: "10px",
     top: "0px",
+    left: "195px",
+    position: "absolute",
     zIndex: 5,
     cursor: "col-resize"
   },
@@ -46,36 +52,32 @@ function Drawers(props: Props) {
   const [ref, subViewWidth, isDragging, setDragging] = useMouseTracker();
 
   return (
-    <div ref={ref}>
+    <div
+      ref={ref}
+      className={props.classes.root}
+      style={{
+        width: 200 + subViewWidth + "px",
+        right:
+          [-(200 + subViewWidth), -subViewWidth, 0][props.drawersVisible] +
+          "px",
+        transition: isDragging ? "0s" : ".5s"
+      }}
+    >
       <div
         className={props.classes.drawer}
-        style={{
-          width: "200px",
-          right: [-200, 0, subViewWidth][props.drawersVisible] + "px",
-          transition: isDragging ? "0s" : ".5s"
-        }}
+        style={{ width: "200px", left: "0px" }}
       >
         <ToolbarContainer />
       </div>
       <div
         className={props.classes.dragBar}
-        style={{
-          right: [-200, 0, subViewWidth][props.drawersVisible] - 5 + "px",
-          transition: isDragging ? "0s" : ".5s"
-        }}
         onMouseDown={() => setDragging(true)}
       >
         <Icon className={props.classes.icon}>drag_indicator</Icon>
       </div>
       <div
         className={props.classes.drawer}
-        style={{
-          width: subViewWidth + "px",
-          right:
-            [-(200 + subViewWidth), -subViewWidth, 0][props.drawersVisible] +
-            "px",
-          transition: isDragging ? "0s" : ".5s"
-        }}
+        style={{ width: subViewWidth + "px", right: "0px" }}
       >
         <ErrorBoundary key={props.subView || ""}>
           {(() => {
