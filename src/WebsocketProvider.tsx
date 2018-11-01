@@ -16,8 +16,7 @@ import {
   configuration,
   deviceDataAll,
   deviceDataUpdate,
-  psToolsResponse,
-  errorMessageSet
+  psToolsResponse
 } from "./actions/actionCreators";
 
 export const WebsocketContext = React.createContext({});
@@ -113,7 +112,8 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     inboundMessage: (message: unknown) => {
       console.log(message);
-      if (!isWsMessage(message)) return;
+      if (!isWsMessage(message))
+        throw Error("Invalid WS message type specified");
       const { type, payload } = message;
       switch (type) {
         case WsMessageTypeKeys.Configuration:
@@ -133,12 +133,7 @@ const mapDispatchToProps = (dispatch: any) => {
           if (isPsToolsResponse(payload)) dispatch(psToolsResponse(payload));
           break;
         default:
-          dispatch(
-            errorMessageSet({
-              err: new Error("Invalid WS message type specified")
-            })
-          );
-          break;
+          throw Error("Invalid WS message type specified");
       }
     }
   };

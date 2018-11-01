@@ -76,9 +76,7 @@ export enum ActionTypeKeys {
   DEVICE_DATA_UPDATE = "DEVICE_DATA_UPDATE",
   RESET_ALL = "RESET_ALL",
   ACTION_RESPONSE_SET = "ACTION_RESPONSE_SET",
-  ACTION_RESPONSE_CLEAR = "ACTION_RESPONSE_CLEAR",
-  ERROR_MESSAGE_SET = "ERROR_MESSAGE_SET",
-  ERROR_MESSAGE_CLEAR = "ERROR_MESSAGE_CLEAR"
+  ACTION_RESPONSE_CLEAR = "ACTION_RESPONSE_CLEAR"
 }
 
 export interface ConfigurationAction {
@@ -145,14 +143,6 @@ export interface DeviceActionResponseClearAction {
   readonly type: ActionTypeKeys.ACTION_RESPONSE_CLEAR;
 }
 
-export interface ErrorMessageSetAction extends ErrorMessage {
-  readonly type: ActionTypeKeys.ERROR_MESSAGE_SET;
-}
-
-export interface ErrorMessageClearAction {
-  readonly type: ActionTypeKeys.ERROR_MESSAGE_CLEAR;
-}
-
 export type Actions =
   | ConfigurationAction
   | DeviceDataAllAction
@@ -167,9 +157,7 @@ export type Actions =
   | PsToolsResponseAction
   | DialogVisibilityAction
   | DeviceActionResponseSetAction
-  | DeviceActionResponseClearAction
-  | ErrorMessageSetAction
-  | ErrorMessageClearAction;
+  | DeviceActionResponseClearAction;
 
 /** Redux State Types */
 
@@ -180,10 +168,6 @@ export interface ActionResponseState {
 
 export interface DialogState {
   logLevel: boolean;
-}
-
-export interface ErrorMessageState {
-  err: Error | null;
 }
 
 export interface HistoryDataState {
@@ -219,7 +203,6 @@ export interface StoreState {
   userSelection: UserSelectionState;
   historyData: HistoryDataState;
   dialog: DialogState;
-  errorMessage: ErrorMessageState;
   psTools: PsToolsState;
   actionResponse: ActionResponseState;
 }

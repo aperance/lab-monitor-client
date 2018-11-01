@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import { StoreState } from "../types";
-import { errorMessageSet } from "../actions/actionCreators";
 import VncViewer from "../components/VncViewer";
 
 const mapStateToProps = (state: StoreState) => {
@@ -22,13 +21,4 @@ const mapStateToProps = (state: StoreState) => {
   else return { url: "", password: "", fileContents: "" };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    handleError: (err: Error) => dispatch(errorMessageSet({ err }))
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VncViewer);
+export default connect(mapStateToProps)(VncViewer);

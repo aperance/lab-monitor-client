@@ -4,15 +4,15 @@ import { useContext } from "react";
 import { connect } from "react-redux";
 import { StoreState } from "./types";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+import { WebsocketContext } from "./WebsocketProvider";
 import NavBarContainer from "./containers/NavBarContainer";
-import Spinner from "./components/Spinner";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
 import DrawersContainer from "./containers/DrawersContainer";
 import LogLevelContainer from "./containers/LogLevelContainer";
-import ErrorMessageContainer from "./containers/ErrorMessageContainer";
 import ActionResponseContainer from "./containers/ActionResponseContainer";
-import { WebsocketContext } from "./WebsocketProvider";
+import Spinner from "./components/Spinner";
+import ErrorMessage from "./components/ErrorMessage";
 
 const styles = createStyles({
   root: {
@@ -40,7 +40,8 @@ interface Props extends WithStyles<typeof styles> {
 const Layout = (props: Props) => {
   const { status } = useContext(WebsocketContext);
 
-  if (status === "error") return <div>ERROR</div>;
+  if (status === "error")
+    return <ErrorMessage message={"Unable to connect to server"} />;
 
   if (status === "disconnected" || !props.dataReceived) return <Spinner />;
 
@@ -57,7 +58,6 @@ const Layout = (props: Props) => {
       </div>
       <DrawersContainer />
       <LogLevelContainer />
-      <ErrorMessageContainer />
       <ActionResponseContainer />
     </>
   );

@@ -9,9 +9,6 @@ import {
   DeviceActionResponse,
   DeviceActionResponseSetAction,
   DeviceActionResponseClearAction,
-  ErrorMessage,
-  ErrorMessageSetAction,
-  ErrorMessageClearAction,
   ResetAllAction,
   SingleRowSelectAction,
   MultiRowSelectAction,
@@ -50,16 +47,6 @@ export const actionResponseSet = (
 
 export const actionResponseClear = (): DeviceActionResponseClearAction => {
   return { type: ActionTypeKeys.ACTION_RESPONSE_CLEAR };
-};
-
-export const errorMessageSet = (
-  payload: ErrorMessage
-): ErrorMessageSetAction => {
-  return { ...payload, type: ActionTypeKeys.ERROR_MESSAGE_SET };
-};
-
-export const errorMessageClear = (): ErrorMessageClearAction => {
-  return { type: ActionTypeKeys.ERROR_MESSAGE_CLEAR };
 };
 
 export const resetAll = (): ResetAllAction => {

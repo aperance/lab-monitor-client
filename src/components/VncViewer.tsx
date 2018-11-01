@@ -32,7 +32,6 @@ interface Props extends WithStyles<typeof styles> {
   url: string;
   password: string;
   fileContents: string;
-  handleError: (err: Error) => void;
 }
 
 function VncViewer(props: Props) {
