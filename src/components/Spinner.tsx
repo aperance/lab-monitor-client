@@ -14,8 +14,6 @@ const styles = createStyles({
 interface Props extends WithStyles<typeof styles> {}
 
 function Spinner(props: Props) {
-  console.log("SPINNER");
-
   return (
     <span className={props.classes.root}>
       <CircularProgress size={60} />
