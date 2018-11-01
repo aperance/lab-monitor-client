@@ -59,6 +59,7 @@ function Toolbar(props: Props) {
             name="Shared Drives"
             leftIcon="folder"
             rightIcon="get_app"
+            row={props.rows[0]}
             onClick={() => {
               const link = document.getElementById("downloadLink");
               if (link !== null) link.click();
@@ -81,6 +82,7 @@ function Toolbar(props: Props) {
             name="Logs"
             leftIcon="subject"
             rightIcon="open_in_new"
+            row={props.rows[0]}
             onClick={() => {
               const link = document.getElementById("logsLink");
               if (link !== null) link.click();
