@@ -2,18 +2,19 @@ import * as React from "react";
 // @ts-ignore
 import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 // @ts-ignore
 import { useVnc } from "../hooks/useVnc";
+import Spinner from "./Spinner";
 
 const styles = createStyles({
-  root: { height: "100%" },
+  root: {
+    height: "100%",
+    backgroundColor: "rgb(40, 40, 40)"
+  },
   buttonOne: {
     position: "absolute",
     right: "18px",
@@ -32,12 +33,11 @@ const styles = createStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, .1)"
+    height: "90%"
   },
   errorDialog: {
-    padding: "24px",
-    width: "50%"
+    color: "white",
+    width: "350px"
   }
 });
 
@@ -45,28 +45,32 @@ interface Props extends WithStyles<typeof styles> {
   url: string;
   password: string;
   fileContents: string;
+  isDragging: boolean;
 }
 
 function VncViewer(props: Props) {
   const [scaled, setScaled] = useState(true);
-  const [ref, status] = useVnc(props.url, props.password, scaled);
+  const [ref, status] = useVnc(
+    props.url,
+    props.password,
+    scaled,
+    props.isDragging
+  );
 
   return (
-    <>
-      {status === "disconnected" && <LinearProgress />}
+    <div className={props.classes.root}>
+      {status === "disconnected" && <Spinner />}
       {status === "error" && (
         <div className={props.classes.errorDiv}>
-          <Paper elevation={1} className={props.classes.errorDialog}>
-            <Typography component="p">
-              Unable to establish VNC connection. Make sure VNC server is
-              running on the target device.
-            </Typography>
-          </Paper>
+          <p className={props.classes.errorDialog}>
+            Unable to establish VNC connection. Make sure VNC server is running
+            on the target device.
+          </p>
         </div>
       )}
       <div
-        className={props.classes.root}
         style={{
+          height: "100%",
           visibility: status === "connected" ? "visible" : "hidden"
         }}
       >
@@ -95,7 +99,7 @@ function VncViewer(props: Props) {
           <SaveIcon />
         </Button>
       </div>
-    </>
+    </div>
   );
 }
 

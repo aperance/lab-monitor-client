@@ -86,7 +86,7 @@ function Drawers(props: Props) {
             case "psTools":
               return <PsToolsContainer />;
             case "vnc":
-              return !isDragging ? <VncContainer /> : null;
+              return <VncContainer isDragging={isDragging} />;
             default:
               return null;
           }
