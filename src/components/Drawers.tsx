@@ -8,8 +8,6 @@ import WebPageContainer from "../containers/WebPageContainer";
 import PsToolsContainer from "../containers/PsToolsContainer";
 import VncContainer from "../containers/VncContainer";
 
-import ErrorBoundary from "./ErrorBoundary";
-
 const styles = createStyles({
   root: {
     height: "100%",
@@ -77,24 +75,22 @@ function Drawers(props: Props) {
       </div>
       <div
         className={props.classes.drawer}
-        style={{ width: subViewWidth + "px", right: "0px" }}
+        style={{ width: subViewWidth + "px", left: "200px" }}
       >
-        <ErrorBoundary key={props.subView || ""}>
-          {(() => {
-            switch (props.subView) {
-              case "history":
-                return <HistoryContainer />;
-              case "statePage":
-                return !isDragging ? <WebPageContainer /> : null;
-              case "psTools":
-                return <PsToolsContainer />;
-              case "vnc":
-                return !isDragging ? <VncContainer /> : null;
-              default:
-                return null;
-            }
-          })()}
-        </ErrorBoundary>
+        {(() => {
+          switch (props.subView) {
+            case "history":
+              return <HistoryContainer />;
+            case "statePage":
+              return !isDragging ? <WebPageContainer /> : null;
+            case "psTools":
+              return <PsToolsContainer />;
+            case "vnc":
+              return !isDragging ? <VncContainer /> : null;
+            default:
+              return null;
+          }
+        })()}
       </div>
     </div>
   );

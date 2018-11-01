@@ -4,6 +4,8 @@ import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
@@ -25,6 +27,17 @@ const styles = createStyles({
     top: "72px",
     backgroundColor: "white",
     opacity: 0.5
+  },
+  errorDiv: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, .1)"
+  },
+  errorDialog: {
+    padding: "24px",
+    width: "50%"
   }
 });
 
@@ -41,7 +54,16 @@ function VncViewer(props: Props) {
   return (
     <>
       {status === "disconnected" && <LinearProgress />}
-      {status === "error" && <pre>ERROR</pre>}
+      {status === "error" && (
+        <div className={props.classes.errorDiv}>
+          <Paper elevation={1} className={props.classes.errorDialog}>
+            <Typography component="p">
+              Unable to establish VNC connection. Make sure VNC server is
+              running on the target device.
+            </Typography>
+          </Paper>
+        </div>
+      )}
       <div
         className={props.classes.root}
         style={{

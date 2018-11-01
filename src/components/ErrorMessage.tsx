@@ -15,7 +15,7 @@ function ErrorMessage(props: Props) {
     <Dialog open={true}>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          <pre>{props.message}</pre>
+          {props.message}
         </DialogContentText>
       </DialogContent>
     </Dialog>
