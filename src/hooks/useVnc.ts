@@ -6,17 +6,24 @@ import RFB from "@novnc/novnc/core/rfb";
 
 type Vnc = [React.RefObject<HTMLSpanElement>, string];
 
-export function useVnc(url: string, password: string, scaled: boolean) {
+export function useVnc(
+  url: string,
+  password: string,
+  scaled: boolean,
+  suspend: boolean
+) {
   const [status, setStatus] = useState("disconnected");
   const targetRef: React.RefObject<HTMLSpanElement> = useRef();
 
   useEffect(
     () => {
-      disconnectVnc();
-      connectVnc();
-      return () => disconnectVnc();
+      if (!suspend) {
+        disconnectVnc();
+        connectVnc();
+        return () => disconnectVnc();
+      }
     },
-    [url, scaled]
+    [url, scaled, suspend]
   );
 
   let rfb: any = null;
