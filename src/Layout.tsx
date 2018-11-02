@@ -9,7 +9,6 @@ import NavBar from "./components/NavBar";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
 import DrawersContainer from "./containers/DrawersContainer";
-import LogLevelContainer from "./containers/LogLevelContainer";
 import ActionResponseContainer from "./containers/ActionResponseContainer";
 import Spinner from "./components/Spinner";
 import ErrorMessage from "./components/ErrorMessage";
