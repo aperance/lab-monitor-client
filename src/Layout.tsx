@@ -3,13 +3,14 @@ import * as React from "react";
 import { useContext } from "react";
 import { connect } from "react-redux";
 import { StoreState } from "./types";
+import { actionResponseClear } from "./actions/actionCreators";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { WebsocketContext } from "./WebsocketProvider";
 import NavBar from "./components/NavBar";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
 import DrawersContainer from "./containers/DrawersContainer";
-import ActionResponseContainer from "./containers/ActionResponseContainer";
+import ActionResponse from "./components/ActionResponse";
 import Spinner from "./components/Spinner";
 import ErrorMessage from "./components/ErrorMessage";
 
@@ -29,13 +30,22 @@ const mapStateToProps = (state: StoreState) => {
     title: state.configuration.title,
     dataReceived:
       Object.keys(state.configuration).length !== 0 &&
-      Object.keys(state.tableData).length !== 0
+      Object.keys(state.tableData).length !== 0,
+    actionResponse: state.actionResponse
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    actionResponseClose: () => dispatch(actionResponseClear())
   };
 };
 
 interface Props extends WithStyles<typeof styles> {
   title: string;
   dataReceived: boolean;
+  actionResponse: { err: Error | null; results: any[] | null };
+  actionResponseClose: () => void;
 }
 
 const Layout = (props: Props) => {
@@ -58,9 +68,18 @@ const Layout = (props: Props) => {
         </div>
       </div>
       <DrawersContainer />
-      <ActionResponseContainer />
+      <ActionResponse
+        err={props.actionResponse.err}
+        results={props.actionResponse.results}
+        handleClose={props.actionResponseClose}
+      />
     </>
   );
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(Layout));
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Layout)
+);
