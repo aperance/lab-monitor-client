@@ -13,21 +13,30 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
-  message: string | null;
+  err: Error | null;
+  results: any[] | null;
   handleClose: () => void;
 }
 
 function ActionResponse(props: Props) {
+  let message: string | null = null;
+
+  if (props.err !== null) message = "ERROR: " + props.err.message;
+  else if (props.results !== null)
+    message = props.results.every(result => result.success === true)
+      ? "Request successfuly received by device(s)."
+      : "Request sent but not acknowledged by every device. Please manually confirm.";
+
   return (
     <Snackbar
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "center"
       }}
-      open={props.message ? true : false}
+      open={message ? true : false}
       autoHideDuration={6000}
       onClose={props.handleClose}
-      message={<span id="message-id">{props.message}</span>}
+      message={<span id="message-id">{message}</span>}
       action={
         <IconButton
           color="inherit"
