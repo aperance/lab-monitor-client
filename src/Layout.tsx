@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { StoreState } from "./types";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { WebsocketContext } from "./WebsocketProvider";
-import NavBarContainer from "./containers/NavBarContainer";
+import NavBar from "./components/NavBar";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
 import DrawersContainer from "./containers/DrawersContainer";
@@ -27,6 +27,7 @@ const styles = createStyles({
 
 const mapStateToProps = (state: StoreState) => {
   return {
+    title: state.configuration.title,
     dataReceived:
       Object.keys(state.configuration).length !== 0 &&
       Object.keys(state.tableData).length !== 0
@@ -34,6 +35,7 @@ const mapStateToProps = (state: StoreState) => {
 };
 
 interface Props extends WithStyles<typeof styles> {
+  title: string;
   dataReceived: boolean;
 }
 
@@ -47,7 +49,7 @@ const Layout = (props: Props) => {
 
   return (
     <>
-      <NavBarContainer />
+      <NavBar title={props.title} />
       <div className={props.classes.root}>
         <div className={props.classes.filter}>
           <FilterBarContainer />
