@@ -30,16 +30,9 @@ interface Props extends WithStyles<typeof styles> {
   name: string;
   leftIcon: string;
   rightIcon?: string;
-  row?: string;
   selected?: boolean;
   onClick: () => void;
   children?: JSX.Element;
-}
-
-function preventRender(prevProps: Props, nextProps: Props) {
-  return (
-    prevProps.row === nextProps.row && prevProps.selected === nextProps.selected
-  );
 }
 
 function ToolbarItem(props: Props) {
@@ -64,7 +57,4 @@ function ToolbarItem(props: Props) {
   );
 }
 
-export default withStyles(styles)(
-  // @ts-ignore
-  React.memo(ToolbarItem, preventRender) as JSX.Element
-);
+export default withStyles(styles)(ToolbarItem);

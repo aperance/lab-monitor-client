@@ -5,11 +5,6 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ToolbarItem from "./ToolbarItem";
 import { WebsocketContext } from "../WebsocketProvider";
-// import {
-//   sendDeviceAction,
-//   sendRefreshDevice,
-//   sendClearDevice
-// } from "../messageHandler";
 
 interface Props {
   view: string | null;
@@ -59,7 +54,6 @@ function Toolbar(props: Props) {
             name="Shared Drives"
             leftIcon="folder"
             rightIcon="get_app"
-            row={props.rows[0]}
             onClick={() => {
               const link = document.getElementById("downloadLink");
               if (link !== null) link.click();
@@ -82,7 +76,6 @@ function Toolbar(props: Props) {
             name="Logs"
             leftIcon="subject"
             rightIcon="open_in_new"
-            row={props.rows[0]}
             onClick={() => {
               const link = document.getElementById("logsLink");
               if (link !== null) link.click();
@@ -112,7 +105,7 @@ function Toolbar(props: Props) {
       <ToolbarItem
         name="RAM Clear"
         leftIcon="memory"
-        onClick={(): void => ws.sendDeviceAction(props.rows, "ramClear")}
+        onClick={() => ws.sendDeviceAction(props.rows, "ramClear")}
       />
       <ToolbarItem
         name="Reset Display"
