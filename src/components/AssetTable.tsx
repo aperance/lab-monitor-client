@@ -14,7 +14,9 @@ const styles = createStyles({
     display: "flex",
     flexDirection: "column",
     whiteSpace: "nowrap",
-    margin: "0px 16px"
+    margin: "0px 16px",
+    overflowX: "hidden",
+    flex: 1
   },
   belowTable: {
     flex: 1

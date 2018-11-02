@@ -33,7 +33,7 @@ function NavBar(props: Props) {
 
   return (
     <AppBar
-      position="fixed"
+      position="static"
       color="default"
       elevation={0}
       className={props.classes.root}

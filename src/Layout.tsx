@@ -4,26 +4,47 @@ import { useContext } from "react";
 import { connect } from "react-redux";
 import { StoreState } from "./types";
 import { actionResponseClear } from "./actions/actionCreators";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { WebsocketContext } from "./WebsocketProvider";
-import NavBar from "./components/NavBar";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
 import DrawersContainer from "./containers/DrawersContainer";
-import ActionResponse from "./components/ActionResponse";
-import Spinner from "./components/Spinner";
 import ErrorMessage from "./components/ErrorMessage";
+import Spinner from "./components/Spinner";
+import NavBar from "./components/NavBar";
+import ActionResponse from "./components/ActionResponse";
 
-const styles = createStyles({
-  root: {
-    height: "calc(100vh - 80px)",
-    paddingTop: "68px",
-    display: "flex",
-    overflowX: "hidden"
-  },
-  filter: { flex: 0, borderRight: "1px solid #0000001f" },
-  table: { flex: 1 }
-});
+interface Props {
+  title: string;
+  dataReceived: boolean;
+  actionResponse: { err: Error | null; results: any[] | null };
+  actionResponseClose: () => void;
+}
+
+const Layout = (props: Props) => {
+  const { status } = useContext(WebsocketContext);
+
+  if (status === "error")
+    return <ErrorMessage message={"Unable to connect to server"} />;
+
+  return status === "disconnected" || !props.dataReceived ? (
+    <Spinner />
+  ) : (
+    <>
+      <NavBar title={props.title} />
+      <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
+        <FilterBarContainer />
+        <AssetTableContainer />
+      </div>
+      <DrawersContainer />
+      <ActionResponse
+        err={props.actionResponse.err}
+        results={props.actionResponse.results}
+        handleClose={props.actionResponseClose}
+      />
+      )}
+    </>
+  );
+};
 
 const mapStateToProps = (state: StoreState) => {
   return {
@@ -41,45 +62,7 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-interface Props extends WithStyles<typeof styles> {
-  title: string;
-  dataReceived: boolean;
-  actionResponse: { err: Error | null; results: any[] | null };
-  actionResponseClose: () => void;
-}
-
-const Layout = (props: Props) => {
-  const { status } = useContext(WebsocketContext);
-
-  if (status === "error")
-    return <ErrorMessage message={"Unable to connect to server"} />;
-
-  if (status === "disconnected" || !props.dataReceived) return <Spinner />;
-
-  return (
-    <>
-      <NavBar title={props.title} />
-      <div className={props.classes.root}>
-        <div className={props.classes.filter}>
-          <FilterBarContainer />
-        </div>
-        <div className={props.classes.table}>
-          <AssetTableContainer />
-        </div>
-      </div>
-      <DrawersContainer />
-      <ActionResponse
-        err={props.actionResponse.err}
-        results={props.actionResponse.results}
-        handleClose={props.actionResponseClose}
-      />
-    </>
-  );
-};
-
-export default withStyles(styles)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Layout)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Layout);

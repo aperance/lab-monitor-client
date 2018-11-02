@@ -10,7 +10,10 @@ import FilterBarItem from "./FilterBarItem";
 const styles = createStyles({
   root: {
     padding: "20px 20px 20px 16px",
-    height: "calc(100% - 40px)"
+    marginTop: "8px",
+    marginBottom: "8px",
+    borderRight: "1px solid #0000001f",
+    position: "static"
   },
   formLabel: {
     fontSize: "0.75rem",
