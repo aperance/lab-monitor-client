@@ -1,18 +1,9 @@
 import * as React from "react";
-import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    close: {
-      width: theme.spacing.unit * 4,
-      height: theme.spacing.unit * 4
-    }
-  });
-
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   err: Error | null;
   results: any[] | null;
   handleClose: () => void;
@@ -38,11 +29,7 @@ function ActionResponse(props: Props) {
       onClose={props.handleClose}
       message={<span id="message-id">{message}</span>}
       action={
-        <IconButton
-          color="inherit"
-          className={props.classes.close}
-          onClick={props.handleClose}
-        >
+        <IconButton color="inherit" onClick={props.handleClose}>
           <CloseIcon />
         </IconButton>
       }
@@ -50,4 +37,4 @@ function ActionResponse(props: Props) {
   );
 }
 
-export default withStyles(styles)(ActionResponse);
+export default ActionResponse;
