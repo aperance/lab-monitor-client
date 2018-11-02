@@ -1,10 +1,11 @@
 // @ts-ignore
 import { useState, useRef, useEffect } from "react";
 import { WsMessage } from "../types";
+import { isWsMessage } from "../typeGuards";
 
 export const useWebsocket = (
   url: string,
-  inboundMessageHandler: (message: unknown) => void
+  inboundMessageHandler: (message: WsMessage) => void
 ) => {
   const [status, setStatus] = useState("disconnected");
   const [retry, setRetry] = useState(false);
@@ -16,7 +17,13 @@ export const useWebsocket = (
         const ws = new WebSocket(url);
 
         ws.onopen = () => setTimeout(() => setStatus("connected"), 500);
-        ws.onmessage = x => inboundMessageHandler(JSON.parse(x.data));
+        ws.onmessage = x => {
+          const message = JSON.parse(x.data);
+          console.log(message);
+          if (!isWsMessage(message))
+            throw Error("Invalid WS message type specified");
+          inboundMessageHandler(message);
+        };
         ws.onerror = () => setStatus("error");
         ws.onclose = () => setTimeout(() => setRetry(true), 5000);
 

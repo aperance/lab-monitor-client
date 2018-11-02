@@ -2,10 +2,9 @@ import * as React from "react";
 // @ts-ignore
 import { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
-import { StoreState, WsMessageTypeKeys } from "./types";
+import { StoreState, WsMessageTypeKeys, WsMessage } from "./types";
 import { useWebsocket } from "./hooks/useWebsocket";
 import {
-  isWsMessage,
   isDeviceDataAll,
   isDeviceDataUpdate,
   isDeviceActionResponse,
@@ -24,7 +23,7 @@ export const WebsocketContext = React.createContext({});
 interface Props {
   url: string;
   children: JSX.Element;
-  inboundMessage: (message: unknown) => void;
+  inboundMessage: (message: WsMessage) => void;
 }
 
 const WebsocketProvider = (props: Props) => {
@@ -110,11 +109,7 @@ const mapStateToProps = (state: StoreState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    inboundMessage: (message: unknown) => {
-      console.log(message);
-      if (!isWsMessage(message))
-        throw Error("Invalid WS message type specified");
-      const { type, payload } = message;
+    inboundMessage: ({ type, payload }: WsMessage) => {
       switch (type) {
         case WsMessageTypeKeys.Configuration:
           dispatch(configuration(payload));
