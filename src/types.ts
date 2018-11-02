@@ -69,7 +69,6 @@ export enum ActionTypeKeys {
   HISTORY_SELECT = "HISTORY_SELECT",
   FILTER_SELECT = "FILTER_SELECT",
   PROXY_TOGGLE = "PROXY_TOGGLE",
-  DIALOG_VISIBILITY = "DIALOG_VISIBILITY",
   PSTOOLS_RESPONSE = "PSTOOLS_RESPONSE",
   CONFIGURATION = "CONFIGURATION",
   DEVICE_DATA_ALL = "DEVICE_DATA_ALL",
@@ -130,11 +129,6 @@ export interface PsToolsResponseAction extends PsToolsResponse {
   readonly type: ActionTypeKeys.PSTOOLS_RESPONSE;
 }
 
-export interface DialogVisibilityAction {
-  readonly type: ActionTypeKeys.DIALOG_VISIBILITY;
-  readonly logLevel: boolean;
-}
-
 export interface DeviceActionResponseSetAction extends DeviceActionResponse {
   readonly type: ActionTypeKeys.ACTION_RESPONSE_SET;
 }
@@ -155,7 +149,6 @@ export type Actions =
   | FilterSelectAction
   | ProxyToggleAction
   | PsToolsResponseAction
-  | DialogVisibilityAction
   | DeviceActionResponseSetAction
   | DeviceActionResponseClearAction;
 
@@ -164,10 +157,6 @@ export type Actions =
 export interface ActionResponseState {
   err: Error | null;
   results: any[] | null;
-}
-
-export interface DialogState {
-  logLevel: boolean;
 }
 
 export interface HistoryDataState {
@@ -202,7 +191,6 @@ export interface StoreState {
   tableData: TableDataState;
   userSelection: UserSelectionState;
   historyData: HistoryDataState;
-  dialog: DialogState;
   psTools: PsToolsState;
   actionResponse: ActionResponseState;
 }

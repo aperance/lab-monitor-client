@@ -59,7 +59,6 @@ const Layout = (props: Props) => {
         </div>
       </div>
       <DrawersContainer />
-      <LogLevelContainer />
       <ActionResponseContainer />
     </>
   );

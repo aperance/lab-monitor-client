@@ -15,8 +15,7 @@ import {
   ViewSelectAction,
   HistorySelectAction,
   FilterSelectAction,
-  ProxyToggleAction,
-  DialogVisibilityAction
+  ProxyToggleAction
 } from "../types";
 
 export const configuration = (payload: any): any => {
@@ -78,12 +77,4 @@ export const filterSelect = (
 
 export const proxyToggle = (): ProxyToggleAction => {
   return { type: ActionTypeKeys.PROXY_TOGGLE };
-};
-
-export const dialogVisibility = ({
-  logLevel
-}: {
-  logLevel: boolean;
-}): DialogVisibilityAction => {
-  return { type: ActionTypeKeys.DIALOG_VISIBILITY, logLevel };
 };
