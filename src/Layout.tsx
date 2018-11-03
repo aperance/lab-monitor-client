@@ -41,7 +41,6 @@ const Layout = (props: Props) => {
         results={props.actionResponse.results}
         handleClose={props.actionResponseClose}
       />
-      )}
     </>
   );
 };
