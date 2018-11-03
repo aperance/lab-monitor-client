@@ -30,14 +30,26 @@ interface Props extends WithStyles<typeof styles> {
   name: string;
   leftIcon: string;
   rightIcon?: string;
-  selected?: boolean;
+  selectedRows?: string[];
+  isSelected?: boolean;
   onClick: () => void;
   children?: JSX.Element;
 }
 
+function preventRender(prevProps: Props, nextProps: Props) {
+  const didIsSelectedChange = prevProps.isSelected !== nextProps.isSelected;
+  const didSelectedRowsChange =
+    prevProps.selectedRows &&
+    nextProps.selectedRows &&
+    (prevProps.selectedRows[0] !== nextProps.selectedRows[0] ||
+      prevProps.selectedRows.length !== nextProps.selectedRows.length);
+
+  return !didIsSelectedChange && !didSelectedRowsChange;
+}
+
 function ToolbarItem(props: Props) {
   return (
-    <div className={props.selected ? props.classes.selected : undefined}>
+    <div className={props.isSelected ? props.classes.selected : undefined}>
       <ListItem button onClick={props.onClick} className={props.classes.root}>
         <ListItemIcon className={props.classes.icon}>
           <Icon>{props.leftIcon}</Icon>
@@ -57,4 +69,7 @@ function ToolbarItem(props: Props) {
   );
 }
 
-export default withStyles(styles)(ToolbarItem);
+export default withStyles(styles)(
+  // @ts-ignore
+  React.memo(ToolbarItem, preventRender) as JSX.Element
+);

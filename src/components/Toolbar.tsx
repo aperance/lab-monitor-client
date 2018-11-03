@@ -29,28 +29,28 @@ function Toolbar(props: Props) {
               name="State"
               leftIcon="list_alt"
               rightIcon="navigate_next"
-              selected={props.view === "statePage"}
+              isSelected={props.view === "statePage"}
               onClick={() => props.handleViewClick("statePage")}
             />
             <ToolbarItem
               name="History"
               leftIcon="history"
               rightIcon="navigate_next"
-              selected={props.view === "history"}
+              isSelected={props.view === "history"}
               onClick={() => props.handleViewClick("history")}
             />
             <ToolbarItem
               name="PSTools"
               leftIcon="code"
               rightIcon="navigate_next"
-              selected={props.view === "psTools"}
+              isSelected={props.view === "psTools"}
               onClick={() => props.handleViewClick("psTools")}
             />
             <ToolbarItem
               name="VNC"
               leftIcon="picture_in_picture"
               rightIcon="navigate_next"
-              selected={props.view === "vnc"}
+              isSelected={props.view === "vnc"}
               onClick={() => props.handleViewClick("vnc")}
             />
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
@@ -58,6 +58,7 @@ function Toolbar(props: Props) {
               name="Shared Drives"
               leftIcon="folder"
               rightIcon="get_app"
+              selectedRows={props.rows}
               onClick={() => {
                 const link = document.getElementById("downloadLink");
                 if (link !== null) link.click();
@@ -80,6 +81,7 @@ function Toolbar(props: Props) {
               name="Logs"
               leftIcon="subject"
               rightIcon="open_in_new"
+              selectedRows={props.rows}
               onClick={() => {
                 const link = document.getElementById("logsLink");
                 if (link !== null) link.click();
@@ -94,37 +96,44 @@ function Toolbar(props: Props) {
         <ToolbarItem
           name="Log Level"
           leftIcon="tune"
+          selectedRows={props.rows}
           onClick={() => setLogConfigOpen(true)}
         />
         <ToolbarItem
           name="Delete Logs"
           leftIcon="delete_sweep"
+          selectedRows={props.rows}
           onClick={() => ws.sendDeviceAction(props.rows, "deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
           leftIcon="power_settings_new"
+          selectedRows={props.rows}
           onClick={() => ws.sendDeviceAction(props.rows, "cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
           leftIcon="memory"
+          selectedRows={props.rows}
           onClick={() => ws.sendDeviceAction(props.rows, "ramClear")}
         />
         <ToolbarItem
           name="Reset Display"
           leftIcon="desktop_windows"
+          selectedRows={props.rows}
           onClick={() => ws.sendDeviceAction(props.rows, "resetDisplay")}
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Force Refresh"
           leftIcon="refresh"
+          selectedRows={props.rows}
           onClick={() => ws.sendRefreshDevice(props.rows)}
         />
         <ToolbarItem
           name="Clear Record"
           leftIcon="delete"
+          selectedRows={props.rows}
           onClick={() => ws.sendClearDevice(props.rows)}
         />
       </List>

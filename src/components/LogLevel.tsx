@@ -27,6 +27,10 @@ interface Props extends WithStyles<typeof styles> {
   cancelLogLevel: () => void;
 }
 
+function preventRender(prevProps: Props, nextProps: Props) {
+  return nextProps.open === prevProps.open;
+}
+
 function LogLevel(props: Props) {
   const ws = useContext(WebsocketContext);
   const [namespace, setNamespace] = useState("");
@@ -88,4 +92,7 @@ function LogLevel(props: Props) {
   );
 }
 
-export default withStyles(styles)(LogLevel);
+export default withStyles(styles)(
+  // @ts-ignore
+  React.memo(LogLevel, preventRender) as JSX.Element
+);
