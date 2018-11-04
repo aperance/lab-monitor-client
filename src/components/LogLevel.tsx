@@ -11,7 +11,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import { WebsocketContext } from "../WebsocketProvider";
 
 const styles = createStyles({
   form: { display: "flex", flexWrap: "wrap" },
@@ -24,6 +23,7 @@ interface Props extends WithStyles<typeof styles> {
   namespaces: string[];
   levels: string[];
   targets: string[];
+  sendDeviceAction: (type: string, parameters: any) => void;
   cancelLogLevel: () => void;
 }
 
@@ -32,7 +32,6 @@ function preventRender(prevProps: Props, nextProps: Props) {
 }
 
 function LogLevel(props: Props) {
-  const ws = useContext(WebsocketContext);
   const [namespace, setNamespace] = useState("");
   const [level, setLevel] = useState("");
 
@@ -77,7 +76,7 @@ function LogLevel(props: Props) {
       <DialogActions>
         <Button
           onClick={() => {
-            ws.sendDeviceAction(props.targets, "logLevel", {
+            props.sendDeviceAction("logLevel", {
               namespace,
               level
             });

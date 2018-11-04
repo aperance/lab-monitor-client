@@ -2,7 +2,7 @@ import * as React from "react";
 // @ts-ignore
 import { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
-import { StoreState, WsMessageTypeKeys, WsMessage } from "./types";
+import { WsMessageTypeKeys, WsMessage } from "./types";
 import { useWebsocket } from "./hooks/useWebsocket";
 import {
   isDeviceDataAll,
@@ -29,82 +29,15 @@ interface Props {
 const WebsocketProvider = (props: Props) => {
   const [status, sendToServer] = useWebsocket(props.url, props.inboundMessage);
 
-  /**
-   * Public method to trigger refresh of device tracking by server.
-   * @param {string[]} targets
-   */
-  const sendRefreshDevice = (targets: string[]) => {
-    sendToServer({
-      type: WsMessageTypeKeys.RefreshDevice,
-      payload: { targets }
-    });
-  };
-
-  /**
-   * Public method to trigger removal of device in server records.
-   * @param {string[]} targets
-   */
-  const sendClearDevice = (targets: string[]) => {
-    sendToServer({
-      type: WsMessageTypeKeys.ClearDevice,
-      payload: { targets }
-    });
-  };
-
-  /**
-   * Public method to send action request to device via websocket server.
-   * @param {string[]} targets
-   * @param {string} action
-   * @param {object} parameters
-   */
-  const sendDeviceAction = (
-    targets: string[],
-    action: string,
-    parameters = {}
-  ) => {
-    sendToServer({
-      type: WsMessageTypeKeys.DeviceAction,
-      payload: { targets, type: action, parameters }
-    });
-  };
-
-  /**
-   * Public method to send PsTools command to device via websocket server.
-   * @param {string} target
-   * @param {string} mode
-   * @param {string} cmd
-   */
-  const sendPsToolsCommand = (
-    target: string,
-    { mode, cmd }: { mode: string; cmd: string }
-  ) => {
-    sendToServer({
-      type: WsMessageTypeKeys.PsToolsCommand,
-      payload: { target, mode, argument: cmd }
-    });
-  };
-
   return (
-    <WebsocketContext.Provider
-      value={{
-        status,
-        sendRefreshDevice,
-        sendClearDevice,
-        sendDeviceAction,
-        sendPsToolsCommand
-      }}
-    >
+    <WebsocketContext.Provider value={{ status, sendToServer }}>
       {props.children}
     </WebsocketContext.Provider>
   );
 };
 
-const mapStateToProps = (state: StoreState) => {
-  return {
-    dataReceived:
-      Object.keys(state.configuration).length !== 0 &&
-      Object.keys(state.tableData).length !== 0
-  };
+const mapStateToProps = () => {
+  return {};
 };
 
 const mapDispatchToProps = (dispatch: any) => {

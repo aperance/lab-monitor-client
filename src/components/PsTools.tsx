@@ -1,6 +1,7 @@
 import * as React from "react";
 // @ts-ignore
 import { useState, useContext } from "react";
+import { WsMessageTypeKeys, PsToolsRequest } from "../types";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -44,6 +45,16 @@ function PsTools(props: Props) {
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");
+
+  /**
+   * Public method to send PsTools command to device via websocket server.
+   */
+  const sendPsToolsCommand = () => {
+    ws.sendToServer({
+      type: WsMessageTypeKeys.PsToolsCommand,
+      payload: { target: props.target, mode, argument: cmd } as PsToolsRequest
+    });
+  };
 
   return (
     <div className={props.classes.container}>
@@ -102,10 +113,7 @@ function PsTools(props: Props) {
           />
         </FormControl>
 
-        <Button
-          size="small"
-          onClick={() => ws.sendPsToolsCommand(props.target, { mode, cmd })}
-        >
+        <Button size="small" onClick={sendPsToolsCommand}>
           Send
         </Button>
       </form>

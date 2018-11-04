@@ -39,9 +39,21 @@ export interface DeviceDataUpdate {
   readonly history: Array<[string, [string, string | null]]>;
 }
 
+export interface PsToolsRequest {
+  readonly target: string;
+  readonly mode: string;
+  readonly argument: string;
+}
+
 export interface PsToolsResponse {
   readonly err: Error | null;
   readonly result: string | null;
+}
+
+export interface DeviceActionRequest {
+  readonly targets: string[];
+  readonly type: string;
+  readonly parameters: any;
 }
 
 export interface DeviceActionResponse {
@@ -50,6 +62,14 @@ export interface DeviceActionResponse {
     err: Error | null;
     success: boolean;
   }> | null;
+}
+
+export interface RefreshDeviceRequest {
+  readonly targets: string[];
+}
+
+export interface ClearDeviceRequest {
+  readonly targets: string[];
 }
 
 /** Non-WS Interfaces */

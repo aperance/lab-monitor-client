@@ -1,6 +1,12 @@
 import * as React from "react";
 // @ts-ignore
 import { useContext, useState } from "react";
+import {
+  WsMessageTypeKeys,
+  DeviceActionRequest,
+  RefreshDeviceRequest,
+  ClearDeviceRequest
+} from "../types";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ToolbarItem from "./ToolbarItem";
@@ -20,6 +26,28 @@ interface Props {
 function Toolbar(props: Props) {
   const ws = useContext(WebsocketContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
+
+  const sendDeviceAction = (type: string, parameters: any = {}) => {
+    ws.sendToServer({
+      type: WsMessageTypeKeys.DeviceAction,
+      payload: { targets: props.rows, type, parameters } as DeviceActionRequest
+    });
+  };
+
+  const sendRefreshDevice = () => {
+    ws.sendToServer({
+      type: WsMessageTypeKeys.RefreshDevice,
+      payload: { targets: props.rows } as RefreshDeviceRequest
+    });
+  };
+
+  const sendClearDevice = () => {
+    ws.sendToServer({
+      type: WsMessageTypeKeys.ClearDevice,
+      payload: { targets: props.rows } as ClearDeviceRequest
+    });
+  };
+
   return (
     <>
       <List draggable={false}>
@@ -103,38 +131,38 @@ function Toolbar(props: Props) {
           name="Delete Logs"
           leftIcon="delete_sweep"
           selectedRows={props.rows}
-          onClick={() => ws.sendDeviceAction(props.rows, "deleteLogs")}
+          onClick={() => sendDeviceAction("deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
           leftIcon="power_settings_new"
           selectedRows={props.rows}
-          onClick={() => ws.sendDeviceAction(props.rows, "cleanStart")}
+          onClick={() => sendDeviceAction("cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
           leftIcon="memory"
           selectedRows={props.rows}
-          onClick={() => ws.sendDeviceAction(props.rows, "ramClear")}
+          onClick={() => sendDeviceAction("ramClear")}
         />
         <ToolbarItem
           name="Reset Display"
           leftIcon="desktop_windows"
           selectedRows={props.rows}
-          onClick={() => ws.sendDeviceAction(props.rows, "resetDisplay")}
+          onClick={() => sendDeviceAction("resetDisplay")}
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Force Refresh"
           leftIcon="refresh"
           selectedRows={props.rows}
-          onClick={() => ws.sendRefreshDevice(props.rows)}
+          onClick={sendRefreshDevice}
         />
         <ToolbarItem
           name="Clear Record"
           leftIcon="delete"
           selectedRows={props.rows}
-          onClick={() => ws.sendClearDevice(props.rows)}
+          onClick={sendClearDevice}
         />
       </List>
       <LogLevel
@@ -142,6 +170,7 @@ function Toolbar(props: Props) {
         targets={props.rows}
         levels={props.logLevels}
         namespaces={props.logNamespaces}
+        sendDeviceAction={sendDeviceAction}
         cancelLogLevel={() => setLogConfigOpen(false)}
       />
     </>
