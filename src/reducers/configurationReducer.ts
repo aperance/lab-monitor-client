@@ -1,4 +1,4 @@
-import { Actions, ActionTypeKeys } from "../types";
+import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 // @ts-ignore
 // import initialState from "../config.json";
 
