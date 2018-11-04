@@ -16,9 +16,7 @@ const mapDispatchToProps = (dispatch: any) => {
     handleCheckboxClick: (property: string, regex: string) => {
       dispatch(filterSelect(property, regex));
     },
-    handleProxyClick: () => {
-      dispatch(proxyToggle());
-    }
+    handleProxyClick: () => dispatch(proxyToggle())
   };
 };
 

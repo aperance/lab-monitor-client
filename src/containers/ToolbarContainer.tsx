@@ -3,29 +3,23 @@ import { StoreState } from "../types";
 import { viewSelect } from "../actions/actionCreators";
 import Toolbar from "../components/Toolbar";
 
-const mapStateToProps = (state: StoreState) => {
-  let logsUrl = "http://";
-  if (state.userSelection.proxy)
-    logsUrl +=
-      state.configuration.httpProxy +
-      state.configuration.logsPath +
-      "?target=" +
-      state.userSelection.rows[0];
-  else
-    logsUrl +=
-      state.userSelection.rows[0] + ":8001" + state.configuration.logsPath;
+const mapStateToProps = ({ userSelection, configuration }: StoreState) => {
   return {
-    rows: state.userSelection.rows,
-    view: state.userSelection.view,
-    logsUrl,
+    rows: userSelection.rows,
+    view: userSelection.view,
     fileContents:
-      `net use \\\\${state.userSelection.rows[0]} ` +
-      `/user:${state.configuration.vnc.username} ` +
-      `${state.configuration.vnc.password} ` +
+      `net use \\\\${userSelection.rows[0]} ` +
+      `/user:${configuration.vnc.username} ` +
+      `${configuration.vnc.password} ` +
       `/PERSISTENT:NO\n` +
-      `start \\\\${state.userSelection.rows[0]}`,
-    logLevels: state.configuration.logLevel.level,
-    logNamespaces: state.configuration.logLevel.namespace
+      `start \\\\${userSelection.rows[0]}`,
+    logsUrl:
+      userSelection.proxy === true
+        ? `http://${configuration.httpProxy}${configuration.logsPath}` +
+          `?target=${userSelection.rows[0]}`
+        : `http://${userSelection.rows[0]}:8001${configuration.logsPath}`,
+    logLevels: configuration.logLevel.level,
+    logNamespaces: configuration.logLevel.namespace
   };
 };
 

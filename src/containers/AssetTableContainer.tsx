@@ -3,20 +3,26 @@ import { StoreState, RowData } from "../types";
 import { singleRowSelect, multiRowSelect } from "../actions/actionCreators";
 import AssetTable from "../components/AssetTable";
 
-const mapStateToProps = (state: StoreState) => {
-  const columnsToModify = state.configuration.columns.filter(
-    (x: any) => typeof x.replace !== "undefined"
-  ) as Array<{ property: string; replace: { [x: string]: string } }>;
+interface ColumnConfig {
+  property: string;
+  replace: { [x: string]: string };
+}
 
+const mapStateToProps = (state: StoreState) => {
   const mapFunc = ([id, rowData]: RowData) => {
-    columnsToModify.forEach(({ property, replace }) => {
-      if (replace && rowData[property] !== null) {
-        Object.entries(replace).forEach(([replacement, matcher]) => {
-          if ((rowData[property] as string).match(matcher))
-            rowData[property] = replacement;
-        });
-      }
-    });
+    state.configuration.columns
+      /** Filter out column config with no replacement rule */
+      .filter((x: any) => typeof x.replace !== "undefined")
+      /** Iterate over column config with replacement rules */
+      .forEach(({ property, replace }: ColumnConfig) => {
+        if (replace && rowData[property] !== null) {
+          /** Apply all replacemnt rules on rowData */
+          Object.entries(replace).forEach(([replacement, matcher]) => {
+            if ((rowData[property] as string).match(matcher))
+              rowData[property] = replacement;
+          });
+        }
+      });
     return [id, rowData] as RowData;
   };
 

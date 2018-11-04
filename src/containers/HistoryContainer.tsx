@@ -3,19 +3,17 @@ import { StoreState } from "../types";
 import { historySelect } from "../actions/actionCreators";
 import History from "../components/History";
 
-const mapStateToProps = (state: StoreState) => {
+const mapStateToProps = ({ userSelection, historyData }: StoreState) => {
   const properties =
-    state.userSelection.rows.length === 1
-      ? Object.keys(state.historyData[state.userSelection.rows[0]])
+    userSelection.rows.length === 1
+      ? Object.keys(historyData[userSelection.rows[0]])
       : [];
   return {
     properties,
-    selectedIndex: properties.indexOf(state.userSelection.history || ""),
+    selectedIndex: properties.indexOf(userSelection.history || ""),
     selectedData:
-      state.userSelection.history && state.userSelection.rows.length === 1
-        ? state.historyData[state.userSelection.rows[0]][
-            state.userSelection.history
-          ]
+      userSelection.history && userSelection.rows.length === 1
+        ? historyData[userSelection.rows[0]][userSelection.history]
         : []
   };
 };
