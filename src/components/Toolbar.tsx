@@ -22,7 +22,7 @@ function Toolbar(props: Props) {
   const [logConfigOpen, setLogConfigOpen] = useState(false);
   return (
     <>
-      <List>
+      <List draggable={false}>
         {props.rows.length <= 1 && (
           <>
             <ToolbarItem

@@ -16,7 +16,8 @@ const styles = createStyles({
     whiteSpace: "nowrap",
     margin: "0px 16px",
     overflowX: "hidden",
-    flex: 1
+    flex: 1,
+    userSelect: "none"
   },
   belowTable: {
     flex: 1

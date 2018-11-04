@@ -1,6 +1,5 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import Icon from "@material-ui/core/Icon";
 import { useMouseTracker } from "../hooks/useMouseTracker";
 import ToolbarContainer from "../containers/ToolbarContainer";
 import HistoryContainer from "../containers/HistoryContainer";
@@ -49,40 +48,54 @@ interface Props extends WithStyles<typeof styles> {
 function Drawers(props: Props) {
   const [ref, subViewWidth, isDragging, setDragging] = useMouseTracker();
 
+  const translateBy = [200 + subViewWidth, subViewWidth, 0][
+    props.drawersVisible
+  ];
+
   return (
     <div
       ref={ref}
       className={props.classes.root}
+      draggable={false}
       style={{
         width: 200 + subViewWidth + "px",
-        right:
-          [-(200 + subViewWidth), -subViewWidth, 0][props.drawersVisible] +
-          "px",
-        transition: isDragging ? "0s" : ".5s"
+        right: "0px",
+        transform: `translateX(${translateBy}px)`,
+        transition: isDragging ? "0s" : "all 400ms cubic-bezier(0, 0, 0.2, 1)",
+        transitionDelay: isDragging || props.drawersVisible !== 2 ? "0s" : ".2s"
       }}
     >
       <div
         className={props.classes.drawer}
-        style={{ width: "200px", left: "0px" }}
+        draggable={false}
+        style={{
+          userSelect: "none",
+          width: "200px",
+          left: "0px"
+        }}
       >
         <ToolbarContainer />
       </div>
       <div
         className={props.classes.dragBar}
         onMouseDown={() => setDragging(true)}
-      >
-        <Icon className={props.classes.icon}>drag_indicator</Icon>
-      </div>
+        draggable={false}
+      />
       <div
         className={props.classes.drawer}
-        style={{ width: subViewWidth + "px", left: "200px" }}
+        draggable={false}
+        style={{
+          userSelect: "none",
+          width: subViewWidth + "px",
+          left: "200px"
+        }}
       >
         {(() => {
           switch (props.subView) {
             case "history":
               return <HistoryContainer />;
             case "statePage":
-              return !isDragging ? <WebPageContainer /> : null;
+              return <WebPageContainer />;
             case "psTools":
               return <PsToolsContainer />;
             case "vnc":

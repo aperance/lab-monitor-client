@@ -35,7 +35,8 @@ function WebPage(props: Props) {
         title="iframe"
         width="100%"
         height="100%"
-        style={{ borderWidth: "0px" }}
+        draggable={false}
+        style={{ userSelect: "none", borderWidth: "0px" }}
       >
         <p>Your browser does not support iframes.</p>
       </iframe>

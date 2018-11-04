@@ -13,7 +13,8 @@ const styles = createStyles({
     marginTop: "8px",
     marginBottom: "8px",
     borderRight: "1px solid #0000001f",
-    position: "static"
+    position: "static",
+    userSelect: "none"
   },
   formLabel: {
     fontSize: "0.75rem",
