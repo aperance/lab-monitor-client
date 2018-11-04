@@ -4,17 +4,17 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
 interface Props {
-  err: Error | null;
-  results: any[] | null;
+  response: { err: Error | null; results: any[] | null };
   handleClose: () => void;
 }
 
 function ActionResponse(props: Props) {
   let message: string | null = null;
 
-  if (props.err !== null) message = "ERROR: " + props.err.message;
-  else if (props.results !== null)
-    message = props.results.every(result => result.success === true)
+  if (props.response.err !== null)
+    message = "ERROR: " + props.response.err.message;
+  else if (props.response.results !== null)
+    message = props.response.results.every(result => result.success === true)
       ? "Request successfuly received by device(s)."
       : "Request sent but not acknowledged by every device. Please manually confirm.";
 

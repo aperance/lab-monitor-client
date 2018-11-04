@@ -7,15 +7,22 @@ import { actionResponseClear } from "./actions/actionCreators";
 import { WebsocketContext } from "./WebsocketProvider";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
-import DrawersContainer from "./containers/DrawersContainer";
+import ToolbarContainer from "./containers/ToolbarContainer";
+import HistoryContainer from "./containers/HistoryContainer";
+import WebPageContainer from "./containers/WebPageContainer";
+import PsToolsContainer from "./containers/PsToolsContainer";
+import VncContainer from "./containers/VncContainer";
+import NavBar from "./components/NavBar";
 import ErrorMessage from "./components/ErrorMessage";
 import Spinner from "./components/Spinner";
-import NavBar from "./components/NavBar";
+import Drawers from "./components/Drawers";
 import ActionResponse from "./components/ActionResponse";
 
 interface Props {
   title: string;
   dataReceived: boolean;
+  subView: string | null;
+  drawersVisible: number;
   actionResponse: { err: Error | null; results: any[] | null };
   actionResponseClose: () => void;
 }
@@ -23,22 +30,39 @@ interface Props {
 const Layout = (props: Props) => {
   const { status } = useContext(WebsocketContext);
 
-  if (status === "error")
-    return <ErrorMessage message={"Unable to connect to server"} />;
-
-  return status === "disconnected" || !props.dataReceived ? (
+  return status === "error" ? (
+    <ErrorMessage message={"Unable to connect to server"} />
+  ) : status === "disconnected" || !props.dataReceived ? (
     <Spinner />
   ) : (
     <>
       <NavBar title={props.title} />
+
       <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
         <FilterBarContainer />
         <AssetTableContainer />
       </div>
-      <DrawersContainer />
+
+      <Drawers drawersVisible={props.drawersVisible}>
+        <ToolbarContainer />
+        {(() => {
+          switch (props.subView) {
+            case "history":
+              return <HistoryContainer />;
+            case "statePage":
+              return <WebPageContainer />;
+            case "psTools":
+              return <PsToolsContainer />;
+            case "vnc":
+              return <VncContainer isDragging={false} />;
+            default:
+              return null;
+          }
+        })()}
+      </Drawers>
+
       <ActionResponse
-        err={props.actionResponse.err}
-        results={props.actionResponse.results}
+        response={props.actionResponse}
         handleClose={props.actionResponseClose}
       />
     </>
@@ -51,6 +75,13 @@ const mapStateToProps = (state: StoreState) => {
     dataReceived:
       Object.keys(state.configuration).length !== 0 &&
       Object.keys(state.tableData).length !== 0,
+    subView: state.userSelection.view,
+    drawersVisible:
+      state.userSelection.rows[0] === undefined
+        ? 0
+        : state.userSelection.view === null
+          ? 1
+          : 2,
     actionResponse: state.actionResponse
   };
 };

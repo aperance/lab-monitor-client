@@ -1,11 +1,6 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { useMouseTracker } from "../hooks/useMouseTracker";
-import ToolbarContainer from "../containers/ToolbarContainer";
-import HistoryContainer from "../containers/HistoryContainer";
-import WebPageContainer from "../containers/WebPageContainer";
-import PsToolsContainer from "../containers/PsToolsContainer";
-import VncContainer from "../containers/VncContainer";
 
 const styles = createStyles({
   root: {
@@ -41,8 +36,8 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  subView: string | null;
   drawersVisible: number;
+  children: Array<JSX.Element | null>;
 }
 
 function Drawers(props: Props) {
@@ -74,7 +69,7 @@ function Drawers(props: Props) {
           left: "0px"
         }}
       >
-        <ToolbarContainer />
+        {props.children[0]}
       </div>
       <div
         className={props.classes.dragBar}
@@ -90,20 +85,7 @@ function Drawers(props: Props) {
           left: "200px"
         }}
       >
-        {(() => {
-          switch (props.subView) {
-            case "history":
-              return <HistoryContainer />;
-            case "statePage":
-              return <WebPageContainer />;
-            case "psTools":
-              return <PsToolsContainer />;
-            case "vnc":
-              return <VncContainer isDragging={isDragging} />;
-            default:
-              return null;
-          }
-        })()}
+        {props.children[1]}
       </div>
     </div>
   );
