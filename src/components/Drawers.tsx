@@ -6,12 +6,16 @@ const styles = createStyles({
   root: {
     height: "100%",
     top: "0px",
-    position: "fixed"
+    right: "0px",
+    position: "fixed",
+    display: "flex",
+    transition: "transform 400ms cubic-bezier(0, 0, 0.2, 1)"
   },
   drawer: {
+    width: "200px",
+    userSelect: "none",
     height: "100%",
     top: "0px",
-    position: "absolute",
     overflowY: "hidden",
     backgroundColor: "rgba(255, 255, 255, 1)",
     boxShadow: `-2px 0px 4px -1px rgba(0, 0, 0, 0.2),
@@ -43,31 +47,25 @@ interface Props extends WithStyles<typeof styles> {
 function Drawers(props: Props) {
   const [ref, subViewWidth, isDragging, setDragging] = useMouseTracker();
 
-  const translateBy = [200 + subViewWidth, subViewWidth, 0][
-    props.drawersVisible
-  ];
-
   return (
     <div
       ref={ref}
       className={props.classes.root}
       draggable={false}
       style={{
+        transitionDelay:
+          isDragging || props.drawersVisible !== 2 ? "0s" : ".2s",
         width: 200 + subViewWidth + "px",
-        right: "0px",
-        transform: `translateX(${translateBy}px)`,
-        transition: isDragging ? "0s" : "all 400ms cubic-bezier(0, 0, 0.2, 1)",
-        transitionDelay: isDragging || props.drawersVisible !== 2 ? "0s" : ".2s"
+        transform:
+          "translateX(" +
+          [200 + subViewWidth, subViewWidth, 0][props.drawersVisible] +
+          "px)"
       }}
     >
       <div
         className={props.classes.drawer}
         draggable={false}
-        style={{
-          userSelect: "none",
-          width: "200px",
-          left: "0px"
-        }}
+        style={{ flexGrow: 0 }}
       >
         {props.children[0]}
       </div>
@@ -79,11 +77,7 @@ function Drawers(props: Props) {
       <div
         className={props.classes.drawer}
         draggable={false}
-        style={{
-          userSelect: "none",
-          width: subViewWidth + "px",
-          left: "200px"
-        }}
+        style={{ flexGrow: 1 }}
       >
         {props.children[1]}
       </div>

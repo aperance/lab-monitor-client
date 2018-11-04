@@ -8,6 +8,7 @@ import Icon from "@material-ui/core/Icon";
 const styles = createStyles({
   selected: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
   root: {
+    width: "200px",
     paddingLeft: "20px",
     paddingRight: "20px"
   },

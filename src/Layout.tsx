@@ -23,7 +23,10 @@ interface Props {
   dataReceived: boolean;
   subView: string | null;
   drawersVisible: number;
-  actionResponse: { err: Error | null; results: any[] | null };
+  actionResponse: {
+    err: Error | null;
+    results: any[] | null;
+  };
   actionResponseClose: () => void;
 }
 

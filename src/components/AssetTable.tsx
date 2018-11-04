@@ -39,9 +39,12 @@ function AssetTable(props: Props) {
     setSortProperty(props.columns[0].property);
   }, []);
 
-  const changeSorting = (property: string) => {
-    setSortProperty(property);
-    setSortReverse(sortProperty !== property ? false : !sortReverse);
+  const changeSorting = (newSortProperty: string) => {
+    if (newSortProperty === sortProperty) setSortReverse(!sortReverse);
+    else {
+      setSortProperty(newSortProperty);
+      setSortReverse(false);
+    }
   };
 
   const sortFunc = (key1: RowData, key2: RowData) => {
