@@ -1,4 +1,14 @@
-import { Actions, ActionTypeKeys, UserSelectionState } from "../types";
+import { Actions, ActionTypeKeys } from "../actions/actionTypes";
+
+interface State {
+  rows: string[];
+  view: string | null;
+  history: string | null;
+  filters: {
+    [property: string]: string[];
+  };
+  proxy: boolean;
+}
 
 const initialState = {
   rows: [],
@@ -8,7 +18,7 @@ const initialState = {
   proxy: true
 };
 
-export default (state: UserSelectionState = initialState, action: Actions) => {
+const userSelectionReducer = (state: State = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.SINGLE_ROW_SELECT:
       if (
@@ -63,3 +73,5 @@ export default (state: UserSelectionState = initialState, action: Actions) => {
       return { ...state };
   }
 };
+
+export { userSelectionReducer, State as UserSelectionState };

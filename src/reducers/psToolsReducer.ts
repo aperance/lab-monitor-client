@@ -1,8 +1,13 @@
-import { Actions, ActionTypeKeys, PsToolsState } from "../types";
+import { Actions, ActionTypeKeys } from "../actions/actionTypes";
+
+interface State {
+  err: Error | null;
+  result: string | null;
+}
 
 const initialState = { result: null, err: null };
 
-export default (state: PsToolsState = initialState, action: Actions) => {
+const psToolsReducer = (state: State = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.PSTOOLS_RESPONSE:
       return { ...state, result: action.result };
@@ -14,3 +19,5 @@ export default (state: PsToolsState = initialState, action: Actions) => {
       return { ...state };
   }
 };
+
+export { psToolsReducer, State as PsToolsState };

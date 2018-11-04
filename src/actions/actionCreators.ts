@@ -1,12 +1,8 @@
 import {
   ActionTypeKeys,
-  DeviceDataAll,
   DeviceDataAllAction,
-  DeviceDataUpdate,
   DeviceDataUpdateAction,
-  PsToolsResponse,
   PsToolsResponseAction,
-  DeviceActionResponse,
   DeviceActionResponseSetAction,
   DeviceActionResponseClearAction,
   ResetAllAction,
@@ -16,6 +12,12 @@ import {
   HistorySelectAction,
   FilterSelectAction,
   ProxyToggleAction
+} from "./actionTypes";
+import {
+  DeviceDataAll,
+  DeviceDataUpdate,
+  PsToolsResponse,
+  DeviceActionResponse
 } from "../types";
 
 export const configuration = (payload: any): any => {

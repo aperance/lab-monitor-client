@@ -1,8 +1,14 @@
-import { Actions, ActionTypeKeys, TableDataState } from "../types";
+import { Actions, ActionTypeKeys } from "../actions/actionTypes";
+
+interface State {
+  [id: string]: {
+    [property: string]: string | null;
+  };
+}
 
 const initialState = {};
 
-export default (state: TableDataState = initialState, action: Actions) => {
+const tableDataReducer = (state: State = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.DEVICE_DATA_ALL:
       return { ...action.state };
@@ -20,8 +26,10 @@ export default (state: TableDataState = initialState, action: Actions) => {
           }
         };
     case ActionTypeKeys.RESET_ALL:
-      return {} as TableDataState;
+      return {} as State;
     default:
       return { ...state };
   }
 };
+
+export { tableDataReducer, State as TableDataState };
