@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { StoreState } from "../types";
+import { StoreState } from "../reducers/index";
 import { filterSelect, proxyToggle } from "../actions/actionCreators";
 import FilterBar from "../components/FilterBar";
 

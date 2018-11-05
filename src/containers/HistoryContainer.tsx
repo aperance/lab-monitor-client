@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { StoreState } from "../types";
+import { StoreState } from "../reducers/index";
 import { historySelect } from "../actions/actionCreators";
 import History from "../components/History";
 

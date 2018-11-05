@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { StoreState } from "../types";
+import { StoreState } from "../reducers/index";
 import { viewSelect } from "../actions/actionCreators";
 import Toolbar from "../components/Toolbar";
 

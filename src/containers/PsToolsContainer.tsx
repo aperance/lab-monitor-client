@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { StoreState } from "../types";
+import { StoreState } from "../reducers/index";
 import PsTools from "../components/PsTools";
 
 const mapStateToProps = (state: StoreState) => {
