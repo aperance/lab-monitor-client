@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { connect } from "react-redux";
 import { StoreState } from "./reducers/index";
 import { actionResponseClear } from "./actions/actionCreators";
-import { WebsocketContext } from "./WebsocketProvider";
+import { WebsocketContext } from "./Websocket";
 import AssetTableContainer from "./containers/AssetTableContainer";
 import FilterBarContainer from "./containers/FilterBarContainer";
 import ToolbarContainer from "./containers/ToolbarContainer";
