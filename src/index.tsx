@@ -4,8 +4,8 @@ import { Provider } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { WebsocketProvider } from "./Websocket";
 import blue from "@material-ui/core/colors/blue";
-import Layout from "./Layout";
 import store from "./store";
+import AppContainer from "./containers/AppContainer";
 
 const theme = createMuiTheme({
   palette: { primary: blue },
@@ -16,7 +16,7 @@ ReactDOM.render(
   <Provider store={store}>
     <WebsocketProvider url={"ws://10.91.1.1:4000/data"}>
       <MuiThemeProvider theme={theme}>
-        <Layout />
+        <AppContainer />
       </MuiThemeProvider>
     </WebsocketProvider>
   </Provider>,
