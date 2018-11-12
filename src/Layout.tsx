@@ -2,7 +2,7 @@ import * as React from "react";
 // @ts-ignore
 import { useContext } from "react";
 import { connect } from "react-redux";
-import { StoreState } from "./types";
+import { StoreState } from "./reducers/index";
 import { actionResponseClear } from "./actions/actionCreators";
 import { WebsocketContext } from "./WebsocketProvider";
 import AssetTableContainer from "./containers/AssetTableContainer";
@@ -83,8 +83,8 @@ const mapStateToProps = (state: StoreState) => {
       state.userSelection.rows[0] === undefined
         ? 0
         : state.userSelection.view === null
-          ? 1
-          : 2,
+        ? 1
+        : 2,
     actionResponse: state.actionResponse
   };
 };

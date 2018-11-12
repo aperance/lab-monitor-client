@@ -26,10 +26,10 @@ interface Props {
 }
 
 const WebsocketProvider = (props: Props) => {
-  const [status, sendToServer] = useWebsocket(props.url, inboundMessageRouter);
+  const [status, send] = useWebsocket(props.url, inboundMessageRouter);
 
   return (
-    <WebsocketContext.Provider value={{ status, sendToServer }}>
+    <WebsocketContext.Provider value={{ status, send }}>
       {props.children}
     </WebsocketContext.Provider>
   );

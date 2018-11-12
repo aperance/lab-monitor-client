@@ -22,9 +22,8 @@ interface Props extends WithStyles<typeof styles> {
   open: boolean;
   namespaces: string[];
   levels: string[];
-  targets: string[];
-  sendDeviceAction: (type: string, parameters: any) => void;
-  cancelLogLevel: () => void;
+  sendDeviceCommand: (namespace: string, level: string) => void;
+  close: () => void;
 }
 
 function preventRender(prevProps: Props, nextProps: Props) {
@@ -36,7 +35,7 @@ function LogLevel(props: Props) {
   const [level, setLevel] = useState("");
 
   return (
-    <Dialog open={props.open} onClose={props.cancelLogLevel}>
+    <Dialog open={props.open} onClose={props.close}>
       <DialogContent>
         <form className={props.classes.form}>
           <FormControl>
@@ -76,11 +75,8 @@ function LogLevel(props: Props) {
       <DialogActions>
         <Button
           onClick={() => {
-            props.sendDeviceAction("logLevel", {
-              namespace,
-              level
-            });
-            props.cancelLogLevel();
+            props.sendDeviceCommand(namespace, level);
+            props.close();
           }}
           color="primary"
         >

@@ -1,7 +1,6 @@
 import * as React from "react";
 // @ts-ignore
 import { useState, useContext } from "react";
-import { WsMessageTypeKeys, PsToolsRequest } from "../types";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -11,6 +10,7 @@ import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Terminal from "./Terminal";
 import { WebsocketContext } from "../WebsocketProvider";
+import { psToolsCommand } from "../messageCreators";
 
 const styles = createStyles({
   container: {
@@ -45,16 +45,6 @@ function PsTools(props: Props) {
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");
-
-  /**
-   * Public method to send PsTools command to device via websocket server.
-   */
-  const sendPsToolsCommand = () => {
-    ws.sendToServer({
-      type: WsMessageTypeKeys.PsToolsCommand,
-      payload: { target: props.target, mode, argument: cmd } as PsToolsRequest
-    });
-  };
 
   return (
     <div className={props.classes.container}>
@@ -113,7 +103,12 @@ function PsTools(props: Props) {
           />
         </FormControl>
 
-        <Button size="small" onClick={sendPsToolsCommand}>
+        <Button
+          size="small"
+          onClick={() => {
+            ws.send(psToolsCommand(props.target, mode, cmd));
+          }}
+        >
           Send
         </Button>
       </form>
