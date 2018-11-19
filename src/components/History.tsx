@@ -1,5 +1,4 @@
 import * as React from "react";
-// @ts-ignore
 import { useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { Collection, AutoSizer } from "react-virtualized";

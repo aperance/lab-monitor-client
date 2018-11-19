@@ -1,5 +1,4 @@
 import * as React from "react";
-// @ts-ignore
 import { useContext, useState } from "react";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";

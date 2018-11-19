@@ -1,5 +1,4 @@
 import * as React from "react";
-// @ts-ignore
 import { useState, useRef, useEffect } from "react";
 import store from "./store";
 import { WsMessageTypeKeys, WsMessage } from "./types";
@@ -19,7 +18,10 @@ import {
   psToolsResponse
 } from "./actions/actionCreators";
 
-export const WebsocketContext = React.createContext({});
+export const WebsocketContext = React.createContext({} as {
+  status: string;
+  send: (message: WsMessage) => void;
+});
 
 interface Props {
   url: string;
@@ -29,7 +31,7 @@ interface Props {
 export const WebsocketProvider = (props: Props) => {
   const [status, setStatus] = useState("disconnected");
   const [retry, setRetry] = useState(false);
-  const socket = useRef(null);
+  const socket = useRef(null as WebSocket | null);
 
   useEffect(
     () => {

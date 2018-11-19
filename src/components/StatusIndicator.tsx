@@ -1,5 +1,4 @@
 import * as React from "react";
-// @ts-ignore
 import { useState, useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";

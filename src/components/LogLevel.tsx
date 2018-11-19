@@ -1,6 +1,5 @@
 import * as React from "react";
-// @ts-ignore
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";

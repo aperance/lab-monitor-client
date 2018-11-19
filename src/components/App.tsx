@@ -1,5 +1,4 @@
 import * as React from "react";
-// @ts-ignore
 import { useContext } from "react";
 import { WebsocketContext } from "../Websocket";
 import AssetTableContainer from "../containers/AssetTableContainer";

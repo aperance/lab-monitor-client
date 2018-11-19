@@ -1,12 +1,10 @@
 import * as React from "react";
-// @ts-ignore
 import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
-// @ts-ignore
 import { useVnc } from "../hooks/useVnc";
 import Spinner from "./Spinner";
 

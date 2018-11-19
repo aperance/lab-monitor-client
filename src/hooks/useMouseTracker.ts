@@ -1,11 +1,10 @@
 import * as React from "react";
-// @ts-ignore
 import { useState, useRef } from "react";
 
 export function useMouseTracker() {
   const [isDragging, setDragging] = useState(false);
   const [subViewWidth, setSubViewWidth] = useState(800);
-  const ref: React.RefObject<HTMLDivElement> = useRef();
+  const ref = useRef(null as HTMLDivElement | null);
 
   if (ref.current) {
     ref.current.onmouseup = () => setDragging(false);
@@ -16,5 +15,10 @@ export function useMouseTracker() {
     };
   }
 
-  return [ref, subViewWidth, isDragging, setDragging];
+  return [ref, subViewWidth, isDragging, setDragging] as [
+    React.RefObject<HTMLDivElement>,
+    number,
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>
+  ];
 }

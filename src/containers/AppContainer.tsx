@@ -1,4 +1,3 @@
-// @ts-ignore
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
 import { actionResponseClear } from "../actions/actionCreators";

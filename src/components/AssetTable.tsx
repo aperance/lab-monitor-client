@@ -1,12 +1,17 @@
 import * as React from "react";
-// @ts-ignore
 import { useState, useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
-import { RowData } from "../types";
+
+type RowData = [
+  string,
+  {
+    [x: string]: string | null;
+  }
+];
 
 const styles = createStyles({
   root: {
@@ -32,7 +37,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function AssetTable(props: Props) {
-  const [sortProperty, setSortProperty] = useState(null);
+  const [sortProperty, setSortProperty] = useState(null as string | null);
   const [sortReverse, setSortReverse] = useState(false);
 
   useEffect(() => {
@@ -48,6 +53,7 @@ function AssetTable(props: Props) {
   };
 
   const sortFunc = (key1: RowData, key2: RowData) => {
+    // @ts-ignore
     let result = (key1[1][sortProperty] || "") > (key2[1][sortProperty] || "");
     if (sortReverse) result = !result;
     return result ? 1 : -1;

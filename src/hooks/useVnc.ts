@@ -1,5 +1,4 @@
 import * as React from "react";
-// @ts-ignore
 import { useState, useEffect, useRef } from "react";
 // @ts-ignore
 import RFB from "@novnc/novnc/core/rfb";
@@ -13,7 +12,7 @@ export function useVnc(
   suspend: boolean
 ) {
   const [status, setStatus] = useState("disconnected");
-  const targetRef: React.RefObject<HTMLSpanElement> = useRef();
+  const targetRef = useRef(null as HTMLSpanElement | null);
 
   useEffect(
     () => {
