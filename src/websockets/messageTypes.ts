@@ -16,7 +16,6 @@ export enum WsMessageTypeKeys {
 
 export interface WsMessage {
   readonly type: WsMessageTypeKeys;
-  // @ts-ignore
   readonly payload: unknown;
 }
 
@@ -70,10 +69,4 @@ export interface RefreshDeviceRequest {
 
 export interface ClearDeviceRequest {
   readonly targets: string[];
-}
-
-/** Non-WS Interfaces */
-
-export interface ErrorMessage {
-  readonly err: Error | null;
 }

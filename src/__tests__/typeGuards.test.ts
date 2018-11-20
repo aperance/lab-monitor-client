@@ -4,7 +4,7 @@ import {
   isDeviceDataUpdate
   // isDeviceActionResponse,
   // isPsToolsResponse
-} from "../typeGuards";
+} from "../websockets/messageTypeGuards";
 
 describe("isWsMessage type guard", () => {
   test("accepts a proper websocket message", () => {

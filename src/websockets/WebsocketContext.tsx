@@ -1,22 +1,8 @@
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
-import store from "./store";
-import { WsMessageTypeKeys, WsMessage } from "./types";
-
-import { isWsMessage } from "./typeGuards";
-import {
-  isDeviceDataAll,
-  isDeviceDataUpdate,
-  isDeviceActionResponse,
-  isPsToolsResponse
-} from "./typeGuards";
-import {
-  actionResponseSet,
-  configuration,
-  deviceDataAll,
-  deviceDataUpdate,
-  psToolsResponse
-} from "./actions/actionCreators";
+import { WsMessage } from "./messageTypes";
+import { messageRouter } from "./messageRouter";
+import { isWsMessage } from "./messageTypeGuards";
 
 export const WebsocketContext = React.createContext({} as {
   status: string;
@@ -44,7 +30,7 @@ export const WebsocketProvider = (props: Props) => {
           console.log(message);
           if (!isWsMessage(message))
             throw Error("Invalid WS message type specified");
-          inboundMessageRouter(message);
+          messageRouter(message);
         };
         ws.onerror = () => setStatus("error");
         ws.onclose = () => setTimeout(() => setRetry(true), 5000);
@@ -55,31 +41,6 @@ export const WebsocketProvider = (props: Props) => {
     },
     [retry]
   );
-
-  const inboundMessageRouter = ({ type, payload }: WsMessage) => {
-    switch (type) {
-      case WsMessageTypeKeys.Configuration:
-        store.dispatch(configuration(payload));
-        break;
-      case WsMessageTypeKeys.DeviceDataAll:
-        if (isDeviceDataAll(payload)) store.dispatch(deviceDataAll(payload));
-        break;
-      case WsMessageTypeKeys.DeviceDataUpdate:
-        if (isDeviceDataUpdate(payload))
-          store.dispatch(deviceDataUpdate(payload));
-        break;
-      case WsMessageTypeKeys.DeviceActionResponse:
-        if (isDeviceActionResponse(payload))
-          store.dispatch(actionResponseSet(payload));
-        break;
-      case WsMessageTypeKeys.PsToolsCommandResponse:
-        if (isPsToolsResponse(payload))
-          store.dispatch(psToolsResponse(payload));
-        break;
-      default:
-        throw Error("Invalid WS message type specified");
-    }
-  };
 
   const send = (message: WsMessage) => {
     if (socket.current) {

@@ -3,7 +3,7 @@ import {
   DeviceDataUpdate,
   PsToolsResponse,
   DeviceActionResponse
-} from "../types";
+} from "../websockets/messageTypes";
 
 export enum ActionTypeKeys {
   SINGLE_ROW_SELECT = "SINGLE_ROW_SELECT",

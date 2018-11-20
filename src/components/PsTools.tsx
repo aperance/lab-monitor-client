@@ -8,8 +8,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Terminal from "./Terminal";
-import { WebsocketContext } from "../Websocket";
-import { psToolsCommand } from "../messageCreators";
+import { WebsocketContext } from "../websockets/WebsocketContext";
+import { psToolsCommand } from "../websockets/messageCreators";
 
 const styles = createStyles({
   container: {

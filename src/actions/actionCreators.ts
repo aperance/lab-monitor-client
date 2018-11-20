@@ -18,7 +18,7 @@ import {
   DeviceDataUpdate,
   PsToolsResponse,
   DeviceActionResponse
-} from "../types";
+} from "../websockets/messageTypes";
 
 export const configuration = (payload: any): any => {
   return { configuration: { ...payload }, type: ActionTypeKeys.CONFIGURATION };

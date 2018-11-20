@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { WebsocketContext } from "../Websocket";
+import { WebsocketContext } from "../websockets/WebsocketContext";
 import AssetTableContainer from "../containers/AssetTableContainer";
 import FilterBarContainer from "../containers/FilterBarContainer";
 import ToolbarContainer from "../containers/ToolbarContainer";

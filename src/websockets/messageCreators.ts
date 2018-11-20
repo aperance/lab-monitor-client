@@ -1,4 +1,4 @@
-import { WsMessageTypeKeys } from "./types";
+import { WsMessageTypeKeys } from "./messageTypes";
 
 export const psToolsCommand = (
   target: string,

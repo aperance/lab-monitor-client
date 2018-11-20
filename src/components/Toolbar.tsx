@@ -3,9 +3,13 @@ import { useContext, useState } from "react";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ToolbarItem from "./ToolbarItem";
-import { WebsocketContext } from "../Websocket";
+import { WebsocketContext } from "../websockets/WebsocketContext";
 import LogLevel from "../components/LogLevel";
-import { deviceCommand, refreshDevice, clearDevice } from "../messageCreators";
+import {
+  deviceCommand,
+  refreshDevice,
+  clearDevice
+} from "../websockets/messageCreators";
 
 interface Props {
   view: string | null;

@@ -4,7 +4,7 @@ import {
   DeviceDataUpdate,
   PsToolsResponse,
   DeviceActionResponse
-} from "./types";
+} from "./messageTypes";
 
 /**
  * Type guard for WsMessage interface
