@@ -57,7 +57,4 @@ function AssetTableRow(props: Props) {
   );
 }
 
-export default withStyles(styles)(
-  // @ts-ignore
-  React.memo(AssetTableRow, preventRender) as JSX.Element
-);
+export default withStyles(styles)(React.memo(AssetTableRow, preventRender));

@@ -21,7 +21,4 @@ function Spinner(props: Props) {
   );
 }
 
-export default withStyles(styles)(
-  // @ts-ignore
-  React.memo(Spinner) as JSX.Element
-);
+export default withStyles(styles)(React.memo(Spinner));

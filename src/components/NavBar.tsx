@@ -70,7 +70,4 @@ function NavBar(props: Props) {
   );
 }
 
-export default withStyles(styles)(
-  // @ts-ignore
-  React.memo(NavBar) as JSX.Element
-);
+export default withStyles(styles)(React.memo(NavBar));

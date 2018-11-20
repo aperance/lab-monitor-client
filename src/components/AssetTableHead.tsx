@@ -49,7 +49,4 @@ function AssetTableHead(props: Props) {
   );
 }
 
-export default withStyles(styles)(
-  // @ts-ignore
-  React.memo(AssetTableHead, preventRender) as JSX.Element
-);
+export default withStyles(styles)(React.memo(AssetTableHead, preventRender));

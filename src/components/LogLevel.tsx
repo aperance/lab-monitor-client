@@ -86,7 +86,4 @@ function LogLevel(props: Props) {
   );
 }
 
-export default withStyles(styles)(
-  // @ts-ignore
-  React.memo(LogLevel, preventRender) as JSX.Element
-);
+export default withStyles(styles)(React.memo(LogLevel, preventRender));

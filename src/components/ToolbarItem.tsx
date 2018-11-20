@@ -70,7 +70,4 @@ function ToolbarItem(props: Props) {
   );
 }
 
-export default withStyles(styles)(
-  // @ts-ignore
-  React.memo(ToolbarItem, preventRender) as JSX.Element
-);
+export default withStyles(styles)(React.memo(ToolbarItem, preventRender));
