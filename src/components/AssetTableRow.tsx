@@ -1,11 +1,10 @@
 import * as React from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import { StatusIndicator } from "./StatusIndicator";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   row: { height: "36px", cursor: "pointer", userSelect: "none" },
   cell: {
     fontSize: "0.75rem",
@@ -15,7 +14,7 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   rowData: {
     [property: string]: string | null;
   };
@@ -27,17 +26,28 @@ interface Props {
   handleRowClick: (e: MouseEvent) => void;
 }
 
+<<<<<<< HEAD
 const AssetTableRow = (props: Props) => {
   const classes = useStyles();
 
+=======
+function preventRender(prevProps: Props, nextProps: Props) {
+  return (
+    prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
+    prevProps.selected === nextProps.selected
+  );
+}
+
+function AssetTableRow(props: Props) {
+>>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   return (
     <TableRow
       hover
-      className={classes.row}
+      className={props.classes.row}
       selected={props.selected}
       onClick={e => props.handleRowClick(e.nativeEvent)}
     >
-      <TableCell className={classes.cell}>
+      <TableCell className={props.classes.cell}>
         <StatusIndicator
           timestamp={props.rowData.timestamp}
           status={props.rowData.status}
@@ -45,7 +55,7 @@ const AssetTableRow = (props: Props) => {
       </TableCell>
       {props.columns &&
         props.columns.map(column => (
-          <TableCell key={column.property} className={classes.cell}>
+          <TableCell key={column.property} className={props.classes.cell}>
             {props.rowData[column.property]}
           </TableCell>
         ))}
@@ -63,4 +73,8 @@ const memoizedAssetTableRow = React.memo(
   }
 );
 
+<<<<<<< HEAD
 export { memoizedAssetTableRow as AssetTableRow };
+=======
+export default withStyles(styles)(React.memo(AssetTableRow, preventRender));
+>>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks

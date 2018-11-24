@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
@@ -12,13 +11,13 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   form: { display: "flex", flexWrap: "wrap" },
   selectNamespace: { width: "230px", marginRight: "32px" },
   selectLevel: { width: "90px" }
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   open: boolean;
   namespaces: string[];
   levels: string[];
@@ -26,19 +25,27 @@ interface Props {
   close: () => void;
 }
 
+<<<<<<< HEAD
 const LogLevel = (props: Props) => {
   const classes = useStyles();
+=======
+function preventRender(prevProps: Props, nextProps: Props) {
+  return nextProps.open === prevProps.open;
+}
+
+function LogLevel(props: Props) {
+>>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   const [namespace, setNamespace] = useState("");
   const [level, setLevel] = useState("");
 
   return (
     <Dialog open={props.open} onClose={props.close}>
       <DialogContent>
-        <form className={classes.form}>
+        <form className={props.classes.form}>
           <FormControl>
             <InputLabel>Namespace</InputLabel>
             <Select
-              className={classes.selectNamespace}
+              className={props.classes.selectNamespace}
               value={namespace}
               onChange={e => setNamespace(e.target.value)}
               input={<Input id="namespace" />}
@@ -54,7 +61,7 @@ const LogLevel = (props: Props) => {
           <FormControl>
             <InputLabel>Level</InputLabel>
             <Select
-              className={classes.selectLevel}
+              className={props.classes.selectLevel}
               value={level}
               onChange={e => setLevel(e.target.value)}
               input={<Input id="level" />}
@@ -91,4 +98,8 @@ const memoizedLogLevel = React.memo(
   }
 );
 
+<<<<<<< HEAD
 export { memoizedLogLevel as LogLevel };
+=======
+export default withStyles(styles)(React.memo(LogLevel, preventRender));
+>>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks

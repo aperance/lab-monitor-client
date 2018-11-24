@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState, useContext } from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -12,7 +11,7 @@ import { Terminal } from "./Terminal";
 import { WebsocketContext } from "../websockets/WebsocketContext";
 import { psToolsCommand } from "../websockets/messageCreators";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   container: {
     // tslint:disable-next-line:object-literal-key-quotes
     margin: "24px 32px 0px 32px",
@@ -28,7 +27,7 @@ const useStyles = makeStyles({
   text: { fontSize: "0.825rem" }
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   presets: {
     [x: string]: {
       name: string;
@@ -40,20 +39,24 @@ interface Props {
   result?: string;
 }
 
+<<<<<<< HEAD
 const PsTools = (props: Props) => {
   const classes = useStyles();
+=======
+function PsTools(props: Props) {
+>>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   const ws = useContext(WebsocketContext);
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");
 
   return (
-    <div className={classes.container}>
+    <div className={props.classes.container}>
       <form>
-        <FormControl className={classes.presetsInput}>
+        <FormControl className={props.classes.presetsInput}>
           <InputLabel>Load Preset Command</InputLabel>
           <Select
-            className={classes.text}
+            className={props.classes.text}
             input={<Input id="presets" />}
             value={preset}
             onChange={e => {
@@ -63,7 +66,7 @@ const PsTools = (props: Props) => {
             }}
           >
             {Object.keys(props.presets).map(x => (
-              <MenuItem className={classes.text} key={x} value={x}>
+              <MenuItem className={props.classes.text} key={x} value={x}>
                 {props.presets[x].name}
               </MenuItem>
             ))}
@@ -72,10 +75,10 @@ const PsTools = (props: Props) => {
       </form>
 
       <form>
-        <FormControl className={classes.modeInput}>
+        <FormControl className={props.classes.modeInput}>
           <InputLabel>Mode</InputLabel>
           <Select
-            className={classes.text}
+            className={props.classes.text}
             input={<Input id="mode" />}
             value={mode}
             onChange={e => {
@@ -83,16 +86,16 @@ const PsTools = (props: Props) => {
               setMode(e.target.value);
             }}
           >
-            <MenuItem className={classes.text} value="psExec">
+            <MenuItem className={props.classes.text} value="psExec">
               PSExec
             </MenuItem>
-            <MenuItem className={classes.text} value="psKill">
+            <MenuItem className={props.classes.text} value="psKill">
               PSKill
             </MenuItem>
           </Select>
         </FormControl>
 
-        <FormControl className={classes.cmdInput}>
+        <FormControl className={props.classes.cmdInput}>
           <InputLabel htmlFor="name-input">Command</InputLabel>
           <Input
             id="cmd"
@@ -118,4 +121,8 @@ const PsTools = (props: Props) => {
   );
 };
 
+<<<<<<< HEAD
 export { PsTools };
+=======
+export default withStyles(styles)(PsTools);
+>>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks

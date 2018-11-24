@@ -1,9 +1,8 @@
 import * as React from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { useMouseTracker } from "../hooks/useMouseTracker";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   root: {
     height: "100%",
     top: "0px",
@@ -40,19 +39,23 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   drawersVisible: number;
   children: Array<JSX.Element | null>;
 }
 
+<<<<<<< HEAD
 const Drawers = (props: Props) => {
   const classes = useStyles();
+=======
+function Drawers(props: Props) {
+>>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   const [ref, subViewWidth, isDragging, setDragging] = useMouseTracker();
 
   return (
     <div
       ref={ref}
-      className={classes.root}
+      className={props.classes.root}
       draggable={false}
       style={{
         transitionDelay:
@@ -64,19 +67,31 @@ const Drawers = (props: Props) => {
           "px)"
       }}
     >
-      <div className={classes.drawer} draggable={false} style={{ flexGrow: 0 }}>
+      <div
+        className={props.classes.drawer}
+        draggable={false}
+        style={{ flexGrow: 0 }}
+      >
         {props.children[0]}
       </div>
       <div
-        className={classes.dragBar}
+        className={props.classes.dragBar}
         onMouseDown={() => setDragging(true)}
         draggable={false}
       />
-      <div className={classes.drawer} draggable={false} style={{ flexGrow: 1 }}>
+      <div
+        className={props.classes.drawer}
+        draggable={false}
+        style={{ flexGrow: 1 }}
+      >
         {props.children[1]}
       </div>
     </div>
   );
 };
 
+<<<<<<< HEAD
 export { Drawers };
+=======
+export default withStyles(styles)(Drawers);
+>>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
