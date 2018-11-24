@@ -18,7 +18,6 @@ const colorLookup: { [x: string]: string } = {
   INACTIVE: "crimson"
 };
 
-interface Props {
 interface Props extends WithStyles<typeof styles> {
   timestamp: string | null;
   status: string | null;
