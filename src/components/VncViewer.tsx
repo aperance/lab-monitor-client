@@ -7,7 +7,7 @@ import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 import { useVnc } from "../hooks/useVnc";
-import Spinner from "./Spinner";
+import { Spinner } from "./Spinner";
 
 const useStyles = makeStyles({
   root: {
@@ -47,7 +47,7 @@ interface Props {
   isDragging: boolean;
 }
 
-function VncViewer(props: Props) {
+const VncViewer = (props: Props) => {
   const classes = useStyles();
   const [scaled, setScaled] = useState(true);
   const [ref, status] = useVnc(
@@ -101,6 +101,6 @@ function VncViewer(props: Props) {
       </div>
     </div>
   );
-}
+};
 
-export default VncViewer;
+export { VncViewer };

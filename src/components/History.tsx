@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
 import { Collection, AutoSizer } from "react-virtualized";
-import HistoryItem from "./HistoryItem";
+import { HistoryItem } from "./HistoryItem";
 
 interface Props {
   properties: string[];
@@ -10,7 +10,7 @@ interface Props {
   handleClick: (property: string) => void;
 }
 
-function HistoryList(props: Props) {
+const HistoryList = (props: Props) => {
   useEffect(() => recomputeCells());
 
   let collectionRef: any = null;
@@ -63,6 +63,6 @@ function HistoryList(props: Props) {
       )}
     </AutoSizer>
   );
-}
+};
 
-export default HistoryList;
+export { HistoryList };

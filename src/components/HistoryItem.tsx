@@ -55,7 +55,7 @@ interface Props {
   handleClick: (property: string) => void;
 }
 
-function HistoryItem(props: Props) {
+const HistoryItem = (props: Props) => {
   const classes = useStyles();
 
   return (
@@ -93,6 +93,6 @@ function HistoryItem(props: Props) {
       )}
     </div>
   );
-}
+};
 
-export default HistoryItem;
+export { HistoryItem };

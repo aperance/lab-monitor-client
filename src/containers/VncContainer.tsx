@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
-import VncViewer from "../components/VncViewer";
+import { VncViewer } from "../components/VncViewer";
 
 const mapStateToProps = ({ userSelection, configuration }: StoreState) => {
   if (userSelection.rows.length !== 1)
@@ -20,4 +20,4 @@ const mapStateToProps = ({ userSelection, configuration }: StoreState) => {
     };
 };
 
-export default connect(mapStateToProps)(VncViewer);
+export const VncContainer = connect(mapStateToProps)(VncViewer);

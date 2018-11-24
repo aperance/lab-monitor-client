@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
 import { actionResponseClear } from "../actions/actionCreators";
-import App from "../components/App";
+import { App } from "../components/App";
 
 const mapStateToProps = (state: StoreState) => {
   return {
@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(
+export const AppContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);

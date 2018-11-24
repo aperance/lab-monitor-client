@@ -26,11 +26,7 @@ interface Props {
   close: () => void;
 }
 
-function preventRender(prevProps: Props, nextProps: Props) {
-  return nextProps.open === prevProps.open;
-}
-
-function LogLevel(props: Props) {
+const LogLevel = (props: Props) => {
   const classes = useStyles();
   const [namespace, setNamespace] = useState("");
   const [level, setLevel] = useState("");
@@ -86,6 +82,13 @@ function LogLevel(props: Props) {
       </DialogActions>
     </Dialog>
   );
-}
+};
 
-export default React.memo(LogLevel, preventRender);
+const memoizedLogLevel = React.memo(
+  LogLevel,
+  (prevProps: Props, nextProps: Props) => {
+    return nextProps.open === prevProps.open;
+  }
+);
+
+export { memoizedLogLevel as LogLevel };

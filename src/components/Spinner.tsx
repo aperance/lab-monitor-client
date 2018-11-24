@@ -22,4 +22,6 @@ function Spinner() {
   );
 }
 
-export default React.memo(Spinner);
+const memoizedSpinner = React.memo(Spinner);
+
+export { memoizedSpinner as Spinner };

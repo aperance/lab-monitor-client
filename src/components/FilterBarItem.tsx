@@ -37,7 +37,7 @@ interface Props {
   handleCheckboxClick: (property: string, regex: string) => void;
 }
 
-function FilterBarItem(props: Props) {
+const FilterBarItem = (props: Props) => {
   const classes = useStyles();
 
   return (
@@ -58,6 +58,6 @@ function FilterBarItem(props: Props) {
       label={props.label}
     />
   );
-}
+};
 
-export default FilterBarItem;
+export { FilterBarItem };

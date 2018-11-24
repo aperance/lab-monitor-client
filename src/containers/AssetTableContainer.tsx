@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
 import { singleRowSelect, multiRowSelect } from "../actions/actionCreators";
-import AssetTable from "../components/AssetTable";
+import { AssetTable } from "../components/AssetTable";
 
 interface ColumnConfig {
   property: string;
@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(
+export const AssetTableContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AssetTable);

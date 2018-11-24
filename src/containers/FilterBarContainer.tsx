@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
 import { filterSelect, proxyToggle } from "../actions/actionCreators";
-import FilterBar from "../components/FilterBar";
+import { FilterBar } from "../components/FilterBar";
 
 const mapStateToProps = (state: StoreState) => {
   return {
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(
+export const FilterBarContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(FilterBar);

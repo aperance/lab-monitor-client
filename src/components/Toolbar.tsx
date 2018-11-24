@@ -2,9 +2,9 @@ import * as React from "react";
 import { useContext, useState } from "react";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import ToolbarItem from "./ToolbarItem";
+import { ToolbarItem } from "./ToolbarItem";
 import { WebsocketContext } from "../websockets/WebsocketContext";
-import LogLevel from "../components/LogLevel";
+import { LogLevel } from "../components/LogLevel";
 import {
   deviceCommand,
   refreshDevice,
@@ -21,7 +21,7 @@ interface Props {
   handleViewClick: (view: string) => null;
 }
 
-function Toolbar(props: Props) {
+const Toolbar = (props: Props) => {
   const ws = useContext(WebsocketContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
 
@@ -153,5 +153,6 @@ function Toolbar(props: Props) {
       />
     </>
   );
-}
-export default Toolbar;
+};
+
+export { Toolbar };
