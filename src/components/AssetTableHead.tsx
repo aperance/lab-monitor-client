@@ -1,16 +1,17 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   row: { height: "48px" },
   cell: { paddingRight: "4px", paddingLeft: "12px" }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   columns: Array<{
     title: string;
     property: string;
@@ -28,13 +29,15 @@ function preventRender(prevProps: Props, nextProps: Props) {
 }
 
 function AssetTableHead(props: Props) {
+  const classes = useStyles();
+
   return (
     <TableHead>
-      <TableRow className={props.classes.row}>
-        <TableCell key="status" className={props.classes.cell} />
+      <TableRow className={classes.row}>
+        <TableCell key="status" className={classes.cell} />
         {props.columns &&
           props.columns.map(column => (
-            <TableCell key={column.title} className={props.classes.cell}>
+            <TableCell key={column.title} className={classes.cell}>
               <TableSortLabel
                 active={props.sortProperty === column.property}
                 direction={props.sortDirection}
@@ -49,4 +52,4 @@ function AssetTableHead(props: Props) {
   );
 }
 
-export default withStyles(styles)(React.memo(AssetTableHead, preventRender));
+export default React.memo(AssetTableHead, preventRender);

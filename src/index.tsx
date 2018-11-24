@@ -1,6 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+// @ts-ignore
+import { install } from "@material-ui/styles";
+install();
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { WebsocketProvider } from "./websockets/WebsocketContext";
 import blue from "@material-ui/core/colors/blue";

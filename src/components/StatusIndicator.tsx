@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import Icon from "@material-ui/core/Icon";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     fontSize: "15px",
     transition: "opacity 0.5s",
@@ -18,12 +19,13 @@ const colorLookup: { [x: string]: string } = {
   INACTIVE: "crimson"
 };
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   timestamp: string | null;
   status: string | null;
 }
 
 function StatusIndicator(props: Props) {
+  const classes = useStyles();
   const [initialized, setInitialized] = useState(false);
   const [animate, setAnimate] = useState(false);
 
@@ -42,7 +44,7 @@ function StatusIndicator(props: Props) {
 
   return (
     <Icon
-      classes={props.classes}
+      classes={classes}
       style={{
         opacity: animate ? 0.5 : 1,
         color: colorLookup[props.status || "INACTIVE"]
@@ -53,4 +55,4 @@ function StatusIndicator(props: Props) {
   );
 }
 
-export default withStyles(styles)(StatusIndicator);
+export default StatusIndicator;

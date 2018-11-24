@@ -1,9 +1,10 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   button: {
     position: "absolute",
     right: "18px",
@@ -13,17 +14,19 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   url: string | null;
 }
 
 function WebPage(props: Props) {
+  const classes = useStyles();
+
   return props.url === null ? null : (
     <>
       <Button
         variant="fab"
         mini={true}
-        className={props.classes.button}
+        className={classes.button}
         href={props.url}
         target="_blank"
       >
@@ -44,4 +47,4 @@ function WebPage(props: Props) {
   );
 }
 
-export default withStyles(styles)(WebPage);
+export default WebPage;

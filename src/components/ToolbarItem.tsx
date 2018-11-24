@@ -1,11 +1,12 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Icon from "@material-ui/core/Icon";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   selected: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
   root: {
     width: "200px",
@@ -27,7 +28,7 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   name: string;
   leftIcon: string;
   rightIcon?: string;
@@ -49,18 +50,19 @@ function preventRender(prevProps: Props, nextProps: Props) {
 }
 
 function ToolbarItem(props: Props) {
+  const classes = useStyles();
   return (
-    <div className={props.isSelected ? props.classes.selected : undefined}>
-      <ListItem button onClick={props.onClick} className={props.classes.root}>
-        <ListItemIcon className={props.classes.icon}>
+    <div className={props.isSelected ? classes.selected : undefined}>
+      <ListItem button onClick={props.onClick} className={classes.root}>
+        <ListItemIcon className={classes.icon}>
           <Icon>{props.leftIcon}</Icon>
         </ListItemIcon>
         <ListItemText
-          classes={{ primary: props.classes.text }}
+          classes={{ primary: classes.text }}
           primary={props.name}
         />
         {props.rightIcon && (
-          <ListItemIcon className={props.classes.icon}>
+          <ListItemIcon className={classes.icon}>
             <Icon>{props.rightIcon}</Icon>
           </ListItemIcon>
         )}
@@ -70,4 +72,4 @@ function ToolbarItem(props: Props) {
   );
 }
 
-export default withStyles(styles)(React.memo(ToolbarItem, preventRender));
+export default React.memo(ToolbarItem, preventRender);

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -7,7 +8,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import FilterBarItem from "./FilterBarItem";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     padding: "20px 20px 20px 16px",
     marginTop: "8px",
@@ -47,7 +48,7 @@ interface Filter {
   };
 }
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   filters: Filter[];
   selectedFilters: { [property: string]: string[] };
   proxyEnabled: boolean;
@@ -56,15 +57,17 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 function FilterBar(props: Props) {
+  const classes = useStyles();
+
   return (
-    <FormControl className={props.classes.root}>
+    <FormControl className={classes.root}>
       {props.filters.map(filter => {
         return (
           <div key={filter.property}>
-            <FormLabel className={props.classes.formLabel} focused={false}>
+            <FormLabel className={classes.formLabel} focused={false}>
               {filter.title}
             </FormLabel>
-            <FormGroup className={props.classes.formGroup}>
+            <FormGroup className={classes.formGroup}>
               {Object.entries(filter.options).map(([label, regex]) => {
                 return (
                   <FilterBarItem
@@ -83,8 +86,8 @@ function FilterBar(props: Props) {
       })}
       <FormControlLabel
         classes={{
-          root: props.classes.switchForm,
-          label: props.classes.switchLabel
+          root: classes.switchForm,
+          label: classes.switchLabel
         }}
         control={
           <Switch
@@ -101,4 +104,4 @@ function FilterBar(props: Props) {
   );
 }
 
-export default withStyles(styles)(FilterBar);
+export default FilterBar;
