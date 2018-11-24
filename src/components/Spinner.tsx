@@ -1,9 +1,8 @@
 import * as React from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   root: {
     height: "90vh",
     display: "flex",
@@ -12,14 +11,14 @@ const useStyles = makeStyles({
   }
 });
 
-function Spinner() {
-  const classes = useStyles();
+interface Props extends WithStyles<typeof styles> {}
 
+function Spinner(props: Props) {
   return (
-    <span className={classes.root}>
+    <span className={props.classes.root}>
       <CircularProgress size={60} />
     </span>
   );
 }
 
-export default React.memo(Spinner);
+export default withStyles(styles)(React.memo(Spinner));

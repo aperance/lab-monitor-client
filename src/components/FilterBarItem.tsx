@@ -1,10 +1,9 @@
 import * as React from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   formControlLabel: {
     marginLeft: "0px",
     marginRight: "0px"
@@ -29,7 +28,7 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   selectedFilters: { [property: string]: string[] };
   property: string;
   regex: string;
@@ -38,15 +37,13 @@ interface Props {
 }
 
 function FilterBarItem(props: Props) {
-  const classes = useStyles();
-
   return (
     <FormControlLabel
-      className={classes.formControlLabel}
-      classes={{ label: classes.label }}
+      className={props.classes.formControlLabel}
+      classes={{ label: props.classes.label }}
       control={
         <Checkbox
-          className={classes.checkbox}
+          className={props.classes.checkbox}
           color="primary"
           checked={
             props.selectedFilters.hasOwnProperty(props.property) &&
@@ -60,4 +57,4 @@ function FilterBarItem(props: Props) {
   );
 }
 
-export default FilterBarItem;
+export default withStyles(styles)(FilterBarItem);

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/MoreVert";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   root: {
     backgroundColor: "white",
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -24,12 +23,11 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   title: string;
 }
 
 function NavBar(props: Props) {
-  const classes = useStyles();
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
   return (
@@ -37,10 +35,14 @@ function NavBar(props: Props) {
       position="static"
       color="default"
       elevation={0}
-      className={classes.root}
+      className={props.classes.root}
     >
-      <Toolbar className={classes.toolbar}>
-        <Typography variant="h6" color="inherit" className={classes.title}>
+      <Toolbar className={props.classes.toolbar}>
+        <Typography
+          variant="h6"
+          color="inherit"
+          className={props.classes.title}
+        >
           {props.title}
         </Typography>
         <IconButton onClick={e => setAnchor(e.currentTarget)}>
@@ -68,4 +70,4 @@ function NavBar(props: Props) {
   );
 }
 
-export default React.memo(NavBar);
+export default withStyles(styles)(React.memo(NavBar));

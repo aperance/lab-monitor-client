@@ -1,9 +1,12 @@
 import * as React from "react";
 import { useEffect } from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { Collection, AutoSizer } from "react-virtualized";
 import HistoryItem from "./HistoryItem";
 
-interface Props {
+const styles = createStyles({});
+
+interface Props extends WithStyles<typeof styles> {
   properties: string[];
   selectedIndex: number;
   selectedData: Array<[string, string | null]>;
@@ -65,4 +68,4 @@ function HistoryList(props: Props) {
   );
 }
 
-export default HistoryList;
+export default withStyles(styles)(HistoryList);

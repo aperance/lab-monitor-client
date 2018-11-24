@@ -1,6 +1,5 @@
 import * as React from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -8,7 +7,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import FilterBarItem from "./FilterBarItem";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   root: {
     padding: "20px 20px 20px 16px",
     marginTop: "8px",
@@ -48,7 +47,7 @@ interface Filter {
   };
 }
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   filters: Filter[];
   selectedFilters: { [property: string]: string[] };
   proxyEnabled: boolean;
@@ -57,17 +56,15 @@ interface Props {
 }
 
 function FilterBar(props: Props) {
-  const classes = useStyles();
-
   return (
-    <FormControl className={classes.root}>
+    <FormControl className={props.classes.root}>
       {props.filters.map(filter => {
         return (
           <div key={filter.property}>
-            <FormLabel className={classes.formLabel} focused={false}>
+            <FormLabel className={props.classes.formLabel} focused={false}>
               {filter.title}
             </FormLabel>
-            <FormGroup className={classes.formGroup}>
+            <FormGroup className={props.classes.formGroup}>
               {Object.entries(filter.options).map(([label, regex]) => {
                 return (
                   <FilterBarItem
@@ -86,8 +83,8 @@ function FilterBar(props: Props) {
       })}
       <FormControlLabel
         classes={{
-          root: classes.switchForm,
-          label: classes.switchLabel
+          root: props.classes.switchForm,
+          label: props.classes.switchLabel
         }}
         control={
           <Switch
@@ -104,4 +101,4 @@ function FilterBar(props: Props) {
   );
 }
 
-export default FilterBar;
+export default withStyles(styles)(FilterBar);

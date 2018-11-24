@@ -1,12 +1,11 @@
 import * as React from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Icon from "@material-ui/core/Icon";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   root: {
     backgroundColor: "white",
     borderTop: "1px solid #0000001f",
@@ -47,7 +46,7 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   style: any;
   isSelected: boolean;
   property: string;
@@ -56,18 +55,16 @@ interface Props {
 }
 
 function HistoryItem(props: Props) {
-  const classes = useStyles();
-
   return (
     <div
       style={props.style}
-      className={classes.root}
+      className={props.classes.root}
       onClick={() => props.handleClick(props.property)}
     >
-      <div className={classes.topRow}>
-        <span className={classes.title}>{props.property}</span>
+      <div className={props.classes.topRow}>
+        <span className={props.classes.title}>{props.property}</span>
         <Icon
-          className={classes.icon}
+          className={props.classes.icon}
           style={props.isSelected ? { transform: "rotate(0.5turn)" } : {}}
         >
           expand_more
@@ -76,13 +73,19 @@ function HistoryItem(props: Props) {
       {props.isSelected && (
         <div>
           {props.historyData && (
-            <Table className={classes.table}>
+            <Table className={props.classes.table}>
               {props.historyData.map(([key, value]) => (
-                <TableRow classes={{ root: classes.row }}>
-                  <TableCell className={classes.cell} style={{ flexGrow: 0 }}>
+                <TableRow classes={{ root: props.classes.row }}>
+                  <TableCell
+                    className={props.classes.cell}
+                    style={{ flexGrow: 0 }}
+                  >
                     {key}
                   </TableCell>
-                  <TableCell className={classes.cell} style={{ flexGrow: 1 }}>
+                  <TableCell
+                    className={props.classes.cell}
+                    style={{ flexGrow: 1 }}
+                  >
                     {value}
                   </TableCell>
                 </TableRow>
@@ -95,4 +98,4 @@ function HistoryItem(props: Props) {
   );
 }
 
-export default HistoryItem;
+export default withStyles(styles)(HistoryItem);

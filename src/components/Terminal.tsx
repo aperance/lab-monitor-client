@@ -1,9 +1,8 @@
 import * as React from "react";
-// @ts-ignore
-import { makeStyles } from "@material-ui/styles";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
-const useStyles = makeStyles({
+const styles = createStyles({
   paper: {
     height: "500px",
     width: "100%",
@@ -15,17 +14,16 @@ const useStyles = makeStyles({
   pre: { padding: "10px 10px 10px 10px", whiteSpace: "pre-wrap" }
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   output?: string;
 }
 
 function Terminal(props: Props) {
-  const classes = useStyles();
   return (
-    <Paper className={classes.paper} elevation={8} square={true}>
-      <pre className={classes.pre}>{props.output}</pre>
+    <Paper className={props.classes.paper} elevation={8} square={true}>
+      <pre className={props.classes.pre}>{props.output}</pre>
     </Paper>
   );
 }
 
-export default Terminal;
+export default withStyles(styles)(Terminal);
