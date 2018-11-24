@@ -1,11 +1,12 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Icon from "@material-ui/core/Icon";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     backgroundColor: "white",
     borderTop: "1px solid #0000001f",
@@ -46,7 +47,7 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   style: any;
   isSelected: boolean;
   property: string;
@@ -54,23 +55,19 @@ interface Props extends WithStyles<typeof styles> {
   handleClick: (property: string) => void;
 }
 
-<<<<<<< HEAD
 const HistoryItem = (props: Props) => {
   const classes = useStyles();
 
-=======
-function HistoryItem(props: Props) {
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   return (
     <div
       style={props.style}
-      className={props.classes.root}
+      className={classes.root}
       onClick={() => props.handleClick(props.property)}
     >
-      <div className={props.classes.topRow}>
-        <span className={props.classes.title}>{props.property}</span>
+      <div className={classes.topRow}>
+        <span className={classes.title}>{props.property}</span>
         <Icon
-          className={props.classes.icon}
+          className={classes.icon}
           style={props.isSelected ? { transform: "rotate(0.5turn)" } : {}}
         >
           expand_more
@@ -79,19 +76,13 @@ function HistoryItem(props: Props) {
       {props.isSelected && (
         <div>
           {props.historyData && (
-            <Table className={props.classes.table}>
+            <Table className={classes.table}>
               {props.historyData.map(([key, value]) => (
-                <TableRow classes={{ root: props.classes.row }}>
-                  <TableCell
-                    className={props.classes.cell}
-                    style={{ flexGrow: 0 }}
-                  >
+                <TableRow classes={{ root: classes.row }}>
+                  <TableCell className={classes.cell} style={{ flexGrow: 0 }}>
                     {key}
                   </TableCell>
-                  <TableCell
-                    className={props.classes.cell}
-                    style={{ flexGrow: 1 }}
-                  >
+                  <TableCell className={classes.cell} style={{ flexGrow: 1 }}>
                     {value}
                   </TableCell>
                 </TableRow>
@@ -104,8 +95,4 @@ function HistoryItem(props: Props) {
   );
 };
 
-<<<<<<< HEAD
 export { HistoryItem };
-=======
-export default withStyles(styles)(HistoryItem);
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks

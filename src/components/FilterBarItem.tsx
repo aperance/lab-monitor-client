@@ -1,9 +1,10 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   formControlLabel: {
     marginLeft: "0px",
     marginRight: "0px"
@@ -28,7 +29,7 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   selectedFilters: { [property: string]: string[] };
   property: string;
   regex: string;
@@ -36,20 +37,16 @@ interface Props extends WithStyles<typeof styles> {
   handleCheckboxClick: (property: string, regex: string) => void;
 }
 
-<<<<<<< HEAD
 const FilterBarItem = (props: Props) => {
   const classes = useStyles();
 
-=======
-function FilterBarItem(props: Props) {
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   return (
     <FormControlLabel
-      className={props.classes.formControlLabel}
-      classes={{ label: props.classes.label }}
+      className={classes.formControlLabel}
+      classes={{ label: classes.label }}
       control={
         <Checkbox
-          className={props.classes.checkbox}
+          className={classes.checkbox}
           color="primary"
           checked={
             props.selectedFilters.hasOwnProperty(props.property) &&
@@ -63,8 +60,4 @@ function FilterBarItem(props: Props) {
   );
 };
 
-<<<<<<< HEAD
 export { FilterBarItem };
-=======
-export default withStyles(styles)(FilterBarItem);
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks

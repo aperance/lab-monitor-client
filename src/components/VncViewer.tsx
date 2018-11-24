@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
@@ -8,7 +9,7 @@ import SaveIcon from "@material-ui/icons/GetApp";
 import { useVnc } from "../hooks/useVnc";
 import { Spinner } from "./Spinner";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     height: "100%",
     backgroundColor: "rgb(40, 40, 40)"
@@ -39,19 +40,15 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   url: string;
   password: string;
   fileContents: string;
   isDragging: boolean;
 }
 
-<<<<<<< HEAD
 const VncViewer = (props: Props) => {
   const classes = useStyles();
-=======
-function VncViewer(props: Props) {
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   const [scaled, setScaled] = useState(true);
   const [ref, status] = useVnc(
     props.url,
@@ -61,11 +58,11 @@ function VncViewer(props: Props) {
   );
 
   return (
-    <div className={props.classes.root}>
+    <div className={classes.root}>
       {status === "disconnected" && <Spinner />}
       {status === "error" && (
-        <div className={props.classes.errorDiv}>
-          <p className={props.classes.errorDialog}>
+        <div className={classes.errorDiv}>
+          <p className={classes.errorDialog}>
             Unable to establish VNC connection. Make sure VNC server is running
             on the target device.
           </p>
@@ -81,7 +78,7 @@ function VncViewer(props: Props) {
         <Button
           variant="fab"
           mini={true}
-          className={props.classes.buttonOne}
+          className={classes.buttonOne}
           onClick={() => setScaled(!scaled)}
         >
           {scaled ? <ExpandIcon /> : <ShrinkIcon />}
@@ -89,7 +86,7 @@ function VncViewer(props: Props) {
         <Button
           variant="fab"
           mini={true}
-          className={props.classes.buttonTwo}
+          className={classes.buttonTwo}
           href={
             props.fileContents &&
             URL.createObjectURL(
@@ -106,8 +103,4 @@ function VncViewer(props: Props) {
   );
 };
 
-<<<<<<< HEAD
 export { VncViewer };
-=======
-export default withStyles(styles)(VncViewer);
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks

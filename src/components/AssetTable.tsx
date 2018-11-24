@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import { AssetTableHead } from "./AssetTableHead";
@@ -13,7 +14,7 @@ type RowData = [
   }
 ];
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     height: "100%",
     display: "flex",
@@ -29,19 +30,15 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   tableData: RowData[];
   columns: Array<{ title: string; property: string }>;
   selected: string[];
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
-<<<<<<< HEAD
 const AssetTable = (props: Props) => {
   const classes = useStyles();
-=======
-function AssetTable(props: Props) {
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   const [sortProperty, setSortProperty] = useState(null as string | null);
   const [sortReverse, setSortReverse] = useState(false);
 
@@ -65,7 +62,7 @@ function AssetTable(props: Props) {
   };
 
   return (
-    <div className={props.classes.root}>
+    <div className={classes.root}>
       <Table>
         <AssetTableHead
           columns={props.columns}
@@ -86,15 +83,11 @@ function AssetTable(props: Props) {
         </TableBody>
       </Table>
       <div
-        className={props.classes.belowTable}
+        className={classes.belowTable}
         onClick={e => props.handleRowClick(e.nativeEvent, null)}
       />
     </div>
   );
 };
 
-<<<<<<< HEAD
 export { AssetTable };
-=======
-export default withStyles(styles)(AssetTable);
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+// @ts-ignore
+import { makeStyles } from "@material-ui/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/MoreVert";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     backgroundColor: "white",
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -23,16 +24,12 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   title: string;
 }
 
-<<<<<<< HEAD
 const NavBar = (props: Props) => {
   const classes = useStyles();
-=======
-function NavBar(props: Props) {
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
   return (
@@ -40,14 +37,10 @@ function NavBar(props: Props) {
       position="static"
       color="default"
       elevation={0}
-      className={props.classes.root}
+      className={classes.root}
     >
-      <Toolbar className={props.classes.toolbar}>
-        <Typography
-          variant="h6"
-          color="inherit"
-          className={props.classes.title}
-        >
+      <Toolbar className={classes.toolbar}>
+        <Typography variant="h6" color="inherit" className={classes.title}>
           {props.title}
         </Typography>
         <IconButton onClick={e => setAnchor(e.currentTarget)}>
@@ -77,8 +70,4 @@ function NavBar(props: Props) {
 
 const memoizedNavBar = React.memo(NavBar);
 
-<<<<<<< HEAD
 export { memoizedNavBar as NavBar };
-=======
-export default withStyles(styles)(React.memo(NavBar));
->>>>>>> parent of d52762c... Migrated to material-ui/styles with hooks
