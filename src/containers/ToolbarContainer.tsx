@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
 import { viewSelect } from "../actions/actionCreators";
-import { Toolbar } from "../components/Toolbar";
+import Toolbar from "../components/Toolbar";
 
 const mapStateToProps = ({ userSelection, configuration }: StoreState) => {
   return {
@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export const ToolbarContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Toolbar);

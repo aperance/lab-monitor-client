@@ -24,7 +24,7 @@ interface Props {
   status: string | null;
 }
 
-const StatusIndicator = (props: Props) => {
+function StatusIndicator(props: Props) {
   const classes = useStyles();
   const [initialized, setInitialized] = useState(false);
   const [animate, setAnimate] = useState(false);
@@ -53,6 +53,6 @@ const StatusIndicator = (props: Props) => {
       lens
     </Icon>
   );
-};
+}
 
-export { StatusIndicator };
+export default StatusIndicator;

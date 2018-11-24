@@ -8,7 +8,7 @@ interface Props {
   handleClose: () => void;
 }
 
-const ActionResponse = (props: Props) => {
+function ActionResponse(props: Props) {
   let message: string | null = null;
 
   if (props.response.err !== null)
@@ -35,6 +35,6 @@ const ActionResponse = (props: Props) => {
       }
     />
   );
-};
+}
 
-export { ActionResponse };
+export default ActionResponse;

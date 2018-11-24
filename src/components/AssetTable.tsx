@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import { AssetTableHead } from "./AssetTableHead";
-import { AssetTableRow } from "./AssetTableRow";
+import AssetTableHead from "./AssetTableHead";
+import AssetTableRow from "./AssetTableRow";
 
 type RowData = [
   string,
@@ -37,7 +37,7 @@ interface Props {
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
-const AssetTable = (props: Props) => {
+function AssetTable(props: Props) {
   const classes = useStyles();
   const [sortProperty, setSortProperty] = useState(null as string | null);
   const [sortReverse, setSortReverse] = useState(false);
@@ -88,6 +88,6 @@ const AssetTable = (props: Props) => {
       />
     </div>
   );
-};
+}
 
-export { AssetTable };
+export default AssetTable;

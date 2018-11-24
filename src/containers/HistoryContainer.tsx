@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
 import { historySelect } from "../actions/actionCreators";
-import { HistoryList } from "../components/History";
+import History from "../components/History";
 
 const mapStateToProps = ({ userSelection, historyData }: StoreState) => {
   const properties =
@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export const HistoryContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HistoryList);
+)(History);

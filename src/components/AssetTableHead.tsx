@@ -21,7 +21,14 @@ interface Props {
   changeSorting: (property: string) => void;
 }
 
-const AssetTableHead = (props: Props) => {
+function preventRender(prevProps: Props, nextProps: Props) {
+  return (
+    prevProps.sortProperty === nextProps.sortProperty &&
+    prevProps.sortDirection === nextProps.sortDirection
+  );
+}
+
+function AssetTableHead(props: Props) {
   const classes = useStyles();
 
   return (
@@ -43,16 +50,6 @@ const AssetTableHead = (props: Props) => {
       </TableRow>
     </TableHead>
   );
-};
+}
 
-const memoizedAssetTableHead = React.memo(
-  AssetTableHead,
-  (prevProps: Props, nextProps: Props) => {
-    return (
-      prevProps.sortProperty === nextProps.sortProperty &&
-      prevProps.sortDirection === nextProps.sortDirection
-    );
-  }
-);
-
-export { memoizedAssetTableHead as AssetTableHead };
+export default React.memo(AssetTableHead, preventRender);

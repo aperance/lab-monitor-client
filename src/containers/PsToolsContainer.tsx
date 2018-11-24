@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
-import { PsTools } from "../components/PsTools";
+import PsTools from "../components/PsTools";
 
 const mapStateToProps = (state: StoreState) => {
   return {
@@ -10,4 +10,4 @@ const mapStateToProps = (state: StoreState) => {
   };
 };
 
-export const PsToolsContainer = connect(mapStateToProps)(PsTools);
+export default connect(mapStateToProps)(PsTools);

@@ -8,7 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import { Terminal } from "./Terminal";
+import Terminal from "./Terminal";
 import { WebsocketContext } from "../websockets/WebsocketContext";
 import { psToolsCommand } from "../websockets/messageCreators";
 
@@ -40,7 +40,7 @@ interface Props {
   result?: string;
 }
 
-const PsTools = (props: Props) => {
+function PsTools(props: Props) {
   const classes = useStyles();
   const ws = useContext(WebsocketContext);
   const [preset, setPreset] = useState("");
@@ -116,6 +116,6 @@ const PsTools = (props: Props) => {
       <Terminal output={props.result} />
     </div>
   );
-};
+}
 
-export { PsTools };
+export default PsTools;

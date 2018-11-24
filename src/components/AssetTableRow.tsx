@@ -3,7 +3,7 @@ import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import { StatusIndicator } from "./StatusIndicator";
+import StatusIndicator from "./StatusIndicator";
 
 const useStyles = makeStyles({
   row: { height: "36px", cursor: "pointer", userSelect: "none" },
@@ -27,7 +27,14 @@ interface Props {
   handleRowClick: (e: MouseEvent) => void;
 }
 
-const AssetTableRow = (props: Props) => {
+function preventRender(prevProps: Props, nextProps: Props) {
+  return (
+    prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
+    prevProps.selected === nextProps.selected
+  );
+}
+
+function AssetTableRow(props: Props) {
   const classes = useStyles();
 
   return (
@@ -51,16 +58,6 @@ const AssetTableRow = (props: Props) => {
         ))}
     </TableRow>
   );
-};
+}
 
-const memoizedAssetTableRow = React.memo(
-  AssetTableRow,
-  (prevProps: Props, nextProps: Props) => {
-    return (
-      prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
-      prevProps.selected === nextProps.selected
-    );
-  }
-);
-
-export { memoizedAssetTableRow as AssetTableRow };
+export default React.memo(AssetTableRow, preventRender);

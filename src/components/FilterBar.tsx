@@ -6,7 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import { FilterBarItem } from "./FilterBarItem";
+import FilterBarItem from "./FilterBarItem";
 
 const useStyles = makeStyles({
   root: {
@@ -56,7 +56,7 @@ interface Props {
   handleProxyClick: () => void;
 }
 
-const FilterBar = (props: Props) => {
+function FilterBar(props: Props) {
   const classes = useStyles();
 
   return (
@@ -102,6 +102,6 @@ const FilterBar = (props: Props) => {
       />
     </FormControl>
   );
-};
+}
 
-export { FilterBar };
+export default FilterBar;

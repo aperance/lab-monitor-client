@@ -1,18 +1,18 @@
 import * as React from "react";
 import { useContext } from "react";
 import { WebsocketContext } from "../websockets/WebsocketContext";
-import { AssetTableContainer } from "../containers/AssetTableContainer";
-import { FilterBarContainer } from "../containers/FilterBarContainer";
-import { ToolbarContainer } from "../containers/ToolbarContainer";
-import { HistoryContainer } from "../containers/HistoryContainer";
-import { WebPageContainer } from "../containers/WebPageContainer";
-import { PsToolsContainer } from "../containers/PsToolsContainer";
-import { VncContainer } from "../containers/VncContainer";
-import { NavBar } from "./NavBar";
-import { ErrorMessage } from "./ErrorMessage";
-import { Spinner } from "./Spinner";
-import { Drawers } from "./Drawers";
-import { ActionResponse } from "./ActionResponse";
+import AssetTableContainer from "../containers/AssetTableContainer";
+import FilterBarContainer from "../containers/FilterBarContainer";
+import ToolbarContainer from "../containers/ToolbarContainer";
+import HistoryContainer from "../containers/HistoryContainer";
+import WebPageContainer from "../containers/WebPageContainer";
+import PsToolsContainer from "../containers/PsToolsContainer";
+import VncContainer from "../containers/VncContainer";
+import NavBar from "./NavBar";
+import ErrorMessage from "./ErrorMessage";
+import Spinner from "./Spinner";
+import Drawers from "./Drawers";
+import ActionResponse from "./ActionResponse";
 
 interface Props {
   title: string;
@@ -68,4 +68,4 @@ const App = (props: Props) => {
   );
 };
 
-export { App };
+export default App;

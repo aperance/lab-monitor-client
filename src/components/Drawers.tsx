@@ -45,7 +45,7 @@ interface Props {
   children: Array<JSX.Element | null>;
 }
 
-const Drawers = (props: Props) => {
+function Drawers(props: Props) {
   const classes = useStyles();
   const [ref, subViewWidth, isDragging, setDragging] = useMouseTracker();
 
@@ -77,6 +77,6 @@ const Drawers = (props: Props) => {
       </div>
     </div>
   );
-};
+}
 
-export { Drawers };
+export default Drawers;

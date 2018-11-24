@@ -18,7 +18,7 @@ interface Props {
   url: string | null;
 }
 
-const WebPage = (props: Props) => {
+function WebPage(props: Props) {
   const classes = useStyles();
 
   return props.url === null ? null : (
@@ -45,6 +45,6 @@ const WebPage = (props: Props) => {
       </iframe>
     </>
   );
-};
+}
 
-export { WebPage };
+export default WebPage;

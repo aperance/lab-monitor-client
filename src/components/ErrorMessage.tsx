@@ -7,7 +7,7 @@ interface Props {
   message: string;
 }
 
-const ErrorMessage = (props: Props) => {
+function ErrorMessage(props: Props) {
   return (
     <Dialog open={true}>
       <DialogContent>
@@ -17,6 +17,6 @@ const ErrorMessage = (props: Props) => {
       </DialogContent>
     </Dialog>
   );
-};
+}
 
-export { ErrorMessage };
+export default ErrorMessage;

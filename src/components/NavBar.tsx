@@ -28,7 +28,7 @@ interface Props {
   title: string;
 }
 
-const NavBar = (props: Props) => {
+function NavBar(props: Props) {
   const classes = useStyles();
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
@@ -66,8 +66,6 @@ const NavBar = (props: Props) => {
       </Toolbar>
     </AppBar>
   );
-};
+}
 
-const memoizedNavBar = React.memo(NavBar);
-
-export { memoizedNavBar as NavBar };
+export default React.memo(NavBar);

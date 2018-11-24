@@ -8,7 +8,7 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { WebsocketProvider } from "./websockets/WebsocketContext";
 import blue from "@material-ui/core/colors/blue";
 import store from "./store";
-import { AppContainer } from "./containers/AppContainer";
+import AppContainer from "./containers/AppContainer";
 
 const theme = createMuiTheme({
   palette: { primary: blue },

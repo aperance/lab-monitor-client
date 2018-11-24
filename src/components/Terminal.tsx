@@ -19,13 +19,13 @@ interface Props {
   output?: string;
 }
 
-const Terminal = (props: Props) => {
+function Terminal(props: Props) {
   const classes = useStyles();
   return (
     <Paper className={classes.paper} elevation={8} square={true}>
       <pre className={classes.pre}>{props.output}</pre>
     </Paper>
   );
-};
+}
 
-export { Terminal };
+export default Terminal;
