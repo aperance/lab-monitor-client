@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { Table, TableBody } from "@material-ui/core";
 import AssetTableHead from "./AssetTableHead";
@@ -36,12 +36,8 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const AssetTable = (props: Props) => {
-  const [sortProperty, setSortProperty] = useState(null as string | null);
+  const [sortProperty, setSortProperty] = useState(props.columns[0].property);
   const [sortReverse, setSortReverse] = useState(false);
-
-  useEffect(() => {
-    setSortProperty(props.columns[0].property);
-  }, []);
 
   const changeSorting = (newSortProperty: string) => {
     if (newSortProperty === sortProperty) setSortReverse(!sortReverse);
@@ -52,8 +48,11 @@ const AssetTable = (props: Props) => {
   };
 
   const sortFunc = (key1: RowData, key2: RowData) => {
-    // @ts-ignore
-    let result = (key1[1][sortProperty] || "") > (key2[1][sortProperty] || "");
+    const prop =
+      key1[1][sortProperty] !== key2[1][sortProperty]
+        ? sortProperty
+        : props.columns[0].property;
+    let result = (key1[1][prop] || "") > (key2[1][prop] || "");
     if (sortReverse) result = !result;
     return result ? 1 : -1;
   };
