@@ -51,7 +51,7 @@ interface Props extends WithStyles<typeof styles> {
   handleClick: (property: string) => void;
 }
 
-function HistoryItem(props: Props) {
+const HistoryItem = (props: Props) => {
   return (
     <div
       style={props.style}
@@ -93,6 +93,6 @@ function HistoryItem(props: Props) {
       )}
     </div>
   );
-}
+};
 
 export default withStyles(styles)(HistoryItem);

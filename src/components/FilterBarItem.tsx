@@ -36,7 +36,7 @@ interface Props extends WithStyles<typeof styles> {
   handleCheckboxClick: (property: string, regex: string) => void;
 }
 
-function FilterBarItem(props: Props) {
+const FilterBarItem = (props: Props) => {
   return (
     <FormControlLabel
       className={props.classes.formControlLabel}
@@ -55,6 +55,6 @@ function FilterBarItem(props: Props) {
       label={props.label}
     />
   );
-}
+};
 
 export default withStyles(styles)(FilterBarItem);

@@ -41,7 +41,7 @@ interface Props extends WithStyles<typeof styles> {
   result?: string;
 }
 
-function PsTools(props: Props) {
+const PsTools = (props: Props) => {
   const ws = useContext(WebsocketContext);
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
@@ -116,6 +116,6 @@ function PsTools(props: Props) {
       <Terminal output={props.result} />
     </div>
   );
-}
+};
 
 export default withStyles(styles)(PsTools);

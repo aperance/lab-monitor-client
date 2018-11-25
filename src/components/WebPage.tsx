@@ -17,7 +17,7 @@ interface Props extends WithStyles<typeof styles> {
   url: string | null;
 }
 
-function WebPage(props: Props) {
+const WebPage = (props: Props) => {
   return props.url === null ? null : (
     <>
       <Button
@@ -42,6 +42,6 @@ function WebPage(props: Props) {
       </iframe>
     </>
   );
-}
+};
 
 export default withStyles(styles)(WebPage);

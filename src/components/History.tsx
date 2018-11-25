@@ -13,7 +13,7 @@ interface Props extends WithStyles<typeof styles> {
   handleClick: (property: string) => void;
 }
 
-function HistoryList(props: Props) {
+const HistoryList = (props: Props) => {
   useEffect(() => recomputeCells());
 
   let collectionRef: any = null;
@@ -66,6 +66,6 @@ function HistoryList(props: Props) {
       )}
     </AutoSizer>
   );
-}
+};
 
 export default withStyles(styles)(HistoryList);

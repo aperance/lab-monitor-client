@@ -18,7 +18,7 @@ interface Props extends WithStyles<typeof styles> {
   changeSorting: (property: string) => void;
 }
 
-function AssetTableHead(props: Props) {
+const AssetTableHead = (props: Props) => {
   return (
     <TableHead>
       <TableRow className={props.classes.row}>
@@ -38,7 +38,7 @@ function AssetTableHead(props: Props) {
       </TableRow>
     </TableHead>
   );
-}
+};
 
 const memoizedAssetTableHead = React.memo(
   AssetTableHead,

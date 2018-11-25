@@ -35,7 +35,7 @@ interface Props extends WithStyles<typeof styles> {
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
-function AssetTable(props: Props) {
+const AssetTable = (props: Props) => {
   const [sortProperty, setSortProperty] = useState(null as string | null);
   const [sortReverse, setSortReverse] = useState(false);
 
@@ -85,6 +85,6 @@ function AssetTable(props: Props) {
       />
     </div>
   );
-}
+};
 
 export default withStyles(styles)(AssetTable);

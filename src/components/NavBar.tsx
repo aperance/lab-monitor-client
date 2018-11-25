@@ -29,7 +29,7 @@ interface Props extends WithStyles<typeof styles> {
   title: string;
 }
 
-function NavBar(props: Props) {
+const NavBar = (props: Props) => {
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
   return (
@@ -70,6 +70,6 @@ function NavBar(props: Props) {
       </Toolbar>
     </AppBar>
   );
-}
+};
 
 export default withStyles(styles)(React.memo(NavBar));

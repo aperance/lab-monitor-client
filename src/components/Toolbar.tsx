@@ -20,7 +20,7 @@ interface Props {
   handleViewClick: (view: string) => null;
 }
 
-function Toolbar(props: Props) {
+const Toolbar = (props: Props) => {
   const ws = useContext(WebsocketContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
 
@@ -152,5 +152,5 @@ function Toolbar(props: Props) {
       />
     </>
   );
-}
+};
 export default Toolbar;

@@ -57,7 +57,7 @@ interface Props extends WithStyles<typeof styles> {
   handleProxyClick: () => void;
 }
 
-function FilterBar(props: Props) {
+const FilterBar = (props: Props) => {
   return (
     <FormControl className={props.classes.root}>
       {props.filters.map(filter => {
@@ -101,6 +101,6 @@ function FilterBar(props: Props) {
       />
     </FormControl>
   );
-}
+};
 
 export default withStyles(styles)(FilterBar);

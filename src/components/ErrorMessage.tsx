@@ -8,7 +8,7 @@ interface Props extends WithStyles<typeof styles> {
   message: string;
 }
 
-function ErrorMessage(props: Props) {
+const ErrorMessage = (props: Props) => {
   return (
     <Dialog open={true}>
       <DialogContent>
@@ -18,6 +18,6 @@ function ErrorMessage(props: Props) {
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 export default withStyles(styles)(ErrorMessage);

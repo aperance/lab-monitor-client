@@ -46,7 +46,7 @@ interface Props extends WithStyles<typeof styles> {
   isDragging: boolean;
 }
 
-function VncViewer(props: Props) {
+const VncViewer = (props: Props) => {
   const [scaled, setScaled] = useState(true);
   const [ref, status] = useVnc(
     props.url,
@@ -99,6 +99,6 @@ function VncViewer(props: Props) {
       </div>
     </div>
   );
-}
+};
 
 export default withStyles(styles)(VncViewer);
