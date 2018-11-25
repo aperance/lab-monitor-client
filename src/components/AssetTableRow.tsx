@@ -53,6 +53,7 @@ const memoizedAssetTableRow = React.memo(
   AssetTableRow,
   (prevProps, nextProps) =>
     prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
+    prevProps.rowData.sratus === nextProps.rowData.status &&
     prevProps.selected === nextProps.selected
 );
 
