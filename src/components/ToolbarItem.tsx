@@ -34,18 +34,7 @@ interface Props extends WithStyles<typeof styles> {
   children?: JSX.Element;
 }
 
-function preventRender(prevProps: Props, nextProps: Props) {
-  const didIsSelectedChange = prevProps.isSelected !== nextProps.isSelected;
-  const didSelectedRowsChange =
-    prevProps.selectedRows &&
-    nextProps.selectedRows &&
-    (prevProps.selectedRows[0] !== nextProps.selectedRows[0] ||
-      prevProps.selectedRows.length !== nextProps.selectedRows.length);
-
-  return !didIsSelectedChange && !didSelectedRowsChange;
-}
-
-function ToolbarItem(props: Props) {
+const ToolbarItem = (props: Props) => {
   return (
     <div className={props.isSelected ? props.classes.selected : undefined}>
       <ListItem button onClick={props.onClick} className={props.classes.root}>
@@ -65,6 +54,17 @@ function ToolbarItem(props: Props) {
       {props.children}
     </div>
   );
-}
+};
 
-export default withStyles(styles)(React.memo(ToolbarItem, preventRender));
+const memoizedToolbarItem = React.memo(ToolbarItem, (prevProps, nextProps) => {
+  const didIsSelectedChange = prevProps.isSelected !== nextProps.isSelected;
+  const didSelectedRowsChange =
+    prevProps.selectedRows &&
+    nextProps.selectedRows &&
+    (prevProps.selectedRows[0] !== nextProps.selectedRows[0] ||
+      prevProps.selectedRows.length !== nextProps.selectedRows.length);
+
+  return !didIsSelectedChange && !didSelectedRowsChange;
+});
+
+export default withStyles(styles)(memoizedToolbarItem);

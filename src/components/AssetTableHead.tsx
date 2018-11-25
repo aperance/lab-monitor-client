@@ -18,13 +18,6 @@ interface Props extends WithStyles<typeof styles> {
   changeSorting: (property: string) => void;
 }
 
-function preventRender(prevProps: Props, nextProps: Props) {
-  return (
-    prevProps.sortProperty === nextProps.sortProperty &&
-    prevProps.sortDirection === nextProps.sortDirection
-  );
-}
-
 function AssetTableHead(props: Props) {
   return (
     <TableHead>
@@ -47,4 +40,11 @@ function AssetTableHead(props: Props) {
   );
 }
 
-export default withStyles(styles)(React.memo(AssetTableHead, preventRender));
+const memoizedAssetTableHead = React.memo(
+  AssetTableHead,
+  (prevProps, nextProps) =>
+    prevProps.sortProperty === nextProps.sortProperty &&
+    prevProps.sortDirection === nextProps.sortDirection
+);
+
+export default withStyles(styles)(memoizedAssetTableHead);

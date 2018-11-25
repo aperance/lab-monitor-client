@@ -25,14 +25,7 @@ interface Props extends WithStyles<typeof styles> {
   handleRowClick: (e: MouseEvent) => void;
 }
 
-function preventRender(prevProps: Props, nextProps: Props) {
-  return (
-    prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
-    prevProps.selected === nextProps.selected
-  );
-}
-
-function AssetTableRow(props: Props) {
+const AssetTableRow = (props: Props) => {
   return (
     <TableRow
       hover
@@ -54,6 +47,13 @@ function AssetTableRow(props: Props) {
         ))}
     </TableRow>
   );
-}
+};
 
-export default withStyles(styles)(React.memo(AssetTableRow, preventRender));
+const memoizedAssetTableRow = React.memo(
+  AssetTableRow,
+  (prevProps, nextProps) =>
+    prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
+    prevProps.selected === nextProps.selected
+);
+
+export default withStyles(styles)(memoizedAssetTableRow);
