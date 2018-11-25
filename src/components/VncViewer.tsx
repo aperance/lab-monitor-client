@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
+import { TableRow, TableCell } from "@material-ui/core";
 import StatusIndicator from "./StatusIndicator";
 
 const styles = createStyles({

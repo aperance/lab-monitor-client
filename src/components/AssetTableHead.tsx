@@ -1,8 +1,6 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import { TableHead, TableRow, TableCell } from "@material-ui/core";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 
 const styles = createStyles({

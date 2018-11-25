@@ -1,9 +1,6 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Icon from "@material-ui/core/Icon";
+import { ListItem, ListItemText, ListItemIcon, Icon } from "@material-ui/core";
 
 const styles = createStyles({
   selected: { backgroundColor: "rgba(0, 0, 0, 0.04)" },

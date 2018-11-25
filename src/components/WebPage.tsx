@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 
 const styles = createStyles({

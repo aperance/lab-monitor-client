@@ -1,10 +1,12 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import {
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Switch
+} from "@material-ui/core";
 import FilterBarItem from "./FilterBarItem";
 
 const styles = createStyles({

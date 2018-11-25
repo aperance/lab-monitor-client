@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import Icon from "@material-ui/core/Icon";
+import { Icon } from "@material-ui/core";
 
 const styles = createStyles({
   root: {

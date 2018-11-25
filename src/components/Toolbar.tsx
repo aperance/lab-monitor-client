@@ -1,10 +1,9 @@
 import * as React from "react";
 import { useContext, useState } from "react";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
+import { List, Divider } from "@material-ui/core";
 import ToolbarItem from "./ToolbarItem";
+import LogLevel from "./LogLevel";
 import { WebsocketContext } from "../websockets/WebsocketContext";
-import LogLevel from "../components/LogLevel";
 import {
   deviceCommand,
   refreshDevice,

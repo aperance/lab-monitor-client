@@ -1,15 +1,17 @@
 import * as React from "react";
 import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Button from "@material-ui/core/Button";
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Input,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Button
+} from "@material-ui/core";
 
 const styles = createStyles({
   form: { display: "flex", flexWrap: "wrap" },

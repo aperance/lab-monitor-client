@@ -1,9 +1,6 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import Table from "@material-ui/core/Table";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import Icon from "@material-ui/core/Icon";
+import { Table, TableRow, TableCell, Icon } from "@material-ui/core";
 
 const styles = createStyles({
   root: {
