@@ -5,12 +5,7 @@ import { Table, TableBody } from "@material-ui/core";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
 
-type RowData = [
-  string,
-  {
-    [x: string]: string | null;
-  }
-];
+type RowData = [string, { [x: string]: string | null }];
 
 const styles = createStyles({
   root: {

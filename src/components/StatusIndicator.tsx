@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import { Icon } from "@material-ui/core";
+import Icon from "@material-ui/icons/Lens";
 
 const styles = createStyles({
   root: {
@@ -47,9 +47,7 @@ const StatusIndicator = (props: Props) => {
         opacity: animate ? 0.5 : 1,
         color: colorLookup[props.status || "INACTIVE"]
       }}
-    >
-      lens
-    </Icon>
+    />
   );
 };
 
