@@ -50,7 +50,6 @@ const Drawers = (props: Props) => {
   return (
     <div
       className={props.classes.root}
-      draggable={false}
       style={{
         transitionDelay:
           isDragging || props.drawersVisible !== 2 ? "0s" : ".2s",
@@ -61,23 +60,14 @@ const Drawers = (props: Props) => {
           "px)"
       }}
     >
-      <div
-        className={props.classes.drawer}
-        draggable={false}
-        style={{ flexGrow: 0 }}
-      >
+      <div className={props.classes.drawer} style={{ flexGrow: 0 }}>
         {props.children[0]}
       </div>
       <div
         className={props.classes.dragBar}
         onMouseDown={() => setDragging(true)}
-        draggable={false}
       />
-      <div
-        className={props.classes.drawer}
-        draggable={false}
-        style={{ flexGrow: 1 }}
-      >
+      <div className={props.classes.drawer} style={{ flexGrow: 1 }}>
         {props.children[1]}
       </div>
     </div>

@@ -6,10 +6,19 @@ export function useMouseTracker() {
   const [subViewWidth, setSubViewWidth] = useState(800);
 
   document.onmousemove = e => {
-    if (isDragging) setSubViewWidth(Math.max(window.innerWidth - e.pageX, 400));
+    if (isDragging) {
+      const position = window.innerWidth - e.pageX;
+      const max = window.innerWidth - 300;
+      const min = 300;
+      setSubViewWidth(Math.min(Math.max(position, min), max));
+    }
   };
-  document.onmouseup = () => setDragging(false);
-  document.onmouseleave = () => setDragging(false);
+  document.onmouseup = () => {
+    if (isDragging) setDragging(false);
+  };
+  document.onmouseleave = () => {
+    if (isDragging) setDragging(false);
+  };
 
   return [subViewWidth, isDragging, setDragging] as [
     number,
