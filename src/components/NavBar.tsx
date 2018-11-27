@@ -21,7 +21,8 @@ const styles = createStyles({
   title: {
     flexGrow: 1,
     color: "rgba(0, 0, 0, 0.75)",
-    fontSize: "1.2rem"
+    fontSize: "1.2rem",
+    userSelect: "none"
   }
 });
 

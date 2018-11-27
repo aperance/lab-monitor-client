@@ -45,11 +45,10 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const Drawers = (props: Props) => {
-  const [ref, subViewWidth, isDragging, setDragging] = useMouseTracker();
+  const [subViewWidth, isDragging, setDragging] = useMouseTracker();
 
   return (
     <div
-      ref={ref}
       className={props.classes.root}
       draggable={false}
       style={{
