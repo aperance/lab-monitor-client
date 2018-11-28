@@ -57,7 +57,7 @@ const App = (props: Props) => {
             case "psTools":
               return <PsToolsContainer />;
             case "vnc":
-              return <VncContainer isDragging={false} />;
+              return <VncContainer />;
             default:
               return null;
           }

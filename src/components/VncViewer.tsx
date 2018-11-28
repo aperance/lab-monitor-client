@@ -43,7 +43,7 @@ interface Props extends WithStyles<typeof styles> {
   url: string;
   password: string;
   fileContents: string;
-  isDragging: boolean;
+  suspend: boolean;
 }
 
 const VncViewer = (props: Props) => {
@@ -52,7 +52,7 @@ const VncViewer = (props: Props) => {
     props.url,
     props.password,
     scaled,
-    props.isDragging
+    props.suspend
   );
 
   return (

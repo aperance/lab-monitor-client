@@ -4,7 +4,7 @@ import VncViewer from "../components/VncViewer";
 
 const mapStateToProps = ({ userSelection, configuration }: StoreState) => {
   if (userSelection.rows.length !== 1)
-    return { url: "", password: "", fileContents: "" };
+    return { url: "", password: "", fileContents: "", suspend: false };
   else
     return {
       url:
@@ -16,7 +16,8 @@ const mapStateToProps = ({ userSelection, configuration }: StoreState) => {
         `[connection]\n` +
         `host=${userSelection.rows[0]}\n` +
         `port=${configuration.vnc.port}\n` +
-        `password=${configuration.vnc.passwordEncrypted}`
+        `password=${configuration.vnc.passwordEncrypted}`,
+      suspend: userSelection.dragging
     };
 };
 
