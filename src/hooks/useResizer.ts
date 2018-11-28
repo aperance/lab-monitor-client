@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 
-export function useMouseTracker() {
+export function useResizer(startValue: number, onChange: (x: boolean) => void) {
   const [isDragging, setDragging] = useState(false);
-  const [position, setPosition] = useState(800);
+  const [position, setPosition] = useState(startValue);
   const ref = useRef(null as HTMLDivElement | null);
 
   useEffect(
@@ -29,13 +29,10 @@ export function useMouseTracker() {
         document.onmouseup = null;
         document.onmouseleave = null;
       }
+      onChange(isDragging);
     },
     [isDragging]
   );
 
-  return [isDragging, position, ref] as [
-    boolean,
-    number,
-    React.RefObject<HTMLDivElement>
-  ];
+  return [position, ref] as [number, React.RefObject<HTMLDivElement>];
 }

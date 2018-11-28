@@ -1,7 +1,6 @@
 import * as React from "react";
-import { useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import { useMouseTracker } from "../hooks/useMouseTracker";
+import { useResizer } from "../hooks/useResizer";
 
 const styles = createStyles({
   root: {
@@ -43,31 +42,19 @@ const styles = createStyles({
 interface Props extends WithStyles<typeof styles> {
   drawersVisible: number;
   children: Array<JSX.Element | null>;
-  draggingSet: (isDragging: boolean) => void;
+  draggingSet: (x: boolean) => void;
 }
 
 const Drawers = (props: Props) => {
-  const [isDragging, subViewWidth, ref] = useMouseTracker();
+  const [viewWidth, ref] = useResizer(800, props.draggingSet);
 
-  useEffect(
-    () => {
-      props.draggingSet(isDragging);
-    },
-    [isDragging]
-  );
+  const width = viewWidth + 200;
+  const translateX = [width, viewWidth, 0][props.drawersVisible];
 
   return (
     <div
       className={props.classes.root}
-      style={{
-        transitionDelay:
-          isDragging || props.drawersVisible !== 2 ? "0s" : ".2s",
-        width: 200 + subViewWidth + "px",
-        transform:
-          "translateX(" +
-          [200 + subViewWidth, subViewWidth, 0][props.drawersVisible] +
-          "px)"
-      }}
+      style={{ width: `${width}px`, transform: `translateX(${translateX}px)` }}
     >
       <div className={props.classes.drawer} style={{ flexGrow: 0 }}>
         {props.children[0]}

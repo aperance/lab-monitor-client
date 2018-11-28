@@ -24,7 +24,7 @@ interface Props {
     results: any[] | null;
   };
   actionResponseClose: () => void;
-  draggingSet: (isDragging: boolean) => void;
+  draggingSet: (x: boolean) => void;
 }
 
 const App = (props: Props) => {
