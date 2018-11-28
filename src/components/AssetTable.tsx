@@ -27,6 +27,7 @@ interface Props extends WithStyles<typeof styles> {
   tableData: RowData[];
   columns: Array<{ title: string; property: string }>;
   selected: string[];
+  pause: boolean;
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
@@ -81,4 +82,9 @@ const AssetTable = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(AssetTable);
+const memoizedAssetTable = React.memo(
+  AssetTable,
+  (_, nextProps) => nextProps.pause
+);
+
+export default withStyles(styles)(memoizedAssetTable);

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { useMouseTracker } from "../hooks/useMouseTracker";
 
@@ -42,10 +43,18 @@ const styles = createStyles({
 interface Props extends WithStyles<typeof styles> {
   drawersVisible: number;
   children: Array<JSX.Element | null>;
+  draggingSet: (isDragging: boolean) => void;
 }
 
 const Drawers = (props: Props) => {
-  const [subViewWidth, isDragging, setDragging] = useMouseTracker();
+  const [isDragging, subViewWidth, ref] = useMouseTracker();
+
+  useEffect(
+    () => {
+      props.draggingSet(isDragging);
+    },
+    [isDragging]
+  );
 
   return (
     <div
@@ -63,10 +72,7 @@ const Drawers = (props: Props) => {
       <div className={props.classes.drawer} style={{ flexGrow: 0 }}>
         {props.children[0]}
       </div>
-      <div
-        className={props.classes.dragBar}
-        onMouseDown={() => setDragging(true)}
-      />
+      <div className={props.classes.dragBar} ref={ref} />
       <div className={props.classes.drawer} style={{ flexGrow: 1 }}>
         {props.children[1]}
       </div>

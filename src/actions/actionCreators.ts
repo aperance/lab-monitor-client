@@ -11,7 +11,8 @@ import {
   ViewSelectAction,
   HistorySelectAction,
   FilterSelectAction,
-  ProxyToggleAction
+  ProxyToggleAction,
+  DraggingSetAction
 } from "./actionTypes";
 import {
   DeviceDataAll,
@@ -79,4 +80,8 @@ export const filterSelect = (
 
 export const proxyToggle = (): ProxyToggleAction => {
   return { type: ActionTypeKeys.PROXY_TOGGLE };
+};
+
+export const draggingSet = (isDragging: boolean): DraggingSetAction => {
+  return { type: ActionTypeKeys.DRAGGING_SET, isDragging };
 };

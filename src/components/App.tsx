@@ -24,6 +24,7 @@ interface Props {
     results: any[] | null;
   };
   actionResponseClose: () => void;
+  draggingSet: (isDragging: boolean) => void;
 }
 
 const App = (props: Props) => {
@@ -42,7 +43,10 @@ const App = (props: Props) => {
         <AssetTableContainer />
       </div>
 
-      <Drawers drawersVisible={props.drawersVisible}>
+      <Drawers
+        drawersVisible={props.drawersVisible}
+        draggingSet={props.draggingSet}
+      >
         <ToolbarContainer />
         {(() => {
           switch (props.subView) {

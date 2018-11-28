@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
-import { actionResponseClear } from "../actions/actionCreators";
+import { actionResponseClear, draggingSet } from "../actions/actionCreators";
 import App from "../components/App";
 
 const mapStateToProps = (state: StoreState) => {
@@ -22,7 +22,8 @@ const mapStateToProps = (state: StoreState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    actionResponseClose: () => dispatch(actionResponseClear())
+    actionResponseClose: () => dispatch(actionResponseClear()),
+    draggingSet: (isDragging: boolean) => dispatch(draggingSet(isDragging))
   };
 };
 

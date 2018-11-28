@@ -40,7 +40,8 @@ const mapStateToProps = (state: StoreState) => {
   return {
     columns: state.configuration.columns,
     selected: state.userSelection.rows,
-    tableData: filteredTableData
+    tableData: filteredTableData,
+    pause: state.userSelection.dragging
   };
 };
 

@@ -1,28 +1,41 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function useMouseTracker() {
   const [isDragging, setDragging] = useState(false);
-  const [subViewWidth, setSubViewWidth] = useState(800);
+  const [position, setPosition] = useState(800);
+  const ref = useRef(null as HTMLDivElement | null);
 
-  document.onmousemove = e => {
-    if (isDragging) {
-      const position = window.innerWidth - e.pageX;
-      const max = window.innerWidth - 300;
-      const min = 300;
-      setSubViewWidth(Math.min(Math.max(position, min), max));
-    }
-  };
-  document.onmouseup = () => {
-    if (isDragging) setDragging(false);
-  };
-  document.onmouseleave = () => {
-    if (isDragging) setDragging(false);
-  };
+  useEffect(
+    () => {
+      if (ref.current) ref.current.onmousedown = () => setDragging(true);
+    },
+    [ref.current]
+  );
 
-  return [subViewWidth, isDragging, setDragging] as [
-    number,
+  useEffect(
+    () => {
+      if (isDragging) {
+        document.onmousemove = e => {
+          const rawPosition = window.innerWidth - e.pageX;
+          const max = window.innerWidth - 300;
+          const min = 300;
+          setPosition(Math.min(Math.max(rawPosition, min), max));
+        };
+        document.onmouseup = () => setDragging(false);
+        document.onmouseleave = () => setDragging(false);
+      } else {
+        document.onmousemove = null;
+        document.onmouseup = null;
+        document.onmouseleave = null;
+      }
+    },
+    [isDragging]
+  );
+
+  return [isDragging, position, ref] as [
     boolean,
-    React.Dispatch<React.SetStateAction<boolean>>
+    number,
+    React.RefObject<HTMLDivElement>
   ];
 }

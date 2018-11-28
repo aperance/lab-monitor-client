@@ -18,7 +18,8 @@ export enum ActionTypeKeys {
   DEVICE_DATA_UPDATE = "DEVICE_DATA_UPDATE",
   RESET_ALL = "RESET_ALL",
   ACTION_RESPONSE_SET = "ACTION_RESPONSE_SET",
-  ACTION_RESPONSE_CLEAR = "ACTION_RESPONSE_CLEAR"
+  ACTION_RESPONSE_CLEAR = "ACTION_RESPONSE_CLEAR",
+  DRAGGING_SET = "DRAGGING_SET"
 }
 
 export interface ConfigurationAction {
@@ -80,6 +81,11 @@ export interface DeviceActionResponseClearAction {
   readonly type: ActionTypeKeys.ACTION_RESPONSE_CLEAR;
 }
 
+export interface DraggingSetAction {
+  readonly type: ActionTypeKeys.DRAGGING_SET;
+  readonly isDragging: boolean;
+}
+
 export type Actions =
   | ConfigurationAction
   | DeviceDataAllAction
@@ -93,4 +99,5 @@ export type Actions =
   | ProxyToggleAction
   | PsToolsResponseAction
   | DeviceActionResponseSetAction
-  | DeviceActionResponseClearAction;
+  | DeviceActionResponseClearAction
+  | DraggingSetAction;

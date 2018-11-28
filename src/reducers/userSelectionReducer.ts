@@ -8,6 +8,7 @@ interface State {
     [property: string]: string[];
   };
   proxy: boolean;
+  dragging: boolean;
 }
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   view: null,
   history: null,
   filters: {},
-  proxy: true
+  proxy: true,
+  dragging: false
 };
 
 const userSelectionReducer = (state: State = initialState, action: Actions) => {
@@ -60,6 +62,9 @@ const userSelectionReducer = (state: State = initialState, action: Actions) => {
 
     case ActionTypeKeys.PROXY_TOGGLE:
       return { ...state, proxy: !state.proxy };
+
+    case ActionTypeKeys.DRAGGING_SET:
+      return { ...state, dragging: action.isDragging };
 
     case ActionTypeKeys.DEVICE_DATA_UPDATE:
       if (action.state === null)
