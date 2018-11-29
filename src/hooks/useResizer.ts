@@ -1,17 +1,8 @@
-import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 export function useResizer(startValue: number, onChange: (x: boolean) => void) {
   const [isDragging, setDragging] = useState(false);
   const [position, setPosition] = useState(startValue);
-  const ref = useRef(null as HTMLDivElement | null);
-
-  useEffect(
-    () => {
-      if (ref.current) ref.current.onmousedown = () => setDragging(true);
-    },
-    [ref.current]
-  );
 
   useEffect(
     () => {
@@ -34,5 +25,5 @@ export function useResizer(startValue: number, onChange: (x: boolean) => void) {
     [isDragging]
   );
 
-  return [position, ref] as [number, React.RefObject<HTMLDivElement>];
+  return [position, () => setDragging(true)] as [number, () => void];
 }

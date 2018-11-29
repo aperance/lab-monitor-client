@@ -40,13 +40,14 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  drawersVisible: number;
-  children: Array<JSX.Element | null>;
-  draggingSet: (x: boolean) => void;
+  drawersVisible: 0 | 1 | 2;
+  leftDrawer: JSX.Element;
+  rightDrawer: JSX.Element | null;
+  isResizing: (x: boolean) => void;
 }
 
 const Drawers = (props: Props) => {
-  const [viewWidth, ref] = useResizer(800, props.draggingSet);
+  const [viewWidth, triggerResize] = useResizer(800, props.isResizing);
 
   const width = viewWidth + 200;
   const translateX = [width, viewWidth, 0][props.drawersVisible];
@@ -57,11 +58,15 @@ const Drawers = (props: Props) => {
       style={{ width: `${width}px`, transform: `translateX(${translateX}px)` }}
     >
       <div className={props.classes.drawer} style={{ flexGrow: 0 }}>
-        {props.children[0]}
+        {props.leftDrawer}
       </div>
-      <div className={props.classes.dragBar} ref={ref} />
+      <div
+        className={props.classes.dragBar}
+        role="dragbar"
+        onMouseDown={triggerResize}
+      />
       <div className={props.classes.drawer} style={{ flexGrow: 1 }}>
-        {props.children[1]}
+        {props.rightDrawer}
       </div>
     </div>
   );

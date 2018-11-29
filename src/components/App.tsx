@@ -18,7 +18,7 @@ interface Props {
   title: string;
   dataReceived: boolean;
   subView: string | null;
-  drawersVisible: number;
+  drawersVisible: 0 | 1 | 2;
   actionResponse: {
     err: Error | null;
     results: any[] | null;
@@ -45,10 +45,9 @@ const App = (props: Props) => {
 
       <Drawers
         drawersVisible={props.drawersVisible}
-        draggingSet={props.draggingSet}
-      >
-        <ToolbarContainer />
-        {(() => {
+        isResizing={props.draggingSet}
+        leftDrawer={<ToolbarContainer />}
+        rightDrawer={(() => {
           switch (props.subView) {
             case "history":
               return <HistoryContainer />;
@@ -62,7 +61,7 @@ const App = (props: Props) => {
               return null;
           }
         })()}
-      </Drawers>
+      />
 
       <ActionResponse
         response={props.actionResponse}

@@ -10,12 +10,11 @@ const mapStateToProps = (state: StoreState) => {
       Object.keys(state.configuration).length !== 0 &&
       Object.keys(state.tableData).length !== 0,
     subView: state.userSelection.view,
-    drawersVisible:
-      state.userSelection.rows[0] === undefined
-        ? 0
-        : state.userSelection.view === null
-        ? 1
-        : 2,
+    drawersVisible: (state.userSelection.rows[0] === undefined
+      ? 0
+      : state.userSelection.view === null
+      ? 1
+      : 2) as 0 | 1 | 2,
     actionResponse: state.actionResponse
   };
 };
