@@ -52,14 +52,16 @@ const HistoryList = (props: Props) => {
             />
           )}
           cellSizeAndPositionGetter={({ index }: { index: number }) => {
-            const isSelected = props.selectedIndex === index;
             const isBelowSelected =
               props.selectedIndex !== -1 && index > props.selectedIndex;
+            const selectedHeight =
+              Math.min(props.selectedData.length, 10) * 24 + 18;
+
             return {
               x: 0,
-              y: isBelowSelected ? 40 * (index + 7) : 40 * index,
+              y: isBelowSelected ? 40 * index + selectedHeight : 40 * index,
               width: width - 65,
-              height: isSelected ? 320 : 40
+              height: selectedHeight
             };
           }}
         />

@@ -29,7 +29,7 @@ const styles = createStyles({
     transitionProperty: "transform",
     transitionDuration: "0.4s"
   },
-  table: { marginTop: "12px" },
+
   row: {
     fontSize: "0.75rem",
     color: "rgba(0, 0, 0, 0.54)",
@@ -70,7 +70,7 @@ const HistoryItem = (props: Props) => {
       {props.isSelected && (
         <div>
           {props.historyData && (
-            <Table className={props.classes.table}>
+            <Table>
               {props.historyData.map(([key, value]) => (
                 <TableRow classes={{ root: props.classes.row }}>
                   <TableCell
