@@ -4,9 +4,7 @@ import { Table, TableBody } from "@material-ui/core";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
 import FilterBar from "./FilterBar";
-import { useTableReplacing } from "../hooks/useTableReplacing";
-import { useTableFiltering } from "../hooks/useTableFiltering";
-import { useTableSorting } from "../hooks/useTableSorting";
+import { useDataConditioner } from "../hooks/useDataConditioner";
 
 const styles = createStyles({
   root: {
@@ -42,14 +40,13 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const AssetTable = (props: Props) => {
-  const [dataWithReplace] = useTableReplacing(props.tableData, props.columns);
-  const [filteredData, selectedFilters, toggleFilter] = useTableFiltering(
-    dataWithReplace
-  );
-  const [sortedData, sortState, changeSort] = useTableSorting(
-    filteredData,
-    props.columns[0].property
-  );
+  const [
+    conditionedData,
+    selectedFilters,
+    toggleFilter,
+    selectedSorting,
+    changeSort
+  ] = useDataConditioner(props.tableData, props.columns);
 
   return (
     <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
@@ -65,11 +62,11 @@ const AssetTable = (props: Props) => {
         <Table>
           <AssetTableHead
             columns={props.columns}
-            sortState={sortState}
+            selectedSorting={selectedSorting}
             changeSort={changeSort}
           />
           <TableBody>
-            {sortedData.map(([rowId, rowData]) => (
+            {conditionedData.map(([rowId, rowData]) => (
               <AssetTableRow
                 key={rowId}
                 columns={props.columns}
