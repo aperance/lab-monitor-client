@@ -103,4 +103,11 @@ const FilterBar = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(FilterBar);
+const memoizedFilterBar = React.memo(
+  FilterBar,
+  (prevProps, nextProps) =>
+    prevProps.selectedFilters === nextProps.selectedFilters &&
+    prevProps.proxyEnabled === nextProps.proxyEnabled
+);
+
+export default withStyles(styles)(memoizedFilterBar);
