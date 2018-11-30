@@ -2,11 +2,6 @@ import { useReducer } from "react";
 
 type RowData = [string, { [x: string]: string | null }];
 
-interface ColumnConfig {
-  property: string;
-  replace: { [x: string]: string };
-}
-
 const selectedFilterReducer = (
   selectedFilters: { [x: string]: string[] },
   action: { property: string; regex: string }
@@ -32,7 +27,10 @@ const selectedSortingReducer = (
   };
 };
 
-export const useDataConditioner = (rawData: RowData[], columns: any) => {
+export const useDataConditioner = (
+  rawData: RowData[],
+  columns: Array<{ property: string; replace: { [x: string]: string } }>
+) => {
   const [selectedFilters, filterDispatch] = useReducer(
     selectedFilterReducer,
     {} as { [x: string]: string[] }
@@ -42,22 +40,21 @@ export const useDataConditioner = (rawData: RowData[], columns: any) => {
     reverse: false
   });
 
-  const replacementRules: ColumnConfig[] = columns
-    /** Filter out column config with no replacement rule */
-    .filter((x: any) => typeof x.replace !== "undefined");
-
   const conditionedData = rawData
     .map(([id, rowData]) => {
-      /** Iterate over column config with replacement rules */
-      replacementRules.forEach(({ property, replace }) => {
-        if (replace && rowData[property] !== null) {
-          /** Apply all replacemnt rules on rowData */
-          Object.entries(replace).forEach(([replacement, matcher]) => {
-            if ((rowData[property] as string).match(matcher))
-              rowData[property] = replacement;
-          });
-        }
-      });
+      columns
+        /** Filter out column config with no replacement rule */
+        .filter(x => typeof x.replace !== "undefined")
+        /** Iterate over column config with replacement rules */
+        .forEach(({ property, replace }) => {
+          if (replace && rowData[property] !== null) {
+            /** Apply all replacemnt rules on rowData */
+            Object.entries(replace).forEach(([replacement, matcher]) => {
+              if ((rowData[property] as string).match(matcher))
+                rowData[property] = replacement;
+            });
+          }
+        });
       return [id, rowData] as [string, { [x: string]: string | null }];
     })
     .filter(([, rowData]) =>
