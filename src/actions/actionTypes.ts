@@ -10,7 +10,6 @@ export enum ActionTypeKeys {
   MULTI_ROW_SELECT = "MULTI_ROW_SELECT",
   VIEW_SELECT = "VIEW_SELECT",
   HISTORY_SELECT = "HISTORY_SELECT",
-  FILTER_SELECT = "FILTER_SELECT",
   PROXY_TOGGLE = "PROXY_TOGGLE",
   PSTOOLS_RESPONSE = "PSTOOLS_RESPONSE",
   CONFIGURATION = "CONFIGURATION",
@@ -59,12 +58,6 @@ export interface HistorySelectAction {
   readonly property: string;
 }
 
-export interface FilterSelectAction {
-  readonly type: ActionTypeKeys.FILTER_SELECT;
-  readonly property: string;
-  readonly regex: string;
-}
-
 export interface ProxyToggleAction {
   readonly type: ActionTypeKeys.PROXY_TOGGLE;
 }
@@ -95,7 +88,6 @@ export type Actions =
   | MultiRowSelectAction
   | ViewSelectAction
   | HistorySelectAction
-  | FilterSelectAction
   | ProxyToggleAction
   | PsToolsResponseAction
   | DeviceActionResponseSetAction

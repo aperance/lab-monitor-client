@@ -1,38 +1,30 @@
-type RowData = [string, { [x: string]: string | null }];
+import { useReducer } from "react";
 
-interface ColumnConfig {
-  property: string;
-  replace: { [x: string]: string };
-}
+type TableData = Array<[string, { [x: string]: string | null }]>;
 
 interface SelectedFilters {
   [property: string]: string[];
 }
 
-export const useTableFiltering = (
-  rawTableData: RowData[],
+const selectedFilterReducer = (
   selectedFilters: SelectedFilters,
-  columns: any
+  action: { property: string; regex: string }
 ) => {
-  const replacementRules: ColumnConfig[] = columns
-    /** Filter out column config with no replacement rule */
-    .filter((x: any) => typeof x.replace !== "undefined");
+  const regexArray = selectedFilters[action.property] || [];
+  const currentIndex = regexArray.indexOf(action.regex);
+  currentIndex === -1
+    ? regexArray.push(action.regex)
+    : regexArray.splice(currentIndex, 1);
+  return { ...selectedFilters, [action.property]: regexArray };
+};
 
-  const tableDataWithReplacements = rawTableData.map(([id, rowData]) => {
-    /** Iterate over column config with replacement rules */
-    replacementRules.forEach(({ property, replace }) => {
-      if (replace && rowData[property] !== null) {
-        /** Apply all replacemnt rules on rowData */
-        Object.entries(replace).forEach(([replacement, matcher]) => {
-          if ((rowData[property] as string).match(matcher))
-            rowData[property] = replacement;
-        });
-      }
-    });
-    return [id, rowData] as [string, { [x: string]: string | null }];
-  });
+export const useTableFiltering = (rawData: TableData) => {
+  const [selectedFilters, dispatch] = useReducer(
+    selectedFilterReducer,
+    {} as SelectedFilters
+  );
 
-  const filteredTableData = tableDataWithReplacements.filter(([, rowData]) =>
+  const filteredTableData = rawData.filter(([, rowData]) =>
     Object.entries(selectedFilters).every(
       ([property, regexArray]) =>
         !regexArray.every(regex => !(rowData[property] || "").match(regex)) ||
@@ -40,5 +32,9 @@ export const useTableFiltering = (
     )
   );
 
-  return [filteredTableData];
+  return [
+    filteredTableData,
+    selectedFilters,
+    (property, regex) => dispatch({ property, regex })
+  ] as [TableData, SelectedFilters, (x: string, y: string) => void];
 };

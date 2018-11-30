@@ -4,6 +4,7 @@ import { Table, TableBody } from "@material-ui/core";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
 import FilterBar from "./FilterBar";
+import { useTableReplacing } from "../hooks/useTableReplacing";
 import { useTableFiltering } from "../hooks/useTableFiltering";
 import { useTableSorting } from "../hooks/useTableSorting";
 
@@ -23,32 +24,27 @@ const styles = createStyles({
   }
 });
 
-interface Filter {
-  property: string;
-  title: string;
-  options: {
-    [label: string]: string;
-  };
-}
-
 interface Props extends WithStyles<typeof styles> {
   tableData: Array<[string, { [x: string]: string | null }]>;
   columns: Array<{ title: string; property: string }>;
   selected: string[];
   pause: boolean;
-  filters: Filter[];
-  selectedFilters: { [property: string]: string[] };
+  filters: Array<{
+    property: string;
+    title: string;
+    options: {
+      [label: string]: string;
+    };
+  }>;
   proxyEnabled: boolean;
-  handleCheckboxClick: (property: string, regex: string) => void;
   handleProxyClick: () => void;
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
 const AssetTable = (props: Props) => {
-  const [filteredData] = useTableFiltering(
-    props.tableData,
-    props.selectedFilters,
-    props.columns
+  const [dataWithReplace] = useTableReplacing(props.tableData, props.columns);
+  const [filteredData, selectedFilters, toggleFilter] = useTableFiltering(
+    dataWithReplace
   );
   const [
     sortedData,
@@ -61,9 +57,9 @@ const AssetTable = (props: Props) => {
     <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
       <FilterBar
         filters={props.filters}
-        selectedFilters={props.selectedFilters}
+        selectedFilters={selectedFilters}
         proxyEnabled={props.proxyEnabled}
-        handleCheckboxClick={props.handleCheckboxClick}
+        handleCheckboxClick={toggleFilter}
         handleProxyClick={props.handleProxyClick}
       />
 

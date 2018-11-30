@@ -4,9 +4,6 @@ interface State {
   rows: string[];
   view: string | null;
   history: string | null;
-  filters: {
-    [property: string]: string[];
-  };
   proxy: boolean;
   dragging: boolean;
 }
@@ -15,7 +12,6 @@ const initialState = {
   rows: [],
   view: null,
   history: null,
-  filters: {},
   proxy: true,
   dragging: false
 };
@@ -45,20 +41,6 @@ const userSelectionReducer = (state: State = initialState, action: Actions) => {
     case ActionTypeKeys.HISTORY_SELECT:
       if (action.property === state.history) return { ...state, history: null };
       else return { ...state, history: action.property };
-
-    case ActionTypeKeys.FILTER_SELECT:
-      const regexArray = state.filters[action.property] || [];
-      const currentIndex = regexArray.indexOf(action.regex);
-      currentIndex === -1
-        ? regexArray.push(action.regex)
-        : regexArray.splice(currentIndex, 1);
-      return {
-        ...state,
-        rows: [],
-        view: null,
-        history: null,
-        filters: { ...state.filters, [action.property]: regexArray }
-      };
 
     case ActionTypeKeys.PROXY_TOGGLE:
       return { ...state, proxy: !state.proxy };
