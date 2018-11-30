@@ -46,12 +46,10 @@ const AssetTable = (props: Props) => {
   const [filteredData, selectedFilters, toggleFilter] = useTableFiltering(
     dataWithReplace
   );
-  const [
-    sortedData,
-    sortProperty,
-    sortReverse,
-    changeSorting
-  ] = useTableSorting(filteredData, props.columns[0].property);
+  const [sortedData, sortState, changeSort] = useTableSorting(
+    filteredData,
+    props.columns[0].property
+  );
 
   return (
     <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
@@ -67,9 +65,8 @@ const AssetTable = (props: Props) => {
         <Table>
           <AssetTableHead
             columns={props.columns}
-            sortProperty={sortProperty}
-            sortDirection={sortReverse ? "asc" : "desc"}
-            changeSorting={changeSorting}
+            sortState={sortState}
+            changeSort={changeSort}
           />
           <TableBody>
             {sortedData.map(([rowId, rowData]) => (

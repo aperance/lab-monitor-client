@@ -13,9 +13,8 @@ interface Props extends WithStyles<typeof styles> {
     title: string;
     property: string;
   }>;
-  sortProperty: string | null;
-  sortDirection: "asc" | "desc";
-  changeSorting: (property: string) => void;
+  sortState: { property: string | null; direction: "asc" | "desc" };
+  changeSort: (property: string) => void;
 }
 
 const AssetTableHead = (props: Props) => {
@@ -27,9 +26,9 @@ const AssetTableHead = (props: Props) => {
           props.columns.map(column => (
             <TableCell key={column.title} className={props.classes.cell}>
               <TableSortLabel
-                active={props.sortProperty === column.property}
-                direction={props.sortDirection}
-                onClick={() => props.changeSorting(column.property)}
+                active={props.sortState.property === column.property}
+                direction={props.sortState.direction}
+                onClick={() => props.changeSort(column.property)}
               >
                 {column.title}
               </TableSortLabel>
@@ -43,8 +42,8 @@ const AssetTableHead = (props: Props) => {
 const memoizedAssetTableHead = React.memo(
   AssetTableHead,
   (prevProps, nextProps) =>
-    prevProps.sortProperty === nextProps.sortProperty &&
-    prevProps.sortDirection === nextProps.sortDirection
+    prevProps.sortState.property === nextProps.sortState.property &&
+    prevProps.sortState.direction === nextProps.sortState.direction
 );
 
 export default withStyles(styles)(memoizedAssetTableHead);

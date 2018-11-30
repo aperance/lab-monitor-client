@@ -27,10 +27,13 @@ export const useTableSorting = (
     return result ? 1 : -1;
   });
 
-  return [sortedData, sortProperty, sortReverse, changeSorting] as [
+  return [
+    sortedData,
+    { property: sortProperty, direction: sortReverse ? "asc" : "desc" },
+    changeSorting
+  ] as [
     RowData[],
-    string,
-    boolean,
+    { property: string; direction: "asc" | "desc" },
     (x: string) => void
   ];
 };
