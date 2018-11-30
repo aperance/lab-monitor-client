@@ -1,11 +1,9 @@
 import * as React from "react";
-import { useState } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { Table, TableBody } from "@material-ui/core";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
-
-type RowData = [string, { [x: string]: string | null }];
+import { useTableSorting } from "../hooks/useTableSorting";
 
 const styles = createStyles({
   root: {
@@ -24,7 +22,7 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  tableData: RowData[];
+  tableData: Array<[string, { [x: string]: string | null }]>;
   columns: Array<{ title: string; property: string }>;
   selected: string[];
   pause: boolean;
@@ -32,26 +30,12 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const AssetTable = (props: Props) => {
-  const [sortProperty, setSortProperty] = useState(props.columns[0].property);
-  const [sortReverse, setSortReverse] = useState(false);
-
-  const changeSorting = (newSortProperty: string) => {
-    if (newSortProperty === sortProperty) setSortReverse(!sortReverse);
-    else {
-      setSortProperty(newSortProperty);
-      setSortReverse(false);
-    }
-  };
-
-  const sortFunc = (key1: RowData, key2: RowData) => {
-    const prop =
-      key1[1][sortProperty] !== key2[1][sortProperty]
-        ? sortProperty
-        : props.columns[0].property;
-    let result = (key1[1][prop] || "") > (key2[1][prop] || "");
-    if (sortReverse) result = !result;
-    return result ? 1 : -1;
-  };
+  const [
+    sortedData,
+    sortProperty,
+    sortReverse,
+    changeSorting
+  ] = useTableSorting(props.tableData, props.columns[0].property);
 
   return (
     <div className={props.classes.root}>
@@ -63,7 +47,7 @@ const AssetTable = (props: Props) => {
           changeSorting={changeSorting}
         />
         <TableBody>
-          {props.tableData.sort(sortFunc).map(([rowId, rowData]) => (
+          {sortedData.map(([rowId, rowData]) => (
             <AssetTableRow
               key={rowId}
               columns={props.columns}
