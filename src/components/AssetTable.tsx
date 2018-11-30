@@ -4,6 +4,7 @@ import { Table, TableBody } from "@material-ui/core";
 import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
 import FilterBar from "./FilterBar";
+import { useTableFiltering } from "../hooks/useTableFiltering";
 import { useTableSorting } from "../hooks/useTableSorting";
 
 const styles = createStyles({
@@ -44,12 +45,17 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const AssetTable = (props: Props) => {
+  const [filteredData] = useTableFiltering(
+    props.tableData,
+    props.selectedFilters,
+    props.columns
+  );
   const [
     sortedData,
     sortProperty,
     sortReverse,
     changeSorting
-  ] = useTableSorting(props.tableData, props.columns[0].property);
+  ] = useTableSorting(filteredData, props.columns[0].property);
 
   return (
     <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
