@@ -1,6 +1,11 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
-import { singleRowSelect, multiRowSelect } from "../actions/actionCreators";
+import {
+  singleRowSelect,
+  multiRowSelect,
+  filterSelect,
+  proxyToggle
+} from "../actions/actionCreators";
 import AssetTable from "../components/AssetTable";
 
 interface ColumnConfig {
@@ -41,6 +46,9 @@ const mapStateToProps = (state: StoreState) => {
     columns: state.configuration.columns,
     selected: state.userSelection.rows,
     tableData: filteredTableData,
+    filters: state.configuration.filters,
+    selectedFilters: state.userSelection.filters,
+    proxyEnabled: state.userSelection.proxy,
     pause: state.userSelection.dragging
   };
 };
@@ -50,7 +58,11 @@ const mapDispatchToProps = (dispatch: any) => {
     handleRowClick: (e: MouseEvent, id: string | null) => {
       if (e.altKey || e.ctrlKey) dispatch(multiRowSelect(id));
       else dispatch(singleRowSelect(id));
-    }
+    },
+    handleCheckboxClick: (property: string, regex: string) => {
+      dispatch(filterSelect(property, regex));
+    },
+    handleProxyClick: () => dispatch(proxyToggle())
   };
 };
 

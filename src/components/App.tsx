@@ -2,7 +2,6 @@ import * as React from "react";
 import { useContext } from "react";
 import { WebsocketContext } from "../websockets/WebsocketContext";
 import AssetTableContainer from "../containers/AssetTableContainer";
-import FilterBarContainer from "../containers/FilterBarContainer";
 import ToolbarContainer from "../containers/ToolbarContainer";
 import HistoryContainer from "../containers/HistoryContainer";
 import WebPageContainer from "../containers/WebPageContainer";
@@ -38,10 +37,7 @@ const App = (props: Props) => {
     <>
       <NavBar title={props.title} />
 
-      <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
-        <FilterBarContainer />
-        <AssetTableContainer />
-      </div>
+      <AssetTableContainer />
 
       <Drawers
         drawersVisible={props.drawersVisible}
