@@ -3,7 +3,6 @@ import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 interface State {
   rows: string[];
   view: string | null;
-  history: string | null;
   proxy: boolean;
   dragging: boolean;
 }
@@ -11,7 +10,6 @@ interface State {
 const initialState = {
   rows: [],
   view: null,
-  history: null,
   proxy: true,
   dragging: false
 };
@@ -37,10 +35,6 @@ const userSelectionReducer = (state: State = initialState, action: Actions) => {
       if (action.view === state.view || state.rows.length !== 1)
         return { ...state, view: null, history: null };
       else return { ...state, view: action.view, history: null };
-
-    case ActionTypeKeys.HISTORY_SELECT:
-      if (action.property === state.history) return { ...state, history: null };
-      else return { ...state, history: action.property };
 
     case ActionTypeKeys.PROXY_TOGGLE:
       return { ...state, proxy: !state.proxy };

@@ -1,72 +1,86 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import { Collection, AutoSizer } from "react-virtualized";
-import HistoryItem from "./HistoryItem";
+import { useState } from "react";
+import {
+  createStyles,
+  WithStyles,
+  withStyles,
+  ListItem,
+  ListItemText
+} from "@material-ui/core";
+import { List, AutoSizer } from "react-virtualized";
 
-const styles = createStyles({});
+const styles = createStyles({
+  root: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    padding: "0 12px 0 12px"
+  },
+  selectedRow: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
+  text: { fontSize: "0.75rem" }
+});
 
 interface Props extends WithStyles<typeof styles> {
+  historyData: { [x: string]: Array<[string, string | null]> };
   properties: string[];
-  selectedIndex: number;
-  selectedData: Array<[string, string | null]>;
-  handleClick: (property: string) => void;
 }
 
 const HistoryList = (props: Props) => {
-  useEffect(() => recomputeCells());
-
-  let collectionRef: any = null;
-  const recomputeCells = () => {
-    if (collectionRef) collectionRef.recomputeCellSizesAndPositions();
-  };
+  const [selectedProperty, setSelectedProperty] = useState("");
 
   return (
-    <AutoSizer onResize={recomputeCells}>
-      {({ height, width }: any) => (
-        <Collection
-          ref={(ref: any) => (collectionRef = ref)}
-          style={{ position: "absolute", right: "0px" }} // overwritten if through class
-          height={height + 320}
-          width={width}
-          verticalOverscanSize={5}
-          cellCount={props.properties.length + 7}
-          cellRenderer={({
-            key,
-            index,
-            style
-          }: {
-            key: number;
-            index: number;
-            style: any;
-          }) => (
-            <HistoryItem
-              key={key}
-              style={style}
-              property={props.properties[index]}
-              isSelected={props.selectedIndex === index}
-              historyData={
-                props.selectedIndex === index ? props.selectedData : null
-              }
-              handleClick={props.handleClick}
+    <div className={props.classes.root}>
+      <div style={{ flex: 1 }}>
+        <AutoSizer>
+          {({ width, height }) => (
+            <List
+              width={width}
+              rowHeight={32}
+              height={height}
+              rowCount={props.properties.length}
+              rowRenderer={({ key, index, style }) => (
+                <ListItem
+                  button
+                  style={style}
+                  key={key}
+                  className={
+                    props.properties[index] === selectedProperty
+                      ? props.classes.selectedRow
+                      : undefined
+                  }
+                  onClick={() => setSelectedProperty(props.properties[index])}
+                  dense={true}
+                  divider={true}
+                >
+                  <ListItemText
+                    classes={{ primary: props.classes.text }}
+                    primary={props.properties[index]}
+                  />
+                </ListItem>
+              )}
             />
           )}
-          cellSizeAndPositionGetter={({ index }: { index: number }) => {
-            const isBelowSelected =
-              props.selectedIndex !== -1 && index > props.selectedIndex;
-            const selectedHeight =
-              Math.min(props.selectedData.length, 10) * 24 + 18;
-
-            return {
-              x: 0,
-              y: isBelowSelected ? 40 * index + selectedHeight : 40 * index,
-              width: width - 65,
-              height: selectedHeight
-            };
-          }}
-        />
-      )}
-    </AutoSizer>
+        </AutoSizer>
+      </div>
+      <div
+        style={{
+          flex: 1,
+          padding: "16px 16px 16px 16px",
+          borderTop: "1px solid #0000001f"
+        }}
+      >
+        {props.historyData[selectedProperty] && (
+          <>
+            <pre>{`History for ${selectedProperty}`}</pre>
+            {Object.values(props.historyData[selectedProperty]).map(
+              ([x, y]) => (
+                <pre>{`  ${x}:  ${y}`}</pre>
+              )
+            )}
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -9,7 +9,6 @@ export enum ActionTypeKeys {
   SINGLE_ROW_SELECT = "SINGLE_ROW_SELECT",
   MULTI_ROW_SELECT = "MULTI_ROW_SELECT",
   VIEW_SELECT = "VIEW_SELECT",
-  HISTORY_SELECT = "HISTORY_SELECT",
   PROXY_TOGGLE = "PROXY_TOGGLE",
   PSTOOLS_RESPONSE = "PSTOOLS_RESPONSE",
   CONFIGURATION = "CONFIGURATION",
@@ -53,11 +52,6 @@ export interface ViewSelectAction {
   readonly view: string;
 }
 
-export interface HistorySelectAction {
-  readonly type: ActionTypeKeys.HISTORY_SELECT;
-  readonly property: string;
-}
-
 export interface ProxyToggleAction {
   readonly type: ActionTypeKeys.PROXY_TOGGLE;
 }
@@ -87,7 +81,6 @@ export type Actions =
   | SingleRowSelectAction
   | MultiRowSelectAction
   | ViewSelectAction
-  | HistorySelectAction
   | ProxyToggleAction
   | PsToolsResponseAction
   | DeviceActionResponseSetAction

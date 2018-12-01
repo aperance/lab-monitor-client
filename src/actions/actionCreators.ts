@@ -9,7 +9,6 @@ import {
   SingleRowSelectAction,
   MultiRowSelectAction,
   ViewSelectAction,
-  HistorySelectAction,
   ProxyToggleAction,
   DraggingSetAction
 } from "./actionTypes";
@@ -64,10 +63,6 @@ export const multiRowSelect = (row: string | null): MultiRowSelectAction => {
 
 export const viewSelect = (view: string): ViewSelectAction => {
   return { type: ActionTypeKeys.VIEW_SELECT, view };
-};
-
-export const historySelect = (property: string): HistorySelectAction => {
-  return { type: ActionTypeKeys.HISTORY_SELECT, property };
 };
 
 export const proxyToggle = (): ProxyToggleAction => {

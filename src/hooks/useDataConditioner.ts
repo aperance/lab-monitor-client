@@ -29,7 +29,7 @@ const selectedSortingReducer = (
 
 export const useDataConditioner = (
   rawData: RowData[],
-  columns: Array<{ property: string; replace: { [x: string]: string } }>
+  columns: Array<{ property: string; replace?: { [x: string]: string } }>
 ) => {
   const [selectedFilters, filterDispatch] = useReducer(
     selectedFilterReducer,
