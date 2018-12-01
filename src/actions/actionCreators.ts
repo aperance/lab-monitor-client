@@ -19,7 +19,7 @@ import {
   DeviceActionResponse
 } from "../websockets/messageTypes";
 
-export const configuration = (payload: any): any => {
+export const configuration = (payload: unknown): any => {
   return { configuration: { ...payload }, type: ActionTypeKeys.CONFIGURATION };
 };
 

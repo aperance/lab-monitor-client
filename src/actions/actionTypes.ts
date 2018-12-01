@@ -22,7 +22,7 @@ export enum ActionTypeKeys {
 
 export interface ConfigurationAction {
   readonly type: ActionTypeKeys.CONFIGURATION;
-  readonly configuration: any;
+  readonly configuration: unknown;
 }
 
 export interface DeviceDataAllAction extends DeviceDataAll {

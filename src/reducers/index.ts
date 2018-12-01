@@ -1,5 +1,8 @@
 import { combineReducers } from "redux";
-import configurationReducer from "./configurationReducer";
+import {
+  configurationReducer,
+  ConfigurationState
+} from "./configurationReducer";
 import { tableDataReducer, TableDataState } from "./tableDataReducer";
 import { historyDataReducer, HistoryDataState } from "./historyDataReducer";
 import { psToolsReducer, PsToolsState } from "./psToolsReducer";
@@ -13,7 +16,7 @@ import {
 } from "./userSelectionReducer";
 
 export interface StoreState {
-  configuration: any;
+  configuration: ConfigurationState;
   tableData: TableDataState;
   userSelection: UserSelectionState;
   historyData: HistoryDataState;
