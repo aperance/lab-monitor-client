@@ -1,5 +1,6 @@
 import {
   WsMessage,
+  Configuration,
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
@@ -24,6 +25,16 @@ export const isWsMessage = (message: any): message is WsMessage => {
     console.error("WS message received with unexpected structure.");
     return false;
   }
+};
+
+/**
+ * Type guard for Configuration interface
+ *
+ * @param {any} payload
+ * @returns {boolean}
+ */
+export const isConfiguration = (payload: any): payload is Configuration => {
+  return payload ? true : false;
 };
 
 /**

@@ -1,20 +1,20 @@
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 
-interface State {
+interface UserSelectionState {
   rows: string[];
   view: string | null;
   proxy: boolean;
   dragging: boolean;
 }
 
-const initialState = {
+const initialState: UserSelectionState = {
   rows: [],
   view: null,
   proxy: true,
   dragging: false
 };
 
-const userSelectionReducer = (state: State = initialState, action: Actions) => {
+const userSelectionReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.SINGLE_ROW_SELECT:
       if (
@@ -55,4 +55,4 @@ const userSelectionReducer = (state: State = initialState, action: Actions) => {
   }
 };
 
-export { userSelectionReducer, State as UserSelectionState };
+export { userSelectionReducer, UserSelectionState };

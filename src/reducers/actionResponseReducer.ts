@@ -1,16 +1,13 @@
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 
-interface State {
+interface ActionResponseState {
   err: Error | null;
   results: any[] | null;
 }
 
-const initialState = { err: null, results: null };
+const initialState: ActionResponseState = { err: null, results: null };
 
-const actionResponseReducer = (
-  state: State = initialState,
-  action: Actions
-) => {
+const actionResponseReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.ACTION_RESPONSE_SET:
       return { err: action.err, results: action.results };
@@ -21,4 +18,4 @@ const actionResponseReducer = (
   }
 };
 
-export { actionResponseReducer, State as ActionResponseState };
+export { actionResponseReducer, ActionResponseState };

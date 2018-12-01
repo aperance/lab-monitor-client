@@ -2,6 +2,7 @@ import store from "../store";
 import { WsMessageTypeKeys, WsMessage } from "./messageTypes";
 import {
   isDeviceDataAll,
+  isConfiguration,
   isDeviceDataUpdate,
   isDeviceActionResponse,
   isPsToolsResponse
@@ -17,7 +18,7 @@ import {
 export const messageRouter = ({ type, payload }: WsMessage) => {
   switch (type) {
     case WsMessageTypeKeys.Configuration:
-      store.dispatch(configuration(payload));
+      if (isConfiguration(payload)) store.dispatch(configuration(payload));
       break;
     case WsMessageTypeKeys.DeviceDataAll:
       if (isDeviceDataAll(payload)) store.dispatch(deviceDataAll(payload));

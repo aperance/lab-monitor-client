@@ -1,13 +1,13 @@
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 
-interface State {
+interface PsToolsState {
   err: Error | null;
   result: string | null;
 }
 
-const initialState = { result: null, err: null };
+const initialState: PsToolsState = { result: null, err: null };
 
-const psToolsReducer = (state: State = initialState, action: Actions) => {
+const psToolsReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.PSTOOLS_RESPONSE:
       return { ...state, result: action.result };
@@ -20,4 +20,4 @@ const psToolsReducer = (state: State = initialState, action: Actions) => {
   }
 };
 
-export { psToolsReducer, State as PsToolsState };
+export { psToolsReducer, PsToolsState };

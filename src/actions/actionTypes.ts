@@ -1,4 +1,5 @@
 import {
+  Configuration,
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
@@ -22,7 +23,7 @@ export enum ActionTypeKeys {
 
 export interface ConfigurationAction {
   readonly type: ActionTypeKeys.CONFIGURATION;
-  readonly configuration: unknown;
+  readonly configuration: Configuration;
 }
 
 export interface DeviceDataAllAction extends DeviceDataAll {

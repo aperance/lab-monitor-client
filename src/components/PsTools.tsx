@@ -37,7 +37,7 @@ interface Props extends WithStyles<typeof styles> {
       cmd: string;
     };
   };
-  target: string;
+  target: string | null;
   result?: string;
 }
 
@@ -48,73 +48,78 @@ const PsTools = (props: Props) => {
   const [cmd, setCmd] = useState("");
 
   return (
-    <div className={props.classes.container}>
-      <form>
-        <FormControl className={props.classes.presetsInput}>
-          <InputLabel>Load Preset Command</InputLabel>
-          <Select
-            className={props.classes.text}
-            input={<Input id="presets" />}
-            value={preset}
-            onChange={e => {
-              setPreset(e.target.value);
-              setMode(props.presets[e.target.value].mode);
-              setCmd(props.presets[e.target.value].cmd);
-            }}
-          >
-            {Object.keys(props.presets).map(x => (
-              <MenuItem className={props.classes.text} key={x} value={x}>
-                {props.presets[x].name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </form>
+    <>
+      {props.target && (
+        <div className={props.classes.container}>
+          <form>
+            <FormControl className={props.classes.presetsInput}>
+              <InputLabel>Load Preset Command</InputLabel>
+              <Select
+                className={props.classes.text}
+                input={<Input id="presets" />}
+                value={preset}
+                onChange={e => {
+                  setPreset(e.target.value);
+                  setMode(props.presets[e.target.value].mode);
+                  setCmd(props.presets[e.target.value].cmd);
+                }}
+              >
+                {Object.keys(props.presets).map(x => (
+                  <MenuItem className={props.classes.text} key={x} value={x}>
+                    {props.presets[x].name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </form>
 
-      <form>
-        <FormControl className={props.classes.modeInput}>
-          <InputLabel>Mode</InputLabel>
-          <Select
-            className={props.classes.text}
-            input={<Input id="mode" />}
-            value={mode}
-            onChange={e => {
-              setPreset("");
-              setMode(e.target.value);
-            }}
-          >
-            <MenuItem className={props.classes.text} value="psExec">
-              PSExec
-            </MenuItem>
-            <MenuItem className={props.classes.text} value="psKill">
-              PSKill
-            </MenuItem>
-          </Select>
-        </FormControl>
+          <form>
+            <FormControl className={props.classes.modeInput}>
+              <InputLabel>Mode</InputLabel>
+              <Select
+                className={props.classes.text}
+                input={<Input id="mode" />}
+                value={mode}
+                onChange={e => {
+                  setPreset("");
+                  setMode(e.target.value);
+                }}
+              >
+                <MenuItem className={props.classes.text} value="psExec">
+                  PSExec
+                </MenuItem>
+                <MenuItem className={props.classes.text} value="psKill">
+                  PSKill
+                </MenuItem>
+              </Select>
+            </FormControl>
 
-        <FormControl className={props.classes.cmdInput}>
-          <InputLabel htmlFor="name-input">Command</InputLabel>
-          <Input
-            id="cmd"
-            value={cmd}
-            onChange={e => {
-              setPreset("");
-              setCmd(e.target.value);
-            }}
-          />
-        </FormControl>
+            <FormControl className={props.classes.cmdInput}>
+              <InputLabel htmlFor="name-input">Command</InputLabel>
+              <Input
+                id="cmd"
+                value={cmd}
+                onChange={e => {
+                  setPreset("");
+                  setCmd(e.target.value);
+                }}
+              />
+            </FormControl>
 
-        <Button
-          size="small"
-          onClick={() => {
-            ws.send(psToolsCommand(props.target, mode, cmd));
-          }}
-        >
-          Send
-        </Button>
-      </form>
-      <Terminal output={props.result} />
-    </div>
+            <Button
+              size="small"
+              onClick={() => {
+                if (props.target)
+                  ws.send(psToolsCommand(props.target, mode, cmd));
+              }}
+            >
+              Send
+            </Button>
+          </form>
+          <Terminal output={props.result} />
+        </div>
+      )}
+    </>
   );
 };
 

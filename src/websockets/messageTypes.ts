@@ -19,16 +19,47 @@ export interface WsMessage {
   readonly payload: unknown;
 }
 
-export interface DeviceDataAll {
-  readonly state: {
-    [id: string]: {
-      [property: string]: string;
+export interface Configuration {
+  readonly title: string;
+  readonly columns: Array<{
+    property: string;
+    title: string;
+    replace?: { [x: string]: string };
+  }>;
+  readonly filters: Array<{
+    property: string;
+    title: string;
+    options: { [x: string]: string };
+  }>;
+  readonly logLevel: {
+    level: string[];
+    namespace: string[];
+  };
+  readonly httpProxy: string;
+  readonly logsPath: string;
+  readonly statePath: string;
+  readonly psTools: {
+    [x: string]: {
+      name: string;
+      mode: string;
+      cmd: string;
     };
   };
+  readonly vnc: {
+    proxyUrl: string;
+    port: string;
+    username: string;
+    password: string;
+    passwordEncrypted: string;
+  };
+}
+
+export interface DeviceDataAll {
+  readonly state: {
+    [id: string]: { [property: string]: string };
+  };
   readonly history: {
-    [id: string]: {
-      [property: string]: Array<[string, string | null]>;
-    };
+    [id: string]: { [property: string]: Array<[string, string | null]> };
   };
 }
 

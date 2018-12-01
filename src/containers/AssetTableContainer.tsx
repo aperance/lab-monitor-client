@@ -9,10 +9,10 @@ import AssetTable from "../components/AssetTable";
 
 const mapStateToProps = (state: StoreState) => {
   return {
-    columns: state.configuration.columns,
+    columns: state.configuration.received ? state.configuration.columns : [],
     selected: state.userSelection.rows,
     tableData: Object.entries(state.tableData),
-    filters: state.configuration.filters,
+    filters: state.configuration.received ? state.configuration.filters : [],
     proxyEnabled: state.userSelection.proxy,
     pause: state.userSelection.dragging
   };
