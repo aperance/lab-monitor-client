@@ -28,25 +28,3 @@ const configurationReducer = (
 };
 
 export { configurationReducer, ConfigurationState };
-
-// import * as Ajv from "ajv";
-
-// const ajv = new Ajv();
-
-// export const isDeviceStoreConfig = (
-//   data: unknown
-// ): data is DeviceStoreConfig => {
-//   const schema = {
-//     properties: {
-//       maxHistory: {
-//         type: "number"
-//       },
-//       dateFormat: {
-//         type: "object"
-//       }
-//     },
-//     required: ["maxHistory", "dateFormat"],
-//     additionalProperties: false
-//   };
-//   return ajv.validate(schema, data) ? true : false;
-// };

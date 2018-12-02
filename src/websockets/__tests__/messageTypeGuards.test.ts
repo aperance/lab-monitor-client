@@ -4,28 +4,31 @@ import {
   isDeviceDataUpdate
   // isDeviceActionResponse,
   // isPsToolsResponse
-} from "../websockets/messageTypeGuards";
+} from "../messageTypeGuards";
 
 describe("isWsMessage type guard", () => {
   test("accepts a proper websocket message", () => {
-    expect(isWsMessage({ type: "TEST", payload: { x: {} } })).toBe(true);
+    const message = { type: "TEST", payload: { x: {} } };
+    expect(isWsMessage(message)).toBe(true);
   });
-  test("rejects message without test field", () => {
-    expect(isWsMessage({ payload: { x: {} } })).toBe(false);
+  test("rejects message without type field", () => {
+    const message = { payload: { x: {} } };
+    expect(() => isWsMessage(message)).toThrowError();
   });
   test("rejects message without payload field", () => {
-    expect(isWsMessage({ type: "TEST" })).toBe(false);
+    const message = { type: "TEST" };
+    expect(() => isWsMessage(message)).toThrowError();
   });
   test("rejects message with unexpected field", () => {
-    expect(isWsMessage({ type: "TEST", payload: { x: {} }, y: "y" })).toBe(
-      false
-    );
+    const message = { type: "TEST", payload: { x: {} }, y: "y" };
+    expect(() => isWsMessage(message)).toThrowError();
   });
   describe("type field validation", () => {
     test.each([undefined, null, {}, { x: "x" }, 0, [], ["x"], true, false])(
       "rejects %p",
       x => {
-        expect(isWsMessage({ type: x, payload: { x: {} } })).toBe(false);
+        const message = { type: x, payload: { x: {} } };
+        expect(() => isWsMessage(message)).toThrowError();
       }
     );
   });
@@ -33,7 +36,8 @@ describe("isWsMessage type guard", () => {
     test.each([undefined, null, {}, "TEST", 0, true, false])(
       "rejects %p",
       x => {
-        expect(isWsMessage({ type: "TEST", payload: x })).toBe(false);
+        const message = { type: "TEST", payload: x };
+        expect(() => isWsMessage(message)).toThrowError();
       }
     );
   });
@@ -56,14 +60,14 @@ describe("isDeviceDataAll type guard", () => {
         id: { property: [["timestamp", "value"], ["timestamp", null]] }
       }
     };
-    expect(isDeviceDataAll(payload)).toBe(false);
+    expect(() => isDeviceDataAll(payload)).toThrowError();
   });
 
   test("rejects a DeviceDataAll object without a history field", () => {
     const payload = {
       state: { id: { property: "value" } }
     };
-    expect(isDeviceDataAll(payload)).toBe(false);
+    expect(() => isDeviceDataAll(payload)).toThrowError();
   });
 
   test("rejects a DeviceDataAll object with an unexpected field", () => {
@@ -74,7 +78,7 @@ describe("isDeviceDataAll type guard", () => {
       },
       x: {}
     };
-    expect(isDeviceDataAll(payload)).toBe(false);
+    expect(() => isDeviceDataAll(payload)).toThrowError();
   });
 
   describe("history field validation", () => {
@@ -85,7 +89,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: x
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -97,7 +101,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: x }
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -109,7 +113,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: { property: x } }
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -121,7 +125,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: { property: [x] } }
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -133,7 +137,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: { property: [[x, "value"]] } }
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -145,7 +149,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: { property: [["timestamp", x]] } }
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -160,7 +164,7 @@ describe("isDeviceDataAll type guard", () => {
             id: { property: [["timestamp", "value"], ["timestamp", null]] }
           }
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -174,7 +178,7 @@ describe("isDeviceDataAll type guard", () => {
             id: { property: [["timestamp", "value"], ["timestamp", null]] }
           }
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -188,7 +192,7 @@ describe("isDeviceDataAll type guard", () => {
             id: { property: [["timestamp", "value"], ["timestamp", null]] }
           }
         };
-        expect(isDeviceDataAll(payload)).toBe(false);
+        expect(() => isDeviceDataAll(payload)).toThrowError();
       }
     );
   });
@@ -214,7 +218,7 @@ describe("isDeviceDataUpdate type guard", () => {
         ["property2", ["timestamp", null]]
       ]
     };
-    expect(isDeviceDataUpdate(payload)).toBe(false);
+    expect(() => isDeviceDataUpdate(payload)).toThrowError();
   });
   test("rejects DeviceDataUpdate object without a state field", () => {
     const payload = {
@@ -224,16 +228,15 @@ describe("isDeviceDataUpdate type guard", () => {
         ["property2", ["timestamp", null]]
       ]
     };
-    expect(isDeviceDataUpdate(payload)).toBe(false);
+    expect(() => isDeviceDataUpdate(payload)).toThrowError();
   });
   test("rejects DeviceDataUpdate object without a history field", () => {
     const payload = {
       id: "id",
       state: { property1: "property1", property2: "property2" }
     };
-    expect(isDeviceDataUpdate(payload)).toBe(false);
+    expect(() => isDeviceDataUpdate(payload)).toThrowError();
   });
-
   describe("id field validation", () => {
     test.each([undefined, null, 0, {}, { x: {} }, [], ["x"], true, false, ""])(
       "rejects %p",
@@ -246,11 +249,10 @@ describe("isDeviceDataUpdate type guard", () => {
             ["property2", ["timestamp", null]]
           ]
         };
-        expect(isDeviceDataUpdate(payload)).toBe(false);
+        expect(() => isDeviceDataUpdate(payload)).toThrowError();
       }
     );
   });
-
   describe("state field validation", () => {
     test.each([undefined, null, 0, {}, [], ["x"], true, false, "x"])(
       "rejects %p",
@@ -263,11 +265,10 @@ describe("isDeviceDataUpdate type guard", () => {
             ["property2", ["timestamp", null]]
           ]
         };
-        expect(isDeviceDataUpdate(payload)).toBe(false);
+        expect(() => isDeviceDataUpdate(payload)).toThrowError();
       }
     );
   });
-
   describe("state>property field validation", () => {
     test.each([undefined, 0, {}, { x: {} }, [], ["x"], true, false])(
       "rejects %p",
@@ -280,11 +281,10 @@ describe("isDeviceDataUpdate type guard", () => {
             ["property2", ["timestamp", null]]
           ]
         };
-        expect(isDeviceDataUpdate(payload)).toBe(false);
+        expect(() => isDeviceDataUpdate(payload)).toThrowError();
       }
     );
   });
-
   describe("history field validation", () => {
     test.each([undefined, null, 0, {}, { x: {} }, true, false, "x"])(
       "rejects %p",
@@ -294,7 +294,7 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: x
         };
-        expect(isDeviceDataUpdate(payload)).toBe(false);
+        expect(() => isDeviceDataUpdate(payload)).toThrowError();
       }
     );
   });
@@ -307,11 +307,10 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: [[x, ["timestamp", null]]]
         };
-        expect(isDeviceDataUpdate(payload)).toBe(false);
+        expect(() => isDeviceDataUpdate(payload)).toThrowError();
       }
     );
   });
-
   describe("history>record field validation", () => {
     test.each([undefined, null, 0, {}, [], ["x"], ["x", "x", "x"], true, "x"])(
       "rejects %p",
@@ -321,11 +320,10 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: [["property", x]]
         };
-        expect(isDeviceDataUpdate(payload)).toBe(false);
+        expect(() => isDeviceDataUpdate(payload)).toThrowError();
       }
     );
   });
-
   describe("history>record>timestamp field validation", () => {
     test.each([undefined, null, 0, {}, { x: {} }, [], ["x"], true, false, ""])(
       "rejects %p",
@@ -335,11 +333,10 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: [["property", [x, null]]]
         };
-        expect(isDeviceDataUpdate(payload)).toBe(false);
+        expect(() => isDeviceDataUpdate(payload)).toThrowError();
       }
     );
   });
-
   describe("history>record>value field validation", () => {
     test.each([undefined, 0, {}, { x: {} }, [], ["x"], true, false])(
       "rejects %p",
@@ -349,7 +346,7 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: [["property", ["timestamp", x]]]
         };
-        expect(isDeviceDataUpdate(payload)).toBe(false);
+        expect(() => isDeviceDataUpdate(payload)).toThrowError();
       }
     );
   });

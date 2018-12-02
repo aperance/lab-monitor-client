@@ -1,3 +1,4 @@
+import { Ajv } from "ajv";
 import {
   WsMessage,
   Configuration,
@@ -7,6 +8,9 @@ import {
   DeviceActionResponse
 } from "./messageTypes";
 
+// tslint:disable-next-line:no-var-requires
+const ajv = new (require("ajv"))() as Ajv;
+
 /**
  * Type guard for WsMessage interface
  *
@@ -14,17 +18,19 @@ import {
  * @returns {boolean}
  */
 export const isWsMessage = (message: any): message is WsMessage => {
-  if (
-    isNonEmptyObject(message) &&
-    JSON.stringify(Object.keys(message).sort()) === '["payload","type"]' &&
-    isNonEmptyObject(message.payload) &&
-    typeof message.type === "string"
-  )
-    return true;
-  else {
-    console.error("WS message received with unexpected structure.");
-    return false;
-  }
+  const schema = {
+    properties: {
+      type: { type: "string" },
+      payload: { type: "object", minProperties: 1 }
+    },
+    required: ["type", "payload"],
+    additionalProperties: false
+  };
+
+  if (!ajv.validate(schema, message))
+    throw new Error("Invalid websocket message received.");
+
+  return true;
 };
 
 /**
@@ -34,7 +40,45 @@ export const isWsMessage = (message: any): message is WsMessage => {
  * @returns {boolean}
  */
 export const isConfiguration = (payload: any): payload is Configuration => {
-  return payload ? true : false;
+  const schema = {
+    properties: {
+      title: { type: "string" },
+      columns: { type: "array", items: { type: "object" } },
+      filters: { type: "array", items: { type: "object" } },
+      logLevel: { type: "object", required: ["level", "namespace"] },
+      httpProxy: { type: "string" },
+      logsPath: { type: "string" },
+      statePath: { type: "string" },
+      psTools: { type: "object" },
+      vnc: {
+        type: "object",
+        required: [
+          "proxyUrl",
+          "port",
+          "username",
+          "password",
+          "passwordEncrypted"
+        ]
+      }
+    },
+    required: [
+      "title",
+      "columns",
+      "filters",
+      "logLevel",
+      "httpProxy",
+      "logsPath",
+      "statePath",
+      "psTools",
+      "vnc"
+    ],
+    additionalProperties: false
+  };
+
+  if (!ajv.validate(schema, payload))
+    throw Error("Invalid configuration received.");
+
+  return true;
 };
 
 /**
@@ -44,40 +88,54 @@ export const isConfiguration = (payload: any): payload is Configuration => {
  * @returns {boolean}
  */
 export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
-  if (
-    JSON.stringify(Object.keys(payload).sort()) === '["history","state"]' &&
-    /** Validate contents of state object */
-    isNonEmptyObject(payload.state) &&
-    Object.values(payload.state).every(
-      byId =>
-        isNonEmptyObject(byId) &&
-        Object.values(byId).every(byProperty => typeof byProperty === "string")
-    ) &&
-    /** Validate contents of history object */
-    isNonEmptyObject(payload.history) &&
-    Object.values(payload.history).every(
-      byId =>
-        isNonEmptyObject(byId) &&
-        Object.values(byId).every(
-          byProperty =>
-            Array.isArray(byProperty) &&
-            byProperty.length !== 0 &&
-            byProperty.every(
-              record =>
-                Array.isArray(record) &&
-                record.length === 2 &&
-                typeof record[0] === "string" &&
-                record[0] !== "" &&
-                (typeof record[1] === "string" || record[1] === null)
-            )
-        )
-    )
-  )
-    return true;
-  else {
-    console.error("Invalid device data received.");
-    return false;
-  }
+  const schema = {
+    properties: {
+      state: {
+        type: "object",
+        minProperties: 1,
+        patternProperties: {
+          "^.*$": {
+            type: "object",
+            minProperties: 1,
+            patternProperties: {
+              "^.*$": { type: "string" }
+            }
+          }
+        }
+      },
+      history: {
+        type: "object",
+        minProperties: 1,
+        patternProperties: {
+          "^.*$": {
+            type: "object",
+            minProperties: 1,
+            patternProperties: {
+              "^.*$": {
+                type: "array",
+                minItems: 1,
+                additionalItems: false,
+                items: {
+                  type: "array",
+                  maxItems: 2,
+                  minItems: 2,
+                  additionalItems: false,
+                  items: [{ type: "string" }, { type: ["string", "null"] }]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    required: ["state", "history"],
+    additionalProperties: false
+  };
+
+  if (!ajv.validate(schema, payload))
+    throw Error("Invalid device data received.");
+
+  return true;
 };
 
 /**
@@ -89,42 +147,48 @@ export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
 export const isDeviceDataUpdate = (
   payload: any
 ): payload is DeviceDataUpdate => {
-  if (
-    JSON.stringify(Object.keys(payload).sort()) ===
-      '["history","id","state"]' &&
-    typeof payload.id === "string" &&
-    payload.id !== "" &&
-    /** Validate contents of state object */
-    (payload.state === null ||
-      (isNonEmptyObject(payload.state) &&
-        Object.values(payload.state).every(
-          byProperty => typeof byProperty === "string" || byProperty === null
-        ))) &&
-    /** Validate contents of history object */
-    (payload.history === null ||
-      (Array.isArray(payload.history) &&
-        payload.history.every(
-          (byProperty: any) =>
-            Array.isArray(byProperty) &&
-            byProperty.length === 2 &&
-            /** Validate property */
-            typeof byProperty[0] === "string" &&
-            byProperty[0] !== "" &&
-            /** Validate record array */
-            Array.isArray(byProperty[1]) &&
-            byProperty[1].length === 2 &&
-            /** Validate timestamp */
-            typeof byProperty[1][0] === "string" &&
-            byProperty[1][0] !== "" &&
-            /** Validate value */
-            (typeof byProperty[1][1] === "string" || byProperty[1][1] === null)
-        )))
-  )
-    return true;
-  else {
-    console.error("Invalid device data received.");
-    return false;
-  }
+  const schema = {
+    properties: {
+      id: { type: "string", minLength: 1 },
+      state: {
+        type: "object",
+        minProperties: 1,
+        patternProperties: {
+          "^.*$": { type: ["string", "null"] }
+        }
+      },
+      history: {
+        type: "array",
+        additionalItems: false,
+        items: {
+          type: "array",
+          maxItems: 2,
+          minItems: 2,
+          additionalItems: false,
+          items: [
+            { type: "string", minLength: 1 },
+            {
+              type: "array",
+              maxItems: 2,
+              minItems: 2,
+              additionalItems: false,
+              items: [
+                { type: "string", minLength: 1 },
+                { type: ["string", "null"] }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    required: ["id", "state", "history"],
+    additionalProperties: false
+  };
+
+  if (!ajv.validate(schema, payload))
+    throw Error("Invalid device data received.");
+
+  return true;
 };
 
 // TODO: Complete type guards
@@ -136,11 +200,21 @@ export const isDeviceDataUpdate = (
  * @returns {boolean}
  */
 export const isPsToolsResponse = (payload: any): payload is PsToolsResponse => {
-  if (payload) return true;
-  else {
+  const schema = {
+    properties: {
+      err: { type: ["string", "object", "null"] },
+      result: { type: ["string", "null"] }
+    },
+    required: ["err", "result"],
+    additionalProperties: false
+  };
+
+  if (!ajv.validate(schema, payload)) {
     console.error("Invalid response received.");
     return false;
   }
+
+  return true;
 };
 
 /**
@@ -152,15 +226,19 @@ export const isPsToolsResponse = (payload: any): payload is PsToolsResponse => {
 export const isDeviceActionResponse = (
   payload: any
 ): payload is DeviceActionResponse => {
-  if (payload) return true;
-  else {
+  const schema = {
+    properties: {
+      err: { type: ["string", "object", "null"] },
+      results: { type: ["array", "null"] }
+    },
+    required: ["err", "results"],
+    additionalProperties: false
+  };
+
+  if (!ajv.validate(schema, payload)) {
     console.error("Invalid response received.");
     return false;
   }
-};
 
-const isNonEmptyObject = (x: any) =>
-  typeof x === "object" &&
-  x !== null &&
-  !Array.isArray(x) &&
-  Object.values(x).length !== 0;
+  return true;
+};
