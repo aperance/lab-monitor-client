@@ -3,27 +3,23 @@ import { StoreState } from "../reducers/index";
 import { actionResponseClear, draggingSet } from "../actions/actionCreators";
 import App from "../components/App";
 
-const mapStateToProps = (state: StoreState) => {
-  if (!state.configuration.received)
-    return {
-      title: "",
-      dataReceived: false,
-      subView: null,
-      drawersVisible: 0 as 0 | 1 | 2,
-      actionResponse: state.actionResponse
-    };
-  else
-    return {
-      title: state.configuration.title,
-      dataReceived: Object.keys(state.tableData).length !== 0,
-      subView: state.userSelection.view,
-      drawersVisible: (state.userSelection.rows[0] === undefined
-        ? 0
-        : state.userSelection.view === null
-        ? 1
-        : 2) as 0 | 1 | 2,
-      actionResponse: state.actionResponse
-    };
+const mapStateToProps = ({
+  userSelection,
+  configuration,
+  tableData,
+  actionResponse
+}: StoreState) => {
+  return {
+    title: configuration.received ? configuration.title : "",
+    dataReceived: configuration.received && Object.keys(tableData).length !== 0,
+    subView: userSelection.view,
+    drawersVisible: (userSelection.rows.length === 0
+      ? 0
+      : !userSelection.view
+      ? 1
+      : 2) as 0 | 1 | 2,
+    actionResponse
+  };
 };
 
 const mapDispatchToProps = (dispatch: any) => {

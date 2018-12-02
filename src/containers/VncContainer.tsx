@@ -3,9 +3,7 @@ import { StoreState } from "../reducers/index";
 import VncViewer from "../components/VncViewer";
 
 const mapStateToProps = ({ userSelection, configuration }: StoreState) => {
-  if (userSelection.rows.length !== 1 || !configuration.received)
-    return { url: "", password: "", fileContents: "", suspend: true };
-  else
+  if (userSelection.rows.length === 1 && configuration.received)
     return {
       url:
         `${configuration.vnc.proxyUrl}` +
@@ -19,6 +17,7 @@ const mapStateToProps = ({ userSelection, configuration }: StoreState) => {
         `password=${configuration.vnc.passwordEncrypted}`,
       suspend: userSelection.dragging
     };
+  else return { url: "", password: "", fileContents: "", suspend: true };
 };
 
 export default connect(mapStateToProps)(VncViewer);

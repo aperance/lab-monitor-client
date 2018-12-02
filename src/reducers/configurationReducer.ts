@@ -9,7 +9,7 @@ interface InitializedState extends Configuration {
   received: true;
 }
 
-type ConfigurationState = UninitializedState | InitializedState;
+type ConfigurationState = InitializedState | UninitializedState;
 
 const initialState: ConfigurationState = {
   received: false
