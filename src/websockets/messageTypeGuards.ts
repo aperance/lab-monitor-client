@@ -9,197 +9,213 @@ import {
 } from "./messageTypes";
 
 // tslint:disable-next-line:no-var-requires
-const ajv = new (require("ajv"))() as Ajv;
+const ajv = new (require("ajv"))({ verbose: true }) as Ajv;
 
-/**
- * Type guard for WsMessage interface
- *
- * @param {any} message
- * @returns {boolean}
- */
-export const isWsMessage = (message: any): message is WsMessage => {
-  const schema = {
-    properties: {
-      type: { type: "string" },
-      payload: { type: "object", minProperties: 1 }
-    },
-    required: ["type", "payload"],
-    additionalProperties: false
-  };
+const validateWsMessage = ajv.compile({
+  properties: {
+    type: { type: "string" },
+    payload: { type: "object", minProperties: 1 }
+  },
+  required: ["type", "payload"],
+  additionalProperties: false
+});
 
-  if (!ajv.validate(schema, message))
-    throw new Error("Invalid websocket message received.");
+const validateConfiguration = ajv.compile({
+  properties: {
+    title: { type: "string" },
+    columns: { type: "array", items: { type: "object" } },
+    filters: { type: "array", items: { type: "object" } },
+    logLevel: { type: "object", required: ["level", "namespace"] },
+    httpProxy: { type: "string" },
+    logsPath: { type: "string" },
+    statePath: { type: "string" },
+    psTools: { type: "object" },
+    vnc: {
+      type: "object",
+      required: [
+        "proxyUrl",
+        "port",
+        "username",
+        "password",
+        "passwordEncrypted"
+      ]
+    }
+  },
+  required: [
+    "title",
+    "columns",
+    "filters",
+    "logLevel",
+    "httpProxy",
+    "logsPath",
+    "statePath",
+    "psTools",
+    "vnc"
+  ],
+  additionalProperties: false
+});
 
-  return true;
-};
-
-/**
- * Type guard for Configuration interface
- *
- * @param {any} payload
- * @returns {boolean}
- */
-export const isConfiguration = (payload: any): payload is Configuration => {
-  const schema = {
-    properties: {
-      title: { type: "string" },
-      columns: { type: "array", items: { type: "object" } },
-      filters: { type: "array", items: { type: "object" } },
-      logLevel: { type: "object", required: ["level", "namespace"] },
-      httpProxy: { type: "string" },
-      logsPath: { type: "string" },
-      statePath: { type: "string" },
-      psTools: { type: "object" },
-      vnc: {
-        type: "object",
-        required: [
-          "proxyUrl",
-          "port",
-          "username",
-          "password",
-          "passwordEncrypted"
-        ]
-      }
-    },
-    required: [
-      "title",
-      "columns",
-      "filters",
-      "logLevel",
-      "httpProxy",
-      "logsPath",
-      "statePath",
-      "psTools",
-      "vnc"
-    ],
-    additionalProperties: false
-  };
-
-  if (!ajv.validate(schema, payload))
-    throw Error("Invalid configuration received.");
-
-  return true;
-};
-
-/**
- * Type guard for DeviceDataAll interface
- *
- * @param {any} payload
- * @returns {boolean}
- */
-export const isDeviceDataAll = (payload: any): payload is DeviceDataAll => {
-  const schema = {
-    properties: {
-      state: {
-        type: "object",
-        minProperties: 1,
-        patternProperties: {
-          "^.*$": {
-            type: "object",
-            minProperties: 1,
-            patternProperties: {
-              "^.*$": { type: "string" }
-            }
+const validateDeviceDataAll = ajv.compile({
+  properties: {
+    state: {
+      type: "object",
+      minProperties: 1,
+      patternProperties: {
+        "^.*$": {
+          type: "object",
+          minProperties: 1,
+          patternProperties: {
+            "^.*$": { type: "string" }
           }
         }
-      },
-      history: {
-        type: "object",
-        minProperties: 1,
-        patternProperties: {
-          "^.*$": {
-            type: "object",
-            minProperties: 1,
-            patternProperties: {
-              "^.*$": {
+      }
+    },
+    history: {
+      type: "object",
+      minProperties: 1,
+      patternProperties: {
+        "^.*$": {
+          type: "object",
+          minProperties: 1,
+          patternProperties: {
+            "^.*$": {
+              type: "array",
+              minItems: 1,
+              additionalItems: false,
+              items: {
                 type: "array",
-                minItems: 1,
+                maxItems: 2,
+                minItems: 2,
                 additionalItems: false,
-                items: {
-                  type: "array",
-                  maxItems: 2,
-                  minItems: 2,
-                  additionalItems: false,
-                  items: [{ type: "string" }, { type: ["string", "null"] }]
-                }
+                items: [{ type: "string" }, { type: ["string", "null"] }]
               }
             }
           }
         }
       }
+    }
+  },
+  required: ["state", "history"],
+  additionalProperties: false
+});
+
+const validateDeviceDataUpdate = ajv.compile({
+  properties: {
+    id: { type: "string", minLength: 1 },
+    state: {
+      type: "object",
+      minProperties: 1,
+      patternProperties: {
+        "^.*$": { type: ["string", "null"] }
+      }
     },
-    required: ["state", "history"],
-    additionalProperties: false
-  };
+    history: {
+      type: "array",
+      additionalItems: false,
+      items: {
+        type: "array",
+        maxItems: 2,
+        minItems: 2,
+        additionalItems: false,
+        items: [
+          { type: "string", minLength: 1 },
+          {
+            type: "array",
+            maxItems: 2,
+            minItems: 2,
+            additionalItems: false,
+            items: [
+              { type: "string", minLength: 1 },
+              { type: ["string", "null"] }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  required: ["id", "state", "history"],
+  additionalProperties: false
+});
 
-  if (!ajv.validate(schema, payload))
-    throw Error("Invalid device data received.");
+/**
+ * Type guard for WsMessage interface
+ *
+ * @param {unknown} message
+ * @returns {boolean}
+ */
+export const isWsMessage = (message: unknown): message is WsMessage => {
+  const isValid = validateWsMessage(message);
+  if (validateWsMessage.errors)
+    console.error({
+      ...validateWsMessage.errors[0],
+      data: message,
+      schema: "WsMessage"
+    });
+  return isValid as boolean;
+};
 
-  return true;
+/**
+ * Type guard for Configuration interface
+ *
+ * @param {unknown} payload
+ * @returns {boolean}
+ */
+export const isConfiguration = (payload: unknown): payload is Configuration => {
+  const isValid = validateConfiguration(payload);
+  if (validateConfiguration.errors)
+    console.error({
+      ...validateConfiguration.errors[0],
+      data: payload,
+      schema: "Configuration"
+    });
+  return isValid as boolean;
+};
+
+/**
+ * Type guard for DeviceDataAll interface
+ *
+ * @param {unknown} payload
+ * @returns {boolean}
+ */
+export const isDeviceDataAll = (payload: unknown): payload is DeviceDataAll => {
+  const isValid = validateDeviceDataAll(payload);
+  if (validateDeviceDataAll.errors)
+    console.error({
+      ...validateDeviceDataAll.errors[0],
+      data: payload,
+      schema: "DeviceDataAll"
+    });
+  return isValid as boolean;
 };
 
 /**
  * Type guard for DeviceDataUpdate interface
  *
- * @param {any} payload
+ * @param {unknown} payload
  * @returns {boolean}
  */
 export const isDeviceDataUpdate = (
-  payload: any
+  payload: unknown
 ): payload is DeviceDataUpdate => {
-  const schema = {
-    properties: {
-      id: { type: "string", minLength: 1 },
-      state: {
-        type: "object",
-        minProperties: 1,
-        patternProperties: {
-          "^.*$": { type: ["string", "null"] }
-        }
-      },
-      history: {
-        type: "array",
-        additionalItems: false,
-        items: {
-          type: "array",
-          maxItems: 2,
-          minItems: 2,
-          additionalItems: false,
-          items: [
-            { type: "string", minLength: 1 },
-            {
-              type: "array",
-              maxItems: 2,
-              minItems: 2,
-              additionalItems: false,
-              items: [
-                { type: "string", minLength: 1 },
-                { type: ["string", "null"] }
-              ]
-            }
-          ]
-        }
-      }
-    },
-    required: ["id", "state", "history"],
-    additionalProperties: false
-  };
-
-  if (!ajv.validate(schema, payload))
-    throw Error("Invalid device data received.");
-
-  return true;
+  const isValid = validateDeviceDataUpdate(payload);
+  if (validateDeviceDataUpdate.errors)
+    console.error({
+      ...validateDeviceDataUpdate.errors[0],
+      data: payload,
+      schema: "DeviceDataUpdate"
+    });
+  return isValid as boolean;
 };
-
-// TODO: Complete type guards
 
 /**
  * Type guard for PsToolsResponse interface
  *
- * @param {any} payload
+ * @param {unknown} payload
  * @returns {boolean}
  */
-export const isPsToolsResponse = (payload: any): payload is PsToolsResponse => {
+export const isPsToolsResponse = (
+  payload: unknown
+): payload is PsToolsResponse => {
   const schema = {
     properties: {
       err: { type: ["string", "object", "null"] },
@@ -220,11 +236,11 @@ export const isPsToolsResponse = (payload: any): payload is PsToolsResponse => {
 /**
  * Type guard for DeviceActionResponse interface
  *
- * @param {any} payload
+ * @param {unknown} payload
  * @returns {boolean}
  */
 export const isDeviceActionResponse = (
-  payload: any
+  payload: unknown
 ): payload is DeviceActionResponse => {
   const schema = {
     properties: {

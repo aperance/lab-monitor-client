@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState, useRef, useEffect } from "react";
 import { WsMessage } from "./messageTypes";
 import { messageRouter } from "./messageRouter";
-import { isWsMessage } from "./messageTypeGuards";
 
 export const WebsocketContext = React.createContext({} as {
   status: string;
@@ -24,15 +23,18 @@ export const WebsocketProvider = (props: Props) => {
       if (!socket.current || retry) {
         const ws = new WebSocket(props.url);
 
-        ws.onopen = () => setTimeout(() => setStatus("connected"), 500);
+        ws.onopen = () => setStatus("connected");
         ws.onmessage = x => {
-          const message = JSON.parse(x.data);
-          console.log(message);
-          if (!isWsMessage(message))
-            throw Error("Invalid WS message type specified");
-          messageRouter(message);
+          try {
+            messageRouter(JSON.parse(x.data));
+          } catch (err) {
+            console.error(err);
+            ws.onclose = null;
+            ws.close();
+            setStatus("dataError");
+          }
         };
-        ws.onerror = () => setStatus("error");
+        ws.onerror = () => setStatus("connectionError");
         ws.onclose = () => setTimeout(() => setRetry(true), 5000);
 
         setRetry(false);

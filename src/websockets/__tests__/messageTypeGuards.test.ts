@@ -13,22 +13,22 @@ describe("isWsMessage type guard", () => {
   });
   test("rejects message without type field", () => {
     const message = { payload: { x: {} } };
-    expect(() => isWsMessage(message)).toThrowError();
+    expect(isWsMessage(message)).toBe(false);
   });
   test("rejects message without payload field", () => {
     const message = { type: "TEST" };
-    expect(() => isWsMessage(message)).toThrowError();
+    expect(isWsMessage(message)).toBe(false);
   });
   test("rejects message with unexpected field", () => {
     const message = { type: "TEST", payload: { x: {} }, y: "y" };
-    expect(() => isWsMessage(message)).toThrowError();
+    expect(isWsMessage(message)).toBe(false);
   });
   describe("type field validation", () => {
     test.each([undefined, null, {}, { x: "x" }, 0, [], ["x"], true, false])(
       "rejects %p",
       x => {
         const message = { type: x, payload: { x: {} } };
-        expect(() => isWsMessage(message)).toThrowError();
+        expect(isWsMessage(message)).toBe(false);
       }
     );
   });
@@ -37,7 +37,7 @@ describe("isWsMessage type guard", () => {
       "rejects %p",
       x => {
         const message = { type: "TEST", payload: x };
-        expect(() => isWsMessage(message)).toThrowError();
+        expect(isWsMessage(message)).toBe(false);
       }
     );
   });
@@ -60,14 +60,14 @@ describe("isDeviceDataAll type guard", () => {
         id: { property: [["timestamp", "value"], ["timestamp", null]] }
       }
     };
-    expect(() => isDeviceDataAll(payload)).toThrowError();
+    expect(isDeviceDataAll(payload)).toBe(false);
   });
 
   test("rejects a DeviceDataAll object without a history field", () => {
     const payload = {
       state: { id: { property: "value" } }
     };
-    expect(() => isDeviceDataAll(payload)).toThrowError();
+    expect(isDeviceDataAll(payload)).toBe(false);
   });
 
   test("rejects a DeviceDataAll object with an unexpected field", () => {
@@ -78,7 +78,7 @@ describe("isDeviceDataAll type guard", () => {
       },
       x: {}
     };
-    expect(() => isDeviceDataAll(payload)).toThrowError();
+    expect(isDeviceDataAll(payload)).toBe(false);
   });
 
   describe("history field validation", () => {
@@ -89,7 +89,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: x
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -101,7 +101,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: x }
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -113,7 +113,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: { property: x } }
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -125,7 +125,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: { property: [x] } }
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -137,7 +137,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: { property: [[x, "value"]] } }
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -149,7 +149,7 @@ describe("isDeviceDataAll type guard", () => {
           state: { id: { property: "value" } },
           history: { id: { property: [["timestamp", x]] } }
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -164,7 +164,7 @@ describe("isDeviceDataAll type guard", () => {
             id: { property: [["timestamp", "value"], ["timestamp", null]] }
           }
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -178,7 +178,7 @@ describe("isDeviceDataAll type guard", () => {
             id: { property: [["timestamp", "value"], ["timestamp", null]] }
           }
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -192,7 +192,7 @@ describe("isDeviceDataAll type guard", () => {
             id: { property: [["timestamp", "value"], ["timestamp", null]] }
           }
         };
-        expect(() => isDeviceDataAll(payload)).toThrowError();
+        expect(isDeviceDataAll(payload)).toBe(false);
       }
     );
   });
@@ -218,7 +218,7 @@ describe("isDeviceDataUpdate type guard", () => {
         ["property2", ["timestamp", null]]
       ]
     };
-    expect(() => isDeviceDataUpdate(payload)).toThrowError();
+    expect(isDeviceDataUpdate(payload)).toBe(false);
   });
   test("rejects DeviceDataUpdate object without a state field", () => {
     const payload = {
@@ -228,14 +228,14 @@ describe("isDeviceDataUpdate type guard", () => {
         ["property2", ["timestamp", null]]
       ]
     };
-    expect(() => isDeviceDataUpdate(payload)).toThrowError();
+    expect(isDeviceDataUpdate(payload)).toBe(false);
   });
   test("rejects DeviceDataUpdate object without a history field", () => {
     const payload = {
       id: "id",
       state: { property1: "property1", property2: "property2" }
     };
-    expect(() => isDeviceDataUpdate(payload)).toThrowError();
+    expect(isDeviceDataUpdate(payload)).toBe(false);
   });
   describe("id field validation", () => {
     test.each([undefined, null, 0, {}, { x: {} }, [], ["x"], true, false, ""])(
@@ -249,7 +249,7 @@ describe("isDeviceDataUpdate type guard", () => {
             ["property2", ["timestamp", null]]
           ]
         };
-        expect(() => isDeviceDataUpdate(payload)).toThrowError();
+        expect(isDeviceDataUpdate(payload)).toBe(false);
       }
     );
   });
@@ -265,7 +265,7 @@ describe("isDeviceDataUpdate type guard", () => {
             ["property2", ["timestamp", null]]
           ]
         };
-        expect(() => isDeviceDataUpdate(payload)).toThrowError();
+        expect(isDeviceDataUpdate(payload)).toBe(false);
       }
     );
   });
@@ -281,7 +281,7 @@ describe("isDeviceDataUpdate type guard", () => {
             ["property2", ["timestamp", null]]
           ]
         };
-        expect(() => isDeviceDataUpdate(payload)).toThrowError();
+        expect(isDeviceDataUpdate(payload)).toBe(false);
       }
     );
   });
@@ -294,7 +294,7 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: x
         };
-        expect(() => isDeviceDataUpdate(payload)).toThrowError();
+        expect(isDeviceDataUpdate(payload)).toBe(false);
       }
     );
   });
@@ -307,7 +307,7 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: [[x, ["timestamp", null]]]
         };
-        expect(() => isDeviceDataUpdate(payload)).toThrowError();
+        expect(isDeviceDataUpdate(payload)).toBe(false);
       }
     );
   });
@@ -320,7 +320,7 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: [["property", x]]
         };
-        expect(() => isDeviceDataUpdate(payload)).toThrowError();
+        expect(isDeviceDataUpdate(payload)).toBe(false);
       }
     );
   });
@@ -333,7 +333,7 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: [["property", [x, null]]]
         };
-        expect(() => isDeviceDataUpdate(payload)).toThrowError();
+        expect(isDeviceDataUpdate(payload)).toBe(false);
       }
     );
   });
@@ -346,7 +346,7 @@ describe("isDeviceDataUpdate type guard", () => {
           state: { property1: "property1", property2: null },
           history: [["property", ["timestamp", x]]]
         };
-        expect(() => isDeviceDataUpdate(payload)).toThrowError();
+        expect(isDeviceDataUpdate(payload)).toBe(false);
       }
     );
   });

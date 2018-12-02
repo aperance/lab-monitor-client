@@ -13,7 +13,11 @@ const ErrorMessage = (props: Props) => {
     <Dialog open={true}>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {props.message}
+          {"Error: "}
+          {props.message === "connectionError" &&
+            "Disconnected from server. See console for further details."}
+          {props.message === "dataError" &&
+            "Invalid data received. See console for further details."}
         </DialogContentText>
       </DialogContent>
     </Dialog>

@@ -1,6 +1,7 @@
 import store from "../store";
-import { WsMessageTypeKeys, WsMessage } from "./messageTypes";
+import { WsMessageTypeKeys } from "./messageTypes";
 import {
+  isWsMessage,
   isDeviceDataAll,
   isConfiguration,
   isDeviceDataUpdate,
@@ -15,26 +16,35 @@ import {
   psToolsResponse
 } from "../actions/actionCreators";
 
-export const messageRouter = ({ type, payload }: WsMessage) => {
+export const messageRouter = (message: unknown) => {
+  if (!isWsMessage(message)) throw Error("Invalid WS message type specified");
+
+  const { type, payload } = message;
+
+  const errorMessage = `Websocket message failed validation (type: ${type})`;
+
   switch (type) {
     case WsMessageTypeKeys.Configuration:
-      if (isConfiguration(payload)) store.dispatch(configuration(payload));
+      if (!isConfiguration(payload)) throw Error(errorMessage);
+      store.dispatch(configuration(payload));
       break;
     case WsMessageTypeKeys.DeviceDataAll:
-      if (isDeviceDataAll(payload)) store.dispatch(deviceDataAll(payload));
+      if (!isDeviceDataAll(payload)) throw Error(errorMessage);
+      store.dispatch(deviceDataAll(payload));
       break;
     case WsMessageTypeKeys.DeviceDataUpdate:
-      if (isDeviceDataUpdate(payload))
-        store.dispatch(deviceDataUpdate(payload));
+      if (!isDeviceDataUpdate(payload)) throw Error(errorMessage);
+      store.dispatch(deviceDataUpdate(payload));
       break;
     case WsMessageTypeKeys.DeviceActionResponse:
-      if (isDeviceActionResponse(payload))
-        store.dispatch(actionResponseSet(payload));
+      if (!isDeviceActionResponse(payload)) throw Error(errorMessage);
+      store.dispatch(actionResponseSet(payload));
       break;
     case WsMessageTypeKeys.PsToolsCommandResponse:
-      if (isPsToolsResponse(payload)) store.dispatch(psToolsResponse(payload));
+      if (!isPsToolsResponse(payload)) throw Error(errorMessage);
+      store.dispatch(psToolsResponse(payload));
       break;
     default:
-      throw Error("Invalid WS message type specified");
+      throw Error("Invalid websocket message type specified");
   }
 };

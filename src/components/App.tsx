@@ -29,42 +29,44 @@ interface Props {
 const App = (props: Props) => {
   const { status } = useContext(WebsocketContext);
 
-  return status === "error" ? (
-    <ErrorMessage message={"Unable to connect to server"} />
-  ) : status === "disconnected" || !props.dataReceived ? (
-    <Spinner />
-  ) : (
-    <>
-      <NavBar title={props.title} />
+  if (status === "connectionError")
+    return <ErrorMessage message={"connectionError"} />;
+  else if (status === "dataError")
+    return <ErrorMessage message={"dataError"} />;
+  else if (status === "connected" && props.dataReceived)
+    return (
+      <>
+        <NavBar title={props.title} />
 
-      <AssetTableContainer />
+        <AssetTableContainer />
 
-      <Drawers
-        drawersVisible={props.drawersVisible}
-        isResizing={props.draggingSet}
-        leftDrawer={<ToolbarContainer />}
-        rightDrawer={(() => {
-          switch (props.subView) {
-            case "history":
-              return <HistoryContainer />;
-            case "statePage":
-              return <WebPageContainer />;
-            case "psTools":
-              return <PsToolsContainer />;
-            case "vnc":
-              return <VncContainer />;
-            default:
-              return null;
-          }
-        })()}
-      />
+        <Drawers
+          drawersVisible={props.drawersVisible}
+          isResizing={props.draggingSet}
+          leftDrawer={<ToolbarContainer />}
+          rightDrawer={(() => {
+            switch (props.subView) {
+              case "history":
+                return <HistoryContainer />;
+              case "statePage":
+                return <WebPageContainer />;
+              case "psTools":
+                return <PsToolsContainer />;
+              case "vnc":
+                return <VncContainer />;
+              default:
+                return null;
+            }
+          })()}
+        />
 
-      <ActionResponse
-        response={props.actionResponse}
-        handleClose={props.actionResponseClose}
-      />
-    </>
-  );
+        <ActionResponse
+          response={props.actionResponse}
+          handleClose={props.actionResponseClose}
+        />
+      </>
+    );
+  else return <Spinner />;
 };
 
 export default App;
