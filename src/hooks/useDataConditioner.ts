@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+import { useReducer, useContext } from "react";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
 type RowData = [string, { [x: string]: string | null }];
 
@@ -27,10 +28,8 @@ const selectedSortingReducer = (
   };
 };
 
-export const useDataConditioner = (
-  rawData: RowData[],
-  columns: Array<{ property: string; replace?: { [x: string]: string } }>
-) => {
+export const useDataConditioner = (rawData: RowData[]) => {
+  const { columns } = useContext(ConfigurationContext);
   const [selectedFilters, filterDispatch] = useReducer(
     selectedFilterReducer,
     {} as { [x: string]: string[] }

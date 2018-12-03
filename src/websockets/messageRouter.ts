@@ -3,14 +3,12 @@ import { WsMessageTypeKeys } from "./messageTypes";
 import {
   isWsMessage,
   isDeviceDataAll,
-  isConfiguration,
   isDeviceDataUpdate,
   isDeviceActionResponse,
   isPsToolsResponse
 } from "./messageTypeGuards";
 import {
   actionResponseSet,
-  configuration,
   deviceDataAll,
   deviceDataUpdate,
   psToolsResponse
@@ -24,10 +22,6 @@ export const messageRouter = (message: unknown) => {
   const errorMessage = `Websocket message failed validation (type: ${type})`;
 
   switch (type) {
-    case WsMessageTypeKeys.Configuration:
-      if (!isConfiguration(payload)) throw Error(errorMessage);
-      store.dispatch(configuration(payload));
-      break;
     case WsMessageTypeKeys.DeviceDataAll:
       if (!isDeviceDataAll(payload)) throw Error(errorMessage);
       store.dispatch(deviceDataAll(payload));

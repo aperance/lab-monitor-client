@@ -1,6 +1,5 @@
 import {
   ActionTypeKeys,
-  ConfigurationAction,
   DeviceDataAllAction,
   DeviceDataUpdateAction,
   PsToolsResponseAction,
@@ -14,16 +13,11 @@ import {
   DraggingSetAction
 } from "./actionTypes";
 import {
-  Configuration,
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
   DeviceActionResponse
 } from "../websockets/messageTypes";
-
-export const configuration = (payload: Configuration): ConfigurationAction => {
-  return { configuration: { ...payload }, type: ActionTypeKeys.CONFIGURATION };
-};
 
 export const deviceDataAll = (payload: DeviceDataAll): DeviceDataAllAction => {
   return { ...payload, type: ActionTypeKeys.DEVICE_DATA_ALL };

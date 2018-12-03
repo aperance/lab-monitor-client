@@ -1,7 +1,9 @@
 import * as React from "react";
+import { useContext } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
 const styles = createStyles({
   button: {
@@ -14,23 +16,32 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  url: string | null;
+  ipAddress: string | null;
+  proxyEnabled: boolean;
 }
 
 const WebPage = (props: Props) => {
-  return props.url === null ? null : (
+  const { httpProxy, statePath } = useContext(ConfigurationContext);
+
+  if (props.ipAddress === null) return null;
+
+  const url = props.proxyEnabled
+    ? `http://${httpProxy}${statePath}&target=${props.ipAddress}`
+    : `http://${props.ipAddress}:8001${statePath}`;
+
+  return (
     <>
       <Button
         variant="fab"
         mini={true}
         className={props.classes.button}
-        href={props.url}
+        href={url}
         target="_blank"
       >
         <OpenIcon />
       </Button>
       <iframe
-        src={props.url}
+        src={url}
         id="qqq"
         title="iframe"
         width="100%"

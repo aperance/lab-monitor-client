@@ -7,16 +7,10 @@ import {
 } from "../actions/actionCreators";
 import AssetTable from "../components/AssetTable";
 
-const mapStateToProps = ({
-  userSelection,
-  configuration,
-  tableData
-}: StoreState) => {
+const mapStateToProps = ({ userSelection, tableData }: StoreState) => {
   return {
-    columns: configuration.received ? configuration.columns : [],
     selected: userSelection.rows,
     tableData: Object.entries(tableData),
-    filters: configuration.received ? configuration.filters : [],
     proxyEnabled: userSelection.proxy,
     pause: userSelection.dragging
   };

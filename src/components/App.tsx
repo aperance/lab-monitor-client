@@ -14,7 +14,6 @@ import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
 interface Props {
-  title: string;
   dataReceived: boolean;
   subView: string | null;
   drawersVisible: 0 | 1 | 2;
@@ -36,7 +35,7 @@ const App = (props: Props) => {
   else if (status === "connected" && props.dataReceived)
     return (
       <>
-        <NavBar title={props.title} />
+        <NavBar />
 
         <AssetTableContainer />
 

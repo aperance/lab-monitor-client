@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import {
   AppBar,
@@ -10,6 +10,7 @@ import {
   Menu
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/MoreVert";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
 const styles = createStyles({
   root: {
@@ -26,11 +27,10 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
-  title: string;
-}
+interface Props extends WithStyles<typeof styles> {}
 
 const NavBar = (props: Props) => {
+  const { title } = useContext(ConfigurationContext);
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
   return (
@@ -46,7 +46,7 @@ const NavBar = (props: Props) => {
           color="inherit"
           className={props.classes.title}
         >
-          {props.title}
+          {title}
         </Typography>
         <IconButton onClick={e => setAnchor(e.currentTarget)}>
           <MenuIcon />

@@ -12,6 +12,7 @@ import {
 import Terminal from "./Terminal";
 import { WebsocketContext } from "../websockets/WebsocketContext";
 import { psToolsCommand } from "../websockets/messageCreators";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
 const styles = createStyles({
   container: {
@@ -30,19 +31,13 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  presets: {
-    [x: string]: {
-      name: string;
-      mode: string;
-      cmd: string;
-    };
-  };
   target: string | null;
   result?: string;
 }
 
 const PsTools = (props: Props) => {
   const ws = useContext(WebsocketContext);
+  const presets = useContext(ConfigurationContext).psTools;
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");
@@ -60,13 +55,13 @@ const PsTools = (props: Props) => {
                 value={preset}
                 onChange={e => {
                   setPreset(e.target.value);
-                  setMode(props.presets[e.target.value].mode);
-                  setCmd(props.presets[e.target.value].cmd);
+                  setMode(presets[e.target.value].mode);
+                  setCmd(presets[e.target.value].cmd);
                 }}
               >
-                {Object.keys(props.presets).map(x => (
+                {Object.keys(presets).map(x => (
                   <MenuItem className={props.classes.text} key={x} value={x}>
-                    {props.presets[x].name}
+                    {presets[x].name}
                   </MenuItem>
                 ))}
               </Select>

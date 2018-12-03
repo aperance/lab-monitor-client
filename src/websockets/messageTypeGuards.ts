@@ -1,7 +1,6 @@
 import { Ajv } from "ajv";
 import {
   WsMessage,
-  Configuration,
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
@@ -20,40 +19,40 @@ const validateWsMessage = ajv.compile({
   additionalProperties: false
 });
 
-const validateConfiguration = ajv.compile({
-  properties: {
-    title: { type: "string" },
-    columns: { type: "array", items: { type: "object" } },
-    filters: { type: "array", items: { type: "object" } },
-    logLevel: { type: "object", required: ["level", "namespace"] },
-    httpProxy: { type: "string" },
-    logsPath: { type: "string" },
-    statePath: { type: "string" },
-    psTools: { type: "object" },
-    vnc: {
-      type: "object",
-      required: [
-        "proxyUrl",
-        "port",
-        "username",
-        "password",
-        "passwordEncrypted"
-      ]
-    }
-  },
-  required: [
-    "title",
-    "columns",
-    "filters",
-    "logLevel",
-    "httpProxy",
-    "logsPath",
-    "statePath",
-    "psTools",
-    "vnc"
-  ],
-  additionalProperties: false
-});
+// const validateConfiguration = ajv.compile({
+//   properties: {
+//     title: { type: "string" },
+//     columns: { type: "array", items: { type: "object" } },
+//     filters: { type: "array", items: { type: "object" } },
+//     logLevel: { type: "object", required: ["level", "namespace"] },
+//     httpProxy: { type: "string" },
+//     logsPath: { type: "string" },
+//     statePath: { type: "string" },
+//     psTools: { type: "object" },
+//     vnc: {
+//       type: "object",
+//       required: [
+//         "proxyUrl",
+//         "port",
+//         "username",
+//         "password",
+//         "passwordEncrypted"
+//       ]
+//     }
+//   },
+//   required: [
+//     "title",
+//     "columns",
+//     "filters",
+//     "logLevel",
+//     "httpProxy",
+//     "logsPath",
+//     "statePath",
+//     "psTools",
+//     "vnc"
+//   ],
+//   additionalProperties: false
+// });
 
 const validateDeviceDataAll = ajv.compile({
   properties: {
@@ -137,6 +136,24 @@ const validateDeviceDataUpdate = ajv.compile({
   additionalProperties: false
 });
 
+const validatePsToolsResponse = ajv.compile({
+  properties: {
+    err: { type: ["string", "object", "null"] },
+    result: { type: ["string", "null"] }
+  },
+  required: ["err", "result"],
+  additionalProperties: false
+});
+
+const validateDeviceActionResponse = ajv.compile({
+  properties: {
+    err: { type: ["string", "object", "null"] },
+    results: { type: ["array", "null"] }
+  },
+  required: ["err", "results"],
+  additionalProperties: false
+});
+
 /**
  * Type guard for WsMessage interface
  *
@@ -160,16 +177,16 @@ export const isWsMessage = (message: unknown): message is WsMessage => {
  * @param {unknown} payload
  * @returns {boolean}
  */
-export const isConfiguration = (payload: unknown): payload is Configuration => {
-  const isValid = validateConfiguration(payload);
-  if (validateConfiguration.errors)
-    console.error({
-      ...validateConfiguration.errors[0],
-      data: payload,
-      schema: "Configuration"
-    });
-  return isValid as boolean;
-};
+// export const isConfiguration = (payload: unknown): payload is Configuration => {
+//   const isValid = validateConfiguration(payload);
+//   if (validateConfiguration.errors)
+//     console.error({
+//       ...validateConfiguration.errors[0],
+//       data: payload,
+//       schema: "Configuration"
+//     });
+//   return isValid as boolean;
+// };
 
 /**
  * Type guard for DeviceDataAll interface
@@ -216,21 +233,14 @@ export const isDeviceDataUpdate = (
 export const isPsToolsResponse = (
   payload: unknown
 ): payload is PsToolsResponse => {
-  const schema = {
-    properties: {
-      err: { type: ["string", "object", "null"] },
-      result: { type: ["string", "null"] }
-    },
-    required: ["err", "result"],
-    additionalProperties: false
-  };
-
-  if (!ajv.validate(schema, payload)) {
-    console.error("Invalid response received.");
-    return false;
-  }
-
-  return true;
+  const isValid = validatePsToolsResponse(payload);
+  if (validatePsToolsResponse.errors)
+    console.error({
+      ...validatePsToolsResponse.errors[0],
+      data: payload,
+      schema: "DeviceDataUpdate"
+    });
+  return isValid as boolean;
 };
 
 /**
@@ -242,19 +252,12 @@ export const isPsToolsResponse = (
 export const isDeviceActionResponse = (
   payload: unknown
 ): payload is DeviceActionResponse => {
-  const schema = {
-    properties: {
-      err: { type: ["string", "object", "null"] },
-      results: { type: ["array", "null"] }
-    },
-    required: ["err", "results"],
-    additionalProperties: false
-  };
-
-  if (!ajv.validate(schema, payload)) {
-    console.error("Invalid response received.");
-    return false;
-  }
-
-  return true;
+  const isValid = validateDeviceActionResponse(payload);
+  if (validateDeviceActionResponse.errors)
+    console.error({
+      ...validateDeviceActionResponse.errors[0],
+      data: payload,
+      schema: "DeviceDataUpdate"
+    });
+  return isValid as boolean;
 };

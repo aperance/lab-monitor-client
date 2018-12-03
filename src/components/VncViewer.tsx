@@ -1,10 +1,11 @@
 import * as React from "react";
-import { useState } from "react";
+import { useContext } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
 import { useVnc } from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
@@ -40,18 +41,14 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  url: string;
-  password: string;
-  fileContents: string;
+  ipAddress: string;
   suspend: boolean;
 }
 
 const VncViewer = (props: Props) => {
-  const [scaled, setScaled] = useState(true);
-  const [ref, status] = useVnc(
-    props.url,
-    props.password,
-    scaled,
+  const { port, passwordEncrypted } = useContext(ConfigurationContext).vnc;
+  const { targetRef, status, scaled, setScaled } = useVnc(
+    props.ipAddress,
     props.suspend
   );
 
@@ -72,7 +69,7 @@ const VncViewer = (props: Props) => {
           visibility: status === "connected" ? "visible" : "hidden"
         }}
       >
-        <span ref={ref} />
+        <span ref={targetRef} />
         <Button
           variant="fab"
           mini={true}
@@ -85,12 +82,17 @@ const VncViewer = (props: Props) => {
           variant="fab"
           mini={true}
           className={props.classes.buttonTwo}
-          href={
-            props.fileContents &&
-            URL.createObjectURL(
-              new Blob([props.fileContents], { type: "text/plain" })
+          href={URL.createObjectURL(
+            new Blob(
+              [
+                `[connection]\n` +
+                  `host=${props.ipAddress}\n` +
+                  `port=${port}\n` +
+                  `password=${passwordEncrypted}`
+              ],
+              { type: "text/plain" }
             )
-          }
+          )}
           download="test.vnc"
           target="_blank"
         >

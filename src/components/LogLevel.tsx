@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import {
   Dialog,
@@ -12,6 +12,7 @@ import {
   Select,
   Button
 } from "@material-ui/core";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
 const styles = createStyles({
   form: { display: "flex", flexWrap: "wrap" },
@@ -21,13 +22,12 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {
   open: boolean;
-  namespaces: string[];
-  levels: string[];
   sendDeviceCommand: (namespace: string, level: string) => void;
   close: () => void;
 }
 
 const LogLevel = (props: Props) => {
+  const configuration = useContext(ConfigurationContext).logLevel;
   const [namespace, setNamespace] = useState("");
   const [level, setLevel] = useState("");
 
@@ -43,7 +43,7 @@ const LogLevel = (props: Props) => {
               onChange={e => setNamespace(e.target.value)}
               input={<Input id="namespace" />}
             >
-              {props.namespaces.map(x => (
+              {configuration.namespace.map(x => (
                 <MenuItem key={x} value={x}>
                   {x}
                 </MenuItem>
@@ -59,7 +59,7 @@ const LogLevel = (props: Props) => {
               onChange={e => setLevel(e.target.value)}
               input={<Input id="level" />}
             >
-              {props.levels.map(x => (
+              {configuration.level.map(x => (
                 <MenuItem key={x} value={x}>
                   {x}
                 </MenuItem>

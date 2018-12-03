@@ -5,6 +5,7 @@ import AssetTableHead from "./AssetTableHead";
 import AssetTableRow from "./AssetTableRow";
 import FilterBar from "./FilterBar";
 import { useDataConditioner } from "../hooks/useDataConditioner";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
 const styles = createStyles({
   root: {
@@ -24,34 +25,27 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {
   tableData: Array<[string, { [x: string]: string | null }]>;
-  columns: Array<{ title: string; property: string }>;
   selected: string[];
   pause: boolean;
-  filters: Array<{
-    property: string;
-    title: string;
-    options: {
-      [label: string]: string;
-    };
-  }>;
   proxyEnabled: boolean;
   handleProxyClick: () => void;
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
 const AssetTable = (props: Props) => {
+  const { columns, filters } = React.useContext(ConfigurationContext);
   const [
     conditionedData,
     selectedFilters,
     toggleFilter,
     selectedSorting,
     changeSort
-  ] = useDataConditioner(props.tableData, props.columns);
+  ] = useDataConditioner(props.tableData);
 
   return (
     <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
       <FilterBar
-        filters={props.filters}
+        filters={filters}
         selectedFilters={selectedFilters}
         proxyEnabled={props.proxyEnabled}
         handleCheckboxClick={toggleFilter}
@@ -61,7 +55,7 @@ const AssetTable = (props: Props) => {
       <div className={props.classes.root}>
         <Table>
           <AssetTableHead
-            columns={props.columns}
+            columns={columns}
             selectedSorting={selectedSorting}
             changeSort={changeSort}
           />
@@ -69,7 +63,7 @@ const AssetTable = (props: Props) => {
             {conditionedData.map(([rowId, rowData]) => (
               <AssetTableRow
                 key={rowId}
-                columns={props.columns}
+                columns={columns}
                 rowData={rowData}
                 selected={props.selected.includes(rowId)}
                 handleRowClick={(e: MouseEvent) =>

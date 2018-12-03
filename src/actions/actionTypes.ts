@@ -1,5 +1,4 @@
 import {
-  Configuration,
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
@@ -12,18 +11,12 @@ export enum ActionTypeKeys {
   VIEW_SELECT = "VIEW_SELECT",
   PROXY_TOGGLE = "PROXY_TOGGLE",
   PSTOOLS_RESPONSE = "PSTOOLS_RESPONSE",
-  CONFIGURATION = "CONFIGURATION",
   DEVICE_DATA_ALL = "DEVICE_DATA_ALL",
   DEVICE_DATA_UPDATE = "DEVICE_DATA_UPDATE",
   RESET_ALL = "RESET_ALL",
   ACTION_RESPONSE_SET = "ACTION_RESPONSE_SET",
   ACTION_RESPONSE_CLEAR = "ACTION_RESPONSE_CLEAR",
   DRAGGING_SET = "DRAGGING_SET"
-}
-
-export interface ConfigurationAction {
-  readonly type: ActionTypeKeys.CONFIGURATION;
-  readonly configuration: Configuration;
 }
 
 export interface DeviceDataAllAction extends DeviceDataAll {
@@ -75,7 +68,6 @@ export interface DraggingSetAction {
 }
 
 export type Actions =
-  | ConfigurationAction
   | DeviceDataAllAction
   | DeviceDataUpdateAction
   | ResetAllAction

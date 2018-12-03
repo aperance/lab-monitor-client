@@ -9,19 +9,18 @@ import {
   refreshDevice,
   clearDevice
 } from "../websockets/messageCreators";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
 interface Props {
   view: string | null;
   rows: string[];
-  logsUrl: string | null;
-  fileContents: string | null;
-  logLevels: string[];
-  logNamespaces: string[];
+  proxyEnabled: boolean;
   handleViewClick: (view: string) => null;
 }
 
 const Toolbar = (props: Props) => {
   const ws = useContext(WebsocketContext);
+  const { vnc, httpProxy, logsPath } = useContext(ConfigurationContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
 
   return (
@@ -58,53 +57,65 @@ const Toolbar = (props: Props) => {
               onClick={() => props.handleViewClick("vnc")}
             />
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
-            {props.fileContents && (
-              <>
-                <ToolbarItem
-                  name="Shared Drives"
-                  leftIcon="folder"
-                  rightIcon="get_app"
-                  selectedRows={props.rows}
-                  onClick={() => {
-                    const link = document.getElementById("downloadLink");
-                    if (link !== null) link.click();
-                  }}
-                >
-                  <a
-                    id="downloadLink"
-                    href={
-                      props.fileContents &&
-                      URL.createObjectURL(
-                        new Blob([props.fileContents], { type: "text/plain" })
-                      )
-                    }
-                    target="_blank"
-                    download="test.bat"
-                  />
-                </ToolbarItem>
-                <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
-              </>
-            )}
-            {props.logsUrl && (
-              <>
-                <ToolbarItem
-                  name="Logs"
-                  leftIcon="subject"
-                  rightIcon="open_in_new"
-                  selectedRows={props.rows}
-                  onClick={() => {
-                    const link = document.getElementById("logsLink");
-                    if (link !== null) link.click();
-                  }}
-                >
-                  <a id="logsLink" href={props.logsUrl} target="_blank" />
-                </ToolbarItem>
-                <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
-              </>
-            )}
+
+            <ToolbarItem
+              name="Shared Drives"
+              leftIcon="folder"
+              rightIcon="get_app"
+              selectedRows={props.rows}
+              onClick={() => {
+                const link = document.getElementById("downloadLink");
+                if (link !== null) link.click();
+              }}
+            >
+              <a
+                id="downloadLink"
+                href={URL.createObjectURL(
+                  new Blob(
+                    [
+                      `net use \\\\${props.rows[0]} ` +
+                        `/user:${vnc.username} ` +
+                        `${vnc.password} ` +
+                        `/PERSISTENT:NO\n` +
+                        `start \\\\${props.rows[0]}`
+                    ],
+                    { type: "text/plain" }
+                  )
+                )}
+                target="_blank"
+                download="test.bat"
+              />
+            </ToolbarItem>
+            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+            <ToolbarItem
+              name="Logs"
+              leftIcon="subject"
+              rightIcon="open_in_new"
+              selectedRows={props.rows}
+              onClick={() => {
+                const link = document.getElementById("logsLink");
+                if (link !== null) link.click();
+              }}
+            >
+              {props.proxyEnabled ? (
+                <a
+                  id="logsLink"
+                  target="_blank"
+                  href={`http://${httpProxy}${logsPath}?target=${
+                    props.rows[0]
+                  }`}
+                />
+              ) : (
+                <a
+                  id="logsLink"
+                  href={`http://${props.rows[0]}:8001${logsPath}`}
+                  target="_blank"
+                />
+              )}
+            </ToolbarItem>
+            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
           </>
         )}
-
         <ToolbarItem
           name="Log Level"
           leftIcon="tune"
@@ -151,8 +162,6 @@ const Toolbar = (props: Props) => {
       </List>
       <LogLevel
         open={logConfigOpen}
-        levels={props.logLevels}
-        namespaces={props.logNamespaces}
         sendDeviceCommand={(namespace: string, level: string) =>
           ws.send(deviceCommand(props.rows, "logLevel", { namespace, level }))
         }
