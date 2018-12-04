@@ -1,12 +1,25 @@
 import * as React from "react";
 import { render, fireEvent, cleanup } from "react-testing-library";
 import LogLevel from "../LogLevel";
-
-const testLevels = ["LevelA", "LevelB", "LevelC"];
-const testNamespaces = ["NamespaceA", "NamespaceB", "NamespaceC"];
+import { ConfigurationContext } from "../../configuration/ConfigurationContext";
 
 const sendDeviceCommandMock = jest.fn();
 const closeMock = jest.fn();
+
+jest.mock("../../configuration/ConfigurationContext");
+
+const testData = {
+  level: ["LevelA", "LevelB", "LevelC"],
+  namespace: ["NamespaceA", "NamespaceB", "NamespaceC"]
+};
+
+const renderWithContext = (element: JSX.Element) =>
+  render(
+    // @ts-ignore
+    <ConfigurationContext.Provider value={{ logLevel: testData }}>
+      {element}
+    </ConfigurationContext.Provider>
+  );
 
 afterEach(() => {
   cleanup();
@@ -14,11 +27,9 @@ afterEach(() => {
 });
 
 test("not rendered if open=false", () => {
-  const { container } = render(
+  const { container } = renderWithContext(
     <LogLevel
       open={false}
-      levels={testLevels}
-      namespaces={testNamespaces}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
@@ -27,11 +38,9 @@ test("not rendered if open=false", () => {
 });
 
 test("rendered if open=true", () => {
-  const { getByRole } = render(
+  const { getByRole } = renderWithContext(
     <LogLevel
       open={true}
-      levels={testLevels}
-      namespaces={testNamespaces}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
@@ -42,43 +51,37 @@ test("rendered if open=true", () => {
 });
 
 test("correct options given for namespace dropdown", () => {
-  const { getAllByRole } = render(
+  const { getAllByRole } = renderWithContext(
     <LogLevel
       open={true}
-      levels={testLevels}
-      namespaces={testNamespaces}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
   );
   fireEvent.click(getAllByRole("button")[0]);
-  expect(getAllByRole("option")[0].textContent).toEqual(testNamespaces[0]);
-  expect(getAllByRole("option")[1].textContent).toEqual(testNamespaces[1]);
-  expect(getAllByRole("option")[2].textContent).toEqual(testNamespaces[2]);
+  expect(getAllByRole("option")[0].textContent).toEqual(testData.namespace[0]);
+  expect(getAllByRole("option")[1].textContent).toEqual(testData.namespace[1]);
+  expect(getAllByRole("option")[2].textContent).toEqual(testData.namespace[2]);
 });
 
 test("correct options given for level dropdown", () => {
-  const { getAllByRole } = render(
+  const { getAllByRole } = renderWithContext(
     <LogLevel
       open={true}
-      levels={testLevels}
-      namespaces={testNamespaces}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
   );
   fireEvent.click(getAllByRole("button")[1]);
-  expect(getAllByRole("option")[0].textContent).toEqual(testLevels[0]);
-  expect(getAllByRole("option")[1].textContent).toEqual(testLevels[1]);
-  expect(getAllByRole("option")[2].textContent).toEqual(testLevels[2]);
+  expect(getAllByRole("option")[0].textContent).toEqual(testData.level[0]);
+  expect(getAllByRole("option")[1].textContent).toEqual(testData.level[1]);
+  expect(getAllByRole("option")[2].textContent).toEqual(testData.level[2]);
 });
 
 test("close function called on submit", () => {
-  const { getByRole } = render(
+  const { getByRole } = renderWithContext(
     <LogLevel
       open={true}
-      levels={testLevels}
-      namespaces={testNamespaces}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
@@ -88,11 +91,9 @@ test("close function called on submit", () => {
 });
 
 test("close function called on background click", () => {
-  const { getByRole } = render(
+  const { getByRole } = renderWithContext(
     <LogLevel
       open={true}
-      levels={testLevels}
-      namespaces={testNamespaces}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
@@ -102,11 +103,9 @@ test("close function called on background click", () => {
 });
 
 test("sendDeviceCommand function called on submit", () => {
-  const { getByRole } = render(
+  const { getByRole } = renderWithContext(
     <LogLevel
       open={true}
-      levels={testLevels}
-      namespaces={testNamespaces}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
@@ -117,11 +116,9 @@ test("sendDeviceCommand function called on submit", () => {
 });
 
 test("sendDeviceCommand function NOT called on background click", () => {
-  const { getByRole } = render(
+  const { getByRole } = renderWithContext(
     <LogLevel
       open={true}
-      levels={testLevels}
-      namespaces={testNamespaces}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
