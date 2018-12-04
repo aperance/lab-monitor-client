@@ -7,7 +7,7 @@ import {
   DeviceActionResponse
 } from "./messageTypes";
 
-// tslint:disable-next-line:no-var-requires
+// @ts-ignore
 const ajv = new (require("ajv"))({ verbose: true }) as Ajv;
 
 const validateWsMessage = ajv.compile({
