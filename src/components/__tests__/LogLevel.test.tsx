@@ -6,8 +6,6 @@ import { ConfigurationContext } from "../../configuration/ConfigurationContext";
 const sendDeviceCommandMock = jest.fn();
 const closeMock = jest.fn();
 
-jest.mock("../../configuration/ConfigurationContext");
-
 const testData = {
   level: ["LevelA", "LevelB", "LevelC"],
   namespace: ["NamespaceA", "NamespaceB", "NamespaceC"]
@@ -78,14 +76,54 @@ test("correct options given for level dropdown", () => {
   expect(getAllByRole("option")[2].textContent).toEqual(testData.level[2]);
 });
 
-test("close function called on submit", () => {
-  const { getByRole } = renderWithContext(
+test("sendDeviceCommand function called on submit", () => {
+  const { getByRole, getAllByRole } = renderWithContext(
     <LogLevel
       open={true}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
   );
+  fireEvent.click(getAllByRole("button")[0]);
+  fireEvent.click(getAllByRole("option")[0]);
+  fireEvent.click(getAllByRole("button")[1]);
+  fireEvent.click(getAllByRole("option")[5]);
+  fireEvent.click(getByRole("document").getElementsByTagName("button")[0]);
+  expect(sendDeviceCommandMock).toBeCalledTimes(1);
+  expect(sendDeviceCommandMock).toBeCalledWith(
+    testData.namespace[0],
+    testData.level[2]
+  );
+});
+
+test("sendDeviceCommand function NOT called on background click", () => {
+  const { getByRole, getAllByRole } = renderWithContext(
+    <LogLevel
+      open={true}
+      sendDeviceCommand={sendDeviceCommandMock}
+      close={closeMock}
+    />
+  );
+  fireEvent.click(getAllByRole("button")[0]);
+  fireEvent.click(getAllByRole("option")[0]);
+  fireEvent.click(getAllByRole("button")[1]);
+  fireEvent.click(getAllByRole("option")[5]);
+  fireEvent.click(getByRole("document"));
+  expect(sendDeviceCommandMock).toBeCalledTimes(0);
+});
+
+test("close function called on submit", () => {
+  const { getByRole, getAllByRole } = renderWithContext(
+    <LogLevel
+      open={true}
+      sendDeviceCommand={sendDeviceCommandMock}
+      close={closeMock}
+    />
+  );
+  fireEvent.click(getAllByRole("button")[0]);
+  fireEvent.click(getAllByRole("option")[0]);
+  fireEvent.click(getAllByRole("button")[1]);
+  fireEvent.click(getAllByRole("option")[5]);
   fireEvent.click(getByRole("document").getElementsByTagName("button")[0]);
   expect(closeMock).toBeCalledTimes(1);
 });
@@ -102,27 +140,30 @@ test("close function called on background click", () => {
   expect(closeMock).toBeCalledTimes(1);
 });
 
-test("sendDeviceCommand function called on submit", () => {
-  const { getByRole } = renderWithContext(
+test("unable to submit with empty namespace", () => {
+  const { getByRole, getAllByRole } = renderWithContext(
     <LogLevel
       open={true}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
   );
+  fireEvent.click(getAllByRole("button")[1]);
+  fireEvent.click(getAllByRole("option")[0]);
   fireEvent.click(getByRole("document").getElementsByTagName("button")[0]);
-  expect(sendDeviceCommandMock).toBeCalledTimes(1);
-  expect(sendDeviceCommandMock).toBeCalledWith("", "");
+  expect(sendDeviceCommandMock).toBeCalledTimes(0);
 });
 
-test("sendDeviceCommand function NOT called on background click", () => {
-  const { getByRole } = renderWithContext(
+test("unable to submit with empty level", () => {
+  const { getByRole, getAllByRole } = renderWithContext(
     <LogLevel
       open={true}
       sendDeviceCommand={sendDeviceCommandMock}
       close={closeMock}
     />
   );
-  fireEvent.click(getByRole("document"));
+  fireEvent.click(getAllByRole("button")[0]);
+  fireEvent.click(getAllByRole("option")[0]);
+  fireEvent.click(getByRole("document").getElementsByTagName("button")[0]);
   expect(sendDeviceCommandMock).toBeCalledTimes(0);
 });

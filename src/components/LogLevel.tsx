@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import {
   Dialog,
@@ -28,8 +28,16 @@ interface Props extends WithStyles<typeof styles> {
 
 const LogLevel = (props: Props) => {
   const configuration = useContext(ConfigurationContext).logLevel;
-  const [namespace, setNamespace] = useState("");
-  const [level, setLevel] = useState("");
+  const [namespace, setNamespace] = useState(null as string | null);
+  const [level, setLevel] = useState(null as string | null);
+
+  useEffect(
+    () => {
+      setNamespace(null);
+      setLevel(null);
+    },
+    [props.open]
+  );
 
   return (
     <Dialog open={props.open} onClose={props.close}>
@@ -39,7 +47,7 @@ const LogLevel = (props: Props) => {
             <InputLabel>Namespace</InputLabel>
             <Select
               className={props.classes.selectNamespace}
-              value={namespace}
+              value={namespace || ""}
               onChange={e => setNamespace(e.target.value)}
               input={<Input id="namespace" />}
             >
@@ -55,7 +63,7 @@ const LogLevel = (props: Props) => {
             <InputLabel>Level</InputLabel>
             <Select
               className={props.classes.selectLevel}
-              value={level}
+              value={level || ""}
               onChange={e => setLevel(e.target.value)}
               input={<Input id="level" />}
             >
@@ -72,10 +80,13 @@ const LogLevel = (props: Props) => {
       <DialogActions>
         <Button
           onClick={() => {
-            props.sendDeviceCommand(namespace, level);
-            props.close();
+            if (namespace && level) {
+              props.sendDeviceCommand(namespace, level);
+              props.close();
+            }
           }}
           color="primary"
+          disabled={!namespace || !level}
         >
           Send
         </Button>
