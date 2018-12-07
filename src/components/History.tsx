@@ -22,11 +22,12 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {
   historyData: { [x: string]: Array<[string, string | null]> };
-  properties: string[];
 }
 
 const HistoryList = (props: Props) => {
   const [selectedProperty, setSelectedProperty] = useState("");
+
+  const properties = Object.keys(props.historyData);
 
   return (
     <div className={props.classes.root}>
@@ -37,24 +38,24 @@ const HistoryList = (props: Props) => {
               width={width}
               rowHeight={32}
               height={height}
-              rowCount={props.properties.length}
+              rowCount={properties.length}
               rowRenderer={({ key, index, style }) => (
                 <ListItem
                   button
                   style={style}
                   key={key}
                   className={
-                    props.properties[index] === selectedProperty
+                    properties[index] === selectedProperty
                       ? props.classes.selectedRow
                       : undefined
                   }
-                  onClick={() => setSelectedProperty(props.properties[index])}
+                  onClick={() => setSelectedProperty(properties[index])}
                   dense={true}
                   divider={true}
                 >
                   <ListItemText
                     classes={{ primary: props.classes.text }}
-                    primary={props.properties[index]}
+                    primary={properties[index]}
                   />
                 </ListItem>
               )}
