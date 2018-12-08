@@ -19,10 +19,10 @@ const styles = createStyles({
     // tslint:disable-next-line:object-literal-key-quotes
     margin: "24px 32px 0px 32px",
     "& form": { display: "flex", flexWrap: "wrap", marginTop: "16px" },
-    "& label": { fontSize: "0.825rem" },
+    "& label": { fontSize: "0.825rem", height: "15px" },
     "& button": { margin: "8px 0px 8px" },
     // @ts-ignore
-    "& input": { fontSize: ["0.825rem", "!important"] }
+    "& input": { fontSize: ["0.825rem", "!important"], height: "15px" }
   },
   presetsInput: { width: "100%" },
   modeInput: { width: "76px", marginRight: "16px" },
