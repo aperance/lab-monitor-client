@@ -3,7 +3,10 @@ import { useContext } from "react";
 import { WebsocketContext } from "../websockets/WebsocketContext";
 import AssetTableContainer from "../containers/AssetTableContainer";
 import ToolbarContainer from "../containers/ToolbarContainer";
-import SubViewContainer from "../containers/SubViewContainer";
+import HistoryContainer from "../containers/HistoryContainer";
+import WebPageContainer from "../containers/WebPageContainer";
+import PsToolsContainer from "../containers/PsToolsContainer";
+import VncContainer from "../containers/VncContainer";
 import NavBar from "./NavBar";
 import ErrorMessage from "./ErrorMessage";
 import Spinner from "./Spinner";
@@ -40,7 +43,20 @@ const App = (props: Props) => {
           drawersVisible={props.drawersVisible}
           isResizing={props.draggingSet}
           leftDrawer={<ToolbarContainer />}
-          rightDrawer={<SubViewContainer />}
+          rightDrawer={(() => {
+            switch (props.subView) {
+              case "history":
+                return <HistoryContainer />;
+              case "statePage":
+                return <WebPageContainer />;
+              case "psTools":
+                return <PsToolsContainer />;
+              case "vnc":
+                return <VncContainer />;
+              default:
+                return null;
+            }
+          })()}
         />
 
         <ActionResponse
