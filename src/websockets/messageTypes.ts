@@ -44,13 +44,13 @@ export interface PsToolsResponse {
   readonly result: string | null;
 }
 
-export interface DeviceActionRequest {
+export interface CommandRequest {
   readonly targets: string[];
   readonly type: string;
   readonly parameters: any;
 }
 
-export interface DeviceActionResponse {
+export interface CommandResponse {
   readonly err: Error | null;
   readonly results: Array<{
     err: Error | null;

@@ -5,7 +5,7 @@ import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
 import { WebsocketContext } from "../websockets/WebsocketContext";
 import {
-  deviceCommand,
+  commandRequest,
   refreshDevice,
   clearDevice
 } from "../websockets/messageCreators";
@@ -126,25 +126,25 @@ const Toolbar = (props: Props) => {
           name="Delete Logs"
           leftIcon="delete_sweep"
           selectedRows={props.rows}
-          onClick={() => ws.send(deviceCommand(props.rows, "deleteLogs"))}
+          onClick={() => ws.send(commandRequest(props.rows, "deleteLogs"))}
         />
         <ToolbarItem
           name="Clean Start"
           leftIcon="power_settings_new"
           selectedRows={props.rows}
-          onClick={() => ws.send(deviceCommand(props.rows, "cleanStart"))}
+          onClick={() => ws.send(commandRequest(props.rows, "cleanStart"))}
         />
         <ToolbarItem
           name="RAM Clear"
           leftIcon="memory"
           selectedRows={props.rows}
-          onClick={() => ws.send(deviceCommand(props.rows, "ramClear"))}
+          onClick={() => ws.send(commandRequest(props.rows, "ramClear"))}
         />
         <ToolbarItem
           name="Reset Display"
           leftIcon="desktop_windows"
           selectedRows={props.rows}
-          onClick={() => ws.send(deviceCommand(props.rows, "resetDisplay"))}
+          onClick={() => ws.send(commandRequest(props.rows, "resetDisplay"))}
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
@@ -163,7 +163,7 @@ const Toolbar = (props: Props) => {
       <LogLevel
         open={logConfigOpen}
         sendDeviceCommand={(namespace: string, level: string) =>
-          ws.send(deviceCommand(props.rows, "logLevel", { namespace, level }))
+          ws.send(commandRequest(props.rows, "logLevel", { namespace, level }))
         }
         close={() => setLogConfigOpen(false)}
       />

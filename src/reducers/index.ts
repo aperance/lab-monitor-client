@@ -1,11 +1,10 @@
 import { combineReducers } from "redux";
 import { tableDataReducer, TableDataState } from "./tableDataReducer";
 import { historyDataReducer, HistoryDataState } from "./historyDataReducer";
-import { psToolsReducer, PsToolsState } from "./psToolsReducer";
 import {
-  actionResponseReducer,
-  ActionResponseState
-} from "./actionResponseReducer";
+  deviceResponseReducer,
+  DeviceResponseState
+} from "./deviceResponseReducer";
 import {
   userSelectionReducer,
   UserSelectionState
@@ -13,16 +12,14 @@ import {
 
 export interface StoreState {
   tableData: TableDataState;
-  userSelection: UserSelectionState;
   historyData: HistoryDataState;
-  psTools: PsToolsState;
-  actionResponse: ActionResponseState;
+  deviceResponse: DeviceResponseState;
+  userSelection: UserSelectionState;
 }
 
 export default combineReducers<StoreState>({
   tableData: tableDataReducer,
-  userSelection: userSelectionReducer,
   historyData: historyDataReducer,
-  psTools: psToolsReducer,
-  actionResponse: actionResponseReducer
+  deviceResponse: deviceResponseReducer,
+  userSelection: userSelectionReducer
 });

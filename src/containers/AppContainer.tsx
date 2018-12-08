@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 import { StoreState } from "../reducers/index";
-import { actionResponseClear, draggingSet } from "../actions/actionCreators";
+import { deviceCommandResponse, draggingSet } from "../actions/actionCreators";
 import App from "../components/App";
 
 const mapStateToProps = ({
   userSelection,
   tableData,
-  actionResponse
+  deviceResponse
 }: StoreState) => {
   return {
     dataReceived: Object.keys(tableData).length !== 0,
@@ -16,13 +16,14 @@ const mapStateToProps = ({
       : !userSelection.view
       ? 1
       : 2) as 0 | 1 | 2,
-    actionResponse
+    deviceResponse: deviceResponse.command
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    actionResponseClose: () => dispatch(actionResponseClear()),
+    deviceResponseClear: () =>
+      dispatch(deviceCommandResponse({ err: null, results: null })),
     draggingSet: (isDragging: boolean) => dispatch(draggingSet(isDragging))
   };
 };

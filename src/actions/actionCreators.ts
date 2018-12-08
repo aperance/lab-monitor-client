@@ -3,8 +3,7 @@ import {
   DeviceDataAllAction,
   DeviceDataUpdateAction,
   PsToolsResponseAction,
-  DeviceActionResponseSetAction,
-  DeviceActionResponseClearAction,
+  CommandResponseAction,
   ResetAllAction,
   SingleRowSelectAction,
   MultiRowSelectAction,
@@ -16,7 +15,7 @@ import {
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
-  DeviceActionResponse
+  CommandResponse
 } from "../websockets/messageTypes";
 
 export const deviceDataAll = (payload: DeviceDataAll): DeviceDataAllAction => {
@@ -35,14 +34,10 @@ export const psToolsResponse = (
   return { ...payload, type: ActionTypeKeys.PSTOOLS_RESPONSE };
 };
 
-export const actionResponseSet = (
-  payload: DeviceActionResponse
-): DeviceActionResponseSetAction => {
-  return { ...payload, type: ActionTypeKeys.ACTION_RESPONSE_SET };
-};
-
-export const actionResponseClear = (): DeviceActionResponseClearAction => {
-  return { type: ActionTypeKeys.ACTION_RESPONSE_CLEAR };
+export const deviceCommandResponse = (
+  payload: CommandResponse
+): CommandResponseAction => {
+  return { ...payload, type: ActionTypeKeys.COMMAND_RESPONSE };
 };
 
 export const resetAll = (): ResetAllAction => {

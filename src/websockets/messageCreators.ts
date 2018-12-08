@@ -1,6 +1,6 @@
 import { WsMessageTypeKeys } from "./messageTypes";
 
-export const psToolsCommand = (
+export const psToolsRequest = (
   target: string,
   mode: string,
   argument: string
@@ -11,7 +11,7 @@ export const psToolsCommand = (
   };
 };
 
-export const deviceCommand = (
+export const commandRequest = (
   targets: string[],
   type: string,
   parameters: any = {}

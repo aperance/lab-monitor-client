@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import Terminal from "./Terminal";
 import { WebsocketContext } from "../websockets/WebsocketContext";
-import { psToolsCommand } from "../websockets/messageCreators";
+import { psToolsRequest } from "../websockets/messageCreators";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
 const styles = createStyles({
@@ -32,7 +32,7 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {
   target: string | null;
-  result?: string;
+  result: string | null;
 }
 
 const PsTools = (props: Props) => {
@@ -105,7 +105,7 @@ const PsTools = (props: Props) => {
               size="small"
               onClick={() => {
                 if (props.target)
-                  ws.send(psToolsCommand(props.target, mode, cmd));
+                  ws.send(psToolsRequest(props.target, mode, cmd));
               }}
             >
               Send

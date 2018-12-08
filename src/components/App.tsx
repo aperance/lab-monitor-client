@@ -17,11 +17,11 @@ interface Props {
   dataReceived: boolean;
   subView: string | null;
   drawersVisible: 0 | 1 | 2;
-  actionResponse: {
+  deviceResponse: {
     err: Error | null;
     results: any[] | null;
   };
-  actionResponseClose: () => void;
+  deviceResponseClear: () => void;
   draggingSet: (x: boolean) => void;
 }
 
@@ -60,8 +60,8 @@ const App = (props: Props) => {
         />
 
         <ActionResponse
-          response={props.actionResponse}
-          handleClose={props.actionResponseClose}
+          response={props.deviceResponse}
+          handleClose={props.deviceResponseClear}
         />
       </>
     );

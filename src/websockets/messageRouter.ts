@@ -8,7 +8,7 @@ import {
   isPsToolsResponse
 } from "./messageTypeGuards";
 import {
-  actionResponseSet,
+  deviceCommandResponse,
   deviceDataAll,
   deviceDataUpdate,
   psToolsResponse
@@ -32,7 +32,7 @@ export const messageRouter = (message: unknown) => {
       break;
     case WsMessageTypeKeys.DeviceActionResponse:
       if (!isDeviceActionResponse(payload)) throw Error(errorMessage);
-      store.dispatch(actionResponseSet(payload));
+      store.dispatch(deviceCommandResponse(payload));
       break;
     case WsMessageTypeKeys.PsToolsCommandResponse:
       if (!isPsToolsResponse(payload)) throw Error(errorMessage);

@@ -2,7 +2,7 @@ import {
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
-  DeviceActionResponse
+  CommandResponse
 } from "../websockets/messageTypes";
 
 export enum ActionTypeKeys {
@@ -14,8 +14,7 @@ export enum ActionTypeKeys {
   DEVICE_DATA_ALL = "DEVICE_DATA_ALL",
   DEVICE_DATA_UPDATE = "DEVICE_DATA_UPDATE",
   RESET_ALL = "RESET_ALL",
-  ACTION_RESPONSE_SET = "ACTION_RESPONSE_SET",
-  ACTION_RESPONSE_CLEAR = "ACTION_RESPONSE_CLEAR",
+  COMMAND_RESPONSE = "COMMAND_RESPONSE",
   DRAGGING_SET = "DRAGGING_SET"
 }
 
@@ -54,12 +53,8 @@ export interface PsToolsResponseAction extends PsToolsResponse {
   readonly type: ActionTypeKeys.PSTOOLS_RESPONSE;
 }
 
-export interface DeviceActionResponseSetAction extends DeviceActionResponse {
-  readonly type: ActionTypeKeys.ACTION_RESPONSE_SET;
-}
-
-export interface DeviceActionResponseClearAction {
-  readonly type: ActionTypeKeys.ACTION_RESPONSE_CLEAR;
+export interface CommandResponseAction extends CommandResponse {
+  readonly type: ActionTypeKeys.COMMAND_RESPONSE;
 }
 
 export interface DraggingSetAction {
@@ -76,6 +71,5 @@ export type Actions =
   | ViewSelectAction
   | ProxyToggleAction
   | PsToolsResponseAction
-  | DeviceActionResponseSetAction
-  | DeviceActionResponseClearAction
+  | CommandResponseAction
   | DraggingSetAction;

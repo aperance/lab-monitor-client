@@ -4,7 +4,7 @@ import {
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
-  DeviceActionResponse
+  CommandResponse
 } from "./messageTypes";
 
 // @ts-ignore
@@ -251,7 +251,7 @@ export const isPsToolsResponse = (
  */
 export const isDeviceActionResponse = (
   payload: unknown
-): payload is DeviceActionResponse => {
+): payload is CommandResponse => {
   const isValid = validateDeviceActionResponse(payload);
   if (validateDeviceActionResponse.errors)
     console.error({

@@ -15,13 +15,13 @@ const styles = createStyles({
 });
 
 interface Props extends WithStyles<typeof styles> {
-  output?: string;
+  output: string | null;
 }
 
 const Terminal = (props: Props) => {
   return (
     <Paper className={props.classes.paper} elevation={8} square={true}>
-      <pre className={props.classes.pre}>{props.output}</pre>
+      {props.output && <pre className={props.classes.pre}>{props.output}</pre>}
     </Paper>
   );
 };
