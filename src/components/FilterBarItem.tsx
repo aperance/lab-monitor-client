@@ -25,9 +25,6 @@ const styles = createStyles({
     height: "18px",
     // tslint:disable-next-line:object-literal-key-quotes
     padding: "0px"
-  },
-  checked: {
-    "& svg": { color: "#2196f3" }
   }
 });
 
@@ -47,7 +44,7 @@ const FilterBarItem = (props: Props) => {
       control={
         <Checkbox
           className={props.classes.checkbox}
-          classes={{ checked: props.classes.checked }}
+          color="primary"
           checked={
             props.selectedFilters.hasOwnProperty(props.property) &&
             props.selectedFilters[props.property].includes(props.regex)

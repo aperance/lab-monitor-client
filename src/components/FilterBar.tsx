@@ -38,15 +38,6 @@ const styles = createStyles({
     color: "rgba(0, 0, 0, 0.54)",
     fontWeight: 400,
     whiteSpace: "nowrap"
-  },
-  bar: {},
-  checked: {
-    // tslint:disable-next-line:object-literal-key-quotes
-    color: "#2196f3",
-    // tslint:disable-next-line:object-literal-key-quotes
-    "& + $bar": {
-      backgroundColor: "#2196f3"
-    }
   }
 });
 
@@ -99,13 +90,9 @@ const FilterBar = (props: Props) => {
         }}
         control={
           <Switch
-            classes={{
-              checked: props.classes.checked,
-              bar: props.classes.bar
-            }}
-            color="default"
-            disableRipple={true}
             checked={!props.proxyEnabled}
+            color="primary"
+            disableRipple={true}
             onClick={props.handleProxyClick}
           />
         }

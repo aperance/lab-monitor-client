@@ -8,8 +8,7 @@ const styles = createStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
-  },
-  spinner: { color: "#2196f3" }
+  }
 });
 
 interface Props extends WithStyles<typeof styles> {}
@@ -17,7 +16,7 @@ interface Props extends WithStyles<typeof styles> {}
 const Spinner = (props: Props) => {
   return (
     <span className={props.classes.root}>
-      <CircularProgress className={props.classes.spinner} size={60} />
+      <CircularProgress size={60} />
     </span>
   );
 };
