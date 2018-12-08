@@ -8,7 +8,10 @@ import { WebsocketProvider } from "./websockets/WebsocketContext";
 import { ConfigurationProvider } from "./configuration/ConfigurationContext";
 import AppContainer from "./containers/AppContainer";
 
-const theme = createMuiTheme({ palette: { primary: blue } });
+const theme = createMuiTheme({
+  typography: { useNextVariants: true },
+  palette: { primary: blue }
+});
 
 ReactDOM.render(
   <Provider store={store}>
