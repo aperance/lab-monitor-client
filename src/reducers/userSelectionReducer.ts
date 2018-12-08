@@ -1,11 +1,5 @@
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
-
-interface UserSelectionState {
-  rows: string[];
-  view: string | null;
-  proxy: boolean;
-  dragging: boolean;
-}
+import { UserSelectionState } from "../store/storeTypes";
 
 const initialState: UserSelectionState = {
   rows: [],
@@ -14,7 +8,7 @@ const initialState: UserSelectionState = {
   dragging: false
 };
 
-const userSelectionReducer = (state = initialState, action: Actions) => {
+export const userSelectionReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.SINGLE_ROW_SELECT:
       if (
@@ -54,5 +48,3 @@ const userSelectionReducer = (state = initialState, action: Actions) => {
       return { ...state };
   }
 };
-
-export { userSelectionReducer, UserSelectionState };

@@ -1,14 +1,9 @@
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
-
-interface TableDataState {
-  [id: string]: {
-    [property: string]: string | null;
-  };
-}
+import { TableDataState } from "../store/storeTypes";
 
 const initialState: TableDataState = {};
 
-const tableDataReducer = (state = initialState, action: Actions) => {
+export const tableDataReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.DEVICE_DATA_ALL:
       return { ...action.state };
@@ -31,5 +26,3 @@ const tableDataReducer = (state = initialState, action: Actions) => {
       return { ...state };
   }
 };
-
-export { tableDataReducer, TableDataState };

@@ -1,19 +1,15 @@
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
-
-interface DeviceResponseState {
-  command: { err: Error | null; results: any[] | null };
-  psTools: {
-    err: Error | null;
-    result: string | null;
-  };
-}
+import { DeviceResponseState } from "../store/storeTypes";
 
 const initialState: DeviceResponseState = {
   command: { err: null, results: null },
   psTools: { err: null, result: null }
 };
 
-const deviceResponseReducer = (state = initialState, action: Actions) => {
+export const deviceResponseReducer = (
+  state = initialState,
+  action: Actions
+) => {
   switch (action.type) {
     case ActionTypeKeys.COMMAND_RESPONSE:
       return {
@@ -30,5 +26,3 @@ const deviceResponseReducer = (state = initialState, action: Actions) => {
       return { ...state };
   }
 };
-
-export { deviceResponseReducer, DeviceResponseState };

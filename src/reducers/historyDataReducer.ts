@@ -1,14 +1,9 @@
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
-
-interface HistoryDataState {
-  [id: string]: {
-    [property: string]: Array<[string, string | null]>;
-  };
-}
+import { HistoryDataState } from "../store/storeTypes";
 
 const initialState: HistoryDataState = {};
 
-const historyDataReducer = (state = initialState, action: Actions) => {
+export const historyDataReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypeKeys.DEVICE_DATA_ALL:
       return { ...action.history };
@@ -39,5 +34,3 @@ const historyDataReducer = (state = initialState, action: Actions) => {
       return { ...state };
   }
 };
-
-export { historyDataReducer, HistoryDataState };

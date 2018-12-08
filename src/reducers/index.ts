@@ -1,14 +1,14 @@
 import { combineReducers } from "redux";
-import { tableDataReducer, TableDataState } from "./tableDataReducer";
-import { historyDataReducer, HistoryDataState } from "./historyDataReducer";
+import { tableDataReducer } from "./tableDataReducer";
+import { historyDataReducer } from "./historyDataReducer";
+import { deviceResponseReducer } from "./deviceResponseReducer";
+import { userSelectionReducer } from "./userSelectionReducer";
 import {
-  deviceResponseReducer,
-  DeviceResponseState
-} from "./deviceResponseReducer";
-import {
-  userSelectionReducer,
+  DeviceResponseState,
+  TableDataState,
+  HistoryDataState,
   UserSelectionState
-} from "./userSelectionReducer";
+} from "../store/storeTypes";
 
 export interface StoreState {
   tableData: TableDataState;
