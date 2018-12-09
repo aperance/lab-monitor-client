@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Configuration } from "./configurationTypes";
+import { isConfiguration } from "./configurationTypeGuards";
 
 export const ConfigurationContext = React.createContext({} as Configuration);
 
@@ -18,6 +19,8 @@ export const ConfigurationProvider = (props: Props) => {
       .then(res => res.json())
       .then(obj => {
         console.log(obj);
+        if (!isConfiguration(obj))
+          throw Error(`Configuration file failed validation`);
         setConfiguration(obj);
       });
   }, []);

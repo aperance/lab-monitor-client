@@ -19,41 +19,6 @@ const validateWsMessage = ajv.compile({
   additionalProperties: false
 });
 
-// const validateConfiguration = ajv.compile({
-//   properties: {
-//     title: { type: "string" },
-//     columns: { type: "array", items: { type: "object" } },
-//     filters: { type: "array", items: { type: "object" } },
-//     logLevel: { type: "object", required: ["level", "namespace"] },
-//     httpProxy: { type: "string" },
-//     logsPath: { type: "string" },
-//     statePath: { type: "string" },
-//     psTools: { type: "object" },
-//     vnc: {
-//       type: "object",
-//       required: [
-//         "proxyUrl",
-//         "port",
-//         "username",
-//         "password",
-//         "passwordEncrypted"
-//       ]
-//     }
-//   },
-//   required: [
-//     "title",
-//     "columns",
-//     "filters",
-//     "logLevel",
-//     "httpProxy",
-//     "logsPath",
-//     "statePath",
-//     "psTools",
-//     "vnc"
-//   ],
-//   additionalProperties: false
-// });
-
 const validateDeviceDataAll = ajv.compile({
   properties: {
     state: {
@@ -170,23 +135,6 @@ export const isWsMessage = (message: unknown): message is WsMessage => {
     });
   return isValid as boolean;
 };
-
-/**
- * Type guard for Configuration interface
- *
- * @param {unknown} payload
- * @returns {boolean}
- */
-// export const isConfiguration = (payload: unknown): payload is Configuration => {
-//   const isValid = validateConfiguration(payload);
-//   if (validateConfiguration.errors)
-//     console.error({
-//       ...validateConfiguration.errors[0],
-//       data: payload,
-//       schema: "Configuration"
-//     });
-//   return isValid as boolean;
-// };
 
 /**
  * Type guard for DeviceDataAll interface
