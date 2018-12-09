@@ -2,9 +2,9 @@ import * as React from "react";
 import * as ReactTestingLibrary from "react-testing-library";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import reducer from "../../reducers/index";
-import { ConfigurationContext } from "../../configuration/ConfigurationContext";
-import PsToolsContainer from "../PsToolsContainer";
+import reducer from "../reducers/index";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import PsToolsContainer from "../containers/PsToolsContainer";
 
 afterEach(() => {
   ReactTestingLibrary.cleanup();
@@ -74,12 +74,11 @@ test("does render when one row is selected, without result string", () => {
     userSelection: { rows: ["0.0.0.0"] },
     deviceResponse: { psTools: { result: null } }
   };
-  const { container, debug } = render(
+  const { container } = render(
     <PsToolsContainer />,
     testState,
     testConfiguration
   );
-  debug();
   expect(container.querySelectorAll("form").length).toEqual(2);
   expect(container.querySelectorAll("pre").length).toEqual(0);
 });
@@ -89,12 +88,11 @@ test("does render when one row is selected, with result string", () => {
     userSelection: { rows: ["0.0.0.0"] },
     deviceResponse: { psTools: { result: "Test result string" } }
   };
-  const { container, debug } = render(
+  const { container } = render(
     <PsToolsContainer />,
     testState,
     testConfiguration
   );
-  debug();
   expect(container.querySelectorAll("form").length).toEqual(2);
   expect(container.querySelectorAll("pre").length).toEqual(1);
   expect(container.querySelectorAll("pre")[0].textContent).toEqual(
@@ -107,13 +105,12 @@ test("does render when one row is selected, with result string", () => {
     userSelection: { rows: ["0.0.0.0"] },
     deviceResponse: { psTools: { result: "Test result string" } }
   };
-  const { getAllByRole, debug } = render(
+  const { getAllByRole } = render(
     <PsToolsContainer />,
     testState,
     testConfiguration
   );
   ReactTestingLibrary.fireEvent.click(getAllByRole("button")[0]);
-  debug();
   expect(getAllByRole("option").length).toEqual(2);
   expect(getAllByRole("option")[0].textContent).toEqual("Test Command One");
   expect(getAllByRole("option")[1].textContent).toEqual("Test Command Two");

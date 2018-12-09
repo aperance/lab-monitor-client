@@ -2,9 +2,9 @@ import * as React from "react";
 import * as ReactTestingLibrary from "react-testing-library";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import reducer from "../../reducers/index";
-import { ConfigurationContext } from "../../configuration/ConfigurationContext";
-import ToolbarContainer from "../ToolbarContainer";
+import reducer from "../reducers/index";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import ToolbarContainer from "../containers/ToolbarContainer";
 
 window.URL.createObjectURL = jest.fn();
 
@@ -48,12 +48,11 @@ test("renders full toolbar when zero rows are selected", () => {
   const testState = {
     userSelection: { rows: [], view: null, proxyEnabled: true }
   };
-  const { getAllByRole, debug } = render(
+  const { getAllByRole } = render(
     <ToolbarContainer />,
     testState,
     testConfiguration
   );
-  debug();
   expect(getAllByRole("button").length).toEqual(13);
 });
 
@@ -61,12 +60,11 @@ test("renders full toolbar when one row is selected", () => {
   const testState = {
     userSelection: { rows: ["0.0.0.0"], view: null, proxyEnabled: true }
   };
-  const { getAllByRole, debug } = render(
+  const { getAllByRole } = render(
     <ToolbarContainer />,
     testState,
     testConfiguration
   );
-  debug();
   expect(getAllByRole("button").length).toEqual(13);
 });
 
@@ -78,11 +76,10 @@ test("renders limited toolbar when two rows are selected", () => {
       proxyEnabled: true
     }
   };
-  const { getAllByRole, debug } = render(
+  const { getAllByRole } = render(
     <ToolbarContainer />,
     testState,
     testConfiguration
   );
-  debug();
   expect(getAllByRole("button").length).toEqual(7);
 });

@@ -2,9 +2,9 @@ import * as React from "react";
 import * as ReactTestingLibrary from "react-testing-library";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import reducer from "../../reducers/index";
-import { ConfigurationContext } from "../../configuration/ConfigurationContext";
-import WebPageConatiner from "../WebPageContainer";
+import reducer from "../reducers/index";
+import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import WebPageConatiner from "../containers/WebPageContainer";
 
 afterEach(() => {
   ReactTestingLibrary.cleanup();
