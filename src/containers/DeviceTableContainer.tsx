@@ -5,7 +5,7 @@ import {
   multiRowSelect,
   proxyToggle
 } from "../actions/actionCreators";
-import AssetTable from "../components/AssetTable";
+import DeviceTable from "../components/DeviceTable";
 
 const mapStateToProps = ({ userSelection, tableData }: StoreState) => {
   return {
@@ -29,4 +29,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AssetTable);
+)(DeviceTable);

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useContext } from "react";
 import { WebsocketContext } from "../websockets/WebsocketContext";
-import AssetTableContainer from "../containers/AssetTableContainer";
+import DeviceTableContainer from "../containers/DeviceTableContainer";
 import ToolbarContainer from "../containers/ToolbarContainer";
 import HistoryContainer from "../containers/HistoryContainer";
 import WebPageContainer from "../containers/WebPageContainer";
@@ -37,7 +37,7 @@ const App = (props: Props) => {
       <>
         <NavBar />
 
-        <AssetTableContainer />
+        <DeviceTableContainer />
 
         <Drawers
           drawersVisible={props.drawersVisible}

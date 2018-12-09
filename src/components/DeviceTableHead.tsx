@@ -17,7 +17,7 @@ interface Props extends WithStyles<typeof styles> {
   changeSort: (property: string) => void;
 }
 
-const AssetTableHead = (props: Props) => {
+const DeviceTableHead = (props: Props) => {
   return (
     <TableHead>
       <TableRow className={props.classes.row}>
@@ -39,11 +39,11 @@ const AssetTableHead = (props: Props) => {
   );
 };
 
-const memoizedAssetTableHead = React.memo(
-  AssetTableHead,
+const memoizedDeviceTableHead = React.memo(
+  DeviceTableHead,
   (prevProps, nextProps) =>
     prevProps.selectedSorting.property === nextProps.selectedSorting.property &&
     prevProps.selectedSorting.reverse === nextProps.selectedSorting.reverse
 );
 
-export default withStyles(styles)(memoizedAssetTableHead);
+export default withStyles(styles)(memoizedDeviceTableHead);

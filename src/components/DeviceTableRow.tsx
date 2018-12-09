@@ -25,7 +25,7 @@ interface Props extends WithStyles<typeof styles> {
   handleRowClick: (e: MouseEvent) => void;
 }
 
-const AssetTableRow = (props: Props) => {
+const DeviceTableRow = (props: Props) => {
   return (
     <TableRow
       hover
@@ -49,12 +49,12 @@ const AssetTableRow = (props: Props) => {
   );
 };
 
-const memoizedAssetTableRow = React.memo(
-  AssetTableRow,
+const memoizedDeviceTableRow = React.memo(
+  DeviceTableRow,
   (prevProps, nextProps) =>
     prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
     prevProps.rowData.status === nextProps.rowData.status &&
     prevProps.selected === nextProps.selected
 );
 
-export default withStyles(styles)(memoizedAssetTableRow);
+export default withStyles(styles)(memoizedDeviceTableRow);

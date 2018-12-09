@@ -1,8 +1,8 @@
 import * as React from "react";
 import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { Table, TableBody } from "@material-ui/core";
-import AssetTableHead from "./AssetTableHead";
-import AssetTableRow from "./AssetTableRow";
+import DeviceTableHead from "./DeviceTableHead";
+import DeviceTableRow from "./DeviceTableRow";
 import FilterBar from "./FilterBar";
 import { useDataConditioner } from "../hooks/useDataConditioner";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
@@ -32,7 +32,7 @@ interface Props extends WithStyles<typeof styles> {
   handleRowClick: (e: MouseEvent, id: string | null) => void;
 }
 
-const AssetTable = (props: Props) => {
+const DeviceTable = (props: Props) => {
   const { columns, filters } = React.useContext(ConfigurationContext);
   const [
     conditionedData,
@@ -54,14 +54,14 @@ const AssetTable = (props: Props) => {
 
       <div className={props.classes.root}>
         <Table>
-          <AssetTableHead
+          <DeviceTableHead
             columns={columns}
             selectedSorting={selectedSorting}
             changeSort={changeSort}
           />
           <TableBody>
             {conditionedData.map(([rowId, rowData]) => (
-              <AssetTableRow
+              <DeviceTableRow
                 key={rowId}
                 columns={columns}
                 rowData={rowData}
@@ -82,9 +82,9 @@ const AssetTable = (props: Props) => {
   );
 };
 
-const memoizedAssetTable = React.memo(
-  AssetTable,
+const memoizedDeviceTable = React.memo(
+  DeviceTable,
   (_, nextProps) => nextProps.pause
 );
 
-export default withStyles(styles)(memoizedAssetTable);
+export default withStyles(styles)(memoizedDeviceTable);
