@@ -13,12 +13,15 @@ module.exports = {
       favicon: "./public/favicon.ico"
     }),
     new webpack.HotModuleReplacementPlugin()
+    // new webpack.DefinePlugin({
+    //   "process.env.NODE_ENV": JSON.stringify("production")
+    // })
   ],
 
   devServer: {
     compress: true,
     hot: true,
-    //host: "10.91.1.1",
+    host: "localhost",
     port: 3000
   },
 
