@@ -7,22 +7,86 @@ const ajv = new (require("ajv"))({ verbose: true }) as Ajv;
 const validateConfiguration = ajv.compile({
   properties: {
     title: { type: "string" },
-    columns: { type: "array", items: { type: "object" } },
-    filters: { type: "array", items: { type: "object" } },
-    logLevel: { type: "object", required: ["level", "namespace"] },
+    columns: {
+      type: "array",
+      minItems: 1,
+      items: {
+        type: "object",
+        properties: {
+          property: { type: "string" },
+          title: { type: "string" },
+          replace: {
+            type: "object",
+            patternProperties: { "^.*$": { type: "string" } },
+            additionalProperties: false
+          }
+        },
+        required: ["property", "title"],
+        additionalProperties: false
+      }
+    },
+    filters: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          property: { type: "string" },
+          title: { type: "string" },
+          options: {
+            type: "object",
+            patternProperties: { "^.*$": { type: "string" } },
+            additionalProperties: false
+          }
+        },
+        required: ["property", "title", "options"],
+        additionalProperties: false
+      }
+    },
+    logLevel: {
+      type: "object",
+      properties: {
+        level: { type: "array", minItems: 1, items: { type: "string" } },
+        namespace: { type: "array", minItems: 1, items: { type: "string" } }
+      },
+      required: ["level", "namespace"],
+      additionalProperties: false
+    },
     httpProxy: { type: "string" },
     logsPath: { type: "string" },
     statePath: { type: "string" },
-    psTools: { type: "object" },
+    psTools: {
+      type: "object",
+      patternProperties: {
+        "^.*$": {
+          type: "object",
+          properties: {
+            name: { type: "string" },
+            mode: { type: "string" },
+            cmd: { type: "string" }
+          },
+          required: ["name", "mode", "cmd"],
+          additionalProperties: false
+        }
+      },
+      additionalProperties: false
+    },
     vnc: {
       type: "object",
+      properties: {
+        proxyUrl: { type: "string" },
+        port: { type: "string" },
+        username: { type: "string" },
+        password: { type: "string" },
+        passwordEncrypted: { type: "string" }
+      },
       required: [
         "proxyUrl",
         "port",
         "username",
         "password",
         "passwordEncrypted"
-      ]
+      ],
+      additionalProperties: false
     }
   },
   required: [
