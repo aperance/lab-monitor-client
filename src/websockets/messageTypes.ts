@@ -4,7 +4,9 @@ export enum WsMessageTypeKeys {
   DeviceDataAll = "DEVICE_DATA_ALL",
   DeviceDataUpdate = "DEVICE_DATA_UPDATE",
   RefreshDevice = "REFRESH_DEVICE",
+  RefreshDeviceAll = "REFRESH_DEVICE_ALL",
   ClearDevice = "CLEAR_DEVICE",
+  ClearDeviceAll = "CLEAR_DEVICE_ALL",
   DeviceAction = "DEVICE_ACTION",
   DeviceActionResponse = "DEVICE_ACTION_RESPONSE",
   PsToolsCommand = "PSTOOLS_COMMAND",
@@ -15,7 +17,7 @@ export enum WsMessageTypeKeys {
 
 export interface WsMessage {
   readonly type: WsMessageTypeKeys;
-  readonly payload: unknown;
+  readonly payload?: unknown;
 }
 
 export interface DeviceDataAll {

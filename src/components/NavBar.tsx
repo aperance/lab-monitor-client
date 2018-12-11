@@ -4,6 +4,11 @@ import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { AppBar, Toolbar, IconButton, MenuItem, Menu } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/MoreVert";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import { WebsocketContext } from "../websockets/WebsocketContext";
+import {
+  refreshDeviceAll,
+  clearDeviceAll
+} from "../websockets/messageCreators";
 
 const styles = createStyles({
   root: {
@@ -17,12 +22,14 @@ const styles = createStyles({
     color: "rgba(0, 0, 0, 0.75)",
     fontSize: "1.2rem",
     userSelect: "none"
-  }
+  },
+  menuItem: { fontSize: "0.8rem" }
 });
 
 interface Props extends WithStyles<typeof styles> {}
 
 const NavBar = (props: Props) => {
+  const ws = useContext(WebsocketContext);
   const { title } = useContext(ConfigurationContext);
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
@@ -52,8 +59,24 @@ const NavBar = (props: Props) => {
             horizontal: "right"
           }}
         >
-          <MenuItem onClick={() => setAnchor(null)}>Test</MenuItem>
-          <MenuItem onClick={() => setAnchor(null)}>Test</MenuItem>
+          <MenuItem
+            className={props.classes.menuItem}
+            onClick={() => {
+              ws.send(refreshDeviceAll());
+              setAnchor(null);
+            }}
+          >
+            Force Rescan
+          </MenuItem>
+          <MenuItem
+            className={props.classes.menuItem}
+            onClick={() => {
+              ws.send(clearDeviceAll());
+              setAnchor(null);
+            }}
+          >
+            Reset Server
+          </MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

@@ -29,9 +29,21 @@ export const refreshDevice = (targets: string[]) => {
   };
 };
 
+export const refreshDeviceAll = () => {
+  return {
+    type: WsMessageTypeKeys.RefreshDeviceAll
+  };
+};
+
 export const clearDevice = (targets: string[]) => {
   return {
     type: WsMessageTypeKeys.ClearDevice,
     payload: { targets }
+  };
+};
+
+export const clearDeviceAll = () => {
+  return {
+    type: WsMessageTypeKeys.ClearDeviceAll
   };
 };
