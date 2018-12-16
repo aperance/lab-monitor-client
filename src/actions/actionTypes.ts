@@ -1,9 +1,4 @@
-import {
-  DeviceDataAll,
-  DeviceDataUpdate,
-  PsToolsResponse,
-  CommandResponse
-} from "../websockets/messageTypes";
+import { Action } from "redux";
 
 export enum ActionTypeKeys {
   SINGLE_ROW_SELECT = "SINGLE_ROW_SELECT",
@@ -18,58 +13,138 @@ export enum ActionTypeKeys {
   DRAGGING_SET = "DRAGGING_SET"
 }
 
-export interface DeviceDataAllAction extends DeviceDataAll {
-  readonly type: ActionTypeKeys.DEVICE_DATA_ALL;
+/** Action Interfaces */
+
+interface DeviceDataAllAction extends Action<ActionTypeKeys.DEVICE_DATA_ALL> {
+  state: {
+    [id: string]: { [property: string]: string };
+  };
+  history: {
+    [id: string]: { [property: string]: Array<[string, string | null]> };
+  };
 }
 
-export interface DeviceDataUpdateAction extends DeviceDataUpdate {
-  readonly type: ActionTypeKeys.DEVICE_DATA_UPDATE;
+interface DeviceDataUpdateAction
+  extends Action<ActionTypeKeys.DEVICE_DATA_UPDATE> {
+  id: string;
+  state: { [property: string]: string | null };
+  history: Array<[string, [string, string | null]]>;
 }
 
-export interface ResetAllAction {
-  readonly type: ActionTypeKeys.RESET_ALL;
+interface PsToolsResponseAction
+  extends Action<ActionTypeKeys.PSTOOLS_RESPONSE> {
+  err: Error | null;
+  result: string | null;
 }
 
-export interface SingleRowSelectAction {
-  readonly type: ActionTypeKeys.SINGLE_ROW_SELECT;
-  readonly row: string | null;
+interface CommandResponseAction
+  extends Action<ActionTypeKeys.COMMAND_RESPONSE> {
+  err: Error | null;
+  results: Array<{
+    err: Error | null;
+    success: boolean;
+  }> | null;
 }
 
-export interface MultiRowSelectAction {
-  readonly type: ActionTypeKeys.MULTI_ROW_SELECT;
-  readonly row: string | null;
+interface SingleRowSelectAction
+  extends Action<ActionTypeKeys.SINGLE_ROW_SELECT> {
+  row: string | null;
 }
 
-export interface ViewSelectAction {
-  readonly type: ActionTypeKeys.VIEW_SELECT;
-  readonly view: string;
+interface MultiRowSelectAction extends Action<ActionTypeKeys.MULTI_ROW_SELECT> {
+  row: string | null;
 }
 
-export interface ProxyToggleAction {
-  readonly type: ActionTypeKeys.PROXY_TOGGLE;
+interface ViewSelectAction extends Action<ActionTypeKeys.VIEW_SELECT> {
+  view: string;
 }
 
-export interface PsToolsResponseAction extends PsToolsResponse {
-  readonly type: ActionTypeKeys.PSTOOLS_RESPONSE;
+interface ProxyToggleAction extends Action<ActionTypeKeys.PROXY_TOGGLE> {}
+
+interface DraggingSetAction extends Action<ActionTypeKeys.DRAGGING_SET> {
+  isDragging: boolean;
 }
 
-export interface CommandResponseAction extends CommandResponse {
-  readonly type: ActionTypeKeys.COMMAND_RESPONSE;
-}
-
-export interface DraggingSetAction {
-  readonly type: ActionTypeKeys.DRAGGING_SET;
-  readonly isDragging: boolean;
-}
+interface ResetAllAction extends Action<ActionTypeKeys.RESET_ALL> {}
 
 export type Actions =
   | DeviceDataAllAction
   | DeviceDataUpdateAction
-  | ResetAllAction
   | SingleRowSelectAction
   | MultiRowSelectAction
   | ViewSelectAction
   | ProxyToggleAction
   | PsToolsResponseAction
   | CommandResponseAction
-  | DraggingSetAction;
+  | DraggingSetAction
+  | ResetAllAction;
+
+/** Action Creator Interfaces */
+
+export interface DeviceDataAllActionCreator {
+  (
+    payload: {
+      state: {
+        [id: string]: { [property: string]: string };
+      };
+      history: {
+        [id: string]: { [property: string]: Array<[string, string | null]> };
+      };
+    }
+  ): DeviceDataAllAction;
+}
+
+export interface DeviceDataUpdateActionCreator {
+  (
+    payload: {
+      id: string;
+      state: { [property: string]: string | null };
+      history: Array<[string, [string, string | null]]>;
+    }
+  ): DeviceDataUpdateAction;
+}
+
+export interface PsToolsResponseActionCreator {
+  (
+    payload: {
+      err: Error | null;
+      result: string | null;
+    }
+  ): PsToolsResponseAction;
+}
+
+export interface CommandResponseActionCreator {
+  (
+    payload: {
+      err: Error | null;
+      results: Array<{
+        err: Error | null;
+        success: boolean;
+      }> | null;
+    }
+  ): CommandResponseAction;
+}
+
+export interface SingleRowSelectActionCreator {
+  (row: string | null): SingleRowSelectAction;
+}
+
+export interface MultiRowSelectActionCreator {
+  (row: string | null): MultiRowSelectAction;
+}
+
+export interface ViewSelectActionCreator {
+  (view: string): ViewSelectAction;
+}
+
+export interface ProxyToggleActionCreator {
+  (): ProxyToggleAction;
+}
+
+export interface DraggingSetActionCreator {
+  (isDragging: boolean): DraggingSetAction;
+}
+
+export interface ResetAllActionCreator {
+  (): ResetAllAction;
+}

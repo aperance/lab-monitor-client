@@ -1,9 +1,13 @@
+import { Reducer } from "redux";
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 import { TableDataState } from "../store/storeTypes";
 
-const initialState: TableDataState = {};
+const initialState = {};
 
-export const tableDataReducer = (state = initialState, action: Actions) => {
+export const tableDataReducer: Reducer<TableDataState, Actions> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case ActionTypeKeys.DEVICE_DATA_ALL:
       return { ...action.state };

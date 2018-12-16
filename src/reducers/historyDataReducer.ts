@@ -1,9 +1,13 @@
+import { Reducer } from "redux";
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 import { HistoryDataState } from "../store/storeTypes";
 
-const initialState: HistoryDataState = {};
+const initialState = {};
 
-export const historyDataReducer = (state = initialState, action: Actions) => {
+export const historyDataReducer: Reducer<HistoryDataState, Actions> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case ActionTypeKeys.DEVICE_DATA_ALL:
       return { ...action.history };

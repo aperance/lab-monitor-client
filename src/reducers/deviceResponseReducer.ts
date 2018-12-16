@@ -1,14 +1,15 @@
+import { Reducer } from "redux";
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 import { DeviceResponseState } from "../store/storeTypes";
 
-const initialState: DeviceResponseState = {
+const initialState = {
   command: { err: null, results: null },
   psTools: { err: null, result: null }
 };
 
-export const deviceResponseReducer = (
+export const deviceResponseReducer: Reducer<DeviceResponseState, Actions> = (
   state = initialState,
-  action: Actions
+  action
 ) => {
   switch (action.type) {
     case ActionTypeKeys.COMMAND_RESPONSE:

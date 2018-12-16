@@ -1,14 +1,18 @@
+import { Reducer } from "redux";
 import { Actions, ActionTypeKeys } from "../actions/actionTypes";
 import { UserSelectionState } from "../store/storeTypes";
 
-const initialState: UserSelectionState = {
+const initialState = {
   rows: [],
   view: null,
   proxy: true,
   dragging: false
 };
 
-export const userSelectionReducer = (state = initialState, action: Actions) => {
+export const userSelectionReducer: Reducer<UserSelectionState, Actions> = (
+  state = initialState,
+  action: Actions
+) => {
   switch (action.type) {
     case ActionTypeKeys.SINGLE_ROW_SELECT:
       if (

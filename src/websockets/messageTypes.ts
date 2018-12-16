@@ -20,6 +20,8 @@ export interface WsMessage {
   readonly payload?: unknown;
 }
 
+/** Inbound Message Types */
+
 export interface DeviceDataAll {
   readonly state: {
     [id: string]: { [property: string]: string };
@@ -35,21 +37,9 @@ export interface DeviceDataUpdate {
   readonly history: Array<[string, [string, string | null]]>;
 }
 
-export interface PsToolsRequest {
-  readonly target: string;
-  readonly mode: string;
-  readonly argument: string;
-}
-
 export interface PsToolsResponse {
   readonly err: Error | null;
   readonly result: string | null;
-}
-
-export interface CommandRequest {
-  readonly targets: string[];
-  readonly type: string;
-  readonly parameters: any;
 }
 
 export interface CommandResponse {
@@ -58,6 +48,20 @@ export interface CommandResponse {
     err: Error | null;
     success: boolean;
   }> | null;
+}
+
+/** Outbound Message Types */
+
+export interface PsToolsRequest {
+  readonly target: string;
+  readonly mode: string;
+  readonly argument: string;
+}
+
+export interface CommandRequest {
+  readonly targets: string[];
+  readonly type: string;
+  readonly parameters: any;
 }
 
 export interface RefreshDeviceRequest {
