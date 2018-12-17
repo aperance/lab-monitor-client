@@ -192,8 +192,8 @@ test("SINGLE_ROW_SELECT action dispatched", () => {
   expect(container.querySelectorAll("tr").length).toEqual(3);
   fireEvent.click(container.querySelectorAll("tr")[1]);
   expect(dispatchMock).toBeCalledWith({
-    row: "0.0.0.0",
-    type: "SINGLE_ROW_SELECT"
+    type: "SINGLE_ROW_SELECT",
+    payload: { row: "0.0.0.0" }
   });
 });
 
@@ -207,7 +207,7 @@ test("MULTI_ROW_SELECT action dispatched", () => {
   expect(container.querySelectorAll("tr").length).toEqual(3);
   fireEvent.click(container.querySelectorAll("tr")[2], { ctrlKey: true });
   expect(dispatchMock).toBeCalledWith({
-    row: "1.1.1.1",
-    type: "MULTI_ROW_SELECT"
+    type: "MULTI_ROW_SELECT",
+    payload: { row: "1.1.1.1" }
   });
 });

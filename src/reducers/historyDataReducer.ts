@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { Actions, ActionTypeKeys } from "../actions/actionTypes";
+import { Actions, ActionTypes } from "../actions/actionTypes";
 import { HistoryDataState } from "../store/storeTypes";
 
 const initialState = {};
@@ -9,29 +9,29 @@ export const historyDataReducer: Reducer<HistoryDataState, Actions> = (
   action
 ) => {
   switch (action.type) {
-    case ActionTypeKeys.DEVICE_DATA_ALL:
-      return { ...action.history };
+    case ActionTypes.DEVICE_DATA_ALL:
+      return { ...action.payload.history };
 
-    case ActionTypeKeys.DEVICE_DATA_UPDATE:
-      if (action.history === null) {
+    case ActionTypes.DEVICE_DATA_UPDATE:
+      if (action.payload.history === null) {
         const newHistory = { ...state };
-        delete newHistory[action.id];
+        delete newHistory[action.payload.id];
         return newHistory;
       } else
         return {
           ...state,
-          [action.id]: action.history.reduce(
+          [action.payload.id]: action.payload.history.reduce(
             (acc, [key, newRecord]) => {
               if (!acc[key]) acc[key] = [];
               acc[key] = [newRecord, ...acc[key]];
               while (acc[key].length > 10) acc[key].pop();
               return acc;
             },
-            { ...state[action.id] }
+            { ...state[action.payload.id] }
           )
         };
 
-    case ActionTypeKeys.RESET_ALL:
+    case ActionTypes.RESET_ALL:
       return {};
 
     default:

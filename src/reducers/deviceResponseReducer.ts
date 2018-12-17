@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { Actions, ActionTypeKeys } from "../actions/actionTypes";
+import { Actions, ActionTypes } from "../actions/actionTypes";
 import { DeviceResponseState } from "../store/storeTypes";
 
 const initialState = {
@@ -12,16 +12,19 @@ export const deviceResponseReducer: Reducer<DeviceResponseState, Actions> = (
   action
 ) => {
   switch (action.type) {
-    case ActionTypeKeys.COMMAND_RESPONSE:
+    case ActionTypes.COMMAND_RESPONSE:
       return {
         ...state,
-        command: { err: action.err, results: action.results }
+        command: { err: action.payload.err, results: action.payload.results }
       };
-    case ActionTypeKeys.PSTOOLS_RESPONSE:
-      return { ...state, psTools: { err: action.err, result: action.result } };
-    case ActionTypeKeys.SINGLE_ROW_SELECT ||
-      ActionTypeKeys.MULTI_ROW_SELECT ||
-      ActionTypeKeys.VIEW_SELECT:
+    case ActionTypes.PSTOOLS_RESPONSE:
+      return {
+        ...state,
+        psTools: { err: action.payload.err, result: action.payload.result }
+      };
+    case ActionTypes.SINGLE_ROW_SELECT ||
+      ActionTypes.MULTI_ROW_SELECT ||
+      ActionTypes.VIEW_SELECT:
       return { ...initialState };
     default:
       return { ...state };

@@ -1,53 +1,39 @@
+import { ActionTypes, Action } from "./actionTypes";
 import {
-  ActionTypeKeys,
-  DeviceDataAllActionCreator,
-  DeviceDataUpdateActionCreator,
-  PsToolsResponseActionCreator,
-  CommandResponseActionCreator,
-  ResetAllActionCreator,
-  SingleRowSelectActionCreator,
-  MultiRowSelectActionCreator,
-  ViewSelectActionCreator,
-  ProxyToggleActionCreator,
-  DraggingSetActionCreator
-} from "./actionTypes";
+  DeviceDataAll,
+  DeviceDataUpdate,
+  PsToolsResponse,
+  CommandResponse
+} from "../websockets/messageTypes";
 
-export const deviceDataAll: DeviceDataAllActionCreator = payload => {
-  return { ...payload, type: ActionTypeKeys.DEVICE_DATA_ALL };
+const createAction = <T, P>(type: T, payload: P): Action<T, P> => {
+  return { type, payload };
 };
 
-export const deviceDataUpdate: DeviceDataUpdateActionCreator = payload => {
-  return { ...payload, type: ActionTypeKeys.DEVICE_DATA_UPDATE };
-};
+export const deviceDataAll = (payload: DeviceDataAll) =>
+  createAction(ActionTypes.DEVICE_DATA_ALL, payload);
 
-export const psToolsResponse: PsToolsResponseActionCreator = payload => {
-  return { ...payload, type: ActionTypeKeys.PSTOOLS_RESPONSE };
-};
+export const deviceDataUpdate = (payload: DeviceDataUpdate) =>
+  createAction(ActionTypes.DEVICE_DATA_UPDATE, payload);
 
-export const deviceCommandResponse: CommandResponseActionCreator = payload => {
-  return { ...payload, type: ActionTypeKeys.COMMAND_RESPONSE };
-};
+export const psToolsResponse = (payload: PsToolsResponse) =>
+  createAction(ActionTypes.PSTOOLS_RESPONSE, payload);
 
-export const singleRowSelect: SingleRowSelectActionCreator = row => {
-  return { type: ActionTypeKeys.SINGLE_ROW_SELECT, row };
-};
+export const deviceCommandResponse = (payload: CommandResponse) =>
+  createAction(ActionTypes.COMMAND_RESPONSE, payload);
 
-export const multiRowSelect: MultiRowSelectActionCreator = row => {
-  return { type: ActionTypeKeys.MULTI_ROW_SELECT, row };
-};
+export const singleRowSelect = (payload: { row: string | null }) =>
+  createAction(ActionTypes.SINGLE_ROW_SELECT, payload);
 
-export const viewSelect: ViewSelectActionCreator = view => {
-  return { type: ActionTypeKeys.VIEW_SELECT, view };
-};
+export const multiRowSelect = (payload: { row: string | null }) =>
+  createAction(ActionTypes.MULTI_ROW_SELECT, payload);
 
-export const proxyToggle: ProxyToggleActionCreator = () => {
-  return { type: ActionTypeKeys.PROXY_TOGGLE };
-};
+export const viewSelect = (payload: { view: string }) =>
+  createAction(ActionTypes.VIEW_SELECT, payload);
 
-export const draggingSet: DraggingSetActionCreator = isDragging => {
-  return { type: ActionTypeKeys.DRAGGING_SET, isDragging };
-};
+export const proxyToggle = () => createAction(ActionTypes.PROXY_TOGGLE, {});
 
-export const resetAll: ResetAllActionCreator = () => {
-  return { type: ActionTypeKeys.RESET_ALL };
-};
+export const draggingSet = (payload: { isDragging: boolean }) =>
+  createAction(ActionTypes.DRAGGING_SET, payload);
+
+export const resetAll = () => createAction(ActionTypes.RESET_ALL, {});

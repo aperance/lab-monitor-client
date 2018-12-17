@@ -19,8 +19,8 @@ const mapStateToProps = ({ userSelection, tableData }: StoreState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     handleRowClick: (e: MouseEvent, id: string | null) => {
-      if (e.altKey || e.ctrlKey) dispatch(multiRowSelect(id));
-      else dispatch(singleRowSelect(id));
+      if (e.altKey || e.ctrlKey) dispatch(multiRowSelect({ row: id }));
+      else dispatch(singleRowSelect({ row: id }));
     },
     handleProxyClick: () => dispatch(proxyToggle())
   };

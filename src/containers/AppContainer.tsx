@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     deviceResponseClear: () =>
       dispatch(deviceCommandResponse({ err: null, results: null })),
-    draggingSet: (isDragging: boolean) => dispatch(draggingSet(isDragging))
+    draggingSet: (isDragging: boolean) => dispatch(draggingSet({ isDragging }))
   };
 };
 

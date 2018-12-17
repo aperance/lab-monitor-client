@@ -13,8 +13,7 @@ const mapStateToProps = ({ userSelection }: StoreState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    handleViewClick: (selectedView: string) =>
-      dispatch(viewSelect(selectedView))
+    handleViewClick: (view: string) => dispatch(viewSelect({ view }))
   };
 };
 

@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { Actions, ActionTypeKeys } from "../actions/actionTypes";
+import { Actions, ActionTypes } from "../actions/actionTypes";
 import { UserSelectionState } from "../store/storeTypes";
 
 const initialState = {
@@ -14,38 +14,43 @@ export const userSelectionReducer: Reducer<UserSelectionState, Actions> = (
   action: Actions
 ) => {
   switch (action.type) {
-    case ActionTypeKeys.SINGLE_ROW_SELECT:
+    case ActionTypes.SINGLE_ROW_SELECT:
       if (
-        action.row === null ||
-        (state.rows.length === 1 && state.rows.indexOf(action.row) === 0)
+        action.payload.row === null ||
+        (state.rows.length === 1 &&
+          state.rows.indexOf(action.payload.row) === 0)
       )
         return { ...state, rows: [], view: null, history: null };
-      else return { ...state, rows: [action.row] };
+      else return { ...state, rows: [action.payload.row] };
 
-    case ActionTypeKeys.MULTI_ROW_SELECT:
+    case ActionTypes.MULTI_ROW_SELECT:
       const rows: string[] = [...state.rows];
-      if (action.row === null) return { ...state };
-      else if (rows.indexOf(action.row) === -1) rows.push(action.row);
-      else rows.splice(rows.indexOf(action.row), 1);
+      if (action.payload.row === null) return { ...state };
+      else if (rows.indexOf(action.payload.row) === -1)
+        rows.push(action.payload.row);
+      else rows.splice(rows.indexOf(action.payload.row), 1);
       return { ...state, rows, view: null, history: null };
 
-    case ActionTypeKeys.VIEW_SELECT:
-      if (action.view === state.view || state.rows.length !== 1)
+    case ActionTypes.VIEW_SELECT:
+      if (action.payload.view === state.view || state.rows.length !== 1)
         return { ...state, view: null, history: null };
-      else return { ...state, view: action.view, history: null };
+      else return { ...state, view: action.payload.view, history: null };
 
-    case ActionTypeKeys.PROXY_TOGGLE:
+    case ActionTypes.PROXY_TOGGLE:
       return { ...state, proxy: !state.proxy };
 
-    case ActionTypeKeys.DRAGGING_SET:
-      return { ...state, dragging: action.isDragging };
+    case ActionTypes.DRAGGING_SET:
+      return { ...state, dragging: action.payload.isDragging };
 
-    case ActionTypeKeys.DEVICE_DATA_UPDATE:
-      if (action.state === null)
-        return { ...state, rows: state.rows.filter(x => x !== action.id) };
+    case ActionTypes.DEVICE_DATA_UPDATE:
+      if (action.payload.state === null)
+        return {
+          ...state,
+          rows: state.rows.filter(x => x !== action.payload.id)
+        };
       else return { ...state };
 
-    case ActionTypeKeys.RESET_ALL:
+    case ActionTypes.RESET_ALL:
       return { ...initialState };
 
     default:
