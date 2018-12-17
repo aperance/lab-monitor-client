@@ -5,10 +5,7 @@ import { AppBar, Toolbar, IconButton, MenuItem, Menu } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/MoreVert";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
 import { WebsocketContext } from "../websockets/WebsocketContext";
-import {
-  refreshDeviceAll,
-  clearDeviceAll
-} from "../websockets/messageCreators";
+import { refreshDevice, clearDevice } from "../websockets/messageCreators";
 
 const styles = createStyles({
   root: {
@@ -62,7 +59,7 @@ const NavBar = (props: Props) => {
           <MenuItem
             className={props.classes.menuItem}
             onClick={() => {
-              ws.send(refreshDeviceAll());
+              ws.send(refreshDevice());
               setAnchor(null);
             }}
           >
@@ -71,7 +68,7 @@ const NavBar = (props: Props) => {
           <MenuItem
             className={props.classes.menuItem}
             onClick={() => {
-              ws.send(clearDeviceAll());
+              ws.send(clearDevice());
               setAnchor(null);
             }}
           >

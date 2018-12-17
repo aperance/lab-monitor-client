@@ -22,28 +22,16 @@ export const commandRequest = (
   };
 };
 
-export const refreshDevice = (targets: string[]) => {
+export const refreshDevice = (targets?: string[]) => {
   return {
     type: WsMessageTypeKeys.RefreshDevice,
     payload: { targets }
   };
 };
 
-export const refreshDeviceAll = () => {
-  return {
-    type: WsMessageTypeKeys.RefreshDeviceAll
-  };
-};
-
-export const clearDevice = (targets: string[]) => {
+export const clearDevice = (targets?: string[]) => {
   return {
     type: WsMessageTypeKeys.ClearDevice,
     payload: { targets }
-  };
-};
-
-export const clearDeviceAll = () => {
-  return {
-    type: WsMessageTypeKeys.ClearDeviceAll
   };
 };
