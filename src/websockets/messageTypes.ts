@@ -33,8 +33,8 @@ export interface DeviceDataAll {
 
 export interface DeviceDataUpdate {
   readonly id: string;
-  readonly state: { [property: string]: string | null };
-  readonly history: Array<[string, [string, string | null]]>;
+  readonly state: { [property: string]: string | null } | null;
+  readonly history: Array<[string, [string, string | null]]> | null;
 }
 
 export interface PsToolsResponse {

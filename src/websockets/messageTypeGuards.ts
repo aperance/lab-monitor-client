@@ -8,7 +8,7 @@ import {
 } from "./messageTypes";
 
 // @ts-ignore
-const ajv = new (require("ajv"))({ verbose: true }) as Ajv;
+const ajv = new (require("ajv"))({ verbose: true, nullable: true }) as Ajv;
 
 const validateWsMessage = ajv.compile({
   properties: {
@@ -68,6 +68,7 @@ const validateDeviceDataUpdate = ajv.compile({
     id: { type: "string", minLength: 1 },
     state: {
       type: "object",
+      nullable: true,
       minProperties: 1,
       patternProperties: {
         "^.*$": { type: ["string", "null"] }
@@ -75,6 +76,7 @@ const validateDeviceDataUpdate = ajv.compile({
     },
     history: {
       type: "array",
+      nullable: true,
       additionalItems: false,
       items: {
         type: "array",
