@@ -73,14 +73,17 @@ export const useDataConditioner = (rawData: RowData[]) => {
     return result ? 1 : -1;
   };
 
-  return [
-    rawData
-      .map(replaceFunction)
-      .filter(filterFunction)
-      .sort(sortFunction),
+  const conditionedData = rawData
+    .map(replaceFunction)
+    .filter(filterFunction)
+    .sort(sortFunction);
+
+  return {
+    conditionedData,
     selectedFilters,
-    (property: string, regex: string) => filterDispatch({ property, regex }),
+    toggleFilter: (property: string, regex: string) =>
+      filterDispatch({ property, regex }),
     selectedSorting,
-    (property: string) => sortDispatch({ property })
-  ];
+    changeSort: (property: string) => sortDispatch({ property })
+  };
 };
