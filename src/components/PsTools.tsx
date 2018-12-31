@@ -33,6 +33,7 @@ const styles = createStyles({
 interface Props extends WithStyles<typeof styles> {
   target: string | null;
   result: string | null;
+  clearResult: () => void;
 }
 
 const PsTools = (props: Props) => {
@@ -104,6 +105,7 @@ const PsTools = (props: Props) => {
             <Button
               size="small"
               onClick={() => {
+                props.clearResult();
                 if (props.target)
                   ws.send(psToolsRequest(props.target, mode, cmd));
               }}

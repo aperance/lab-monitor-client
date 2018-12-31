@@ -19,6 +19,9 @@ export const deviceDataUpdate = (payload: DeviceDataUpdate) =>
 export const psToolsResponse = (payload: PsToolsResponse) =>
   createAction(ActionTypes.PSTOOLS_RESPONSE, payload);
 
+export const psToolsResponseClear = () =>
+  createAction(ActionTypes.PSTOOLS_RESPONSE_CLEAR, {});
+
 export const deviceCommandResponse = (payload: CommandResponse) =>
   createAction(ActionTypes.COMMAND_RESPONSE, payload);
 
