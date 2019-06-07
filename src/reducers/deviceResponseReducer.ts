@@ -4,7 +4,7 @@ import { DeviceResponseState } from "../store/storeTypes";
 
 const initialState = {
   command: { err: null, results: null },
-  psTools: { err: null, result: null }
+  psTools: ""
 };
 
 export const deviceResponseReducer: Reducer<DeviceResponseState, Actions> = (
@@ -18,9 +18,15 @@ export const deviceResponseReducer: Reducer<DeviceResponseState, Actions> = (
         command: { err: action.payload.err, results: action.payload.results }
       };
     case ActionTypes.PSTOOLS_RESPONSE:
+      const newResult = state.psTools + action.payload.result;
       return {
         ...state,
-        psTools: { err: action.payload.err, result: action.payload.result }
+        psTools: newResult
+      };
+    case ActionTypes.PSTOOLS_RESPONSE_CLEAR:
+      return {
+        ...state,
+        psTools: ""
       };
     case ActionTypes.SINGLE_ROW_SELECT ||
       ActionTypes.MULTI_ROW_SELECT ||

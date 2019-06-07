@@ -34,13 +34,13 @@ interface Props extends WithStyles<typeof styles> {
 
 const DeviceTable = (props: Props) => {
   const { columns, filters } = React.useContext(ConfigurationContext);
-  const [
+  const {
     conditionedData,
     selectedFilters,
     toggleFilter,
     selectedSorting,
     changeSort
-  ] = useDataConditioner(props.tableData);
+  } = useDataConditioner(props.tableData);
 
   return (
     <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>

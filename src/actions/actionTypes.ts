@@ -11,6 +11,7 @@ export enum ActionTypes {
   VIEW_SELECT = "VIEW_SELECT",
   PROXY_TOGGLE = "PROXY_TOGGLE",
   PSTOOLS_RESPONSE = "PSTOOLS_RESPONSE",
+  PSTOOLS_RESPONSE_CLEAR = "PSTOOLS_RESPONSE_CLEAR",
   DEVICE_DATA_ALL = "DEVICE_DATA_ALL",
   DEVICE_DATA_UPDATE = "DEVICE_DATA_UPDATE",
   RESET_ALL = "RESET_ALL",
@@ -18,19 +19,24 @@ export enum ActionTypes {
   DRAGGING_SET = "DRAGGING_SET"
 }
 
-export interface Action<T, P> {
+interface ActionWithoutPayload<T> {
+  type: T;
+}
+
+interface ActionWithPayload<T, P> {
   type: T;
   payload: P;
 }
 
 export type Actions =
-  | Action<ActionTypes.DEVICE_DATA_ALL, DeviceDataAll>
-  | Action<ActionTypes.DEVICE_DATA_UPDATE, DeviceDataUpdate>
-  | Action<ActionTypes.PSTOOLS_RESPONSE, PsToolsResponse>
-  | Action<ActionTypes.COMMAND_RESPONSE, CommandResponse>
-  | Action<ActionTypes.SINGLE_ROW_SELECT, { row: string | null }>
-  | Action<ActionTypes.MULTI_ROW_SELECT, { row: string | null }>
-  | Action<ActionTypes.VIEW_SELECT, { view: string }>
-  | Action<ActionTypes.PROXY_TOGGLE, {}>
-  | Action<ActionTypes.DRAGGING_SET, { isDragging: boolean }>
-  | Action<ActionTypes.RESET_ALL, {}>;
+  | ActionWithPayload<ActionTypes.DEVICE_DATA_ALL, DeviceDataAll>
+  | ActionWithPayload<ActionTypes.DEVICE_DATA_UPDATE, DeviceDataUpdate>
+  | ActionWithPayload<ActionTypes.PSTOOLS_RESPONSE, PsToolsResponse>
+  | ActionWithoutPayload<ActionTypes.PSTOOLS_RESPONSE_CLEAR>
+  | ActionWithPayload<ActionTypes.COMMAND_RESPONSE, CommandResponse>
+  | ActionWithPayload<ActionTypes.SINGLE_ROW_SELECT, { row: string | null }>
+  | ActionWithPayload<ActionTypes.MULTI_ROW_SELECT, { row: string | null }>
+  | ActionWithPayload<ActionTypes.VIEW_SELECT, { view: string }>
+  | ActionWithoutPayload<ActionTypes.PROXY_TOGGLE>
+  | ActionWithPayload<ActionTypes.DRAGGING_SET, { isDragging: boolean }>
+  | ActionWithoutPayload<ActionTypes.RESET_ALL>;

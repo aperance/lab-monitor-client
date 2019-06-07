@@ -1,9 +1,6 @@
 export interface DeviceResponseState {
   command: { err: Error | null; results: any[] | null };
-  psTools: {
-    err: Error | null;
-    result: string | null;
-  };
+  psTools: string;
 }
 
 export interface HistoryDataState {
