@@ -1,10 +1,7 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { Dialog, DialogContent, DialogContentText } from "@material-ui/core";
 
-const styles = createStyles({});
-
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   message: string;
 }
 
@@ -24,4 +21,4 @@ const ErrorMessage = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(ErrorMessage);
+export default ErrorMessage;

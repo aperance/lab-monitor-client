@@ -1,8 +1,8 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import { useResizer } from "../hooks/useResizer";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     height: "100%",
     top: "0px",
@@ -39,7 +39,7 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   drawersVisible: 0 | 1 | 2;
   leftDrawer: JSX.Element;
   rightDrawer: JSX.Element | null;
@@ -47,6 +47,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const Drawers = (props: Props) => {
+  const classes = useStyles();
   const [viewWidth, triggerResize] = useResizer(800, props.isResizing);
 
   const width = viewWidth + 200;
@@ -54,22 +55,22 @@ const Drawers = (props: Props) => {
 
   return (
     <div
-      className={props.classes.root}
+      className={classes.root}
       style={{ width: `${width}px`, transform: `translateX(${translateX}px)` }}
     >
-      <div className={props.classes.drawer} style={{ flexGrow: 0 }}>
+      <div className={classes.drawer} style={{ flexGrow: 0 }}>
         {props.leftDrawer}
       </div>
       <div
-        className={props.classes.dragBar}
+        className={classes.dragBar}
         role="dragbar"
         onMouseDown={triggerResize}
       />
-      <div className={props.classes.drawer} style={{ flexGrow: 1 }}>
+      <div className={classes.drawer} style={{ flexGrow: 1 }}>
         {props.rightDrawer}
       </div>
     </div>
   );
 };
 
-export default withStyles(styles)(Drawers);
+export default Drawers;

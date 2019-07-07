@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useState, useContext } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import { AppBar, Toolbar, IconButton, MenuItem, Menu } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/MoreVert";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
 import { WebsocketContext } from "../websockets/WebsocketContext";
 import { refreshDevice, clearDevice } from "../websockets/messageCreators";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     backgroundColor: "white",
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -23,9 +23,8 @@ const styles = createStyles({
   menuItem: { fontSize: "0.8rem" }
 });
 
-interface Props extends WithStyles<typeof styles> {}
-
-const NavBar = (props: Props) => {
+const NavBar = () => {
+  const classes = useStyles();
   const ws = useContext(WebsocketContext);
   const { title } = useContext(ConfigurationContext);
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
@@ -35,10 +34,10 @@ const NavBar = (props: Props) => {
       position="static"
       color="default"
       elevation={0}
-      className={props.classes.root}
+      className={classes.root}
     >
-      <Toolbar className={props.classes.toolbar}>
-        <span className={props.classes.title}>{title}</span>
+      <Toolbar className={classes.toolbar}>
+        <span className={classes.title}>{title}</span>
         <IconButton onClick={e => setAnchor(e.currentTarget)}>
           <MenuIcon />
         </IconButton>
@@ -57,7 +56,7 @@ const NavBar = (props: Props) => {
           }}
         >
           <MenuItem
-            className={props.classes.menuItem}
+            className={classes.menuItem}
             onClick={() => {
               ws.send(refreshDevice());
               setAnchor(null);
@@ -66,7 +65,7 @@ const NavBar = (props: Props) => {
             Force Rescan
           </MenuItem>
           <MenuItem
-            className={props.classes.menuItem}
+            className={classes.menuItem}
             onClick={() => {
               ws.send(clearDevice());
               setAnchor(null);
@@ -80,4 +79,4 @@ const NavBar = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(React.memo(NavBar));
+export default React.memo(NavBar);

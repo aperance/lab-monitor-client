@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useContext } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import { Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { Fab } from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
@@ -9,7 +9,7 @@ import { ConfigurationContext } from "../configuration/ConfigurationContext";
 import { useVnc } from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     height: "100%",
     backgroundColor: "rgb(40, 40, 40)"
@@ -40,12 +40,13 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   ipAddress: string;
   suspend: boolean;
 }
 
 const VncViewer = (props: Props) => {
+  const classes = useStyles();
   const { port, passwordEncrypted } = useContext(ConfigurationContext).vnc;
   const { targetRef, status, scaled, setScaled } = useVnc(
     props.ipAddress,
@@ -53,11 +54,11 @@ const VncViewer = (props: Props) => {
   );
 
   return (
-    <div className={props.classes.root}>
+    <div className={classes.root}>
       {status === "disconnected" && <Spinner />}
       {status === "error" && (
-        <div className={props.classes.errorDiv}>
-          <p className={props.classes.errorDialog}>
+        <div className={classes.errorDiv}>
+          <p className={classes.errorDialog}>
             Unable to establish VNC connection. Make sure VNC server is running
             on the target device.
           </p>
@@ -70,18 +71,16 @@ const VncViewer = (props: Props) => {
         }}
       >
         <span ref={targetRef} />
-        <Button
-          variant="fab"
-          mini={true}
-          className={props.classes.buttonOne}
+        <Fab
+          size="small"
+          className={classes.buttonOne}
           onClick={() => setScaled(!scaled)}
         >
           {scaled ? <ExpandIcon /> : <ShrinkIcon />}
-        </Button>
-        <Button
-          variant="fab"
-          mini={true}
-          className={props.classes.buttonTwo}
+        </Fab>
+        <Fab
+          size="small"
+          className={classes.buttonTwo}
           href={URL.createObjectURL(
             new Blob(
               [
@@ -97,10 +96,10 @@ const VncViewer = (props: Props) => {
           target="_blank"
         >
           <SaveIcon />
-        </Button>
+        </Fab>
       </div>
     </div>
   );
 };
 
-export default withStyles(styles)(VncViewer);
+export default VncViewer;

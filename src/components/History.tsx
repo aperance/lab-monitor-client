@@ -1,15 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
-import {
-  createStyles,
-  WithStyles,
-  withStyles,
-  ListItem,
-  ListItemText
-} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { ListItem, ListItemText } from "@material-ui/core";
 import { List, AutoSizer } from "react-virtualized";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     height: "100%",
     display: "flex",
@@ -20,16 +15,17 @@ const styles = createStyles({
   text: { fontSize: "0.75rem" }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   historyData: { [x: string]: Array<[string, string | null]> };
   properties: string[];
 }
 
 const HistoryList = (props: Props) => {
+  const classes = useStyles();
   const [selectedProperty, setSelectedProperty] = useState("");
 
   return (
-    <div className={props.classes.root}>
+    <div className={classes.root}>
       <div style={{ flex: 1 }}>
         <AutoSizer>
           {({ width, height }) => (
@@ -45,7 +41,7 @@ const HistoryList = (props: Props) => {
                   key={key}
                   className={
                     props.properties[index] === selectedProperty
-                      ? props.classes.selectedRow
+                      ? classes.selectedRow
                       : undefined
                   }
                   onClick={() => setSelectedProperty(props.properties[index])}
@@ -53,7 +49,7 @@ const HistoryList = (props: Props) => {
                   divider={true}
                 >
                   <ListItemText
-                    classes={{ primary: props.classes.text }}
+                    classes={{ primary: classes.text }}
                     primary={props.properties[index]}
                   />
                 </ListItem>
@@ -84,4 +80,4 @@ const HistoryList = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(HistoryList);
+export default HistoryList;

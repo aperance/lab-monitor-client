@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useContext } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import {
   Input,
   InputLabel,
@@ -14,7 +14,9 @@ import { WebsocketContext } from "../websockets/WebsocketContext";
 import { psToolsRequest } from "../websockets/messageCreators";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
-const styles = createStyles({
+// @ts-ignore
+const useStyles = makeStyles({
+  // @ts-ignore
   container: {
     // tslint:disable-next-line:object-literal-key-quotes
     margin: "24px 32px 0px 32px",
@@ -30,13 +32,14 @@ const styles = createStyles({
   text: { fontSize: "0.825rem" }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   target: string | null;
   result: string | null;
   clearResult: () => void;
 }
 
 const PsTools = (props: Props) => {
+  const classes = useStyles();
   const ws = useContext(WebsocketContext);
   const presets = useContext(ConfigurationContext).psTools;
   const [preset, setPreset] = useState("");
@@ -46,22 +49,23 @@ const PsTools = (props: Props) => {
   return (
     <>
       {props.target && (
-        <div className={props.classes.container}>
+        <div className={classes.container}>
           <form>
-            <FormControl className={props.classes.presetsInput}>
+            <FormControl className={classes.presetsInput}>
               <InputLabel>Load Preset Command</InputLabel>
               <Select
-                className={props.classes.text}
+                className={classes.text}
                 input={<Input id="presets" />}
                 value={preset}
                 onChange={e => {
-                  setPreset(e.target.value);
-                  setMode(presets[e.target.value].mode);
-                  setCmd(presets[e.target.value].cmd);
+                  const value = e.target.value as string;
+                  setPreset(value);
+                  setMode(presets[value].mode);
+                  setCmd(presets[value].cmd);
                 }}
               >
                 {Object.keys(presets).map(x => (
-                  <MenuItem className={props.classes.text} key={x} value={x}>
+                  <MenuItem className={classes.text} key={x} value={x}>
                     {presets[x].name}
                   </MenuItem>
                 ))}
@@ -70,27 +74,28 @@ const PsTools = (props: Props) => {
           </form>
 
           <form>
-            <FormControl className={props.classes.modeInput}>
+            <FormControl className={classes.modeInput}>
               <InputLabel>Mode</InputLabel>
               <Select
-                className={props.classes.text}
+                className={classes.text}
                 input={<Input id="mode" />}
                 value={mode}
                 onChange={e => {
+                  const value = e.target.value as string;
                   setPreset("");
-                  setMode(e.target.value);
+                  setMode(value);
                 }}
               >
-                <MenuItem className={props.classes.text} value="psExec">
+                <MenuItem className={classes.text} value="psExec">
                   PSExec
                 </MenuItem>
-                <MenuItem className={props.classes.text} value="psKill">
+                <MenuItem className={classes.text} value="psKill">
                   PSKill
                 </MenuItem>
               </Select>
             </FormControl>
 
-            <FormControl className={props.classes.cmdInput}>
+            <FormControl className={classes.cmdInput}>
               <InputLabel htmlFor="name-input">Command</InputLabel>
               <Input
                 id="cmd"
@@ -120,4 +125,4 @@ const PsTools = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(PsTools);
+export default PsTools;

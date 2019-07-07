@@ -21,7 +21,7 @@ module.exports = {
   devServer: {
     compress: true,
     hot: true,
-    host: "localhost",
+    host: "10.91.1.1",
     port: 3000
   },
 

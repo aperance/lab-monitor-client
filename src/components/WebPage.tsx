@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useContext } from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
-import { Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { Fab } from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   button: {
     position: "absolute",
     right: "18px",
@@ -15,12 +15,13 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   ipAddress: string | null;
   proxyEnabled: boolean;
 }
 
 const WebPage = (props: Props) => {
+  const classes = useStyles();
   const { httpProxy, statePath } = useContext(ConfigurationContext);
 
   if (props.ipAddress === null) return null;
@@ -31,15 +32,9 @@ const WebPage = (props: Props) => {
 
   return (
     <>
-      <Button
-        variant="fab"
-        mini={true}
-        className={props.classes.button}
-        href={url}
-        target="_blank"
-      >
+      <Fab size="small" className={classes.button} href={url} target="_blank">
         <OpenIcon />
-      </Button>
+      </Fab>
       <iframe
         src={url}
         id="qqq"
@@ -55,4 +50,4 @@ const WebPage = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(WebPage);
+export default WebPage;

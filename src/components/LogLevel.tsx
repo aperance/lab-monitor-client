@@ -31,13 +31,10 @@ const LogLevel = (props: Props) => {
   const [namespace, setNamespace] = useState(null as string | null);
   const [level, setLevel] = useState(null as string | null);
 
-  useEffect(
-    () => {
-      setNamespace(null);
-      setLevel(null);
-    },
-    [props.open]
-  );
+  useEffect(() => {
+    setNamespace(null);
+    setLevel(null);
+  }, [props.open]);
 
   return (
     <Dialog open={props.open} onClose={props.close}>
@@ -48,7 +45,7 @@ const LogLevel = (props: Props) => {
             <Select
               className={props.classes.selectNamespace}
               value={namespace || ""}
-              onChange={e => setNamespace(e.target.value)}
+              onChange={e => setNamespace(e.target.value as string)}
               input={<Input id="namespace" />}
             >
               {configuration.namespace.map(x => (
@@ -64,7 +61,7 @@ const LogLevel = (props: Props) => {
             <Select
               className={props.classes.selectLevel}
               value={level || ""}
-              onChange={e => setLevel(e.target.value)}
+              onChange={e => setLevel(e.target.value as string)}
               input={<Input id="level" />}
             >
               {configuration.level.map(x => (

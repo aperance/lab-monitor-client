@@ -1,5 +1,6 @@
 import * as React from "react";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+import { useContext } from "react";
+import { makeStyles } from "@material-ui/styles";
 import { Table, TableBody } from "@material-ui/core";
 import DeviceTableHead from "./DeviceTableHead";
 import DeviceTableRow from "./DeviceTableRow";
@@ -7,7 +8,7 @@ import FilterBar from "./FilterBar";
 import { useDataConditioner } from "../hooks/useDataConditioner";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     height: "100%",
     display: "flex",
@@ -23,7 +24,7 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
+interface Props {
   tableData: Array<[string, { [x: string]: string | null }]>;
   selected: string[];
   pause: boolean;
@@ -33,7 +34,8 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const DeviceTable = (props: Props) => {
-  const { columns, filters } = React.useContext(ConfigurationContext);
+  const classes = useStyles();
+  const { columns, filters } = useContext(ConfigurationContext);
   const {
     conditionedData,
     selectedFilters,
@@ -52,7 +54,7 @@ const DeviceTable = (props: Props) => {
         handleProxyClick={props.handleProxyClick}
       />
 
-      <div className={props.classes.root}>
+      <div className={classes.root}>
         <Table>
           <DeviceTableHead
             columns={columns}
@@ -74,7 +76,7 @@ const DeviceTable = (props: Props) => {
           </TableBody>
         </Table>
         <div
-          className={props.classes.belowTable}
+          className={classes.belowTable}
           onClick={e => props.handleRowClick(e.nativeEvent, null)}
         />
       </div>
@@ -87,4 +89,4 @@ const memoizedDeviceTable = React.memo(
   (_, nextProps) => nextProps.pause
 );
 
-export default withStyles(styles)(memoizedDeviceTable);
+export default memoizedDeviceTable;

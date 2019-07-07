@@ -9,7 +9,6 @@ import { ConfigurationProvider } from "./configuration/ConfigurationContext";
 import AppContainer from "./containers/AppContainer";
 
 const theme = createMuiTheme({
-  typography: { useNextVariants: true },
   palette: { primary: blue }
 });
 
