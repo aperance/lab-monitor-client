@@ -1,43 +1,17 @@
-import { useReducer, useContext } from "react";
+import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import { StoreState } from "../reducers/index";
 
 type RowData = [string, { [x: string]: string | null }];
 
-const selectedFilterReducer = (
+export const useDeviceData = (
   selectedFilters: { [x: string]: string[] },
-  action: { property: string; regex: string }
+  selectedSorting: { property: string; reverse: boolean }
 ) => {
-  const regexArray = selectedFilters[action.property] || [];
-  const currentIndex = regexArray.indexOf(action.regex);
-  currentIndex === -1
-    ? regexArray.push(action.regex)
-    : regexArray.splice(currentIndex, 1);
-  return { ...selectedFilters, [action.property]: regexArray };
-};
-
-const selectedSortingReducer = (
-  selectedSorting: { property: string; reverse: boolean },
-  action: { property: string }
-) => {
-  return {
-    property: action.property,
-    reverse:
-      action.property === selectedSorting.property
-        ? !selectedSorting.reverse
-        : selectedSorting.reverse
-  };
-};
-
-export const useDataConditioner = (rawData: RowData[]) => {
   const { columns } = useContext(ConfigurationContext);
-  const [selectedFilters, filterDispatch] = useReducer(
-    selectedFilterReducer,
-    {} as { [x: string]: string[] }
-  );
-  const [selectedSorting, sortDispatch] = useReducer(selectedSortingReducer, {
-    property: columns[0].property,
-    reverse: false
-  });
+  const rawData = useSelector((x: StoreState) => Object.entries(x.tableData));
+  // const pause = useSelector((x: StoreState) => x.userSelection.dragging);
 
   const replaceFunction = ([id, rowData]: RowData): RowData => {
     columns
@@ -78,12 +52,5 @@ export const useDataConditioner = (rawData: RowData[]) => {
     .filter(filterFunction)
     .sort(sortFunction);
 
-  return {
-    conditionedData,
-    selectedFilters,
-    toggleFilter: (property: string, regex: string) =>
-      filterDispatch({ property, regex }),
-    selectedSorting,
-    changeSort: (property: string) => sortDispatch({ property })
-  };
+  return conditionedData;
 };

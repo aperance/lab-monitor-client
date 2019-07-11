@@ -6,7 +6,7 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { blue } from "@material-ui/core/colors";
 import { WebsocketProvider } from "./websockets/WebsocketContext";
 import { ConfigurationProvider } from "./configuration/ConfigurationContext";
-import AppContainer from "./containers/AppContainer";
+import App from "./components/App";
 
 const theme = createMuiTheme({
   palette: { primary: blue }
@@ -17,7 +17,7 @@ ReactDOM.render(
     <ConfigurationProvider>
       <WebsocketProvider url={"ws://10.91.1.1:4000/data"}>
         <MuiThemeProvider theme={theme}>
-          <AppContainer />
+          <App />
         </MuiThemeProvider>
       </WebsocketProvider>
     </ConfigurationProvider>

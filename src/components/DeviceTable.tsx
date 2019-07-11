@@ -1,12 +1,19 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useReducer } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import { Table, TableBody } from "@material-ui/core";
 import DeviceTableHead from "./DeviceTableHead";
 import DeviceTableRow from "./DeviceTableRow";
 import FilterBar from "./FilterBar";
-import { useDataConditioner } from "../hooks/useDataConditioner";
+import { useDeviceData } from "../hooks/useDeviceData";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import { StoreState } from "../reducers/index";
+import {
+  singleRowSelect,
+  multiRowSelect,
+  proxyToggle
+} from "../actions/actionCreators";
 
 const useStyles = makeStyles({
   root: {
@@ -24,34 +31,54 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
-  tableData: Array<[string, { [x: string]: string | null }]>;
-  selected: string[];
-  pause: boolean;
-  proxyEnabled: boolean;
-  handleProxyClick: () => void;
-  handleRowClick: (e: MouseEvent, id: string | null) => void;
-}
+const filterReducer = (
+  selectedFilters: { [x: string]: string[] },
+  action: { property: string; regex: string }
+) => {
+  const regexArray = selectedFilters[action.property] || [];
+  const currentIndex = regexArray.indexOf(action.regex);
+  currentIndex === -1
+    ? regexArray.push(action.regex)
+    : regexArray.splice(currentIndex, 1);
+  return { ...selectedFilters, [action.property]: regexArray };
+};
 
-const DeviceTable = (props: Props) => {
+const sortingReducer = (
+  selectedSorting: { property: string; reverse: boolean },
+  action: { property: string }
+) => {
+  return {
+    property: action.property,
+    reverse:
+      action.property === selectedSorting.property
+        ? !selectedSorting.reverse
+        : selectedSorting.reverse
+  };
+};
+
+const DeviceTable = () => {
   const classes = useStyles();
   const { columns, filters } = useContext(ConfigurationContext);
-  const {
-    conditionedData,
-    selectedFilters,
-    toggleFilter,
-    selectedSorting,
-    changeSort
-  } = useDataConditioner(props.tableData);
+  const selectedRows = useSelector((x: StoreState) => x.userSelection.rows);
+  const proxyEnabled = useSelector((x: StoreState) => x.userSelection.proxy);
+  const dispatch = useDispatch();
+  const [selectedFilters, setFilters] = useReducer(filterReducer, {});
+  const [selectedSorting, setSorting] = useReducer(sortingReducer, {
+    property: columns[0].property,
+    reverse: false
+  });
+  const deviceData = useDeviceData(selectedFilters, selectedSorting);
 
   return (
     <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
       <FilterBar
         filters={filters}
         selectedFilters={selectedFilters}
-        proxyEnabled={props.proxyEnabled}
-        handleCheckboxClick={toggleFilter}
-        handleProxyClick={props.handleProxyClick}
+        proxyEnabled={proxyEnabled}
+        handleCheckboxClick={(property: string, regex: string) =>
+          setFilters({ property, regex })
+        }
+        handleProxyClick={() => dispatch(proxyToggle())}
       />
 
       <div className={classes.root}>
@@ -59,34 +86,31 @@ const DeviceTable = (props: Props) => {
           <DeviceTableHead
             columns={columns}
             selectedSorting={selectedSorting}
-            changeSort={changeSort}
+            changeSort={(property: string) => setSorting({ property })}
           />
           <TableBody>
-            {conditionedData.map(([rowId, rowData]) => (
+            {deviceData.map(([rowId, rowData]) => (
               <DeviceTableRow
                 key={rowId}
                 columns={columns}
                 rowData={rowData}
-                selected={props.selected.includes(rowId)}
-                handleRowClick={(e: MouseEvent) =>
-                  props.handleRowClick(e, rowId)
-                }
+                selected={selectedRows.includes(rowId)}
+                handleRowClick={(e: MouseEvent) => {
+                  if (e.altKey || e.ctrlKey)
+                    dispatch(multiRowSelect({ row: rowId }));
+                  else dispatch(singleRowSelect({ row: rowId }));
+                }}
               />
             ))}
           </TableBody>
         </Table>
         <div
           className={classes.belowTable}
-          onClick={e => props.handleRowClick(e.nativeEvent, null)}
+          onClick={() => dispatch(singleRowSelect({ row: null }))}
         />
       </div>
     </div>
   );
 };
 
-const memoizedDeviceTable = React.memo(
-  DeviceTable,
-  (_, nextProps) => nextProps.pause
-);
-
-export default memoizedDeviceTable;
+export default DeviceTable;

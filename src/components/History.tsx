@@ -1,8 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import { ListItem, ListItemText } from "@material-ui/core";
 import { List, AutoSizer } from "react-virtualized";
+import { StoreState } from "../reducers/index";
 
 const useStyles = makeStyles({
   root: {
@@ -15,13 +17,18 @@ const useStyles = makeStyles({
   text: { fontSize: "0.75rem" }
 });
 
-interface Props {
-  historyData: { [x: string]: Array<[string, string | null]> };
-  properties: string[];
-}
-
-const HistoryList = (props: Props) => {
+const HistoryList = () => {
   const classes = useStyles();
+  const historyData = useSelector((x: StoreState) =>
+    x.userSelection.rows.length === 1
+      ? x.historyData[x.userSelection.rows[0]]
+      : {}
+  );
+  const properties = useSelector((x: StoreState) =>
+    x.userSelection.rows.length === 1
+      ? Object.keys(x.historyData[x.userSelection.rows[0]])
+      : []
+  );
   const [selectedProperty, setSelectedProperty] = useState("");
 
   return (
@@ -33,24 +40,24 @@ const HistoryList = (props: Props) => {
               width={width}
               rowHeight={32}
               height={height}
-              rowCount={props.properties.length}
+              rowCount={properties.length}
               rowRenderer={({ key, index, style }) => (
                 <ListItem
                   button
                   style={style}
                   key={key}
                   className={
-                    props.properties[index] === selectedProperty
+                    properties[index] === selectedProperty
                       ? classes.selectedRow
                       : undefined
                   }
-                  onClick={() => setSelectedProperty(props.properties[index])}
+                  onClick={() => setSelectedProperty(properties[index])}
                   dense={true}
                   divider={true}
                 >
                   <ListItemText
                     classes={{ primary: classes.text }}
-                    primary={props.properties[index]}
+                    primary={properties[index]}
                   />
                 </ListItem>
               )}
@@ -65,14 +72,12 @@ const HistoryList = (props: Props) => {
           borderTop: "1px solid #0000001f"
         }}
       >
-        {props.historyData[selectedProperty] && (
+        {historyData[selectedProperty] && (
           <>
             <pre>{`History for ${selectedProperty}`}</pre>
-            {Object.values(props.historyData[selectedProperty]).map(
-              ([x, y]) => (
-                <pre>{`  ${x}:  ${y}`}</pre>
-              )
-            )}
+            {Object.values(historyData[selectedProperty]).map(([x, y]) => (
+              <pre>{`  ${x}:  ${y}`}</pre>
+            ))}
           </>
         )}
       </div>

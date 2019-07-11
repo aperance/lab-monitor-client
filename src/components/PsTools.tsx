@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import {
   Input,
@@ -13,6 +14,8 @@ import Terminal from "./Terminal";
 import { WebsocketContext } from "../websockets/WebsocketContext";
 import { psToolsRequest } from "../websockets/messageCreators";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import { StoreState } from "../reducers/index";
+import { psToolsResponseClear } from "../actions/actionCreators";
 
 // @ts-ignore
 const useStyles = makeStyles({
@@ -32,23 +35,22 @@ const useStyles = makeStyles({
   text: { fontSize: "0.825rem" }
 });
 
-interface Props {
-  target: string | null;
-  result: string | null;
-  clearResult: () => void;
-}
-
-const PsTools = (props: Props) => {
+const PsTools = () => {
   const classes = useStyles();
   const ws = useContext(WebsocketContext);
   const presets = useContext(ConfigurationContext).psTools;
+  const target = useSelector((x: StoreState) =>
+    x.userSelection.rows.length === 1 ? x.userSelection.rows[0] : null
+  );
+  const result = useSelector((x: StoreState) => x.deviceResponse.psTools);
+  const dispatch = useDispatch();
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");
 
   return (
     <>
-      {props.target && (
+      {target && (
         <div className={classes.container}>
           <form>
             <FormControl className={classes.presetsInput}>
@@ -110,15 +112,14 @@ const PsTools = (props: Props) => {
             <Button
               size="small"
               onClick={() => {
-                props.clearResult();
-                if (props.target)
-                  ws.send(psToolsRequest(props.target, mode, cmd));
+                dispatch(psToolsResponseClear());
+                if (target) ws.send(psToolsRequest(target, mode, cmd));
               }}
             >
               Send
             </Button>
           </form>
-          <Terminal output={props.result} />
+          <Terminal output={result} />
         </div>
       )}
     </>

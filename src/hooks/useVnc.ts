@@ -9,16 +9,13 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   const [status, setStatus] = useState("disconnected");
   const targetRef = useRef(null as HTMLSpanElement | null);
 
-  useEffect(
-    () => {
-      if (!suspend) {
-        disconnectVnc();
-        connectVnc();
-        return () => disconnectVnc();
-      }
-    },
-    [ipAddress, scaled, suspend]
-  );
+  useEffect(() => {
+    if (!suspend) {
+      disconnectVnc();
+      connectVnc();
+      return () => disconnectVnc();
+    }
+  }, [ipAddress, scaled, suspend]);
 
   let rfb: any = null;
   let timer: any;

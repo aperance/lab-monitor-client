@@ -1,9 +1,11 @@
 import * as React from "react";
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import { Fab } from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import { StoreState } from "../reducers/index";
 
 const useStyles = makeStyles({
   button: {
@@ -15,20 +17,21 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
-  ipAddress: string | null;
-  proxyEnabled: boolean;
-}
-
-const WebPage = (props: Props) => {
+const WebPage = () => {
   const classes = useStyles();
   const { httpProxy, statePath } = useContext(ConfigurationContext);
+  const ipAddress = useSelector(({ userSelection }: StoreState) =>
+    userSelection.rows.length === 1 ? userSelection.rows[0] : null
+  );
+  const proxyEnabled = useSelector(
+    ({ userSelection }: StoreState) => userSelection.proxy
+  );
 
-  if (props.ipAddress === null) return null;
+  if (ipAddress === null) return null;
 
-  const url = props.proxyEnabled
-    ? `http://${httpProxy}${statePath}&target=${props.ipAddress}`
-    : `http://${props.ipAddress}:8001${statePath}`;
+  const url = proxyEnabled
+    ? `http://${httpProxy}${statePath}&target=${ipAddress}`
+    : `http://${ipAddress}:8001${statePath}`;
 
   return (
     <>

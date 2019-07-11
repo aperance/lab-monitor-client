@@ -1,58 +1,64 @@
 import * as React from "react";
 import { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { WebsocketContext } from "../websockets/WebsocketContext";
-import DeviceTableContainer from "../containers/DeviceTableContainer";
-import ToolbarContainer from "../containers/ToolbarContainer";
-import HistoryContainer from "../containers/HistoryContainer";
-import WebPageContainer from "../containers/WebPageContainer";
-import PsToolsContainer from "../containers/PsToolsContainer";
-import VncContainer from "../containers/VncContainer";
+import { StoreState } from "../reducers/index";
+import { deviceCommandResponse, draggingSet } from "../actions/actionCreators";
+import DeviceTable from "./DeviceTable";
+import Toolbar from "./Toolbar";
+import History from "./History";
+import WebPage from "./WebPage";
+import PsTools from "./PsTools";
+import VncViewer from "./VncViewer";
 import NavBar from "./NavBar";
 import ErrorMessage from "./ErrorMessage";
 import Spinner from "./Spinner";
 import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
-interface Props {
-  dataReceived: boolean;
-  subView: string | null;
-  drawersVisible: 0 | 1 | 2;
-  deviceResponse: {
-    err: Error | null;
-    results: any[] | null;
-  };
-  deviceResponseClear: () => void;
-  draggingSet: (x: boolean) => void;
-}
-
-const App = (props: Props) => {
+const App = () => {
   const { status } = useContext(WebsocketContext);
+  const store = useSelector((state: StoreState) => {
+    return {
+      dataReceived: Object.keys(state.tableData).length !== 0,
+      subView: state.userSelection.view,
+      drawersVisible: (state.userSelection.rows.length === 0
+        ? 0
+        : !state.userSelection.view
+        ? 1
+        : 2) as 0 | 1 | 2,
+      deviceResponse: state.deviceResponse.command
+    };
+  });
+  const dispatch = useDispatch();
 
   if (status === "connectionError")
     return <ErrorMessage message={"connectionError"} />;
   else if (status === "dataError")
     return <ErrorMessage message={"dataError"} />;
-  else if (status === "connected" && props.dataReceived)
+  else if (status === "connected" && store.dataReceived)
     return (
       <>
         <NavBar />
 
-        <DeviceTableContainer />
+        <DeviceTable />
 
         <Drawers
-          drawersVisible={props.drawersVisible}
-          isResizing={props.draggingSet}
-          leftDrawer={<ToolbarContainer />}
+          drawersVisible={store.drawersVisible}
+          isResizing={(isDragging: boolean) =>
+            dispatch(draggingSet({ isDragging }))
+          }
+          leftDrawer={<Toolbar />}
           rightDrawer={(() => {
-            switch (props.subView) {
+            switch (store.subView) {
               case "history":
-                return <HistoryContainer />;
+                return <History />;
               case "statePage":
-                return <WebPageContainer />;
+                return <WebPage />;
               case "psTools":
-                return <PsToolsContainer />;
+                return <PsTools />;
               case "vnc":
-                return <VncContainer />;
+                return <VncViewer />;
               default:
                 return null;
             }
@@ -60,8 +66,10 @@ const App = (props: Props) => {
         />
 
         <ActionResponse
-          response={props.deviceResponse}
-          handleClose={props.deviceResponseClear}
+          response={store.deviceResponse}
+          handleClose={() =>
+            dispatch(deviceCommandResponse({ err: null, results: null }))
+          }
         />
       </>
     );

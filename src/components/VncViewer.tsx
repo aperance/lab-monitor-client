@@ -1,11 +1,13 @@
 import * as React from "react";
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
 import { Fab } from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import { StoreState } from "../reducers/index";
 import { useVnc } from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
@@ -40,18 +42,16 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
-  ipAddress: string;
-  suspend: boolean;
-}
-
-const VncViewer = (props: Props) => {
+const VncViewer = () => {
   const classes = useStyles();
   const { port, passwordEncrypted } = useContext(ConfigurationContext).vnc;
-  const { targetRef, status, scaled, setScaled } = useVnc(
-    props.ipAddress,
-    props.suspend
+  const ipAddress = useSelector(({ userSelection }: StoreState) =>
+    userSelection.rows.length === 1 ? userSelection.rows[0] : ""
   );
+  const suspend = useSelector(
+    ({ userSelection }: StoreState) => userSelection.dragging
+  );
+  const { targetRef, status, scaled, setScaled } = useVnc(ipAddress, suspend);
 
   return (
     <div className={classes.root}>
@@ -85,7 +85,7 @@ const VncViewer = (props: Props) => {
             new Blob(
               [
                 `[connection]\n` +
-                  `host=${props.ipAddress}\n` +
+                  `host=${ipAddress}\n` +
                   `port=${port}\n` +
                   `password=${passwordEncrypted}`
               ],
