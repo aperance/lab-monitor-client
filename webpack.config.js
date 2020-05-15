@@ -1,13 +1,21 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
+const path = require("path");
 
 module.exports = {
   entry: "./src/index.tsx",
   output: {
     filename: "bundle.js",
-    path: __dirname + "/dist"
+    path: path.resolve(__dirname, "dist")
+  },
+  devServer: {
+    contentBase: "./dist",
+    host: "0.0.0.0",
+    port: 3000
   },
   plugins: [
+    new webpack.EnvironmentPlugin({DEMO: "false"}),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/favicon.ico"
@@ -18,12 +26,12 @@ module.exports = {
     // })
   ],
 
-  devServer: {
-    compress: true,
-    hot: true,
-    host: "10.91.1.1",
-    port: 3000
-  },
+  // devServer: {
+  //   compress: true,
+  //   hot: true,
+  //   host: "192.168.1.117",
+  //   port: 3000
+  // },
 
   // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
@@ -46,7 +54,7 @@ module.exports = {
       },
 
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
     ]
   }
 };

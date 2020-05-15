@@ -1,23 +1,23 @@
-import { Ajv } from "ajv";
-import { Configuration } from "./configurationTypes";
+import {Ajv} from "ajv";
+import {Configuration} from "./configurationTypes";
 
 // @ts-ignore
-const ajv = new (require("ajv"))({ verbose: true }) as Ajv;
+const ajv = new (require("ajv"))({verbose: true}) as Ajv;
 
 const validateConfiguration = ajv.compile({
   properties: {
-    title: { type: "string" },
+    title: {type: "string"},
     columns: {
       type: "array",
       minItems: 1,
       items: {
         type: "object",
         properties: {
-          property: { type: "string" },
-          title: { type: "string" },
+          property: {type: "string"},
+          title: {type: "string"},
           replace: {
             type: "object",
-            patternProperties: { "^.*$": { type: "string" } },
+            patternProperties: {"^.*$": {type: "string"}},
             additionalProperties: false
           }
         },
@@ -30,11 +30,11 @@ const validateConfiguration = ajv.compile({
       items: {
         type: "object",
         properties: {
-          property: { type: "string" },
-          title: { type: "string" },
+          property: {type: "string"},
+          title: {type: "string"},
           options: {
             type: "object",
-            patternProperties: { "^.*$": { type: "string" } },
+            patternProperties: {"^.*$": {type: "string"}},
             additionalProperties: false
           }
         },
@@ -45,24 +45,24 @@ const validateConfiguration = ajv.compile({
     logLevel: {
       type: "object",
       properties: {
-        level: { type: "array", minItems: 1, items: { type: "string" } },
-        namespace: { type: "array", minItems: 1, items: { type: "string" } }
+        level: {type: "array", minItems: 1, items: {type: "string"}},
+        namespace: {type: "array", minItems: 1, items: {type: "string"}}
       },
       required: ["level", "namespace"],
       additionalProperties: false
     },
-    httpProxy: { type: "string" },
-    logsPath: { type: "string" },
-    statePath: { type: "string" },
+    httpProxy: {type: "string"},
+    logsPath: {type: "string"},
+    statePath: {type: "string"},
     psTools: {
       type: "object",
       patternProperties: {
         "^.*$": {
           type: "object",
           properties: {
-            name: { type: "string" },
-            mode: { type: "string" },
-            cmd: { type: "string" }
+            name: {type: "string"},
+            mode: {type: "string"},
+            cmd: {type: "string"}
           },
           required: ["name", "mode", "cmd"],
           additionalProperties: false
@@ -73,11 +73,11 @@ const validateConfiguration = ajv.compile({
     vnc: {
       type: "object",
       properties: {
-        proxyUrl: { type: "string" },
-        port: { type: "string" },
-        username: { type: "string" },
-        password: { type: "string" },
-        passwordEncrypted: { type: "string" }
+        proxyUrl: {type: "string"},
+        port: {type: "string"},
+        username: {type: "string"},
+        password: {type: "string"},
+        passwordEncrypted: {type: "string"}
       },
       required: [
         "proxyUrl",
@@ -94,10 +94,10 @@ const validateConfiguration = ajv.compile({
     "columns",
     "filters",
     "logLevel",
-    "httpProxy",
-    "logsPath",
-    "statePath",
-    "psTools",
+    // "httpProxy",
+    // "logsPath",
+    // "statePath",
+    // "psTools",
     "vnc"
   ],
   additionalProperties: false
