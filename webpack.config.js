@@ -15,7 +15,7 @@ module.exports = {
     port: 3000
   },
   plugins: [
-    new webpack.EnvironmentPlugin({DEMO: "false"}),
+    new webpack.EnvironmentPlugin({DEMO: "false", BACKEND: "0.0.0.0"}),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/favicon.ico"
