@@ -15,7 +15,7 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <Provider store={store}>
     <ConfigurationProvider>
-      <WebsocketProvider url={`ws://${process.env.BACKEND}/data`}>
+      <WebsocketProvider url={`wss://${process.env.BACKEND}/data`}>
         <MuiThemeProvider theme={theme}>
           <App />
         </MuiThemeProvider>
