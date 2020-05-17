@@ -1,11 +1,10 @@
 import * as React from "react";
-import { useContext } from "react";
-import { useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/styles";
-import { Fab } from "@material-ui/core";
+import {useContext} from "react";
+import {useSelector} from "react-redux";
+import {Fab, makeStyles} from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
-import { ConfigurationContext } from "../configuration/ConfigurationContext";
-import { StoreState } from "../reducers/index";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {StoreState} from "../reducers/index";
 
 const useStyles = makeStyles({
   button: {
@@ -19,12 +18,12 @@ const useStyles = makeStyles({
 
 const WebPage = () => {
   const classes = useStyles();
-  const { httpProxy, statePath } = useContext(ConfigurationContext);
-  const ipAddress = useSelector(({ userSelection }: StoreState) =>
+  const {httpProxy, statePath} = useContext(ConfigurationContext);
+  const ipAddress = useSelector(({userSelection}: StoreState) =>
     userSelection.rows.length === 1 ? userSelection.rows[0] : null
   );
   const proxyEnabled = useSelector(
-    ({ userSelection }: StoreState) => userSelection.proxy
+    ({userSelection}: StoreState) => userSelection.proxy
   );
 
   if (ipAddress === null) return null;
@@ -45,7 +44,7 @@ const WebPage = () => {
         width="100%"
         height="100%"
         draggable={false}
-        style={{ userSelect: "none", borderWidth: "0px" }}
+        style={{userSelect: "none", borderWidth: "0px"}}
       >
         <p>Your browser does not support iframes.</p>
       </iframe>

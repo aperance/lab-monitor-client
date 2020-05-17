@@ -1,9 +1,9 @@
 import * as React from "react";
-import { useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { WebsocketContext } from "../websockets/WebsocketContext";
-import { StoreState } from "../reducers/index";
-import { deviceCommandResponse, draggingSet } from "../actions/actionCreators";
+import {useContext} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {WebsocketContext} from "../websockets/WebsocketContext";
+import {StoreState} from "../reducers/index";
+import {deviceCommandResponse, draggingSet} from "../actions/actionCreators";
 import DeviceTable from "./DeviceTable";
 import Toolbar from "./Toolbar";
 import History from "./History";
@@ -17,7 +17,7 @@ import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
 const App = () => {
-  const { status } = useContext(WebsocketContext);
+  const {status} = useContext(WebsocketContext);
   const store = useSelector((state: StoreState) => {
     return {
       dataReceived: Object.keys(state.tableData).length !== 0,
@@ -46,7 +46,7 @@ const App = () => {
         <Drawers
           drawersVisible={store.drawersVisible}
           isResizing={(isDragging: boolean) =>
-            dispatch(draggingSet({ isDragging }))
+            dispatch(draggingSet({isDragging}))
           }
           leftDrawer={<Toolbar />}
           rightDrawer={(() => {
@@ -68,7 +68,7 @@ const App = () => {
         <ActionResponse
           response={store.deviceResponse}
           handleClose={() =>
-            dispatch(deviceCommandResponse({ err: null, results: null }))
+            dispatch(deviceCommandResponse({err: null, results: null}))
           }
         />
       </>

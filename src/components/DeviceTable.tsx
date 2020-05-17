@@ -1,14 +1,13 @@
 import * as React from "react";
-import { useContext, useReducer } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/styles";
-import { Table, TableBody } from "@material-ui/core";
+import {useContext, useReducer} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {Table, TableBody, makeStyles} from "@material-ui/core";
 import DeviceTableHead from "./DeviceTableHead";
 import DeviceTableRow from "./DeviceTableRow";
 import FilterBar from "./FilterBar";
-import { useDeviceData } from "../hooks/useDeviceData";
-import { ConfigurationContext } from "../configuration/ConfigurationContext";
-import { StoreState } from "../reducers/index";
+import {useDeviceData} from "../hooks/useDeviceData";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {StoreState} from "../reducers/index";
 import {
   singleRowSelect,
   multiRowSelect,
@@ -32,20 +31,20 @@ const useStyles = makeStyles({
 });
 
 const filterReducer = (
-  selectedFilters: { [x: string]: string[] },
-  action: { property: string; regex: string }
+  selectedFilters: {[x: string]: string[]},
+  action: {property: string; regex: string}
 ) => {
   const regexArray = selectedFilters[action.property] || [];
   const currentIndex = regexArray.indexOf(action.regex);
   currentIndex === -1
     ? regexArray.push(action.regex)
     : regexArray.splice(currentIndex, 1);
-  return { ...selectedFilters, [action.property]: regexArray };
+  return {...selectedFilters, [action.property]: regexArray};
 };
 
 const sortingReducer = (
-  selectedSorting: { property: string; reverse: boolean },
-  action: { property: string }
+  selectedSorting: {property: string; reverse: boolean},
+  action: {property: string}
 ) => {
   return {
     property: action.property,
@@ -58,7 +57,7 @@ const sortingReducer = (
 
 const DeviceTable = () => {
   const classes = useStyles();
-  const { columns, filters } = useContext(ConfigurationContext);
+  const {columns, filters} = useContext(ConfigurationContext);
   const selectedRows = useSelector((x: StoreState) => x.userSelection.rows);
   const proxyEnabled = useSelector((x: StoreState) => x.userSelection.proxy);
   const dispatch = useDispatch();
@@ -70,13 +69,13 @@ const DeviceTable = () => {
   const deviceData = useDeviceData(selectedFilters, selectedSorting);
 
   return (
-    <div style={{ display: "flex", height: "calc(100vh - 60px)" }}>
+    <div style={{display: "flex", height: "calc(100vh - 60px)"}}>
       <FilterBar
         filters={filters}
         selectedFilters={selectedFilters}
         proxyEnabled={proxyEnabled}
         handleCheckboxClick={(property: string, regex: string) =>
-          setFilters({ property, regex })
+          setFilters({property, regex})
         }
         handleProxyClick={() => dispatch(proxyToggle())}
       />
@@ -86,7 +85,7 @@ const DeviceTable = () => {
           <DeviceTableHead
             columns={columns}
             selectedSorting={selectedSorting}
-            changeSort={(property: string) => setSorting({ property })}
+            changeSort={(property: string) => setSorting({property})}
           />
           <TableBody>
             {deviceData.map(([rowId, rowData]) => (
@@ -97,8 +96,8 @@ const DeviceTable = () => {
                 selected={selectedRows.includes(rowId)}
                 handleRowClick={(e: MouseEvent) => {
                   if (e.altKey || e.ctrlKey)
-                    dispatch(multiRowSelect({ row: rowId }));
-                  else dispatch(singleRowSelect({ row: rowId }));
+                    dispatch(multiRowSelect({row: rowId}));
+                  else dispatch(singleRowSelect({row: rowId}));
                 }}
               />
             ))}
@@ -106,7 +105,7 @@ const DeviceTable = () => {
         </Table>
         <div
           className={classes.belowTable}
-          onClick={() => dispatch(singleRowSelect({ row: null }))}
+          onClick={() => dispatch(singleRowSelect({row: null}))}
         />
       </div>
     </div>

@@ -1,11 +1,17 @@
 import * as React from "react";
-import { useState, useContext } from "react";
-import { makeStyles } from "@material-ui/styles";
-import { AppBar, Toolbar, IconButton, MenuItem, Menu } from "@material-ui/core";
+import {useState, useContext} from "react";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  MenuItem,
+  Menu,
+  makeStyles
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/MoreVert";
-import { ConfigurationContext } from "../configuration/ConfigurationContext";
-import { WebsocketContext } from "../websockets/WebsocketContext";
-import { refreshDevice, clearDevice } from "../websockets/messageCreators";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {WebsocketContext} from "../websockets/WebsocketContext";
+import {refreshDevice, clearDevice} from "../websockets/messageCreators";
 
 const useStyles = makeStyles({
   root: {
@@ -13,20 +19,20 @@ const useStyles = makeStyles({
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
     zIndex: 0
   },
-  toolbar: { minHeight: "56px" },
+  toolbar: {minHeight: "56px"},
   title: {
     flexGrow: 1,
     color: "rgba(0, 0, 0, 0.75)",
     fontSize: "1.2rem",
     userSelect: "none"
   },
-  menuItem: { fontSize: "0.8rem" }
+  menuItem: {fontSize: "0.8rem"}
 });
 
 const NavBar = () => {
   const classes = useStyles();
   const ws = useContext(WebsocketContext);
-  const { title } = useContext(ConfigurationContext);
+  const {title} = useContext(ConfigurationContext);
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
   return (

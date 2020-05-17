@@ -1,21 +1,21 @@
 import * as React from "react";
-import { useState, useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/styles";
+import {useState, useContext} from "react";
+import {useSelector, useDispatch} from "react-redux";
 import {
   Input,
   InputLabel,
   MenuItem,
   FormControl,
   Select,
-  Button
+  Button,
+  makeStyles
 } from "@material-ui/core";
 import Terminal from "./Terminal";
-import { WebsocketContext } from "../websockets/WebsocketContext";
-import { psToolsRequest } from "../websockets/messageCreators";
-import { ConfigurationContext } from "../configuration/ConfigurationContext";
-import { StoreState } from "../reducers/index";
-import { psToolsResponseClear } from "../actions/actionCreators";
+import {WebsocketContext} from "../websockets/WebsocketContext";
+import {psToolsRequest} from "../websockets/messageCreators";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {StoreState} from "../reducers/index";
+import {psToolsResponseClear} from "../actions/actionCreators";
 
 // @ts-ignore
 const useStyles = makeStyles({
@@ -23,16 +23,16 @@ const useStyles = makeStyles({
   container: {
     // tslint:disable-next-line:object-literal-key-quotes
     margin: "24px 32px 0px 32px",
-    "& form": { display: "flex", flexWrap: "wrap", marginTop: "16px" },
-    "& label": { fontSize: "0.825rem", height: "15px" },
-    "& button": { margin: "8px 0px 8px" },
+    "& form": {display: "flex", flexWrap: "wrap", marginTop: "16px"},
+    "& label": {fontSize: "0.825rem", height: "15px"},
+    "& button": {margin: "8px 0px 8px"},
     // @ts-ignore
-    "& input": { fontSize: ["0.825rem", "!important"], height: "15px" }
+    "& input": {fontSize: ["0.825rem", "!important"], height: "15px"}
   },
-  presetsInput: { width: "100%" },
-  modeInput: { width: "76px", marginRight: "16px" },
-  cmdInput: { width: "calc(100% - 164px)", marginRight: "8px" },
-  text: { fontSize: "0.825rem" }
+  presetsInput: {width: "100%"},
+  modeInput: {width: "76px", marginRight: "16px"},
+  cmdInput: {width: "calc(100% - 164px)", marginRight: "8px"},
+  text: {fontSize: "0.825rem"}
 });
 
 const PsTools = () => {

@@ -1,14 +1,13 @@
 import * as React from "react";
-import { useContext } from "react";
-import { useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/styles";
-import { Fab } from "@material-ui/core";
+import {useContext} from "react";
+import {useSelector} from "react-redux";
+import {Fab, makeStyles} from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
-import { ConfigurationContext } from "../configuration/ConfigurationContext";
-import { StoreState } from "../reducers/index";
-import { useVnc } from "../hooks/useVnc";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {StoreState} from "../reducers/index";
+import {useVnc} from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
 const useStyles = makeStyles({
@@ -44,14 +43,14 @@ const useStyles = makeStyles({
 
 const VncViewer = () => {
   const classes = useStyles();
-  const { port, passwordEncrypted } = useContext(ConfigurationContext).vnc;
-  const ipAddress = useSelector(({ userSelection }: StoreState) =>
+  const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
+  const ipAddress = useSelector(({userSelection}: StoreState) =>
     userSelection.rows.length === 1 ? userSelection.rows[0] : ""
   );
   const suspend = useSelector(
-    ({ userSelection }: StoreState) => userSelection.dragging
+    ({userSelection}: StoreState) => userSelection.dragging
   );
-  const { targetRef, status, scaled, setScaled } = useVnc(ipAddress, suspend);
+  const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, suspend);
 
   return (
     <div className={classes.root}>
@@ -89,7 +88,7 @@ const VncViewer = () => {
                   `port=${port}\n` +
                   `password=${passwordEncrypted}`
               ],
-              { type: "text/plain" }
+              {type: "text/plain"}
             )
           )}
           download="test.vnc"

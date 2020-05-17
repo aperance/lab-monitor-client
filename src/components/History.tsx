@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/styles";
-import { ListItem, ListItemText } from "@material-ui/core";
-import { List, AutoSizer } from "react-virtualized";
-import { StoreState } from "../reducers/index";
+import {useState} from "react";
+import {useSelector} from "react-redux";
+import {ListItem, ListItemText, makeStyles} from "@material-ui/core";
+import {List, AutoSizer} from "react-virtualized";
+import {StoreState} from "../reducers/index";
 
 const useStyles = makeStyles({
   root: {
@@ -13,8 +12,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
     padding: "0 12px 0 12px"
   },
-  selectedRow: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
-  text: { fontSize: "0.75rem" }
+  selectedRow: {backgroundColor: "rgba(0, 0, 0, 0.04)"},
+  text: {fontSize: "0.75rem"}
 });
 
 const HistoryList = () => {
@@ -33,15 +32,15 @@ const HistoryList = () => {
 
   return (
     <div className={classes.root}>
-      <div style={{ flex: 1 }}>
+      <div style={{flex: 1}}>
         <AutoSizer>
-          {({ width, height }) => (
+          {({width, height}) => (
             <List
               width={width}
               rowHeight={32}
               height={height}
               rowCount={properties.length}
-              rowRenderer={({ key, index, style }) => (
+              rowRenderer={({key, index, style}) => (
                 <ListItem
                   button
                   style={style}
@@ -56,7 +55,7 @@ const HistoryList = () => {
                   divider={true}
                 >
                   <ListItemText
-                    classes={{ primary: classes.text }}
+                    classes={{primary: classes.text}}
                     primary={properties[index]}
                   />
                 </ListItem>

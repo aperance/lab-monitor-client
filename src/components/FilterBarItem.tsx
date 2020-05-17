@@ -1,6 +1,5 @@
 import * as React from "react";
-import { makeStyles } from "@material-ui/styles";
-import { FormControlLabel } from "@material-ui/core";
+import {FormControlLabel, makeStyles} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles({
@@ -29,7 +28,7 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  selectedFilters: { [property: string]: string[] };
+  selectedFilters: {[property: string]: string[]};
   property: string;
   regex: string;
   label: string;
@@ -42,7 +41,7 @@ const FilterBarItem = (props: Props) => {
   return (
     <FormControlLabel
       className={classes.formControlLabel}
-      classes={{ label: classes.label }}
+      classes={{label: classes.label}}
       control={
         <Checkbox
           className={classes.checkbox}

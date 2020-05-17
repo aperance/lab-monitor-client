@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/styles";
+import {useState, useEffect} from "react";
+import {makeStyles} from "@material-ui/core";
 import Icon from "@material-ui/icons/Lens";
 
 const useStyles = makeStyles({
@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   }
 });
 
-const colorLookup: { [x: string]: string } = {
+const colorLookup: {[x: string]: string} = {
   CONNECTED: "mediumseagreen",
   RETRY: "mediumseagreen",
   DISCONNECTED: "rgb(239, 239, 35)",

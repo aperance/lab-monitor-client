@@ -1,6 +1,5 @@
 import * as React from "react";
-import { makeStyles } from "@material-ui/styles";
-import { Paper } from "@material-ui/core";
+import {Paper, makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles({
   paper: {
@@ -11,7 +10,7 @@ const useStyles = makeStyles({
     color: "white",
     fontSize: "0.825rem"
   },
-  pre: { padding: "10px 10px 10px 10px", whiteSpace: "pre-wrap" }
+  pre: {padding: "10px 10px 10px 10px", whiteSpace: "pre-wrap"}
 });
 
 interface Props {

@@ -1,9 +1,14 @@
 import * as React from "react";
-import { makeStyles } from "@material-ui/styles";
-import { ListItem, ListItemText, ListItemIcon, Icon } from "@material-ui/core";
+import {
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Icon,
+  makeStyles
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
-  selected: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
+  selected: {backgroundColor: "rgba(0, 0, 0, 0.04)"},
   root: {
     width: "200px",
     paddingLeft: "20px",
@@ -43,10 +48,7 @@ const ToolbarItem = (props: Props) => {
         <ListItemIcon className={classes.icon}>
           <Icon>{props.leftIcon}</Icon>
         </ListItemIcon>
-        <ListItemText
-          classes={{ primary: classes.text }}
-          primary={props.name}
-        />
+        <ListItemText classes={{primary: classes.text}} primary={props.name} />
         {props.rightIcon && (
           <ListItemIcon className={classes.icon}>
             <Icon>{props.rightIcon}</Icon>

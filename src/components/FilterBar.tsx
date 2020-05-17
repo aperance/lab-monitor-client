@@ -1,11 +1,11 @@
 import * as React from "react";
-import { makeStyles } from "@material-ui/styles";
 import {
   FormControl,
   FormControlLabel,
   FormGroup,
   FormLabel,
-  Switch
+  Switch,
+  makeStyles
 } from "@material-ui/core";
 import FilterBarItem from "./FilterBarItem";
 
@@ -51,7 +51,7 @@ interface Filter {
 
 interface Props {
   filters: Filter[];
-  selectedFilters: { [property: string]: string[] };
+  selectedFilters: {[property: string]: string[]};
   proxyEnabled: boolean;
   handleCheckboxClick: (property: string, regex: string) => void;
   handleProxyClick: () => void;

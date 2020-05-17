@@ -1,15 +1,12 @@
 import * as React from "react";
-import { makeStyles } from "@material-ui/styles";
-import { TableRow, TableCell } from "@material-ui/core";
+import {TableRow, TableCell, makeStyles} from "@material-ui/core";
 import StatusIndicator from "./StatusIndicator";
 
 const useStyles = makeStyles({
-  row: { height: "36px", cursor: "pointer", userSelect: "none" },
+  row: {cursor: "pointer", userSelect: "none"},
   cell: {
     fontSize: "0.75rem",
-    paddingRight: "24px",
-    paddingLeft: "12px",
-    paddingBottom: "2px"
+    lineHeight: "unset"
   }
 });
 

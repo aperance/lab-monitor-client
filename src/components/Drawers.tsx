@@ -1,6 +1,6 @@
 import * as React from "react";
-import { makeStyles } from "@material-ui/styles";
-import { useResizer } from "../hooks/useResizer";
+import {makeStyles} from "@material-ui/core";
+import {useResizer} from "../hooks/useResizer";
 
 const useStyles = makeStyles({
   root: {
@@ -56,9 +56,9 @@ const Drawers = (props: Props) => {
   return (
     <div
       className={classes.root}
-      style={{ width: `${width}px`, transform: `translateX(${translateX}px)` }}
+      style={{width: `${width}px`, transform: `translateX(${translateX}px)`}}
     >
-      <div className={classes.drawer} style={{ flexGrow: 0 }}>
+      <div className={classes.drawer} style={{flexGrow: 0}}>
         {props.leftDrawer}
       </div>
       <div
@@ -66,7 +66,7 @@ const Drawers = (props: Props) => {
         role="dragbar"
         onMouseDown={triggerResize}
       />
-      <div className={classes.drawer} style={{ flexGrow: 1 }}>
+      <div className={classes.drawer} style={{flexGrow: 1}}>
         {props.rightDrawer}
       </div>
     </div>
