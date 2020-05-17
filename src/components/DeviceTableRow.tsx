@@ -4,6 +4,7 @@ import StatusIndicator from "./StatusIndicator";
 
 const useStyles = makeStyles({
   row: {cursor: "pointer", userSelect: "none"},
+  selectedRow: {backgroundColor: "rgba(0, 0, 0, 0.04) !important"},
   cell: {
     fontSize: "0.75rem",
     lineHeight: "unset"
@@ -28,7 +29,7 @@ const DeviceTableRow = (props: Props) => {
   return (
     <TableRow
       hover
-      className={classes.row}
+      classes={{root: classes.row, selected: classes.selectedRow}}
       selected={props.selected}
       onClick={e => props.handleRowClick(e.nativeEvent)}
     >

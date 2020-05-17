@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     whiteSpace: "nowrap",
-    margin: "0px 16px",
+    padding: "0px 16px",
     overflowX: "hidden",
     flex: 1,
     userSelect: "none"
@@ -81,7 +81,7 @@ const DeviceTable = () => {
       />
 
       <div className={classes.root}>
-        <Table>
+        <Table stickyHeader>
           <DeviceTableHead
             columns={columns}
             selectedSorting={selectedSorting}

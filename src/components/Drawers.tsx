@@ -8,6 +8,7 @@ const useStyles = makeStyles({
     top: "0px",
     right: "0px",
     position: "fixed",
+    zIndex: 10,
     display: "flex",
     transition: "transform 400ms cubic-bezier(0, 0, 0.2, 1)"
   },
@@ -28,7 +29,7 @@ const useStyles = makeStyles({
     top: "0px",
     left: "195px",
     position: "absolute",
-    zIndex: 5,
+    zIndex: 20,
     cursor: "col-resize"
   },
   icon: {
