@@ -11,7 +11,7 @@ import FilterBarItem from "./FilterBarItem";
 
 const useStyles = makeStyles({
   root: {
-    padding: "20px 20px 20px 16px",
+    padding: "16px",
     marginTop: "8px",
     marginBottom: "8px",
     borderRight: "1px solid #0000001f",
