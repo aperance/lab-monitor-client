@@ -1,22 +1,22 @@
 import * as React from "react";
-import { useContext, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { List, Divider } from "@material-ui/core";
+import {useContext, useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {List, Divider} from "@material-ui/core";
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
-import { WebsocketContext } from "../websockets/WebsocketContext";
-import { StoreState } from "../reducers/index";
-import { viewSelect } from "../actions/actionCreators";
+import {WebsocketContext} from "../websockets/WebsocketContext";
+import {StoreState} from "../reducers/index";
+import {viewSelect} from "../actions/actionCreators";
 import {
   commandRequest,
   refreshDevice,
   clearDevice
 } from "../websockets/messageCreators";
-import { ConfigurationContext } from "../configuration/ConfigurationContext";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
 
 const Toolbar = () => {
   const ws = useContext(WebsocketContext);
-  const { vnc, httpProxy, logsPath } = useContext(ConfigurationContext);
+  const {vnc, httpProxy, logsPath} = useContext(ConfigurationContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
   const rows = useSelector((x: StoreState) => x.userSelection.rows);
   const view = useSelector((x: StoreState) => x.userSelection.view);
@@ -33,30 +33,32 @@ const Toolbar = () => {
               leftIcon="list_alt"
               rightIcon="navigate_next"
               isSelected={view === "statePage"}
-              onClick={() => dispatch(viewSelect({ view: "statePage" }))}
+              onClick={() => dispatch(viewSelect({view: "statePage"}))}
             />
             <ToolbarItem
               name="History"
               leftIcon="history"
               rightIcon="navigate_next"
               isSelected={view === "history"}
-              onClick={() => dispatch(viewSelect({ view: "history" }))}
+              onClick={() => dispatch(viewSelect({view: "history"}))}
             />
-            <ToolbarItem
-              name="PSTools"
-              leftIcon="code"
-              rightIcon="navigate_next"
-              isSelected={view === "psTools"}
-              onClick={() => dispatch(viewSelect({ view: "psTools" }))}
-            />
+            {process.env.DEMO !== "true" && (
+              <ToolbarItem
+                name="PSTools"
+                leftIcon="code"
+                rightIcon="navigate_next"
+                isSelected={view === "psTools"}
+                onClick={() => dispatch(viewSelect({view: "psTools"}))}
+              />
+            )}
             <ToolbarItem
               name="VNC"
               leftIcon="picture_in_picture"
               rightIcon="navigate_next"
               isSelected={view === "vnc"}
-              onClick={() => dispatch(viewSelect({ view: "vnc" }))}
+              onClick={() => dispatch(viewSelect({view: "vnc"}))}
             />
-            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+            <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
 
             <ToolbarItem
               name="Shared Drives"
@@ -79,14 +81,14 @@ const Toolbar = () => {
                         `/PERSISTENT:NO\n` +
                         `start \\\\${rows[0]}`
                     ],
-                    { type: "text/plain" }
+                    {type: "text/plain"}
                   )
                 )}
                 target="_blank"
                 download="test.bat"
               />
             </ToolbarItem>
-            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+            <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
             <ToolbarItem
               name="Logs"
               leftIcon="subject"
@@ -111,15 +113,17 @@ const Toolbar = () => {
                 />
               )}
             </ToolbarItem>
-            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+            <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
           </>
         )}
-        <ToolbarItem
-          name="Log Level"
-          leftIcon="tune"
-          selectedRows={rows}
-          onClick={() => setLogConfigOpen(true)}
-        />
+        {process.env.DEMO !== "true" && (
+          <ToolbarItem
+            name="Log Level"
+            leftIcon="tune"
+            selectedRows={rows}
+            onClick={() => setLogConfigOpen(true)}
+          />
+        )}
         <ToolbarItem
           name="Delete Logs"
           leftIcon="delete_sweep"
@@ -144,7 +148,7 @@ const Toolbar = () => {
           selectedRows={rows}
           onClick={() => ws.send(commandRequest(rows, "resetDisplay"))}
         />
-        <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
+        <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
         <ToolbarItem
           name="Force Refresh"
           leftIcon="refresh"
@@ -161,7 +165,7 @@ const Toolbar = () => {
       <LogLevel
         open={logConfigOpen}
         sendDeviceCommand={(namespace: string, level: string) =>
-          ws.send(commandRequest(rows, "logLevel", { namespace, level }))
+          ws.send(commandRequest(rows, "logLevel", {namespace, level}))
         }
         close={() => setLogConfigOpen(false)}
       />

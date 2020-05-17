@@ -16,7 +16,8 @@ const useStyles = makeStyles({
     marginBottom: "8px",
     borderRight: "1px solid #0000001f",
     position: "static",
-    userSelect: "none"
+    userSelect: "none",
+    minWidth: "100px"
   },
   formLabel: {
     fontSize: "0.75rem",
@@ -85,22 +86,24 @@ const FilterBar = (props: Props) => {
           </div>
         );
       })}
-      <FormControlLabel
-        classes={{
-          root: classes.switchForm,
-          label: classes.switchLabel
-        }}
-        control={
-          <Switch
-            checked={!props.proxyEnabled}
-            color="primary"
-            disableRipple={true}
-            onClick={props.handleProxyClick}
-          />
-        }
-        label="Disable Proxy"
-        labelPlacement="start"
-      />
+      {process.env.DEMO !== "true" && (
+        <FormControlLabel
+          classes={{
+            root: classes.switchForm,
+            label: classes.switchLabel
+          }}
+          control={
+            <Switch
+              checked={!props.proxyEnabled}
+              color="primary"
+              disableRipple={true}
+              onClick={props.handleProxyClick}
+            />
+          }
+          label="Disable Proxy"
+          labelPlacement="start"
+        />
+      )}
     </FormControl>
   );
 };
