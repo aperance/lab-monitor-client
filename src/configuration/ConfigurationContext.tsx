@@ -48,27 +48,56 @@ const demoConfig = {
       title: "Serial #"
     },
     {
-      property: "model",
-      title: "Model #"
+      property: "ipAddress",
+      title: "IP Address"
+    },
+    {
+      property: "timestamp",
+      title: "Updated At"
+    },
+    {
+      property: "hardware",
+      title: "Hardware"
     },
     {
       property: "firmware",
-      title: "Firmware Version"
+      title: "Firmware"
     },
     {
-      property: "Property_A",
+      property: "propertyA",
       title: "Property A"
     },
     {
-      property: "Property_B",
+      property: "propertyB",
       title: "Property B"
+    },
+    {
+      property: "propertyC",
+      title: "Property C"
     }
   ],
   filters: [
     {
-      property: "model",
-      title: "Model #",
-      options: {"Model A": "Model A", "Model B": "Model B"}
+      property: "hardware",
+      title: "Hardware",
+      options: {
+        "Rev A": "Rev A",
+        "Rev B": "Rev B",
+        "Rev C": "Rev C",
+        "Rev D": "Rev D",
+        "Rev E": "Rev E"
+      }
+    },
+    {
+      property: "firmware",
+      title: "Firmware",
+      options: {
+        "v1.0.5": "v1.0.5",
+        "v2.0.4": "v2.0.4",
+        "v3.0.3": "v3.0.3",
+        "v4.0.2": "v4.0.2",
+        "v5.0.1": "v5.0.1"
+      }
     }
   ],
   logLevel: {
