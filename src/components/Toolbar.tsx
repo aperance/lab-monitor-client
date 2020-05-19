@@ -58,36 +58,40 @@ const Toolbar = () => {
               isSelected={view === "vnc"}
               onClick={() => dispatch(viewSelect({view: "vnc"}))}
             />
-            <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
 
-            <ToolbarItem
-              name="Shared Drives"
-              leftIcon="folder"
-              rightIcon="get_app"
-              selectedRows={rows}
-              onClick={() => {
-                const link = document.getElementById("downloadLink");
-                if (link !== null) link.click();
-              }}
-            >
-              <a
-                id="downloadLink"
-                href={URL.createObjectURL(
-                  new Blob(
-                    [
-                      `net use \\\\${rows[0]} ` +
-                        `/user:${vnc.username} ` +
-                        `${vnc.password} ` +
-                        `/PERSISTENT:NO\n` +
-                        `start \\\\${rows[0]}`
-                    ],
-                    {type: "text/plain"}
-                  )
-                )}
-                target="_blank"
-                download="test.bat"
-              />
-            </ToolbarItem>
+            {process.env.DEMO !== "true" && (
+              <>
+                <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
+                <ToolbarItem
+                  name="Shared Drives"
+                  leftIcon="folder"
+                  rightIcon="get_app"
+                  selectedRows={rows}
+                  onClick={() => {
+                    const link = document.getElementById("downloadLink");
+                    if (link !== null) link.click();
+                  }}
+                >
+                  <a
+                    id="downloadLink"
+                    href={URL.createObjectURL(
+                      new Blob(
+                        [
+                          `net use \\\\${rows[0]} ` +
+                            `/user:${vnc.username} ` +
+                            `${vnc.password} ` +
+                            `/PERSISTENT:NO\n` +
+                            `start \\\\${rows[0]}`
+                        ],
+                        {type: "text/plain"}
+                      )
+                    )}
+                    target="_blank"
+                    download="test.bat"
+                  />
+                </ToolbarItem>
+              </>
+            )}
             <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
             <ToolbarItem
               name="Logs"
