@@ -3,7 +3,7 @@ import {TableHead, TableRow, TableCell, makeStyles} from "@material-ui/core";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 
 const useStyles = makeStyles({
-  cell: {fontSize: "0.75rem", backgroundColor: "#ffffff"}
+  cell: {fontSize: "0.825rem", backgroundColor: "#ffffff"}
 });
 
 interface Props {

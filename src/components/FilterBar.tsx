@@ -12,15 +12,14 @@ import FilterBarItem from "./FilterBarItem";
 const useStyles = makeStyles({
   root: {
     padding: "16px",
-    marginTop: "8px",
-    marginBottom: "8px",
+    margin: "12px 0px",
     borderRight: "1px solid #0000001f",
     position: "static",
     userSelect: "none",
     minWidth: "100px"
   },
   formLabel: {
-    fontSize: "0.75rem",
+    fontSize: "0.825rem",
     margin: "0px 8px 8px",
     fontWeight: 500,
     color: "rgba(0, 0, 0, 0.7)"

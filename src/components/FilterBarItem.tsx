@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     marginRight: "0px"
   },
   label: {
-    fontSize: "0.75rem",
+    fontSize: "0.825rem",
     color: "rgba(0, 0, 0, 0.54)",
     fontWeight: 400
   },
