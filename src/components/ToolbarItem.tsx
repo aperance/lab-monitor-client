@@ -11,12 +11,11 @@ const useStyles = makeStyles({
   selected: {backgroundColor: "rgba(0, 0, 0, 0.04)"},
   root: {
     width: "200px",
-    paddingLeft: "20px",
-    paddingRight: "20px"
+    padding: "8px"
   },
   icon: {
-    // tslint:disable-next-line:object-literal-key-quotes
-    marginRight: "0px",
+    margin: "4px 12px",
+    minWidth: "unset",
     "& span": {
       height: "auto",
       width: "auto",
@@ -24,8 +23,10 @@ const useStyles = makeStyles({
     }
   },
   text: {
+    margin: "4px 8px",
     fontSize: "0.8rem",
-    color: "rgba(0, 0, 0, 0.54)"
+    color: "rgba(0, 0, 0, 0.54)",
+    whiteSpace: "nowrap"
   }
 });
 
