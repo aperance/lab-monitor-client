@@ -105,10 +105,10 @@ const demoConfig = {
     namespace: ["x", "y", "z"]
   },
   vnc: {
-    proxyUrl: "",
-    port: "",
+    proxyUrl: process.env.VNC_PROXY || "",
+    port: process.env.VNC_PORT || "",
     username: "",
-    password: "",
-    passwordEncrypted: ""
+    password: process.env.VNC_PASSWORD || "",
+    passwordEncrypted: process.env.VNC_PASSWORD || ""
   }
 };

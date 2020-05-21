@@ -44,9 +44,12 @@ const useStyles = makeStyles({
 const VncViewer = () => {
   const classes = useStyles();
   const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
-  const ipAddress = useSelector(({userSelection}: StoreState) =>
-    userSelection.rows.length === 1 ? userSelection.rows[0] : ""
-  );
+  const ipAddress =
+    process.env.DEMO === "true"
+      ? process.env.VNC_IP || ""
+      : useSelector(({userSelection}: StoreState) =>
+          userSelection.rows.length === 1 ? userSelection.rows[0] : ""
+        );
   const suspend = useSelector(
     ({userSelection}: StoreState) => userSelection.dragging
   );

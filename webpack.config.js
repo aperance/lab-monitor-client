@@ -15,7 +15,14 @@ module.exports = {
     port: 3000
   },
   plugins: [
-    new webpack.EnvironmentPlugin({DEMO: "false", BACKEND: "0.0.0.0"}),
+    new webpack.EnvironmentPlugin({
+      DEMO: "false",
+      BACKEND: "ws://0.0.0.0:4000",
+      VNC_PROXY: "ws://0.0.0.0:5000",
+      VNC_IP: "",
+      VNC_PORT: "",
+      VNC_PASSWORD: ""
+    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/favicon.ico"
