@@ -24,6 +24,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
     color: "rgba(0, 0, 0, 0.75)",
     fontSize: "1.2rem",
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     userSelect: "none"
   },
   menuItem: {fontSize: "0.8rem"}

@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const GoogleFontsPlugin = require("@beyonk/google-fonts-webpack-plugin");
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 //   .BundleAnalyzerPlugin;
 
@@ -25,8 +26,12 @@ module.exports = {
       VNC_PORT: "",
       VNC_PASSWORD: ""
     }),
+    new GoogleFontsPlugin({
+      fonts: [{family: "Roboto", variants: ["400", "500", "600", "700"]}]
+    }),
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./src/index.html",
+      title: "QA Lab Monitor"
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CompressionPlugin()
@@ -37,7 +42,6 @@ module.exports = {
   devtool: "source-map",
 
   resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: [".ts", ".tsx", ".js"]
   },
   mode: "development",
@@ -49,8 +53,6 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader"
       },
-
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
     ]
   }
