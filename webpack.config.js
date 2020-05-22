@@ -2,6 +2,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
+const CompressionPlugin = require("compression-webpack-plugin");
+// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+//   .BundleAnalyzerPlugin;
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -27,18 +30,10 @@ module.exports = {
       template: "./public/index.html",
       favicon: "./public/favicon.ico"
     }),
-    new webpack.HotModuleReplacementPlugin()
-    // new webpack.DefinePlugin({
-    //   "process.env.NODE_ENV": JSON.stringify("production")
-    // })
+    new webpack.HotModuleReplacementPlugin(),
+    new CompressionPlugin()
+    // new BundleAnalyzerPlugin()
   ],
-
-  // devServer: {
-  //   compress: true,
-  //   hot: true,
-  //   host: "192.168.1.117",
-  //   port: 3000
-  // },
 
   // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
@@ -51,9 +46,6 @@ module.exports = {
 
   module: {
     rules: [
-      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-      //{ test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-
       {
         test: /\.(tsx?)|(js)$/,
         exclude: /node_modules/,
