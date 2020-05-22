@@ -3,20 +3,24 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const GoogleFontsPlugin = require("@beyonk/google-fonts-webpack-plugin");
-// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-//   .BundleAnalyzerPlugin;
+const CreateFileWebpack = require("create-file-webpack");
 
 module.exports = {
   entry: "./src/index.tsx",
+
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist")
   },
+
+  mode: "development",
+
   devServer: {
     contentBase: "./dist",
     host: "0.0.0.0",
     port: 3000
   },
+
   plugins: [
     new webpack.EnvironmentPlugin({
       DEMO: "false",
@@ -35,16 +39,13 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CompressionPlugin()
-    // new BundleAnalyzerPlugin()
   ],
 
-  // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
 
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
   },
-  mode: "development",
 
   module: {
     rules: [
@@ -57,3 +58,13 @@ module.exports = {
     ]
   }
 };
+
+if (process.env.DEMO == "true") {
+  module.exports.plugins.push(
+    new CreateFileWebpack({
+      path: "./dist",
+      fileName: "log-demo.txt",
+      content: "Demo log file."
+    })
+  );
+}
