@@ -1,4 +1,4 @@
-import { ActionTypes, Actions } from "./actionTypes";
+import {ActionTypes, Actions} from "./actionTypes";
 import {
   DeviceDataAll,
   DeviceDataUpdate,
@@ -30,17 +30,17 @@ export const deviceCommandResponse = (payload: CommandResponse): Actions => ({
   payload
 });
 
-export const singleRowSelect = (payload: { row: string | null }): Actions => ({
+export const singleRowSelect = (payload: {row: string | null}): Actions => ({
   type: ActionTypes.SINGLE_ROW_SELECT,
   payload
 });
 
-export const multiRowSelect = (payload: { row: string | null }): Actions => ({
+export const multiRowSelect = (payload: {row: string | null}): Actions => ({
   type: ActionTypes.MULTI_ROW_SELECT,
   payload
 });
 
-export const viewSelect = (payload: { view: string }): Actions => ({
+export const viewSelect = (payload: {view: string}): Actions => ({
   type: ActionTypes.VIEW_SELECT,
   payload
 });
@@ -49,7 +49,7 @@ export const proxyToggle = (): Actions => ({
   type: ActionTypes.PROXY_TOGGLE
 });
 
-export const draggingSet = (payload: { isDragging: boolean }): Actions => ({
+export const draggingSet = (payload: {isDragging: boolean}): Actions => ({
   type: ActionTypes.DRAGGING_SET,
   payload
 });

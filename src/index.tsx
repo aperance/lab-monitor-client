@@ -8,8 +8,6 @@ import {WebsocketProvider} from "./websockets/WebsocketContext";
 import {ConfigurationProvider} from "./configuration/ConfigurationContext";
 import App from "./components/App";
 
-//import "typeface-roboto";
-
 const theme = createMuiTheme({
   palette: {primary: blue}
 });

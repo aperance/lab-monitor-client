@@ -1,10 +1,14 @@
-import { useState, useEffect, useContext, useRef } from "react";
-import { ConfigurationContext } from "../configuration/ConfigurationContext";
-// @ts-ignore
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import {useState, useEffect, useContext, useRef} from "react";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
+//@ts-ignore
 import RFB from "@novnc/novnc/core/rfb";
 
 export const useVnc = (ipAddress: string, suspend: boolean) => {
-  const { proxyUrl, port, password } = useContext(ConfigurationContext).vnc;
+  const {proxyUrl, port, password} = useContext(ConfigurationContext).vnc;
   const [scaled, setScaled] = useState(true);
   const [status, setStatus] = useState("disconnected");
   const targetRef = useRef(null as HTMLSpanElement | null);
@@ -25,7 +29,7 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   const connectVnc = () => {
     timer = setTimeout(() => {
       rfb = new RFB(targetRef.current, url, {
-        credentials: { password }
+        credentials: {password}
       });
       rfb.scaleViewport = scaled;
       rfb.addEventListener("connect", connectHandler);
@@ -47,5 +51,5 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   const connectHandler = () => setStatus("connected");
   const disconnectHandler = () => setStatus("error");
 
-  return { targetRef, status, scaled, setScaled };
+  return {targetRef, status, scaled, setScaled};
 };

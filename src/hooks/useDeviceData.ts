@@ -1,15 +1,15 @@
-import { useContext } from "react";
-import { useSelector } from "react-redux";
-import { ConfigurationContext } from "../configuration/ConfigurationContext";
-import { StoreState } from "../reducers/index";
+import {useContext} from "react";
+import {useSelector} from "react-redux";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {StoreState} from "../reducers/index";
 
-type RowData = [string, { [x: string]: string | null }];
+type RowData = [string, {[x: string]: string | null}];
 
 export const useDeviceData = (
-  selectedFilters: { [x: string]: string[] },
-  selectedSorting: { property: string; reverse: boolean }
+  selectedFilters: {[x: string]: string[]},
+  selectedSorting: {property: string; reverse: boolean}
 ) => {
-  const { columns } = useContext(ConfigurationContext);
+  const {columns} = useContext(ConfigurationContext);
   const rawData = useSelector((x: StoreState) => Object.entries(x.tableData));
   // const pause = useSelector((x: StoreState) => x.userSelection.dragging);
 
@@ -18,7 +18,7 @@ export const useDeviceData = (
       /** Filter out column config with no replacement rule */
       .filter(x => typeof x.replace !== "undefined")
       /** Iterate over column config with replacement rules */
-      .forEach(({ property, replace }) => {
+      .forEach(({property, replace}) => {
         if (replace && rowData[property] !== null) {
           /** Apply all replacemnt rules on rowData */
           Object.entries(replace).forEach(([replacement, matcher]) => {

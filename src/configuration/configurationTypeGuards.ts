@@ -1,7 +1,6 @@
 import {Ajv} from "ajv";
 import {Configuration} from "./configurationTypes";
 
-// @ts-ignore
 const ajv = new (require("ajv"))({verbose: true}) as Ajv;
 
 const validateConfiguration = ajv.compile({

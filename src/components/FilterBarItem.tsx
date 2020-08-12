@@ -47,6 +47,7 @@ const FilterBarItem = (props: Props) => {
           className={classes.checkbox}
           color="primary"
           checked={
+            // eslint-disable-next-line no-prototype-builtins
             props.selectedFilters.hasOwnProperty(props.property) &&
             props.selectedFilters[props.property].includes(props.regex)
           }

@@ -1,5 +1,5 @@
 import store from "../store/store";
-import { WsMessageTypeKeys } from "./messageTypes";
+import {WsMessageTypeKeys} from "./messageTypes";
 import {
   isWsMessage,
   isDeviceDataAll,
@@ -17,7 +17,7 @@ import {
 export const messageRouter = (message: unknown) => {
   if (!isWsMessage(message)) throw Error("Invalid WS message type specified");
 
-  const { type, payload } = message;
+  const {type, payload} = message;
 
   const errorMessage = `Websocket message failed validation (type: ${type})`;
 

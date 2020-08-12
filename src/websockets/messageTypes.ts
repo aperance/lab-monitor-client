@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /** WebSocket Message Types */
 
 export enum WsMessageTypeKeys {
@@ -24,16 +25,16 @@ export interface WsMessage {
 
 export interface DeviceDataAll {
   readonly state: {
-    [id: string]: { [property: string]: string };
+    [id: string]: {[property: string]: string};
   };
   readonly history: {
-    [id: string]: { [property: string]: Array<[string, string | null]> };
+    [id: string]: {[property: string]: Array<[string, string | null]>};
   };
 }
 
 export interface DeviceDataUpdate {
   readonly id: string;
-  readonly state: { [property: string]: string | null } | null;
+  readonly state: {[property: string]: string | null} | null;
   readonly history: Array<[string, [string, string | null]]> | null;
 }
 

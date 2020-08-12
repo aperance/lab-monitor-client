@@ -1,8 +1,8 @@
-import { combineReducers } from "redux";
-import { tableDataReducer } from "./tableDataReducer";
-import { historyDataReducer } from "./historyDataReducer";
-import { deviceResponseReducer } from "./deviceResponseReducer";
-import { userSelectionReducer } from "./userSelectionReducer";
+import {combineReducers} from "redux";
+import {tableDataReducer} from "./tableDataReducer";
+import {historyDataReducer} from "./historyDataReducer";
+import {deviceResponseReducer} from "./deviceResponseReducer";
+import {userSelectionReducer} from "./userSelectionReducer";
 import {
   DeviceResponseState,
   TableDataState,

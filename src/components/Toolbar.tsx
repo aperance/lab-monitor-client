@@ -87,6 +87,7 @@ const Toolbar = () => {
                       )
                     )}
                     target="_blank"
+                    rel="noreferrer"
                     download="test.bat"
                   />
                 </ToolbarItem>
@@ -106,14 +107,16 @@ const Toolbar = () => {
               {proxyEnabled ? (
                 <a
                   id="logsLink"
-                  target="_blank"
                   href={`http://${httpProxy}${logsPath}?target=${rows[0]}`}
+                  target="_blank"
+                  rel="noreferrer"
                 />
               ) : (
                 <a
                   id="logsLink"
                   href={`http://${rows[0]}:8001${logsPath}`}
                   target="_blank"
+                  rel="noreferrer"
                 />
               )}
             </ToolbarItem>

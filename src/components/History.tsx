@@ -75,7 +75,7 @@ const HistoryList = () => {
           <>
             <pre>{`History for ${selectedProperty}`}</pre>
             {Object.values(historyData[selectedProperty]).map(([x, y]) => (
-              <pre>{`  ${x}:  ${y}`}</pre>
+              <pre key={x + y}>{`  ${x}:  ${y}`}</pre>
             ))}
           </>
         )}

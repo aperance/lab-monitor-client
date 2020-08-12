@@ -36,7 +36,7 @@ const StatusIndicator = (props: Props) => {
       }, 500);
       return () => clearTimeout(id);
     } else setInitialized(true);
-  }, [props.timestamp, props.status]);
+  }, [initialized, props.timestamp, props.status]);
 
   return (
     <Icon

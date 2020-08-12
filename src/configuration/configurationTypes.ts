@@ -8,7 +8,7 @@ export interface Configuration {
   readonly filters: Array<{
     property: string;
     title: string;
-    options: {[x: string]: string | undefined};
+    options: {[x: string]: string};
   }>;
   readonly logLevel: {
     level: string[];

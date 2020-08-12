@@ -40,7 +40,7 @@ export const ConfigurationProvider = (props: Props) => {
   );
 };
 
-const demoConfig = {
+const demoConfig: Configuration = {
   title: "QA Lab Monitor",
   columns: [
     {

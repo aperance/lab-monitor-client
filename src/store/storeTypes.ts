@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface DeviceResponseState {
-  command: { err: Error | null; results: any[] | null };
+  command: {err: Error | null; results: any[] | null};
   psTools: string;
 }
 

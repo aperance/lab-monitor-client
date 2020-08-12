@@ -1,9 +1,10 @@
-import { Reducer } from "redux";
-import { Actions, ActionTypes } from "../actions/actionTypes";
-import { DeviceResponseState } from "../store/storeTypes";
+/* eslint-disable no-case-declarations */
+import {Reducer} from "redux";
+import {Actions, ActionTypes} from "../actions/actionTypes";
+import {DeviceResponseState} from "../store/storeTypes";
 
 const initialState = {
-  command: { err: null, results: null },
+  command: {err: null, results: null},
   psTools: ""
 };
 
@@ -15,7 +16,7 @@ export const deviceResponseReducer: Reducer<DeviceResponseState, Actions> = (
     case ActionTypes.COMMAND_RESPONSE:
       return {
         ...state,
-        command: { err: action.payload.err, results: action.payload.results }
+        command: {err: action.payload.err, results: action.payload.results}
       };
     case ActionTypes.PSTOOLS_RESPONSE:
       const newResult = state.psTools + action.payload.result;
@@ -31,8 +32,8 @@ export const deviceResponseReducer: Reducer<DeviceResponseState, Actions> = (
     case ActionTypes.SINGLE_ROW_SELECT ||
       ActionTypes.MULTI_ROW_SELECT ||
       ActionTypes.VIEW_SELECT:
-      return { ...initialState };
+      return {...initialState};
     default:
-      return { ...state };
+      return {...state};
   }
 };

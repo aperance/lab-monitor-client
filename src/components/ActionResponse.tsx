@@ -3,6 +3,7 @@ import {Snackbar, IconButton} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   response: {err: Error | null; results: any[] | null};
   handleClose: () => void;
 }

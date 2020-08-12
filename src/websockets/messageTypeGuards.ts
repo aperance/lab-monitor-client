@@ -1,4 +1,4 @@
-import { Ajv } from "ajv";
+import {Ajv} from "ajv";
 import {
   WsMessage,
   DeviceDataAll,
@@ -7,13 +7,12 @@ import {
   CommandResponse
 } from "./messageTypes";
 
-// @ts-ignore
-const ajv = new (require("ajv"))({ verbose: true, nullable: true }) as Ajv;
+const ajv = new (require("ajv"))({verbose: true, nullable: true}) as Ajv;
 
 const validateWsMessage = ajv.compile({
   properties: {
-    type: { type: "string" },
-    payload: { type: "object", minProperties: 1 }
+    type: {type: "string"},
+    payload: {type: "object", minProperties: 1}
   },
   required: ["type", "payload"],
   additionalProperties: false
@@ -29,7 +28,7 @@ const validateDeviceDataAll = ajv.compile({
           type: "object",
           minProperties: 1,
           patternProperties: {
-            "^.*$": { type: "string" }
+            "^.*$": {type: "string"}
           }
         }
       }
@@ -51,7 +50,7 @@ const validateDeviceDataAll = ajv.compile({
                 maxItems: 2,
                 minItems: 2,
                 additionalItems: false,
-                items: [{ type: "string" }, { type: ["string", "null"] }]
+                items: [{type: "string"}, {type: ["string", "null"]}]
               }
             }
           }
@@ -65,13 +64,13 @@ const validateDeviceDataAll = ajv.compile({
 
 const validateDeviceDataUpdate = ajv.compile({
   properties: {
-    id: { type: "string", minLength: 1 },
+    id: {type: "string", minLength: 1},
     state: {
       type: "object",
       nullable: true,
       minProperties: 1,
       patternProperties: {
-        "^.*$": { type: ["string", "null"] }
+        "^.*$": {type: ["string", "null"]}
       }
     },
     history: {
@@ -84,16 +83,13 @@ const validateDeviceDataUpdate = ajv.compile({
         minItems: 2,
         additionalItems: false,
         items: [
-          { type: "string", minLength: 1 },
+          {type: "string", minLength: 1},
           {
             type: "array",
             maxItems: 2,
             minItems: 2,
             additionalItems: false,
-            items: [
-              { type: "string", minLength: 1 },
-              { type: ["string", "null"] }
-            ]
+            items: [{type: "string", minLength: 1}, {type: ["string", "null"]}]
           }
         ]
       }
@@ -105,8 +101,8 @@ const validateDeviceDataUpdate = ajv.compile({
 
 const validatePsToolsResponse = ajv.compile({
   properties: {
-    err: { type: ["string", "object", "null"] },
-    result: { type: ["string", "null"] }
+    err: {type: ["string", "object", "null"]},
+    result: {type: ["string", "null"]}
   },
   required: ["err", "result"],
   additionalProperties: false
@@ -114,8 +110,8 @@ const validatePsToolsResponse = ajv.compile({
 
 const validateDeviceActionResponse = ajv.compile({
   properties: {
-    err: { type: ["string", "object", "null"] },
-    results: { type: ["array", "null"] }
+    err: {type: ["string", "object", "null"]},
+    results: {type: ["array", "null"]}
   },
   required: ["err", "results"],
   additionalProperties: false

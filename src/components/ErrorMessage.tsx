@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dialog, DialogContent, DialogContentText } from "@material-ui/core";
+import {Dialog, DialogContent, DialogContentText} from "@material-ui/core";
 
 interface Props {
   message: string;

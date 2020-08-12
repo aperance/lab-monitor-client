@@ -1,6 +1,6 @@
-import { Reducer } from "redux";
-import { Actions, ActionTypes } from "../actions/actionTypes";
-import { TableDataState } from "../store/storeTypes";
+import {Reducer} from "redux";
+import {Actions, ActionTypes} from "../actions/actionTypes";
+import {TableDataState} from "../store/storeTypes";
 
 const initialState = {};
 
@@ -10,10 +10,10 @@ export const tableDataReducer: Reducer<TableDataState, Actions> = (
 ) => {
   switch (action.type) {
     case ActionTypes.DEVICE_DATA_ALL:
-      return { ...action.payload.state };
+      return {...action.payload.state};
     case ActionTypes.DEVICE_DATA_UPDATE:
       if (action.payload.state === null) {
-        const newState = { ...state };
+        const newState = {...state};
         delete newState[action.payload.id];
         return newState;
       } else
@@ -25,8 +25,8 @@ export const tableDataReducer: Reducer<TableDataState, Actions> = (
           }
         };
     case ActionTypes.RESET_ALL:
-      return { ...initialState };
+      return {...initialState};
     default:
-      return { ...state };
+      return {...state};
   }
 };

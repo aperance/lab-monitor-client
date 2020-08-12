@@ -17,16 +17,12 @@ import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {StoreState} from "../reducers/index";
 import {psToolsResponseClear} from "../actions/actionCreators";
 
-// @ts-ignore
 const useStyles = makeStyles({
-  // @ts-ignore
   container: {
-    // tslint:disable-next-line:object-literal-key-quotes
     margin: "24px 32px 0px 32px",
     "& form": {display: "flex", flexWrap: "wrap", marginTop: "16px"},
     "& label": {fontSize: "0.825rem", height: "15px"},
     "& button": {margin: "8px 0px 8px"},
-    // @ts-ignore
     "& input": {fontSize: ["0.825rem", "!important"], height: "15px"}
   },
   presetsInput: {width: "100%"},
@@ -52,28 +48,30 @@ const PsTools = () => {
     <>
       {target && (
         <div className={classes.container}>
-          <form>
-            <FormControl className={classes.presetsInput}>
-              <InputLabel>Load Preset Command</InputLabel>
-              <Select
-                className={classes.text}
-                input={<Input id="presets" />}
-                value={preset}
-                onChange={e => {
-                  const value = e.target.value as string;
-                  setPreset(value);
-                  setMode(presets[value].mode);
-                  setCmd(presets[value].cmd);
-                }}
-              >
-                {Object.keys(presets).map(x => (
-                  <MenuItem className={classes.text} key={x} value={x}>
-                    {presets[x].name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </form>
+          {presets && (
+            <form>
+              <FormControl className={classes.presetsInput}>
+                <InputLabel>Load Preset Command</InputLabel>
+                <Select
+                  className={classes.text}
+                  input={<Input id="presets" />}
+                  value={preset}
+                  onChange={e => {
+                    const value = e.target.value as string;
+                    setPreset(value);
+                    setMode(presets[value].mode);
+                    setCmd(presets[value].cmd);
+                  }}
+                >
+                  {Object.keys(presets).map(x => (
+                    <MenuItem className={classes.text} key={x} value={x}>
+                      {presets[x].name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </form>
+          )}
 
           <form>
             <FormControl className={classes.modeInput}>
