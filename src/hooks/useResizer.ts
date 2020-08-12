@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useState, useEffect} from "react";
 
 export function useResizer(startValue: number, onChange: (x: boolean) => void) {
@@ -20,7 +21,7 @@ export function useResizer(startValue: number, onChange: (x: boolean) => void) {
       document.onmouseleave = null;
     }
     onChange(isDragging);
-  }, [isDragging, onChange]);
+  }, [isDragging]);
 
   return [position, () => setDragging(true)] as [number, () => void];
 }
