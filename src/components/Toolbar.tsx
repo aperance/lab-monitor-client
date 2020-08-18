@@ -5,8 +5,8 @@ import {List, Divider} from "@material-ui/core";
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
 import {WebsocketContext} from "../websockets/WebsocketContext";
-import {StoreState} from "../reducers/index";
-import {viewSelect} from "../actions/actionCreators";
+import {StoreState} from "../redux/store";
+import {viewSelect} from "../redux/actionCreators";
 import {
   commandRequest,
   refreshDevice,

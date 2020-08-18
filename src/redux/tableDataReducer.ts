@@ -1,6 +1,6 @@
 import {Reducer} from "redux";
-import {Actions, ActionTypes} from "../actions/actionTypes";
-import {TableDataState} from "../store/storeTypes";
+import {Actions, ActionTypes} from "./actionCreators";
+import {TableDataState} from "./store";
 
 const initialState = {};
 

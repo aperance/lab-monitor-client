@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import {useSelector} from "react-redux";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../reducers/index";
+import {StoreState} from "../redux/store";
 
 type RowData = [string, {[x: string]: string | null}];
 

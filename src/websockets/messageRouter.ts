@@ -1,4 +1,4 @@
-import store from "../store/store";
+import store from "../redux/store";
 import {WsMessageTypeKeys} from "./messageTypes";
 import {
   isWsMessage,
@@ -12,7 +12,7 @@ import {
   deviceDataAll,
   deviceDataUpdate,
   psToolsResponse
-} from "../actions/actionCreators";
+} from "../redux/actionCreators";
 
 export const messageRouter = (message: unknown) => {
   if (!isWsMessage(message)) throw Error("Invalid WS message type specified");

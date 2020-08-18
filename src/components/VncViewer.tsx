@@ -7,7 +7,7 @@ import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../reducers/index";
+import {StoreState} from "../redux/store";
 import {useVnc} from "../hooks/useVnc";
 import Spinner from "./Spinner";
 

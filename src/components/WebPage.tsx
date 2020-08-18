@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {Fab, makeStyles} from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../reducers/index";
+import {StoreState} from "../redux/store";
 
 const useStyles = makeStyles({
   button: {

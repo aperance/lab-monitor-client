@@ -3,7 +3,7 @@ import {useState} from "react";
 import {useSelector} from "react-redux";
 import {ListItem, ListItemText, makeStyles} from "@material-ui/core";
 import {List, AutoSizer} from "react-virtualized";
-import {StoreState} from "../reducers/index";
+import {StoreState} from "../redux/store";
 
 const useStyles = makeStyles({
   root: {

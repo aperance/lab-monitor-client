@@ -7,12 +7,12 @@ import DeviceTableRow from "./DeviceTableRow";
 import FilterBar from "./FilterBar";
 import {useDeviceData} from "../hooks/useDeviceData";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../reducers/index";
+import {StoreState} from "../redux/store";
 import {
   singleRowSelect,
   multiRowSelect,
   proxyToggle
-} from "../actions/actionCreators";
+} from "../redux/actionCreators";
 
 const useStyles = makeStyles({
   root: {

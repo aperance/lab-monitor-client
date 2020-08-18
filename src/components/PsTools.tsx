@@ -14,8 +14,8 @@ import Terminal from "./Terminal";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {psToolsRequest} from "../websockets/messageCreators";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../reducers/index";
-import {psToolsResponseClear} from "../actions/actionCreators";
+import {StoreState} from "../redux/store";
+import {psToolsResponseClear} from "../redux/actionCreators";
 
 const useStyles = makeStyles({
   container: {

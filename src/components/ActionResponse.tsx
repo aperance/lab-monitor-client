@@ -2,13 +2,18 @@ import * as React from "react";
 import {Snackbar, IconButton} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
-interface Props {
+/** test interface comment */
+interface ActionResponseProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   response: {err: Error | null; results: any[] | null};
+  /** test comment */
   handleClose: () => void;
 }
 
-const ActionResponse = (props: Props) => {
+/**
+ *
+ */
+const ActionResponse = (props: ActionResponseProps) => {
   let message: string | null = null;
 
   if (props.response.err !== null) message = "ERROR: " + props.response.err;
