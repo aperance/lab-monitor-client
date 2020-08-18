@@ -8,10 +8,15 @@ import {
   makeStyles
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/MoreVert";
+
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {refreshDevice, clearDevice} from "../websockets/messageCreators";
 
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   root: {
     backgroundColor: "white",
@@ -29,6 +34,9 @@ const useStyles = makeStyles({
   menuItem: {fontSize: "0.8rem"}
 });
 
+/**
+ *
+ */
 const NavBar = () => {
   const classes = useStyles();
   const ws = useContext(WebsocketContext);

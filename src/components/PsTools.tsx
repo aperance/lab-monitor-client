@@ -9,6 +9,7 @@ import {
   Button,
   makeStyles
 } from "@material-ui/core";
+
 import Terminal from "./Terminal";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {psToolsRequest} from "../websockets/messageCreators";
@@ -16,6 +17,10 @@ import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {StoreState} from "../redux/store";
 import {psToolsResponseClear} from "../redux/actionCreators";
 
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   container: {
     margin: "24px 32px 0px 32px",
@@ -30,6 +35,9 @@ const useStyles = makeStyles({
   text: {fontSize: "0.825rem"}
 });
 
+/**
+ *
+ */
 const PsTools = () => {
   const classes = useStyles();
   const ws = useContext(WebsocketContext);

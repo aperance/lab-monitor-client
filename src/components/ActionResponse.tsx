@@ -2,7 +2,6 @@ import React from "react";
 import {Snackbar, IconButton} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
-/** test interface comment */
 interface ActionResponseProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   response: {err: Error | null; results: any[] | null};

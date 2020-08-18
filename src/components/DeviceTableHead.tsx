@@ -2,11 +2,7 @@ import React from "react";
 import {TableHead, TableRow, TableCell, makeStyles} from "@material-ui/core";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 
-const useStyles = makeStyles({
-  cell: {fontSize: "0.825rem", backgroundColor: "#ffffff"}
-});
-
-interface Props {
+interface DeviceTableHeadProps {
   columns: Array<{
     title: string;
     property: string;
@@ -15,7 +11,18 @@ interface Props {
   changeSort: (property: string) => void;
 }
 
-const DeviceTableHead = (props: Props) => {
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
+const useStyles = makeStyles({
+  cell: {fontSize: "0.825rem", backgroundColor: "#ffffff"}
+});
+
+/**
+ *
+ */
+const DeviceTableHead = (props: DeviceTableHeadProps) => {
   const classes = useStyles();
 
   return (
@@ -39,6 +46,9 @@ const DeviceTableHead = (props: Props) => {
   );
 };
 
+/**
+ *
+ */
 const memoizedDeviceTableHead = React.memo(
   DeviceTableHead,
   (prevProps, nextProps) =>

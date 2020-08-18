@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
 import {useSelector, useDispatch} from "react-redux";
+
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {StoreState} from "../redux/store";
 import {deviceCommandResponse, draggingSet} from "../redux/actionCreators";
@@ -15,6 +16,9 @@ import Spinner from "./Spinner";
 import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
+/**
+ *
+ */
 const App = () => {
   const {status} = useContext(WebsocketContext);
   const store = useSelector((state: StoreState) => {

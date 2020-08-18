@@ -7,6 +7,20 @@ import {
   makeStyles
 } from "@material-ui/core";
 
+interface ToolbarItemProps {
+  name: string;
+  leftIcon: string;
+  rightIcon?: string;
+  selectedRows?: string[];
+  isSelected?: boolean;
+  onClick: () => void;
+  children?: JSX.Element;
+}
+
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   selected: {backgroundColor: "rgba(0, 0, 0, 0.04)"},
   root: {
@@ -30,17 +44,10 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
-  name: string;
-  leftIcon: string;
-  rightIcon?: string;
-  selectedRows?: string[];
-  isSelected?: boolean;
-  onClick: () => void;
-  children?: JSX.Element;
-}
-
-const ToolbarItem = (props: Props) => {
+/**
+ *
+ */
+const ToolbarItem = (props: ToolbarItemProps) => {
   const classes = useStyles();
 
   return (

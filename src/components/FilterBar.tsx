@@ -7,8 +7,29 @@ import {
   Switch,
   makeStyles
 } from "@material-ui/core";
+
 import FilterBarItem from "./FilterBarItem";
 
+interface Filter {
+  property: string;
+  title: string;
+  options: {
+    [label: string]: string;
+  };
+}
+
+interface FilterBarProps {
+  filters: Filter[];
+  selectedFilters: {[property: string]: string[]};
+  proxyEnabled: boolean;
+  handleCheckboxClick: (property: string, regex: string) => void;
+  handleProxyClick: () => void;
+}
+
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   root: {
     padding: "16px",
@@ -41,23 +62,10 @@ const useStyles = makeStyles({
   }
 });
 
-interface Filter {
-  property: string;
-  title: string;
-  options: {
-    [label: string]: string;
-  };
-}
-
-interface Props {
-  filters: Filter[];
-  selectedFilters: {[property: string]: string[]};
-  proxyEnabled: boolean;
-  handleCheckboxClick: (property: string, regex: string) => void;
-  handleProxyClick: () => void;
-}
-
-const FilterBar = (props: Props) => {
+/**
+ *
+ */
+const FilterBar = (props: FilterBarProps) => {
   const classes = useStyles();
 
   return (

@@ -1,17 +1,9 @@
 import React from "react";
 import {TableRow, TableCell, makeStyles} from "@material-ui/core";
+
 import StatusIndicator from "./StatusIndicator";
 
-const useStyles = makeStyles({
-  row: {cursor: "pointer", userSelect: "none"},
-  selectedRow: {backgroundColor: "rgba(0, 0, 0, 0.04) !important"},
-  cell: {
-    fontSize: "0.75rem",
-    lineHeight: "unset"
-  }
-});
-
-interface Props {
+interface DeviceTableRowProps {
   rowData: {
     [property: string]: string | null;
   };
@@ -23,7 +15,23 @@ interface Props {
   handleRowClick: (e: MouseEvent) => void;
 }
 
-const DeviceTableRow = (props: Props) => {
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
+const useStyles = makeStyles({
+  row: {cursor: "pointer", userSelect: "none"},
+  selectedRow: {backgroundColor: "rgba(0, 0, 0, 0.04) !important"},
+  cell: {
+    fontSize: "0.75rem",
+    lineHeight: "unset"
+  }
+});
+
+/**
+ *
+ */
+const DeviceTableRow = (props: DeviceTableRowProps) => {
   const classes = useStyles();
 
   return (

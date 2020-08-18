@@ -2,9 +2,14 @@ import React, {useContext} from "react";
 import {useSelector} from "react-redux";
 import {Fab, makeStyles} from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
+
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {StoreState} from "../redux/store";
 
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   button: {
     position: "absolute",
@@ -15,6 +20,9 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ *
+ */
 const WebPage = () => {
   const classes = useStyles();
   const {httpProxy, statePath} = useContext(ConfigurationContext);

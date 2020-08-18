@@ -1,6 +1,14 @@
 import React from "react";
 import {Paper, makeStyles} from "@material-ui/core";
 
+interface TerminalProps {
+  output: string | null;
+}
+
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   paper: {
     height: "500px",
@@ -13,11 +21,10 @@ const useStyles = makeStyles({
   pre: {padding: "10px 10px 10px 10px", whiteSpace: "pre-wrap"}
 });
 
-interface Props {
-  output: string | null;
-}
-
-const Terminal = (props: Props) => {
+/**
+ *
+ */
+const Terminal = (props: TerminalProps) => {
   const classes = useStyles();
 
   return (

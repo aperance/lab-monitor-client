@@ -1,7 +1,19 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core";
+
 import {useResizer} from "../hooks/useResizer";
 
+interface DrawersProps {
+  drawersVisible: 0 | 1 | 2;
+  leftDrawer: JSX.Element;
+  rightDrawer: JSX.Element | null;
+  isResizing: (x: boolean) => void;
+}
+
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   root: {
     height: "100%",
@@ -40,14 +52,10 @@ const useStyles = makeStyles({
   }
 });
 
-interface Props {
-  drawersVisible: 0 | 1 | 2;
-  leftDrawer: JSX.Element;
-  rightDrawer: JSX.Element | null;
-  isResizing: (x: boolean) => void;
-}
-
-const Drawers = (props: Props) => {
+/**
+ *
+ */
+const Drawers = (props: DrawersProps) => {
   const classes = useStyles();
   const [viewWidth, triggerResize] = useResizer(800, props.isResizing);
 

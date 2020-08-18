@@ -5,11 +5,16 @@ import {Fab, makeStyles} from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
+
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {StoreState} from "../redux/store";
 import {useVnc} from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   root: {
     height: "100%",
@@ -41,6 +46,9 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ *
+ */
 const VncViewer = () => {
   const classes = useStyles();
   const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;

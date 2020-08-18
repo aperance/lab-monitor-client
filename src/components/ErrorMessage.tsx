@@ -1,11 +1,14 @@
 import React from "react";
 import {Dialog, DialogContent, DialogContentText} from "@material-ui/core";
 
-interface Props {
+interface ErrorMessageProps {
   message: string;
 }
 
-const ErrorMessage = (props: Props) => {
+/**
+ *
+ */
+const ErrorMessage = (props: ErrorMessageProps) => {
   return (
     <Dialog open={true}>
       <DialogContent>

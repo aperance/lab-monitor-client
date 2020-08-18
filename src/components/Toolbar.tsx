@@ -1,9 +1,9 @@
 import React, {useContext, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {List, Divider} from "@material-ui/core";
+
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
-import {WebsocketContext} from "../websockets/WebsocketContext";
 import {StoreState} from "../redux/store";
 import {viewSelect} from "../redux/actionCreators";
 import {
@@ -11,8 +11,12 @@ import {
   refreshDevice,
   clearDevice
 } from "../websockets/messageCreators";
+import {WebsocketContext} from "../websockets/WebsocketContext";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 
+/**
+ *
+ */
 const Toolbar = () => {
   const ws = useContext(WebsocketContext);
   const {vnc, httpProxy, logsPath} = useContext(ConfigurationContext);

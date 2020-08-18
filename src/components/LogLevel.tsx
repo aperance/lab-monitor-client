@@ -11,21 +11,29 @@ import {
   Button,
   makeStyles
 } from "@material-ui/core";
+
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 
+interface LogLevelProps {
+  open: boolean;
+  sendDeviceCommand: (namespace: string, level: string) => void;
+  close: () => void;
+}
+
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   form: {display: "flex", flexWrap: "wrap"},
   selectNamespace: {width: "230px", marginRight: "32px"},
   selectLevel: {width: "90px"}
 });
 
-interface Props {
-  open: boolean;
-  sendDeviceCommand: (namespace: string, level: string) => void;
-  close: () => void;
-}
-
-const LogLevel = (props: Props) => {
+/**
+ *
+ */
+const LogLevel = (props: LogLevelProps) => {
   const classes = useStyles();
   const configuration = useContext(ConfigurationContext).logLevel;
   const [namespace, setNamespace] = useState(null as string | null);

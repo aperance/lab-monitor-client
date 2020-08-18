@@ -2,8 +2,13 @@ import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {ListItem, ListItemText, makeStyles} from "@material-ui/core";
 import {List, AutoSizer} from "react-virtualized";
+
 import {StoreState} from "../redux/store";
 
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   root: {
     height: "100%",
@@ -15,6 +20,9 @@ const useStyles = makeStyles({
   text: {fontSize: "0.75rem"}
 });
 
+/**
+ *
+ */
 const HistoryList = () => {
   const classes = useStyles();
   const historyData = useSelector((x: StoreState) =>

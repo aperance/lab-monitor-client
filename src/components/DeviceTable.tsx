@@ -1,9 +1,7 @@
 import React, {useContext, useReducer} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {Table, TableBody, makeStyles} from "@material-ui/core";
-import DeviceTableHead from "./DeviceTableHead";
-import DeviceTableRow from "./DeviceTableRow";
-import FilterBar from "./FilterBar";
+
 import {useDeviceData} from "../hooks/useDeviceData";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {StoreState} from "../redux/store";
@@ -12,7 +10,14 @@ import {
   multiRowSelect,
   proxyToggle
 } from "../redux/actionCreators";
+import DeviceTableHead from "./DeviceTableHead";
+import DeviceTableRow from "./DeviceTableRow";
+import FilterBar from "./FilterBar";
 
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   root: {
     height: "100%",
@@ -29,6 +34,11 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ *
+ * @param selectedFilters
+ * @param action
+ */
 const filterReducer = (
   selectedFilters: {[x: string]: string[]},
   action: {property: string; regex: string}
@@ -41,6 +51,11 @@ const filterReducer = (
   return {...selectedFilters, [action.property]: regexArray};
 };
 
+/**
+ *
+ * @param selectedSorting
+ * @param action
+ */
 const sortingReducer = (
   selectedSorting: {property: string; reverse: boolean},
   action: {property: string}
@@ -54,6 +69,9 @@ const sortingReducer = (
   };
 };
 
+/**
+ *
+ */
 const DeviceTable = () => {
   const classes = useStyles();
   const {columns, filters} = useContext(ConfigurationContext);

@@ -2,6 +2,15 @@ import React, {useState, useEffect} from "react";
 import {makeStyles} from "@material-ui/core";
 import Icon from "@material-ui/icons/Lens";
 
+interface StatusIndicatorProps {
+  timestamp: string | null;
+  status: string | null;
+}
+
+/**
+ * CSS-in-JS styling.
+ * @hidden
+ */
 const useStyles = makeStyles({
   root: {
     fontSize: "15px",
@@ -17,12 +26,10 @@ const colorLookup: {[x: string]: string} = {
   INACTIVE: "crimson"
 };
 
-interface Props {
-  timestamp: string | null;
-  status: string | null;
-}
-
-const StatusIndicator = (props: Props) => {
+/**
+ *
+ */
+const StatusIndicator = (props: StatusIndicatorProps) => {
   const classes = useStyles();
   const [initialized, setInitialized] = useState(false);
   const [animate, setAnimate] = useState(false);
