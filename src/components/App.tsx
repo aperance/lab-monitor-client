@@ -1,5 +1,4 @@
-import * as React from "react";
-import {useContext} from "react";
+import React, {useContext} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {StoreState} from "../redux/store";

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import * as React from "react";
-import {useContext} from "react";
+import React, {useContext} from "react";
 import {useSelector} from "react-redux";
 import {Fab, makeStyles} from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";

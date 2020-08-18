@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {FormControlLabel, makeStyles} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 

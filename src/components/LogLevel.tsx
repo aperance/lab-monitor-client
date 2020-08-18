@@ -1,5 +1,4 @@
-import * as React from "react";
-import {useState, useContext, useEffect} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {
   Dialog,
   DialogContent,

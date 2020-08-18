@@ -1,5 +1,4 @@
-import * as React from "react";
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {List, Divider} from "@material-ui/core";
 import ToolbarItem from "./ToolbarItem";

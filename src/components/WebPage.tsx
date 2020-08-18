@@ -1,5 +1,4 @@
-import * as React from "react";
-import {useContext} from "react";
+import React, {useContext} from "react";
 import {useSelector} from "react-redux";
 import {Fab, makeStyles} from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
