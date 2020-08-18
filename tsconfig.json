@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Basic Options */
     "target": "ES2017" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */,
-    "module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
+    "module": "ES2020" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
     // "lib": [
     //   "esnext"
     // ] /* Specify library files to be included in the compilation. */,
@@ -59,8 +59,31 @@
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
   },
   "typedocOptions": {
+    "exclude": ["**/*.test.ts", "**/*.test.tsx"],
     "mode": "modules",
-    "out": "docs"
+    "out": "docs",
+    "theme": "./node_modules/typedoc-neo-theme/bin/default",
+    "plugins": ["typedoc-neo-theme"],
+    "outline": [
+      {
+        "Components": {
+          "DeviceTable": "_components_devicetable_"
+        },
+        "Hooks": {
+          "useDeviceData": "_hooks_usedevicedata_",
+          "useResizer": "_hooks_useresizer_",
+          "useVnc": "_hooks_usevnc_"
+        },
+        "Redux": {
+          "store": "_store_store_",
+          "actionCreators": "_actions_actioncreators_",
+          "deviceResponseReducer": "_reducers_deviceresponsereducer_",
+          "historyDataReducer": "_reducers_historydatareducer_",
+          "tableDataReducer": "_reducers_tabledatareducer_",
+          "userSelectionReducer": "_reducers_userselectionreducer_"
+        }
+      }
+    ]
   },
   "include": ["./src/**/*"]
 }
