@@ -67,7 +67,27 @@
     "outline": [
       {
         "Components": {
-          "DeviceTable": "_components_devicetable_"
+          "App": "_components_app_",
+          "ActionResponse": "_components_actionresponse_",
+          "DeviceTable": "_components_devicetable_",
+          "DeviceTableHead": "_components_devicetablehead_",
+          "DeviceTableRow": "_components_devicetablerow_",
+          "Drawers": "_components_drawers_",
+          "ErrorBoundary": "_components_errorboundary_",
+          "ErrorMessage": "_components_errormessage_",
+          "FilterBar": "_components_filterbar_",
+          "FilterBarItem": "_components_filterbaritem_",
+          "History": "_components_history_",
+          "LogLevel": "_components_loglevel_",
+          "NavBar": "_components_navbar_",
+          "PsTools": "_components_pstools_",
+          "Spinner": "_components_spinner_",
+          "StatusIndicator": "_components_statusindicator_",
+          "Terminal": "_components_terminal_",
+          "Toolbar": "_components_toolbar_",
+          "ToolbarItem": "_components_toolbaritem_",
+          "VncViewer": "_components_vncviewer_",
+          "WebPage": "_components_webpage_"
         },
         "Hooks": {
           "useDeviceData": "_hooks_usedevicedata_",
@@ -75,12 +95,12 @@
           "useVnc": "_hooks_usevnc_"
         },
         "Redux": {
-          "store": "_store_store_",
-          "actionCreators": "_actions_actioncreators_",
-          "deviceResponseReducer": "_reducers_deviceresponsereducer_",
-          "historyDataReducer": "_reducers_historydatareducer_",
-          "tableDataReducer": "_reducers_tabledatareducer_",
-          "userSelectionReducer": "_reducers_userselectionreducer_"
+          "store": "_redux_store_",
+          "actionCreators": "_redux_actioncreators_",
+          "deviceResponseReducer": "_redux_deviceresponsereducer_",
+          "historyDataReducer": "_redux_historydatareducer_",
+          "tableDataReducer": "_redux_tabledatareducer_",
+          "userSelectionReducer": "_redux_userselectionreducer_"
         }
       }
     ]
