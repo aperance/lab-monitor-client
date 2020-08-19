@@ -17,29 +17,34 @@ import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
 /**
+ * Redux selector function.
+ */
+const selector = (state: StoreState) => {
+  return {
+    dataReceived: Object.keys(state.tableData).length !== 0,
+    subView: state.userSelection.view,
+    drawersVisible: (state.userSelection.rows.length === 0
+      ? 0
+      : !state.userSelection.view
+      ? 1
+      : 2) as 0 | 1 | 2,
+    deviceResponse: state.deviceResponse.command
+  };
+};
+
+/**
  *
  */
 const App = () => {
-  const {status} = useContext(WebsocketContext);
-  const store = useSelector((state: StoreState) => {
-    return {
-      dataReceived: Object.keys(state.tableData).length !== 0,
-      subView: state.userSelection.view,
-      drawersVisible: (state.userSelection.rows.length === 0
-        ? 0
-        : !state.userSelection.view
-        ? 1
-        : 2) as 0 | 1 | 2,
-      deviceResponse: state.deviceResponse.command
-    };
-  });
+  const store = useSelector(selector);
   const dispatch = useDispatch();
+  const ws = useContext(WebsocketContext);
 
-  if (status === "connectionError")
+  if (ws.status === "connectionError")
     return <ErrorMessage message={"connectionError"} />;
-  else if (status === "dataError")
+  else if (ws.status === "dataError")
     return <ErrorMessage message={"dataError"} />;
-  else if (status === "connected" && store.dataReceived)
+  else if (ws.status === "connected" && store.dataReceived)
     return (
       <>
         <NavBar />

@@ -36,17 +36,24 @@ const useStyles = makeStyles({
 });
 
 /**
+ * Redux selector function.
+ */
+const selector = (state: StoreState) => {
+  return {
+    target: state.userSelection.rows[0] ?? null,
+    result: state.deviceResponse.psTools
+  };
+};
+
+/**
  *
  */
 const PsTools = () => {
   const classes = useStyles();
+  const {target, result} = useSelector(selector);
+  const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
   const presets = useContext(ConfigurationContext).psTools;
-  const target = useSelector((x: StoreState) =>
-    x.userSelection.rows.length === 1 ? x.userSelection.rows[0] : null
-  );
-  const result = useSelector((x: StoreState) => x.deviceResponse.psTools);
-  const dispatch = useDispatch();
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");

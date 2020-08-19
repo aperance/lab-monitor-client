@@ -21,17 +21,22 @@ const useStyles = makeStyles({
 });
 
 /**
+ * Redux selector function.
+ */
+const selector = (state: StoreState) => {
+  return {
+    ipAddress: state.userSelection.rows[0] ?? null,
+    proxyEnabled: state.userSelection.proxy
+  };
+};
+
+/**
  *
  */
 const WebPage = () => {
   const classes = useStyles();
+  const {ipAddress, proxyEnabled} = useSelector(selector);
   const {httpProxy, statePath} = useContext(ConfigurationContext);
-  const ipAddress = useSelector(({userSelection}: StoreState) =>
-    userSelection.rows.length === 1 ? userSelection.rows[0] : null
-  );
-  const proxyEnabled = useSelector(
-    ({userSelection}: StoreState) => userSelection.proxy
-  );
 
   if (ipAddress === null) return null;
 

@@ -47,21 +47,26 @@ const useStyles = makeStyles({
 });
 
 /**
+ * Redux selector function.
+ */
+const selector = (state: StoreState) => {
+  return {
+    ipAddress:
+      process.env.DEMO === "true"
+        ? process.env.VNC_IP || ""
+        : state.userSelection.rows[0] ?? "",
+    suspend: state.userSelection.dragging
+  };
+};
+
+/**
  *
  */
 const VncViewer = () => {
   const classes = useStyles();
-  const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
-  const ipAddress =
-    process.env.DEMO === "true"
-      ? process.env.VNC_IP || ""
-      : useSelector(({userSelection}: StoreState) =>
-          userSelection.rows.length === 1 ? userSelection.rows[0] : ""
-        );
-  const suspend = useSelector(
-    ({userSelection}: StoreState) => userSelection.dragging
-  );
+  const {ipAddress, suspend} = useSelector(selector);
   const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, suspend);
+  const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
 
   return (
     <div className={classes.root}>

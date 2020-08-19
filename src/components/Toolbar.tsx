@@ -15,16 +15,25 @@ import {WebsocketContext} from "../websockets/WebsocketContext";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 
 /**
+ * Redux selector function.
+ */
+const selector = (state: StoreState) => {
+  return {
+    rows: state.userSelection.rows,
+    view: state.userSelection.view,
+    proxyEnabled: state.userSelection.proxy
+  };
+};
+
+/**
  *
  */
 const Toolbar = () => {
+  const {rows, view, proxyEnabled} = useSelector(selector);
+  const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
   const {vnc, httpProxy, logsPath} = useContext(ConfigurationContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
-  const rows = useSelector((x: StoreState) => x.userSelection.rows);
-  const view = useSelector((x: StoreState) => x.userSelection.view);
-  const proxyEnabled = useSelector((x: StoreState) => x.userSelection.proxy);
-  const dispatch = useDispatch();
 
   return (
     <>

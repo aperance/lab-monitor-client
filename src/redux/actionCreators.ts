@@ -5,6 +5,15 @@ import {
   CommandResponse
 } from "../websockets/messageTypes";
 
+interface ActionWithoutPayload<T> {
+  type: T;
+}
+
+interface ActionWithPayload<T, P> {
+  type: T;
+  payload: P;
+}
+
 export enum ActionTypes {
   SINGLE_ROW_SELECT = "SINGLE_ROW_SELECT",
   MULTI_ROW_SELECT = "MULTI_ROW_SELECT",
@@ -17,15 +26,6 @@ export enum ActionTypes {
   RESET_ALL = "RESET_ALL",
   COMMAND_RESPONSE = "COMMAND_RESPONSE",
   DRAGGING_SET = "DRAGGING_SET"
-}
-
-interface ActionWithoutPayload<T> {
-  type: T;
-}
-
-interface ActionWithPayload<T, P> {
-  type: T;
-  payload: P;
 }
 
 export type Actions =

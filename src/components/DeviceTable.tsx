@@ -35,6 +35,16 @@ const useStyles = makeStyles({
 });
 
 /**
+ * Redux selector function.
+ */
+const selector = (state: StoreState) => {
+  return {
+    selectedRows: state.userSelection.rows,
+    proxyEnabled: state.userSelection.proxy
+  };
+};
+
+/**
  *
  * @param selectedFilters
  * @param action
@@ -74,10 +84,9 @@ const sortingReducer = (
  */
 const DeviceTable = () => {
   const classes = useStyles();
-  const {columns, filters} = useContext(ConfigurationContext);
-  const selectedRows = useSelector((x: StoreState) => x.userSelection.rows);
-  const proxyEnabled = useSelector((x: StoreState) => x.userSelection.proxy);
+  const {selectedRows, proxyEnabled} = useSelector(selector);
   const dispatch = useDispatch();
+  const {columns, filters} = useContext(ConfigurationContext);
   const [selectedFilters, setFilters] = useReducer(filterReducer, {});
   const [selectedSorting, setSorting] = useReducer(sortingReducer, {
     property: columns[0].property,

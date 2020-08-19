@@ -21,20 +21,19 @@ const useStyles = makeStyles({
 });
 
 /**
- *
+ * Redux selector function.
  */
+const selector = (state: StoreState) => {
+  const selectedRow = state.userSelection.rows[0];
+  const historyData = state.historyData[selectedRow] ?? {};
+  const properties = Object.keys(historyData);
+
+  return {historyData, properties};
+};
+
 const HistoryList = () => {
   const classes = useStyles();
-  const historyData = useSelector((x: StoreState) =>
-    x.userSelection.rows.length === 1
-      ? x.historyData[x.userSelection.rows[0]]
-      : {}
-  );
-  const properties = useSelector((x: StoreState) =>
-    x.userSelection.rows.length === 1
-      ? Object.keys(x.historyData[x.userSelection.rows[0]])
-      : []
-  );
+  const {historyData, properties} = useSelector(selector);
   const [selectedProperty, setSelectedProperty] = useState("");
 
   return (
