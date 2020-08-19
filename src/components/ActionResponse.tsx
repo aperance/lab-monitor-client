@@ -2,17 +2,17 @@ import React from "react";
 import {Snackbar, IconButton} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
-interface ActionResponseProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  response: {err: Error | null; results: any[] | null};
-  /** test comment */
+type Props = {
+  /** Accumulated responses from target devices for recent action. */
+  response: {err: Error | null; results: {success: boolean}[] | null};
+  /** Pending response message cleared when called. */
   handleClose: () => void;
-}
+};
 
 /**
  *
  */
-const ActionResponse = (props: ActionResponseProps) => {
+const ActionResponse = (props: Props) => {
   let message: string | null = null;
 
   if (props.response.err !== null) message = "ERROR: " + props.response.err;

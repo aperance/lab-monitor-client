@@ -15,9 +15,9 @@ import {WebsocketContext} from "../websockets/WebsocketContext";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 
 /**
- * Redux selector function.
+ * Redux selector function (equivilant to mapStateToProps).
  */
-const selector = (state: StoreState) => {
+const reduxSelector = (state: StoreState) => {
   return {
     rows: state.userSelection.rows,
     view: state.userSelection.view,
@@ -29,7 +29,7 @@ const selector = (state: StoreState) => {
  *
  */
 const Toolbar = () => {
-  const {rows, view, proxyEnabled} = useSelector(selector);
+  const {rows, view, proxyEnabled} = useSelector(reduxSelector);
   const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
   const {vnc, httpProxy, logsPath} = useContext(ConfigurationContext);

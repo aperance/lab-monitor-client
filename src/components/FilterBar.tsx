@@ -10,21 +10,19 @@ import {
 
 import FilterBarItem from "./FilterBarItem";
 
-interface Filter {
-  property: string;
-  title: string;
-  options: {
-    [label: string]: string;
-  };
-}
-
-interface FilterBarProps {
-  filters: Filter[];
+type Props = {
+  filters: {
+    property: string;
+    title: string;
+    options: {
+      [label: string]: string;
+    };
+  }[];
   selectedFilters: {[property: string]: string[]};
   proxyEnabled: boolean;
   handleCheckboxClick: (property: string, regex: string) => void;
   handleProxyClick: () => void;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -65,7 +63,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const FilterBar = (props: FilterBarProps) => {
+const FilterBar = (props: Props) => {
   const classes = useStyles();
 
   return (

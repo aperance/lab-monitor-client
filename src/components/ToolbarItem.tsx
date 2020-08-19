@@ -7,7 +7,7 @@ import {
   makeStyles
 } from "@material-ui/core";
 
-interface ToolbarItemProps {
+type Props = {
   name: string;
   leftIcon: string;
   rightIcon?: string;
@@ -15,7 +15,7 @@ interface ToolbarItemProps {
   isSelected?: boolean;
   onClick: () => void;
   children?: JSX.Element;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const ToolbarItem = (props: ToolbarItemProps) => {
+const ToolbarItem = (props: Props) => {
   const classes = useStyles();
 
   return (

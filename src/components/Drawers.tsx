@@ -3,12 +3,12 @@ import {makeStyles} from "@material-ui/core";
 
 import {useResizer} from "../hooks/useResizer";
 
-interface DrawersProps {
+type Props = {
   drawersVisible: 0 | 1 | 2;
   leftDrawer: JSX.Element;
   rightDrawer: JSX.Element | null;
   isResizing: (x: boolean) => void;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -55,7 +55,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const Drawers = (props: DrawersProps) => {
+const Drawers = (props: Props) => {
   const classes = useStyles();
   const [viewWidth, triggerResize] = useResizer(800, props.isResizing);
 

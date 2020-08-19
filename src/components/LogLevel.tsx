@@ -14,11 +14,11 @@ import {
 
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 
-interface LogLevelProps {
+type Props = {
   open: boolean;
   sendDeviceCommand: (namespace: string, level: string) => void;
   close: () => void;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const LogLevel = (props: LogLevelProps) => {
+const LogLevel = (props: Props) => {
   const classes = useStyles();
   const configuration = useContext(ConfigurationContext).logLevel;
   const [namespace, setNamespace] = useState(null as string | null);

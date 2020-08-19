@@ -35,12 +35,13 @@ const useStyles = makeStyles({
 });
 
 /**
- * Redux selector function.
+ * Redux selector function (equivilant to mapStateToProps).
  */
-const selector = (state: StoreState) => {
+const reduxSelector = (state: StoreState) => {
   return {
+    /** Array of rows currently selected by user. */
     selectedRows: state.userSelection.rows,
-    proxyEnabled: state.userSelection.proxy
+    isProxyEnabled: state.userSelection.proxy
   };
 };
 
@@ -84,7 +85,7 @@ const sortingReducer = (
  */
 const DeviceTable = () => {
   const classes = useStyles();
-  const {selectedRows, proxyEnabled} = useSelector(selector);
+  const {selectedRows, isProxyEnabled} = useSelector(reduxSelector);
   const dispatch = useDispatch();
   const {columns, filters} = useContext(ConfigurationContext);
   const [selectedFilters, setFilters] = useReducer(filterReducer, {});
@@ -99,7 +100,7 @@ const DeviceTable = () => {
       <FilterBar
         filters={filters}
         selectedFilters={selectedFilters}
-        proxyEnabled={proxyEnabled}
+        proxyEnabled={isProxyEnabled}
         handleCheckboxClick={(property: string, regex: string) =>
           setFilters({property, regex})
         }

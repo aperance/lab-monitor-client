@@ -2,13 +2,15 @@ import React from "react";
 import {FormControlLabel, makeStyles} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 
-interface FilterBarItemProps {
-  selectedFilters: {[property: string]: string[]};
+type Props = {
+  selectedFilters: {
+    [property: string]: string[];
+  };
   property: string;
   regex: string;
   label: string;
   handleCheckboxClick: (property: string, regex: string) => void;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -38,7 +40,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const FilterBarItem = (props: FilterBarItemProps) => {
+const FilterBarItem = (props: Props) => {
   const classes = useStyles();
 
   return (

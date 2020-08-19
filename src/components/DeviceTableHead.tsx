@@ -2,14 +2,17 @@ import React from "react";
 import {TableHead, TableRow, TableCell, makeStyles} from "@material-ui/core";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 
-interface DeviceTableHeadProps {
-  columns: Array<{
+type Props = {
+  columns: {
     title: string;
     property: string;
-  }>;
-  selectedSorting: {property: string | null; reverse: boolean};
+  }[];
+  selectedSorting: {
+    property: string | null;
+    reverse: boolean;
+  };
   changeSort: (property: string) => void;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -22,7 +25,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const DeviceTableHead = (props: DeviceTableHeadProps) => {
+const DeviceTableHead = (props: Props) => {
   const classes = useStyles();
 
   return (

@@ -3,17 +3,17 @@ import {TableRow, TableCell, makeStyles} from "@material-ui/core";
 
 import StatusIndicator from "./StatusIndicator";
 
-interface DeviceTableRowProps {
+type Props = {
   rowData: {
     [property: string]: string | null;
   };
-  columns: Array<{
+  columns: {
     title: string;
     property: string;
-  }>;
+  }[];
   selected: boolean;
   handleRowClick: (e: MouseEvent) => void;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const DeviceTableRow = (props: DeviceTableRowProps) => {
+const DeviceTableRow = (props: Props) => {
   const classes = useStyles();
 
   return (

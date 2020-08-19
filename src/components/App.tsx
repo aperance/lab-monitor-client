@@ -17,12 +17,14 @@ import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
 /**
- * Redux selector function.
+ * Redux selector function (equivilant to mapStateToProps).
  */
-const selector = (state: StoreState) => {
+const reduxSelector = (state: StoreState) => {
   return {
-    dataReceived: Object.keys(state.tableData).length !== 0,
+    /** True if initial data payload received via web socket. */
+    isDataReceived: Object.keys(state.tableData).length !== 0,
     subView: state.userSelection.view,
+    /** Number of drawers that should be visible to the user. */
     drawersVisible: (state.userSelection.rows.length === 0
       ? 0
       : !state.userSelection.view
@@ -36,7 +38,7 @@ const selector = (state: StoreState) => {
  *
  */
 const App = () => {
-  const store = useSelector(selector);
+  const store = useSelector(reduxSelector);
   const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
 
@@ -44,7 +46,7 @@ const App = () => {
     return <ErrorMessage message={"connectionError"} />;
   else if (ws.status === "dataError")
     return <ErrorMessage message={"dataError"} />;
-  else if (ws.status === "connected" && store.dataReceived)
+  else if (ws.status === "connected" && store.isDataReceived)
     return (
       <>
         <NavBar />

@@ -1,9 +1,9 @@
 import React from "react";
 import {Paper, makeStyles} from "@material-ui/core";
 
-interface TerminalProps {
+type Props = {
   output: string | null;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const Terminal = (props: TerminalProps) => {
+const Terminal = (props: Props) => {
   const classes = useStyles();
 
   return (

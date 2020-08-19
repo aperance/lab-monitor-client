@@ -47,9 +47,9 @@ const useStyles = makeStyles({
 });
 
 /**
- * Redux selector function.
+ * Redux selector function (equivilant to mapStateToProps).
  */
-const selector = (state: StoreState) => {
+const reduxSelector = (state: StoreState) => {
   return {
     ipAddress:
       process.env.DEMO === "true"
@@ -64,7 +64,7 @@ const selector = (state: StoreState) => {
  */
 const VncViewer = () => {
   const classes = useStyles();
-  const {ipAddress, suspend} = useSelector(selector);
+  const {ipAddress, suspend} = useSelector(reduxSelector);
   const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, suspend);
   const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
 

@@ -2,10 +2,10 @@ import React, {useState, useEffect} from "react";
 import {makeStyles} from "@material-ui/core";
 import Icon from "@material-ui/icons/Lens";
 
-interface StatusIndicatorProps {
+type Props = {
   timestamp: string | null;
   status: string | null;
-}
+};
 
 /**
  * CSS-in-JS styling.
@@ -29,7 +29,7 @@ const colorLookup: {[x: string]: string} = {
 /**
  *
  */
-const StatusIndicator = (props: StatusIndicatorProps) => {
+const StatusIndicator = (props: Props) => {
   const classes = useStyles();
   const [initialized, setInitialized] = useState(false);
   const [animate, setAnimate] = useState(false);

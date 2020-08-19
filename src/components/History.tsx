@@ -21,9 +21,9 @@ const useStyles = makeStyles({
 });
 
 /**
- * Redux selector function.
+ * Redux selector function (equivilant to mapStateToProps).
  */
-const selector = (state: StoreState) => {
+const reduxSelector = (state: StoreState) => {
   const selectedRow = state.userSelection.rows[0];
   const historyData = state.historyData[selectedRow] ?? {};
   const properties = Object.keys(historyData);
@@ -33,7 +33,7 @@ const selector = (state: StoreState) => {
 
 const HistoryList = () => {
   const classes = useStyles();
-  const {historyData, properties} = useSelector(selector);
+  const {historyData, properties} = useSelector(reduxSelector);
   const [selectedProperty, setSelectedProperty] = useState("");
 
   return (

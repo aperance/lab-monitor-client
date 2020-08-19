@@ -36,9 +36,9 @@ const useStyles = makeStyles({
 });
 
 /**
- * Redux selector function.
+ * Redux selector function (equivilant to mapStateToProps).
  */
-const selector = (state: StoreState) => {
+const reduxSelector = (state: StoreState) => {
   return {
     target: state.userSelection.rows[0] ?? null,
     result: state.deviceResponse.psTools
@@ -50,7 +50,7 @@ const selector = (state: StoreState) => {
  */
 const PsTools = () => {
   const classes = useStyles();
-  const {target, result} = useSelector(selector);
+  const {target, result} = useSelector(reduxSelector);
   const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
   const presets = useContext(ConfigurationContext).psTools;

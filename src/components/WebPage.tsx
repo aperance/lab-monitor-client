@@ -21,9 +21,9 @@ const useStyles = makeStyles({
 });
 
 /**
- * Redux selector function.
+ * Redux selector function (equivilant to mapStateToProps).
  */
-const selector = (state: StoreState) => {
+const reduxSelector = (state: StoreState) => {
   return {
     ipAddress: state.userSelection.rows[0] ?? null,
     proxyEnabled: state.userSelection.proxy
@@ -35,7 +35,7 @@ const selector = (state: StoreState) => {
  */
 const WebPage = () => {
   const classes = useStyles();
-  const {ipAddress, proxyEnabled} = useSelector(selector);
+  const {ipAddress, proxyEnabled} = useSelector(reduxSelector);
   const {httpProxy, statePath} = useContext(ConfigurationContext);
 
   if (ipAddress === null) return null;
