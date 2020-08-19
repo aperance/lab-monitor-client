@@ -1,3 +1,8 @@
+/**
+ *
+ * @packageDocumentation
+ */
+
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {ListItem, ListItemText, makeStyles} from "@material-ui/core";

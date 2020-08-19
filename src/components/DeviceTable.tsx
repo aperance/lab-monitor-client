@@ -1,3 +1,8 @@
+/**
+ *
+ * @packageDocumentation
+ */
+
 import React, {useContext, useReducer} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {Table, TableBody, makeStyles} from "@material-ui/core";

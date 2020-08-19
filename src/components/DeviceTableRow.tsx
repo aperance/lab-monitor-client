@@ -1,3 +1,8 @@
+/**
+ *
+ * @packageDocumentation
+ */
+
 import React from "react";
 import {TableRow, TableCell, makeStyles} from "@material-ui/core";
 

@@ -1,3 +1,8 @@
+/**
+ *
+ * @packageDocumentation
+ */
+
 import React from "react";
 import {Dialog, DialogContent, DialogContentText} from "@material-ui/core";
 

@@ -1,4 +1,8 @@
-/* eslint-disable react-hooks/rules-of-hooks */
+/**
+ *
+ * @packageDocumentation
+ */
+
 import React, {useContext} from "react";
 import {useSelector} from "react-redux";
 import {Fab, makeStyles} from "@material-ui/core";
@@ -51,11 +55,13 @@ const useStyles = makeStyles({
  */
 const reduxSelector = (state: StoreState) => {
   return {
+    /** IP Address of the target device. */
     ipAddress:
       process.env.DEMO === "true"
         ? process.env.VNC_IP || ""
         : state.userSelection.rows[0] ?? "",
-    suspend: state.userSelection.dragging
+    /** Used to determine if vnc area needs to be resized. */
+    isDragging: state.userSelection.dragging
   };
 };
 
@@ -64,8 +70,8 @@ const reduxSelector = (state: StoreState) => {
  */
 const VncViewer = () => {
   const classes = useStyles();
-  const {ipAddress, suspend} = useSelector(reduxSelector);
-  const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, suspend);
+  const {ipAddress, isDragging} = useSelector(reduxSelector);
+  const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, isDragging);
   const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
 
   return (

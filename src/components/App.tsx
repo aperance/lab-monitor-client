@@ -1,3 +1,8 @@
+/**
+ *
+ * @packageDocumentation
+ */
+
 import React, {useContext} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
@@ -23,6 +28,7 @@ const reduxSelector = (state: StoreState) => {
   return {
     /** True if initial data payload received via web socket. */
     isDataReceived: Object.keys(state.tableData).length !== 0,
+    /** Desired content for the rightmost drawer. */
     subView: state.userSelection.view,
     /** Number of drawers that should be visible to the user. */
     drawersVisible: (state.userSelection.rows.length === 0

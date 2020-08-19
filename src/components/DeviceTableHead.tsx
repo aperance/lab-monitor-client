@@ -1,3 +1,8 @@
+/**
+ *
+ * @packageDocumentation
+ */
+
 import React from "react";
 import {TableHead, TableRow, TableCell, makeStyles} from "@material-ui/core";
 import TableSortLabel from "@material-ui/core/TableSortLabel";

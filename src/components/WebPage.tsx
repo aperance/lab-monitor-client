@@ -1,3 +1,8 @@
+/**
+ *
+ * @packageDocumentation
+ */
+
 import React, {useContext} from "react";
 import {useSelector} from "react-redux";
 import {Fab, makeStyles} from "@material-ui/core";
@@ -25,8 +30,10 @@ const useStyles = makeStyles({
  */
 const reduxSelector = (state: StoreState) => {
   return {
+    /** IP Address of target device. */
     ipAddress: state.userSelection.rows[0] ?? null,
-    proxyEnabled: state.userSelection.proxy
+    /** If true, HTTP request is routed through backend server. */
+    isProxyEnabled: state.userSelection.proxy
   };
 };
 
@@ -35,12 +42,12 @@ const reduxSelector = (state: StoreState) => {
  */
 const WebPage = () => {
   const classes = useStyles();
-  const {ipAddress, proxyEnabled} = useSelector(reduxSelector);
+  const {ipAddress, isProxyEnabled} = useSelector(reduxSelector);
   const {httpProxy, statePath} = useContext(ConfigurationContext);
 
   if (ipAddress === null) return null;
 
-  const url = proxyEnabled
+  const url = isProxyEnabled
     ? `http://${httpProxy}${statePath}&target=${ipAddress}`
     : `http://${ipAddress}:8001${statePath}`;
 
