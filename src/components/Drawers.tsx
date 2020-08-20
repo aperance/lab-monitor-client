@@ -12,7 +12,6 @@ type Props = {
   drawersVisible: 0 | 1 | 2;
   leftDrawer: JSX.Element;
   rightDrawer: JSX.Element | null;
-  isResizing: (x: boolean) => void;
 };
 
 /**
@@ -62,7 +61,7 @@ const useStyles = makeStyles({
  */
 const Drawers = (props: Props) => {
   const classes = useStyles();
-  const [viewWidth, triggerResize] = useResizer(800, props.isResizing);
+  const [viewWidth, triggerResize] = useResizer(800);
 
   const width = viewWidth + 200;
   const translateX = [width, viewWidth, 0][props.drawersVisible];

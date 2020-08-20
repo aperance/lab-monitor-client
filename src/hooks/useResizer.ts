@@ -1,9 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {useState, useEffect} from "react";
+import {useDispatch} from "../redux/store";
+import {draggingSet} from "../redux/actionCreators";
 
-export function useResizer(startValue: number, onChange: (x: boolean) => void) {
+export function useResizer(startValue: number) {
   const [isDragging, setDragging] = useState(false);
   const [position, setPosition] = useState(startValue);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isDragging) {
@@ -20,8 +22,8 @@ export function useResizer(startValue: number, onChange: (x: boolean) => void) {
       document.onmouseup = null;
       document.onmouseleave = null;
     }
-    onChange(isDragging);
-  }, [isDragging]);
+    dispatch(draggingSet({isDragging}));
+  }, [isDragging, dispatch]);
 
   return [position, () => setDragging(true)] as [number, () => void];
 }

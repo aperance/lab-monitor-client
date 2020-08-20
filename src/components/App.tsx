@@ -6,8 +6,7 @@
 import React, {useContext} from "react";
 
 import {WebsocketContext} from "../websockets/WebsocketContext";
-import {useSelector, useDispatch} from "../redux/store";
-import {draggingSet} from "../redux/actionCreators";
+import {useSelector} from "../redux/store";
 import DeviceTable from "./DeviceTable";
 import Toolbar from "./Toolbar";
 import History from "./History";
@@ -38,7 +37,6 @@ const App = () => {
       ? 1
       : 2;
   });
-  const dispatch = useDispatch();
   const wsStatus = useContext(WebsocketContext).status;
 
   if (wsStatus === "connectionError")
@@ -54,9 +52,6 @@ const App = () => {
 
         <Drawers
           drawersVisible={drawersVisible}
-          isResizing={(isDragging: boolean) =>
-            dispatch(draggingSet({isDragging}))
-          }
           leftDrawer={<Toolbar />}
           rightDrawer={(() => {
             switch (selectedSubView) {
