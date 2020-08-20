@@ -1,17 +1,56 @@
-import {useContext} from "react";
+import {useContext, useReducer} from "react";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {useSelector} from "../redux/store";
 
 type RowData = [string, {[x: string]: string | null}];
 
-export const useDeviceData = (
+/**
+ *
+ * @param selectedFilters
+ * @param action
+ */
+const filterReducer = (
   selectedFilters: {[x: string]: string[]},
-  selectedSorting: {property: string; reverse: boolean}
+  action: {property: string; regex: string}
 ) => {
-  const {columns} = useContext(ConfigurationContext);
-  const rawData = useSelector(state => Object.entries(state.tableData));
-  // const pause = useSelector((x: StoreState) => x.userSelection.dragging);
+  const regexArray = selectedFilters[action.property] || [];
+  const currentIndex = regexArray.indexOf(action.regex);
+  currentIndex === -1
+    ? regexArray.push(action.regex)
+    : regexArray.splice(currentIndex, 1);
+  return {...selectedFilters, [action.property]: regexArray};
+};
 
+/**
+ *
+ * @param selectedSorting
+ * @param action
+ */
+const sortingReducer = (
+  selectedSorting: {property: string; reverse: boolean},
+  action: {property: string}
+) => {
+  return {
+    property: action.property,
+    reverse:
+      action.property === selectedSorting.property
+        ? !selectedSorting.reverse
+        : selectedSorting.reverse
+  };
+};
+
+export const useDeviceData = () => {
+  const columns = useContext(ConfigurationContext).columns;
+  const rawData = useSelector(state => Object.entries(state.tableData));
+  const [selectedFilters, setFilters] = useReducer(filterReducer, {});
+  const [selectedSorting, setSorting] = useReducer(sortingReducer, {
+    property: columns[0].property,
+    reverse: false
+  });
+
+  /**
+   *
+   */
   const replaceFunction = ([id, rowData]: RowData): RowData => {
     columns
       /** Filter out column config with no replacement rule */
@@ -51,5 +90,11 @@ export const useDeviceData = (
     .filter(filterFunction)
     .sort(sortFunction);
 
-  return conditionedData;
+  return {
+    deviceData: conditionedData,
+    selectedFilters,
+    setFilters,
+    selectedSorting,
+    setSorting
+  };
 };

@@ -1,4 +1,10 @@
-import {combineReducers, applyMiddleware, createStore, compose} from "redux";
+import {
+  combineReducers,
+  applyMiddleware,
+  createStore,
+  compose,
+  Dispatch
+} from "redux";
 import {
   useSelector as useReduxSelector,
   useDispatch as useReduxDispatch,
@@ -10,6 +16,7 @@ import {tableDataReducer} from "./tableDataReducer";
 import {historyDataReducer} from "./historyDataReducer";
 import {deviceResponseReducer} from "./deviceResponseReducer";
 import {userSelectionReducer} from "./userSelectionReducer";
+import {Actions} from "./actionCreators";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface DeviceResponseState {
@@ -54,4 +61,4 @@ export default createStore(
 );
 
 export const useSelector: TypedUseSelectorHook<StoreState> = useReduxSelector;
-export const useDispatch = useReduxDispatch;
+export const useDispatch = () => useReduxDispatch<Dispatch<Actions>>();

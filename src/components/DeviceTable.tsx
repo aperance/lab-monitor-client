@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import React, {useContext, useReducer} from "react";
+import React, {useContext} from "react";
 import {Table, TableBody, makeStyles} from "@material-ui/core";
 
 import {useDeviceData} from "../hooks/useDeviceData";
@@ -36,41 +36,6 @@ const useStyles = makeStyles({
 
 /**
  *
- * @param selectedFilters
- * @param action
- */
-const filterReducer = (
-  selectedFilters: {[x: string]: string[]},
-  action: {property: string; regex: string}
-) => {
-  const regexArray = selectedFilters[action.property] || [];
-  const currentIndex = regexArray.indexOf(action.regex);
-  currentIndex === -1
-    ? regexArray.push(action.regex)
-    : regexArray.splice(currentIndex, 1);
-  return {...selectedFilters, [action.property]: regexArray};
-};
-
-/**
- *
- * @param selectedSorting
- * @param action
- */
-const sortingReducer = (
-  selectedSorting: {property: string; reverse: boolean},
-  action: {property: string}
-) => {
-  return {
-    property: action.property,
-    reverse:
-      action.property === selectedSorting.property
-        ? !selectedSorting.reverse
-        : selectedSorting.reverse
-  };
-};
-
-/**
- *
  */
 const DeviceTable = () => {
   const classes = useStyles();
@@ -78,12 +43,13 @@ const DeviceTable = () => {
   const selectedRows = useSelector(state => state.userSelection.rows);
   const dispatch = useDispatch();
   const columns = useContext(ConfigurationContext).columns;
-  const [selectedFilters, setFilters] = useReducer(filterReducer, {});
-  const [selectedSorting, setSorting] = useReducer(sortingReducer, {
-    property: columns[0].property,
-    reverse: false
-  });
-  const deviceData = useDeviceData(selectedFilters, selectedSorting);
+  const {
+    deviceData,
+    selectedFilters,
+    setFilters,
+    selectedSorting,
+    setSorting
+  } = useDeviceData();
 
   return (
     <div style={{display: "flex", height: "calc(100vh - 60px)"}}>
