@@ -1,5 +1,4 @@
 import {combineReducers, applyMiddleware, createStore, compose} from "redux";
-import {configureStore} from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import {tableDataReducer} from "./tableDataReducer";
@@ -39,11 +38,12 @@ export interface StoreState {
   userSelection: UserSelectionState;
 }
 
-export default configureStore({
-  reducer: {
+export default createStore(
+  combineReducers<StoreState>({
     tableData: tableDataReducer,
     historyData: historyDataReducer,
     deviceResponse: deviceResponseReducer,
     userSelection: userSelectionReducer
-  }
-});
+  }),
+  compose(applyMiddleware(thunk, logger))
+);
