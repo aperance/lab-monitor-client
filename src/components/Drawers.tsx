@@ -7,9 +7,9 @@ import React from "react";
 import {makeStyles} from "@material-ui/core";
 
 import {useResizer} from "../hooks/useResizer";
+import {useSelector} from "../redux/store";
 
 type Props = {
-  drawersVisible: 0 | 1 | 2;
   leftDrawer: JSX.Element;
   rightDrawer: JSX.Element | null;
 };
@@ -62,9 +62,14 @@ const useStyles = makeStyles({
 const Drawers = (props: Props) => {
   const classes = useStyles();
   const [viewWidth, triggerResize] = useResizer(800);
+  /** Number of drawers that should be visible to the user. */
+  const drawersVisible = useSelector((state): 0 | 1 | 2 => {
+    if (state.userSelection.rows.length === 0) return 0;
+    return state.userSelection.view ? 2 : 1;
+  });
 
   const width = viewWidth + 200;
-  const translateX = [width, viewWidth, 0][props.drawersVisible];
+  const translateX = [width, viewWidth, 0][drawersVisible];
 
   return (
     <div

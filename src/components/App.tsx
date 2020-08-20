@@ -19,9 +19,6 @@ import Spinner from "./Spinner";
 import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
-/**
- *
- */
 const App = () => {
   /** True if initial data payload received via web socket. */
   const isDataReceived = useSelector(
@@ -29,14 +26,7 @@ const App = () => {
   );
   /** Desired content for the rightmost drawer. */
   const selectedSubView = useSelector(state => state.userSelection.view);
-  /** Number of drawers that should be visible to the user. */
-  const drawersVisible = useSelector((state): 0 | 1 | 2 => {
-    return state.userSelection.rows.length === 0
-      ? 0
-      : !state.userSelection.view
-      ? 1
-      : 2;
-  });
+  /** Status of websocket connection to backend server. */
   const wsStatus = useContext(WebsocketContext).status;
 
   if (wsStatus === "connectionError")
@@ -51,7 +41,6 @@ const App = () => {
         <DeviceTable />
 
         <Drawers
-          drawersVisible={drawersVisible}
           leftDrawer={<Toolbar />}
           rightDrawer={(() => {
             switch (selectedSubView) {
