@@ -4,12 +4,11 @@
  */
 
 import React, {useContext, useReducer} from "react";
-import {useDispatch} from "react-redux";
 import {Table, TableBody, makeStyles} from "@material-ui/core";
 
-import {useSelector} from "../hooks/useSelector";
 import {useDeviceData} from "../hooks/useDeviceData";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {useSelector, useDispatch} from "../redux/store";
 import {singleRowSelect, multiRowSelect} from "../redux/actionCreators";
 import DeviceTableHead from "./DeviceTableHead";
 import DeviceTableRow from "./DeviceTableRow";

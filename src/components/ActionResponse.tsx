@@ -4,12 +4,11 @@
  */
 
 import React from "react";
-import {useDispatch} from "react-redux";
 import {Snackbar, IconButton} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
+import {useSelector, useDispatch} from "../redux/store";
 import {deviceCommandResponse} from "../redux/actionCreators";
-import {useSelector} from "../hooks/useSelector";
 
 const ActionResponse = () => {
   /** Accumulated responses from target devices for recent action. */

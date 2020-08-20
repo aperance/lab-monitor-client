@@ -4,10 +4,9 @@
  */
 
 import React, {useContext} from "react";
-import {useDispatch} from "react-redux";
 
-import {useSelector} from "../hooks/useSelector";
 import {WebsocketContext} from "../websockets/WebsocketContext";
+import {useSelector, useDispatch} from "../redux/store";
 import {draggingSet} from "../redux/actionCreators";
 import DeviceTable from "./DeviceTable";
 import Toolbar from "./Toolbar";

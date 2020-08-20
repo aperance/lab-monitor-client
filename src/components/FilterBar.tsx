@@ -4,7 +4,6 @@
  */
 
 import React, {useContext} from "react";
-import {useDispatch} from "react-redux";
 import {
   FormControl,
   FormControlLabel,
@@ -14,7 +13,7 @@ import {
   makeStyles
 } from "@material-ui/core";
 
-import {useSelector} from "../hooks/useSelector";
+import {useSelector, useDispatch} from "../redux/store";
 import {proxyToggle} from "../redux/actionCreators";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import FilterBarItem from "./FilterBarItem";

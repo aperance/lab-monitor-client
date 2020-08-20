@@ -8,7 +8,7 @@ import {Fab, makeStyles} from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {useSelector} from "../hooks/useSelector";
+import {useSelector} from "../redux/store";
 
 /**
  * CSS-in-JS styling.

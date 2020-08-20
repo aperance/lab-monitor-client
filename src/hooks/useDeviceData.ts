@@ -1,7 +1,6 @@
 import {useContext} from "react";
-import {useSelector} from "react-redux";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../redux/store";
+import {useSelector} from "../redux/store";
 
 type RowData = [string, {[x: string]: string | null}];
 
@@ -10,7 +9,7 @@ export const useDeviceData = (
   selectedSorting: {property: string; reverse: boolean}
 ) => {
   const {columns} = useContext(ConfigurationContext);
-  const rawData = useSelector((x: StoreState) => Object.entries(x.tableData));
+  const rawData = useSelector(state => Object.entries(state.tableData));
   // const pause = useSelector((x: StoreState) => x.userSelection.dragging);
 
   const replaceFunction = ([id, rowData]: RowData): RowData => {

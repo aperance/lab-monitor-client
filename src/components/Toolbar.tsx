@@ -4,13 +4,8 @@
  */
 
 import React, {useContext, useState} from "react";
-import {useDispatch} from "react-redux";
 import {List, Divider} from "@material-ui/core";
 
-import ToolbarItem from "./ToolbarItem";
-import LogLevel from "./LogLevel";
-import {useSelector} from "../hooks/useSelector";
-import {viewSelect} from "../redux/actionCreators";
 import {
   commandRequest,
   refreshDevice,
@@ -18,6 +13,10 @@ import {
 } from "../websockets/messageCreators";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {useSelector, useDispatch} from "../redux/store";
+import {viewSelect} from "../redux/actionCreators";
+import ToolbarItem from "./ToolbarItem";
+import LogLevel from "./LogLevel";
 
 const Toolbar = () => {
   const selectedRows = useSelector(state => state.userSelection.rows);

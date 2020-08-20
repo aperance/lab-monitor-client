@@ -4,7 +4,6 @@
  */
 
 import React, {useState, useContext} from "react";
-import {useDispatch} from "react-redux";
 import {
   Input,
   InputLabel,
@@ -15,12 +14,12 @@ import {
   makeStyles
 } from "@material-ui/core";
 
-import {useSelector} from "../hooks/useSelector";
-import Terminal from "./Terminal";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {psToolsRequest} from "../websockets/messageCreators";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {useSelector, useDispatch} from "../redux/store";
 import {psToolsResponseClear} from "../redux/actionCreators";
+import Terminal from "./Terminal";
 
 /**
  * CSS-in-JS styling.

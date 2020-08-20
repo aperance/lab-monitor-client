@@ -1,4 +1,9 @@
 import {combineReducers, applyMiddleware, createStore, compose} from "redux";
+import {
+  useSelector as useReduxSelector,
+  useDispatch as useReduxDispatch,
+  TypedUseSelectorHook
+} from "react-redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import {tableDataReducer} from "./tableDataReducer";
@@ -47,3 +52,6 @@ export default createStore(
   }),
   compose(applyMiddleware(thunk, logger))
 );
+
+export const useSelector: TypedUseSelectorHook<StoreState> = useReduxSelector;
+export const useDispatch = useReduxDispatch;
