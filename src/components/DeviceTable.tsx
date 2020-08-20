@@ -53,19 +53,14 @@ const DeviceTable = () => {
 
   return (
     <div style={{display: "flex", height: "calc(100vh - 60px)"}}>
-      <FilterBar
-        selectedFilters={selectedFilters}
-        handleCheckboxClick={(property: string, regex: string) =>
-          setFilters({property, regex})
-        }
-      />
+      <FilterBar selectedFilters={selectedFilters} setFilters={setFilters} />
 
       <div className={classes.root}>
         <Table stickyHeader>
           <DeviceTableHead
             columns={columns}
             selectedSorting={selectedSorting}
-            changeSort={(property: string) => setSorting({property})}
+            setSorting={setSorting}
           />
           <TableBody>
             {deviceData.map(([rowId, rowData]) => (

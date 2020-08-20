@@ -16,7 +16,7 @@ type Props = {
     property: string | null;
     reverse: boolean;
   };
-  changeSort: (property: string) => void;
+  setSorting: (x: {property: string}) => void;
 };
 
 /**
@@ -43,7 +43,7 @@ const DeviceTableHead = (props: Props) => {
               <TableSortLabel
                 active={props.selectedSorting.property === column.property}
                 direction={props.selectedSorting.reverse ? "asc" : "desc"}
-                onClick={() => props.changeSort(column.property)}
+                onClick={() => props.setSorting({property: column.property})}
               >
                 {column.title}
               </TableSortLabel>

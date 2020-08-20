@@ -20,7 +20,7 @@ import FilterBarItem from "./FilterBarItem";
 
 type Props = {
   selectedFilters: {[property: string]: string[]};
-  handleCheckboxClick: (property: string, regex: string) => void;
+  setFilters: (x: {property: string; regex: string}) => void;
 };
 
 /**
@@ -64,9 +64,7 @@ const useStyles = makeStyles({
  */
 const FilterBar = (props: Props) => {
   const classes = useStyles();
-  const isProxyEnabled = useSelector(state => {
-    return state.userSelection.proxy;
-  });
+  const isProxyEnabled = useSelector(state => state.userSelection.proxy);
   const dispatch = useDispatch();
   const filters = useContext(ConfigurationContext).filters;
 
@@ -87,7 +85,7 @@ const FilterBar = (props: Props) => {
                     regex={regex}
                     property={filter.property}
                     selectedFilters={props.selectedFilters}
-                    handleCheckboxClick={props.handleCheckboxClick}
+                    setFilters={props.setFilters}
                   />
                 );
               })}

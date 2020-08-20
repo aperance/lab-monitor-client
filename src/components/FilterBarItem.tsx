@@ -14,7 +14,7 @@ type Props = {
   property: string;
   regex: string;
   label: string;
-  handleCheckboxClick: (property: string, regex: string) => void;
+  setFilters: (x: {property: string; regex: string}) => void;
 };
 
 /**
@@ -48,6 +48,8 @@ const useStyles = makeStyles({
 const FilterBarItem = (props: Props) => {
   const classes = useStyles();
 
+  const {property, regex, selectedFilters, setFilters} = props;
+
   return (
     <FormControlLabel
       className={classes.formControlLabel}
@@ -56,12 +58,8 @@ const FilterBarItem = (props: Props) => {
         <Checkbox
           className={classes.checkbox}
           color="primary"
-          checked={
-            // eslint-disable-next-line no-prototype-builtins
-            props.selectedFilters.hasOwnProperty(props.property) &&
-            props.selectedFilters[props.property].includes(props.regex)
-          }
-          onClick={() => props.handleCheckboxClick(props.property, props.regex)}
+          checked={selectedFilters[property]?.includes(regex)}
+          onClick={() => setFilters({property, regex})}
         />
       }
       label={props.label}
