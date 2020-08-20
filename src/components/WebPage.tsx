@@ -4,12 +4,11 @@
  */
 
 import React, {useContext} from "react";
-import {useSelector} from "react-redux";
 import {Fab, makeStyles} from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../redux/store";
+import {useSelector} from "../hooks/useSelector";
 
 /**
  * CSS-in-JS styling.
@@ -25,24 +24,12 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- * Redux selector function (equivilant to mapStateToProps).
- */
-const reduxSelector = (state: StoreState) => {
-  return {
-    /** IP Address of target device. */
-    ipAddress: state.userSelection.rows[0] ?? null,
-    /** If true, HTTP request is routed through backend server. */
-    isProxyEnabled: state.userSelection.proxy
-  };
-};
-
-/**
- *
- */
 const WebPage = () => {
   const classes = useStyles();
-  const {ipAddress, isProxyEnabled} = useSelector(reduxSelector);
+  /** IP Address of target device. */
+  const ipAddress = useSelector(state => state.userSelection.rows[0] ?? null);
+  /** If true, HTTP request is routed through backend server. */
+  const isProxyEnabled = useSelector(state => state.userSelection.proxy);
   const {httpProxy, statePath} = useContext(ConfigurationContext);
 
   if (ipAddress === null) return null;

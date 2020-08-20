@@ -4,14 +4,13 @@
  */
 
 import React, {useContext} from "react";
-import {useSelector} from "react-redux";
 import {Fab, makeStyles} from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../redux/store";
+import {useSelector} from "../hooks/useSelector";
 import {useVnc} from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
@@ -50,27 +49,16 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- * Redux selector function (equivilant to mapStateToProps).
- */
-const reduxSelector = (state: StoreState) => {
-  return {
-    /** IP Address of the target device. */
-    ipAddress:
-      process.env.DEMO === "true"
-        ? process.env.VNC_IP || ""
-        : state.userSelection.rows[0] ?? "",
-    /** Used to determine if vnc area needs to be resized. */
-    isDragging: state.userSelection.dragging
-  };
-};
-
-/**
- *
- */
 const VncViewer = () => {
   const classes = useStyles();
-  const {ipAddress, isDragging} = useSelector(reduxSelector);
+  /** IP Address of the target device. */
+  const ipAddress = useSelector(state =>
+    process.env.DEMO === "true"
+      ? process.env.VNC_IP || ""
+      : state.userSelection.rows[0] ?? ""
+  );
+  /** Used to determine if vnc area needs to be resized. */
+  const isDragging = useSelector(state => state.userSelection.dragging);
   const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, isDragging);
   const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
 

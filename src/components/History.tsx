@@ -4,11 +4,10 @@
  */
 
 import React, {useState} from "react";
-import {useSelector} from "react-redux";
 import {ListItem, ListItemText, makeStyles} from "@material-ui/core";
 import {List, AutoSizer} from "react-virtualized";
 
-import {StoreState} from "../redux/store";
+import {useSelector} from "../hooks/useSelector";
 
 /**
  * CSS-in-JS styling.
@@ -25,21 +24,14 @@ const useStyles = makeStyles({
   text: {fontSize: "0.75rem"}
 });
 
-/**
- * Redux selector function (equivilant to mapStateToProps).
- */
-const reduxSelector = (state: StoreState) => {
-  const selectedRow = state.userSelection.rows[0];
-  const historyData = state.historyData[selectedRow] ?? {};
-  const properties = Object.keys(historyData);
-
-  return {historyData, properties};
-};
-
 const HistoryList = () => {
   const classes = useStyles();
-  const {historyData, properties} = useSelector(reduxSelector);
+  const historyData = useSelector(
+    state => state.historyData[state.userSelection.rows[0]] ?? {}
+  );
   const [selectedProperty, setSelectedProperty] = useState("");
+
+  const properties = Object.keys(historyData);
 
   return (
     <div className={classes.root}>

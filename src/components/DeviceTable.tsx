@@ -4,17 +4,13 @@
  */
 
 import React, {useContext, useReducer} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Table, TableBody, makeStyles} from "@material-ui/core";
 
+import {useSelector} from "../hooks/useSelector";
 import {useDeviceData} from "../hooks/useDeviceData";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../redux/store";
-import {
-  singleRowSelect,
-  multiRowSelect,
-  proxyToggle
-} from "../redux/actionCreators";
+import {singleRowSelect, multiRowSelect} from "../redux/actionCreators";
 import DeviceTableHead from "./DeviceTableHead";
 import DeviceTableRow from "./DeviceTableRow";
 import FilterBar from "./FilterBar";
@@ -38,17 +34,6 @@ const useStyles = makeStyles({
     flex: 1
   }
 });
-
-/**
- * Redux selector function (equivilant to mapStateToProps).
- */
-const reduxSelector = (state: StoreState) => {
-  return {
-    /** Array of rows currently selected by user. */
-    selectedRows: state.userSelection.rows,
-    isProxyEnabled: state.userSelection.proxy
-  };
-};
 
 /**
  *
@@ -90,9 +75,10 @@ const sortingReducer = (
  */
 const DeviceTable = () => {
   const classes = useStyles();
-  const {selectedRows, isProxyEnabled} = useSelector(reduxSelector);
+  /** Array of rows currently selected by user. */
+  const selectedRows = useSelector(state => state.userSelection.rows);
   const dispatch = useDispatch();
-  const {columns, filters} = useContext(ConfigurationContext);
+  const columns = useContext(ConfigurationContext).columns;
   const [selectedFilters, setFilters] = useReducer(filterReducer, {});
   const [selectedSorting, setSorting] = useReducer(sortingReducer, {
     property: columns[0].property,
@@ -103,13 +89,10 @@ const DeviceTable = () => {
   return (
     <div style={{display: "flex", height: "calc(100vh - 60px)"}}>
       <FilterBar
-        filters={filters}
         selectedFilters={selectedFilters}
-        proxyEnabled={isProxyEnabled}
         handleCheckboxClick={(property: string, regex: string) =>
           setFilters({property, regex})
         }
-        handleProxyClick={() => dispatch(proxyToggle())}
       />
 
       <div className={classes.root}>

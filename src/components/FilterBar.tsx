@@ -3,7 +3,8 @@
  * @packageDocumentation
  */
 
-import React from "react";
+import React, {useContext} from "react";
+import {useDispatch} from "react-redux";
 import {
   FormControl,
   FormControlLabel,
@@ -13,20 +14,14 @@ import {
   makeStyles
 } from "@material-ui/core";
 
+import {useSelector} from "../hooks/useSelector";
+import {proxyToggle} from "../redux/actionCreators";
+import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import FilterBarItem from "./FilterBarItem";
 
 type Props = {
-  filters: {
-    property: string;
-    title: string;
-    options: {
-      [label: string]: string;
-    };
-  }[];
   selectedFilters: {[property: string]: string[]};
-  proxyEnabled: boolean;
   handleCheckboxClick: (property: string, regex: string) => void;
-  handleProxyClick: () => void;
 };
 
 /**
@@ -70,10 +65,15 @@ const useStyles = makeStyles({
  */
 const FilterBar = (props: Props) => {
   const classes = useStyles();
+  const isProxyEnabled = useSelector(state => {
+    return state.userSelection.proxy;
+  });
+  const dispatch = useDispatch();
+  const filters = useContext(ConfigurationContext).filters;
 
   return (
     <FormControl className={classes.root}>
-      {props.filters.map(filter => {
+      {filters.map(filter => {
         return (
           <div key={filter.property}>
             <FormLabel className={classes.formLabel} focused={false}>
@@ -104,10 +104,10 @@ const FilterBar = (props: Props) => {
           }}
           control={
             <Switch
-              checked={!props.proxyEnabled}
+              checked={!isProxyEnabled}
               color="primary"
               disableRipple={true}
-              onClick={props.handleProxyClick}
+              onClick={() => dispatch(proxyToggle())}
             />
           }
           label="Disable Proxy"
@@ -121,8 +121,7 @@ const FilterBar = (props: Props) => {
 const memoizedFilterBar = React.memo(
   FilterBar,
   (prevProps, nextProps) =>
-    prevProps.selectedFilters === nextProps.selectedFilters &&
-    prevProps.proxyEnabled === nextProps.proxyEnabled
+    prevProps.selectedFilters === nextProps.selectedFilters
 );
 
 export default memoizedFilterBar;

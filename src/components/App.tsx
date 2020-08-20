@@ -4,11 +4,11 @@
  */
 
 import React, {useContext} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 
+import {useSelector} from "../hooks/useSelector";
 import {WebsocketContext} from "../websockets/WebsocketContext";
-import {StoreState} from "../redux/store";
-import {deviceCommandResponse, draggingSet} from "../redux/actionCreators";
+import {draggingSet} from "../redux/actionCreators";
 import DeviceTable from "./DeviceTable";
 import Toolbar from "./Toolbar";
 import History from "./History";
@@ -22,37 +22,31 @@ import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
 /**
- * Redux selector function (equivilant to mapStateToProps).
- */
-const reduxSelector = (state: StoreState) => {
-  return {
-    /** True if initial data payload received via web socket. */
-    isDataReceived: Object.keys(state.tableData).length !== 0,
-    /** Desired content for the rightmost drawer. */
-    subView: state.userSelection.view,
-    /** Number of drawers that should be visible to the user. */
-    drawersVisible: (state.userSelection.rows.length === 0
-      ? 0
-      : !state.userSelection.view
-      ? 1
-      : 2) as 0 | 1 | 2,
-    deviceResponse: state.deviceResponse.command
-  };
-};
-
-/**
  *
  */
 const App = () => {
-  const store = useSelector(reduxSelector);
+  /** True if initial data payload received via web socket. */
+  const isDataReceived = useSelector(
+    state => Object.keys(state.tableData).length !== 0
+  );
+  /** Desired content for the rightmost drawer. */
+  const selectedSubView = useSelector(state => state.userSelection.view);
+  /** Number of drawers that should be visible to the user. */
+  const drawersVisible = useSelector((state): 0 | 1 | 2 => {
+    return state.userSelection.rows.length === 0
+      ? 0
+      : !state.userSelection.view
+      ? 1
+      : 2;
+  });
   const dispatch = useDispatch();
-  const ws = useContext(WebsocketContext);
+  const wsStatus = useContext(WebsocketContext).status;
 
-  if (ws.status === "connectionError")
+  if (wsStatus === "connectionError")
     return <ErrorMessage message={"connectionError"} />;
-  else if (ws.status === "dataError")
+  else if (wsStatus === "dataError")
     return <ErrorMessage message={"dataError"} />;
-  else if (ws.status === "connected" && store.isDataReceived)
+  else if (wsStatus === "connected" && isDataReceived)
     return (
       <>
         <NavBar />
@@ -60,13 +54,13 @@ const App = () => {
         <DeviceTable />
 
         <Drawers
-          drawersVisible={store.drawersVisible}
+          drawersVisible={drawersVisible}
           isResizing={(isDragging: boolean) =>
             dispatch(draggingSet({isDragging}))
           }
           leftDrawer={<Toolbar />}
           rightDrawer={(() => {
-            switch (store.subView) {
+            switch (selectedSubView) {
               case "history":
                 return <History />;
               case "statePage":
@@ -81,12 +75,7 @@ const App = () => {
           })()}
         />
 
-        <ActionResponse
-          response={store.deviceResponse}
-          handleClose={() =>
-            dispatch(deviceCommandResponse({err: null, results: null}))
-          }
-        />
+        <ActionResponse />
       </>
     );
   else return <Spinner />;

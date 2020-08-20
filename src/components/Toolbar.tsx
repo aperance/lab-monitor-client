@@ -4,12 +4,12 @@
  */
 
 import React, {useContext, useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {List, Divider} from "@material-ui/core";
 
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
-import {StoreState} from "../redux/store";
+import {useSelector} from "../hooks/useSelector";
 import {viewSelect} from "../redux/actionCreators";
 import {
   commandRequest,
@@ -19,22 +19,10 @@ import {
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 
-/**
- * Redux selector function (equivilant to mapStateToProps).
- */
-const reduxSelector = (state: StoreState) => {
-  return {
-    rows: state.userSelection.rows,
-    view: state.userSelection.view,
-    proxyEnabled: state.userSelection.proxy
-  };
-};
-
-/**
- *
- */
 const Toolbar = () => {
-  const {rows, view, proxyEnabled} = useSelector(reduxSelector);
+  const selectedRows = useSelector(state => state.userSelection.rows);
+  const selectedSubView = useSelector(state => state.userSelection.view);
+  const isProxyEnabled = useSelector(state => state.userSelection.proxy);
   const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
   const {vnc, httpProxy, logsPath} = useContext(ConfigurationContext);
@@ -43,20 +31,20 @@ const Toolbar = () => {
   return (
     <>
       <List draggable={false}>
-        {rows.length <= 1 && (
+        {selectedRows.length <= 1 && (
           <>
             <ToolbarItem
               name="State"
               leftIcon="list_alt"
               rightIcon="navigate_next"
-              isSelected={view === "statePage"}
+              isSelected={selectedSubView === "statePage"}
               onClick={() => dispatch(viewSelect({view: "statePage"}))}
             />
             <ToolbarItem
               name="History"
               leftIcon="history"
               rightIcon="navigate_next"
-              isSelected={view === "history"}
+              isSelected={selectedSubView === "history"}
               onClick={() => dispatch(viewSelect({view: "history"}))}
             />
             {process.env.DEMO !== "true" && (
@@ -64,7 +52,7 @@ const Toolbar = () => {
                 name="PSTools"
                 leftIcon="code"
                 rightIcon="navigate_next"
-                isSelected={view === "psTools"}
+                isSelected={selectedSubView === "psTools"}
                 onClick={() => dispatch(viewSelect({view: "psTools"}))}
               />
             )}
@@ -72,7 +60,7 @@ const Toolbar = () => {
               name="VNC"
               leftIcon="picture_in_picture"
               rightIcon="navigate_next"
-              isSelected={view === "vnc"}
+              isSelected={selectedSubView === "vnc"}
               onClick={() => dispatch(viewSelect({view: "vnc"}))}
             />
 
@@ -83,7 +71,7 @@ const Toolbar = () => {
                   name="Shared Drives"
                   leftIcon="folder"
                   rightIcon="get_app"
-                  selectedRows={rows}
+                  selectedRows={selectedRows}
                   onClick={() => {
                     const link = document.getElementById("downloadLink");
                     if (link !== null) link.click();
@@ -94,11 +82,11 @@ const Toolbar = () => {
                     href={URL.createObjectURL(
                       new Blob(
                         [
-                          `net use \\\\${rows[0]} ` +
+                          `net use \\\\${selectedRows[0]} ` +
                             `/user:${vnc.username} ` +
                             `${vnc.password} ` +
                             `/PERSISTENT:NO\n` +
-                            `start \\\\${rows[0]}`
+                            `start \\\\${selectedRows[0]}`
                         ],
                         {type: "text/plain"}
                       )
@@ -115,23 +103,23 @@ const Toolbar = () => {
               name="Logs"
               leftIcon="subject"
               rightIcon="open_in_new"
-              selectedRows={rows}
+              selectedRows={selectedRows}
               onClick={() => {
                 const link = document.getElementById("logsLink");
                 if (link !== null) link.click();
               }}
             >
-              {proxyEnabled ? (
+              {isProxyEnabled ? (
                 <a
                   id="logsLink"
-                  href={`http://${httpProxy}${logsPath}?target=${rows[0]}`}
+                  href={`http://${httpProxy}${logsPath}?target=${selectedRows[0]}`}
                   target="_blank"
                   rel="noreferrer"
                 />
               ) : (
                 <a
                   id="logsLink"
-                  href={`http://${rows[0]}:8001${logsPath}`}
+                  href={`http://${selectedRows[0]}:8001${logsPath}`}
                   target="_blank"
                   rel="noreferrer"
                 />
@@ -144,52 +132,52 @@ const Toolbar = () => {
           <ToolbarItem
             name="Log Level"
             leftIcon="tune"
-            selectedRows={rows}
+            selectedRows={selectedRows}
             onClick={() => setLogConfigOpen(true)}
           />
         )}
         <ToolbarItem
           name="Delete Logs"
           leftIcon="delete_sweep"
-          selectedRows={rows}
-          onClick={() => ws.send(commandRequest(rows, "deleteLogs"))}
+          selectedRows={selectedRows}
+          onClick={() => ws.send(commandRequest(selectedRows, "deleteLogs"))}
         />
         <ToolbarItem
           name="Clean Start"
           leftIcon="power_settings_new"
-          selectedRows={rows}
-          onClick={() => ws.send(commandRequest(rows, "cleanStart"))}
+          selectedRows={selectedRows}
+          onClick={() => ws.send(commandRequest(selectedRows, "cleanStart"))}
         />
         <ToolbarItem
           name="RAM Clear"
           leftIcon="memory"
-          selectedRows={rows}
-          onClick={() => ws.send(commandRequest(rows, "ramClear"))}
+          selectedRows={selectedRows}
+          onClick={() => ws.send(commandRequest(selectedRows, "ramClear"))}
         />
         <ToolbarItem
           name="Reset Display"
           leftIcon="desktop_windows"
-          selectedRows={rows}
-          onClick={() => ws.send(commandRequest(rows, "resetDisplay"))}
+          selectedRows={selectedRows}
+          onClick={() => ws.send(commandRequest(selectedRows, "resetDisplay"))}
         />
         <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
         <ToolbarItem
           name="Force Refresh"
           leftIcon="refresh"
-          selectedRows={rows}
-          onClick={() => ws.send(refreshDevice(rows))}
+          selectedRows={selectedRows}
+          onClick={() => ws.send(refreshDevice(selectedRows))}
         />
         <ToolbarItem
           name="Clear Record"
           leftIcon="delete"
-          selectedRows={rows}
-          onClick={() => ws.send(clearDevice(rows))}
+          selectedRows={selectedRows}
+          onClick={() => ws.send(clearDevice(selectedRows))}
         />
       </List>
       <LogLevel
         open={logConfigOpen}
         sendDeviceCommand={(namespace: string, level: string) =>
-          ws.send(commandRequest(rows, "logLevel", {namespace, level}))
+          ws.send(commandRequest(selectedRows, "logLevel", {namespace, level}))
         }
         close={() => setLogConfigOpen(false)}
       />

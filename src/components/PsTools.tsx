@@ -4,7 +4,7 @@
  */
 
 import React, {useState, useContext} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {
   Input,
   InputLabel,
@@ -15,11 +15,11 @@ import {
   makeStyles
 } from "@material-ui/core";
 
+import {useSelector} from "../hooks/useSelector";
 import Terminal from "./Terminal";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {psToolsRequest} from "../websockets/messageCreators";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
-import {StoreState} from "../redux/store";
 import {psToolsResponseClear} from "../redux/actionCreators";
 
 /**
@@ -40,22 +40,11 @@ const useStyles = makeStyles({
   text: {fontSize: "0.825rem"}
 });
 
-/**
- * Redux selector function (equivilant to mapStateToProps).
- */
-const reduxSelector = (state: StoreState) => {
-  return {
-    target: state.userSelection.rows[0] ?? null,
-    result: state.deviceResponse.psTools
-  };
-};
-
-/**
- *
- */
 const PsTools = () => {
   const classes = useStyles();
-  const {target, result} = useSelector(reduxSelector);
+  /** IP Address of target device. */
+  const ipAddress = useSelector(state => state.userSelection.rows[0] ?? null);
+  const result = useSelector(state => state.deviceResponse.psTools);
   const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
   const presets = useContext(ConfigurationContext).psTools;
@@ -65,7 +54,7 @@ const PsTools = () => {
 
   return (
     <>
-      {target && (
+      {ipAddress && (
         <div className={classes.container}>
           {presets && (
             <form>
@@ -130,7 +119,7 @@ const PsTools = () => {
               size="small"
               onClick={() => {
                 dispatch(psToolsResponseClear());
-                if (target) ws.send(psToolsRequest(target, mode, cmd));
+                if (ipAddress) ws.send(psToolsRequest(ipAddress, mode, cmd));
               }}
             >
               Send

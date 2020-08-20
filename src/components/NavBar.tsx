@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 const NavBar = () => {
   const classes = useStyles();
   const ws = useContext(WebsocketContext);
-  const {title} = useContext(ConfigurationContext);
+  const title = useContext(ConfigurationContext).title;
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
   return (
