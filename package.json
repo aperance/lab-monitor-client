@@ -23,7 +23,7 @@
     "typeface-roboto": "0.0.75"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@beyonk/google-fonts-webpack-plugin": "^1.5.0",
@@ -47,7 +47,7 @@
     "eslint-plugin-react-hooks": "^4.1.0",
     "eslint-plugin-tsdoc": "^0.2.6",
     "html-webpack-plugin": "^3.2.0",
-    "jest": "^26.4.0",
+    "jest": "^26.4.1",
     "mock-socket": "^8.1.1",
     "prettier": "^2.0.5",
     "source-map-loader": "^0.2.4",
