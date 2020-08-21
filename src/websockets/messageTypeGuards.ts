@@ -1,6 +1,6 @@
 import {Ajv} from "ajv";
 import {
-  WsMessage,
+  //WsMessage,
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
@@ -9,14 +9,14 @@ import {
 
 const ajv = new (require("ajv"))({verbose: true, nullable: true}) as Ajv;
 
-const validateWsMessage = ajv.compile({
-  properties: {
-    type: {type: "string"},
-    payload: {type: "object", minProperties: 1}
-  },
-  required: ["type", "payload"],
-  additionalProperties: false
-});
+// const validateWsMessage = ajv.compile({
+//   properties: {
+//     type: {type: "string"},
+//     payload: {type: "object", minProperties: 1}
+//   },
+//   required: ["type", "payload"],
+//   additionalProperties: false
+// });
 
 const validateDeviceDataAll = ajv.compile({
   properties: {
@@ -117,22 +117,22 @@ const validateDeviceActionResponse = ajv.compile({
   additionalProperties: false
 });
 
-/**
- * Type guard for WsMessage interface
- *
- * @param {unknown} message
- * @returns {boolean}
- */
-export const isWsMessage = (message: unknown): message is WsMessage => {
-  const isValid = validateWsMessage(message);
-  if (validateWsMessage.errors)
-    console.error({
-      ...validateWsMessage.errors[0],
-      data: message,
-      schema: "WsMessage"
-    });
-  return isValid as boolean;
-};
+// /**
+//  * Type guard for WsMessage interface
+//  *
+//  * @param {unknown} message
+//  * @returns {boolean}
+//  */
+// export const isWsMessage = (message: unknown): message is WsMessage => {
+//   const isValid = validateWsMessage(message);
+//   if (validateWsMessage.errors)
+//     console.error({
+//       ...validateWsMessage.errors[0],
+//       data: message,
+//       schema: "WsMessage"
+//     });
+//   return isValid as boolean;
+// };
 
 /**
  * Type guard for DeviceDataAll interface
