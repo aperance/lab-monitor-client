@@ -59,7 +59,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const Drawers = (props: Props) => {
+const Drawers = (props: Props): JSX.Element => {
   const classes = useStyles();
   const [viewWidth, triggerResize] = useResizer(800);
   /** Number of drawers that should be visible to the user. */

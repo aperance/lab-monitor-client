@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   }
 });
 
-const WebPage = () => {
+const WebPage = (): JSX.Element | null => {
   const classes = useStyles();
   /** IP Address of target device. */
   const ipAddress = useSelector(state => state.userSelection.rows[0] ?? null);

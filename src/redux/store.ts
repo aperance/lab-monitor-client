@@ -61,4 +61,5 @@ export default createStore(
 );
 
 export const useSelector: TypedUseSelectorHook<StoreState> = useReduxSelector;
-export const useDispatch = () => useReduxDispatch<Dispatch<Actions>>();
+export const useDispatch = (): Dispatch<Actions> =>
+  useReduxDispatch<Dispatch<Actions>>();

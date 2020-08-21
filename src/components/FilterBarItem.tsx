@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const FilterBarItem = (props: Props) => {
+const FilterBarItem = (props: Props): JSX.Element => {
   const classes = useStyles();
 
   const {property, regex, selectedFilters, setFilters} = props;

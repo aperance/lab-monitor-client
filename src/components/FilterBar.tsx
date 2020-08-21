@@ -62,7 +62,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const FilterBar = (props: Props) => {
+const FilterBar = (props: Props): JSX.Element => {
   const classes = useStyles();
   const isProxyEnabled = useSelector(state => state.userSelection.proxy);
   const dispatch = useDispatch();

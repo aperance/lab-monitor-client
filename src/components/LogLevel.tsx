@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const LogLevel = (props: Props) => {
+const LogLevel = (props: Props): JSX.Element => {
   const classes = useStyles();
   const configuration = useContext(ConfigurationContext).logLevel;
   const [namespace, setNamespace] = useState(null as string | null);

@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const DeviceTable = () => {
+const DeviceTable = (): JSX.Element => {
   const classes = useStyles();
   /** Array of rows currently selected by user. */
   const selectedRows = useSelector(state => state.userSelection.rows);

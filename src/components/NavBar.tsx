@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const NavBar = () => {
+const NavBar = (): JSX.Element => {
   const classes = useStyles();
   const ws = useContext(WebsocketContext);
   const title = useContext(ConfigurationContext).title;

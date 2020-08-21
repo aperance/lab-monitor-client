@@ -8,7 +8,7 @@ interface Props {
   children: JSX.Element;
 }
 
-export const ConfigurationProvider = (props: Props) => {
+export const ConfigurationProvider = (props: Props): JSX.Element | null => {
   const [configuration, setConfiguration] = useState(
     null as Configuration | null
   );

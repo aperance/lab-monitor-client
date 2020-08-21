@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   text: {fontSize: "0.75rem"}
 });
 
-const HistoryList = () => {
+const HistoryList = (): JSX.Element => {
   const classes = useStyles();
   const historyData = useSelector(
     state => state.historyData[state.userSelection.rows[0]] ?? {}

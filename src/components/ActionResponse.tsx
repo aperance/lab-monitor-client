@@ -10,7 +10,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import {useSelector, useDispatch} from "../redux/store";
 import {deviceCommandResponse} from "../redux/actionCreators";
 
-const ActionResponse = () => {
+const ActionResponse = (): JSX.Element => {
   /** Accumulated responses from target devices for recent action. */
   const results = useSelector(state => state.deviceResponse.command.results);
   const err = useSelector(state => state.deviceResponse.command.err);

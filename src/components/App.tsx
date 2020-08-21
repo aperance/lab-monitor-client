@@ -19,7 +19,7 @@ import Spinner from "./Spinner";
 import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
 
-const App = () => {
+const App = (): JSX.Element => {
   /** True if initial data payload received via web socket. */
   const isDataReceived = useSelector(
     state => Object.keys(state.tableData).length !== 0

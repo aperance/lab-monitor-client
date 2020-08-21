@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const DeviceTableHead = (props: Props) => {
+const DeviceTableHead = (props: Props): JSX.Element => {
   const classes = useStyles();
 
   return (

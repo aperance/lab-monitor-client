@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   text: {fontSize: "0.825rem"}
 });
 
-const PsTools = () => {
+const PsTools = (): JSX.Element => {
   const classes = useStyles();
   /** IP Address of target device. */
   const ipAddress = useSelector(state => state.userSelection.rows[0] ?? null);

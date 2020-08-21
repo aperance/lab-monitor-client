@@ -34,7 +34,7 @@ const colorLookup: {[x: string]: string} = {
 /**
  *
  */
-const StatusIndicator = (props: Props) => {
+const StatusIndicator = (props: Props): JSX.Element => {
   const classes = useStyles();
   const [initialized, setInitialized] = useState(false);
   const [animate, setAnimate] = useState(false);

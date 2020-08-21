@@ -14,7 +14,7 @@ import {
   psToolsResponse
 } from "../redux/actionCreators";
 
-export const messageRouter = (message: unknown) => {
+export const messageRouter = (message: unknown): void => {
   if (!isWsMessage(message)) throw Error("Invalid WS message type specified");
 
   const {type, payload} = message;

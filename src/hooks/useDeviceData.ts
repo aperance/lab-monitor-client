@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {useContext, useReducer} from "react";
 import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {useSelector} from "../redux/store";

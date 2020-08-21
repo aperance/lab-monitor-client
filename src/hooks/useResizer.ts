@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import {useDispatch} from "../redux/store";
 import {draggingSet} from "../redux/actionCreators";
 
-export function useResizer(startValue: number) {
+export const useResizer = (startValue: number): [number, () => void] => {
   const [isDragging, setDragging] = useState(false);
   const [position, setPosition] = useState(startValue);
   const dispatch = useDispatch();
@@ -25,5 +25,5 @@ export function useResizer(startValue: number) {
     dispatch(draggingSet({isDragging}));
   }, [isDragging, dispatch]);
 
-  return [position, () => setDragging(true)] as [number, () => void];
-}
+  return [position, () => setDragging(true)];
+};

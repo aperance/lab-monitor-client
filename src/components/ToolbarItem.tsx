@@ -52,7 +52,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const ToolbarItem = (props: Props) => {
+const ToolbarItem = (props: Props): JSX.Element => {
   const classes = useStyles();
 
   return (

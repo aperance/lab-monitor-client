@@ -14,7 +14,7 @@ interface Props {
   children: JSX.Element;
 }
 
-export const WebsocketProvider = (props: Props) => {
+export const WebsocketProvider = (props: Props): JSX.Element => {
   const [status, setStatus] = useState("disconnected");
   const [retry, setRetry] = useState(false);
   const socket = useRef(null as WebSocket | null);

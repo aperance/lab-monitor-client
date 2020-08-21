@@ -18,7 +18,7 @@ import {viewSelect} from "../redux/actionCreators";
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
 
-const Toolbar = () => {
+const Toolbar = (): JSX.Element => {
   const selectedRows = useSelector(state => state.userSelection.rows);
   const selectedSubView = useSelector(state => state.userSelection.view);
   const isProxyEnabled = useSelector(state => state.userSelection.proxy);

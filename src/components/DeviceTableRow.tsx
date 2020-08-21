@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const DeviceTableRow = (props: Props) => {
+const DeviceTableRow = (props: Props): JSX.Element => {
   const classes = useStyles();
 
   return (

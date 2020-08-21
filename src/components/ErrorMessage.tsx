@@ -13,7 +13,7 @@ type Props = {
 /**
  *
  */
-const ErrorMessage = (props: Props) => {
+const ErrorMessage = (props: Props): JSX.Element => {
   return (
     <Dialog open={true}>
       <DialogContent>

@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const Terminal = (props: Props) => {
+const Terminal = (props: Props): JSX.Element => {
   const classes = useStyles();
 
   return (

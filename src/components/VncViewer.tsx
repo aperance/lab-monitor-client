@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   }
 });
 
-const VncViewer = () => {
+const VncViewer = (): JSX.Element => {
   const classes = useStyles();
   /** IP Address of the target device. */
   const ipAddress = useSelector(state =>

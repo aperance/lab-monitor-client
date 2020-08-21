@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 /**
  *
  */
-const Spinner = () => {
+const Spinner = (): JSX.Element => {
   const classes = useStyles();
 
   return (
