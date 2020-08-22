@@ -57,12 +57,6 @@ const useStyles = makeStyles({
     position: "absolute",
     zIndex: 20,
     cursor: "col-resize"
-  },
-  icon: {
-    position: "absolute",
-    top: "45%",
-    marginLeft: "3px",
-    fontSize: "13px"
   }
 });
 

@@ -15,7 +15,13 @@ const useStyles = makeStyles({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    padding: "0 12px 0 12px"
+    padding: "0 12px 0 12px",
+    "& > div:first-child": {flex: 1},
+    "& > div:last-child": {
+      flex: 1,
+      padding: "16px 16px 16px 16px",
+      borderTop: "1px solid #0000001f"
+    }
   },
   selectedRow: {backgroundColor: "rgba(0, 0, 0, 0.04)"},
   text: {fontSize: "0.75rem"}
@@ -33,7 +39,7 @@ const HistoryList = (): JSX.Element => {
 
   return (
     <div className={classes.root}>
-      <div style={{flex: 1}}>
+      <div>
         <AutoSizer>
           {({width, height}) => (
             <List
@@ -65,13 +71,7 @@ const HistoryList = (): JSX.Element => {
           )}
         </AutoSizer>
       </div>
-      <div
-        style={{
-          flex: 1,
-          padding: "16px 16px 16px 16px",
-          borderTop: "1px solid #0000001f"
-        }}
-      >
+      <div>
         {historyData[selectedProperty] && (
           <>
             <pre>{`History for ${selectedProperty}`}</pre>

@@ -25,13 +25,15 @@ const useStyles = makeStyles({
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
     zIndex: 0
   },
-  toolbar: {minHeight: "56px"},
-  title: {
-    flexGrow: 1,
-    color: "rgba(0, 0, 0, 0.75)",
-    fontSize: "1.2rem",
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    userSelect: "none"
+  toolbar: {
+    minHeight: "56px",
+    "& > span": {
+      flexGrow: 1,
+      color: "rgba(0, 0, 0, 0.75)",
+      fontSize: "1.2rem",
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+      userSelect: "none"
+    }
   },
   menuItem: {fontSize: "0.8rem"}
 });
@@ -50,7 +52,7 @@ const NavBar = (): JSX.Element => {
       className={classes.root}
     >
       <Toolbar className={classes.toolbar}>
-        <span className={classes.title}>{config.title}</span>
+        <span>{config.title}</span>
         <IconButton onClick={e => setAnchor(e.currentTarget)}>
           <MenuIcon />
         </IconButton>

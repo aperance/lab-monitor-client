@@ -14,11 +14,20 @@ import {useSelector} from "../redux/store";
 import {useVnc} from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
+type StyleProps = {
+  connected: boolean;
+};
+
 /**  CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     height: "100%",
-    backgroundColor: "rgb(40, 40, 40)"
+    backgroundColor: "rgb(40, 40, 40)",
+    "& > div:last-child": {
+      height: "100%",
+      visibility: (props: StyleProps) =>
+        props.connected ? "visible" : "hidden"
+    }
   },
   buttonOne: {
     position: "absolute",
@@ -38,17 +47,15 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "90%"
-  },
-  errorDialog: {
-    color: "white",
-    width: "350px"
+    height: "90%",
+    "& > p": {
+      color: "white",
+      width: "350px"
+    }
   }
 });
 
 const VncViewer = (): JSX.Element => {
-  /** Generated CSS class names */
-  const classes = useStyles();
   /** IP Address of the target device. */
   const ipAddress = useSelector(state =>
     process.env.DEMO === "true"
@@ -58,24 +65,21 @@ const VncViewer = (): JSX.Element => {
   /** Used to determine if vnc area needs to be resized. */
   const isDragging = useSelector(state => state.userSelection.dragging);
   const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, isDragging);
+  /** Generated CSS class names */
+  const classes = useStyles({connected: status === "connected"});
 
   return (
     <div className={classes.root}>
       {status === "disconnected" && <Spinner />}
       {status === "error" && (
         <div className={classes.errorDiv}>
-          <p className={classes.errorDialog}>
+          <p>
             Unable to establish VNC connection. Make sure VNC server is running
             on the target device.
           </p>
         </div>
       )}
-      <div
-        style={{
-          height: "100%",
-          visibility: status === "connected" ? "visible" : "hidden"
-        }}
-      >
+      <div>
         <span ref={targetRef} />
         <Fab
           size="small"
