@@ -14,9 +14,9 @@ import {
   makeStyles
 } from "@material-ui/core";
 
+import config from "../configuration/configuration";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {psToolsRequest} from "../websockets/messageCreators";
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {useSelector, useDispatch} from "../redux/store";
 import {psToolsResponseClear} from "../redux/actionCreators";
 import Terminal from "./Terminal";
@@ -46,10 +46,11 @@ const PsTools = (): JSX.Element => {
   const result = useSelector(state => state.deviceResponse.psTools);
   const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
-  const presets = useContext(ConfigurationContext).psTools;
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");
+
+  const presets = config.psTools;
 
   return (
     <>

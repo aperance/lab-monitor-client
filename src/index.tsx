@@ -5,7 +5,6 @@ import store from "./redux/store";
 import {MuiThemeProvider, createMuiTheme} from "@material-ui/core/styles";
 import {blue} from "@material-ui/core/colors";
 import {WebsocketProvider} from "./websockets/WebsocketContext";
-import {ConfigurationProvider} from "./configuration/ConfigurationContext";
 import App from "./components/App";
 
 const theme = createMuiTheme({
@@ -14,13 +13,11 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConfigurationProvider>
-      <WebsocketProvider url={`${process.env.BACKEND}/data`}>
-        <MuiThemeProvider theme={theme}>
-          <App />
-        </MuiThemeProvider>
-      </WebsocketProvider>
-    </ConfigurationProvider>
+    <WebsocketProvider url={`${process.env.BACKEND}/data`}>
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
+    </WebsocketProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -16,7 +16,7 @@ const ActionResponse = (): JSX.Element => {
   const err = useSelector(state => state.deviceResponse.command.err);
   const dispatch = useDispatch();
 
-  /** Pending response message cleared when called. */
+  /** Trigger action to clear pending message from store. */
   const handleClose = () =>
     dispatch(deviceCommandResponse({err: null, results: null}));
 

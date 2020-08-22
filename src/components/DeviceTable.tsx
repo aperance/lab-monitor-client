@@ -3,11 +3,11 @@
  * @packageDocumentation
  */
 
-import React, {useContext} from "react";
+import React from "react";
 import {Table, TableBody, makeStyles} from "@material-ui/core";
 
+import config from "../configuration/configuration";
 import {useDeviceData} from "../hooks/useDeviceData";
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {useSelector, useDispatch} from "../redux/store";
 import {singleRowSelect, multiRowSelect} from "../redux/actionCreators";
 import DeviceTableHead from "./DeviceTableHead";
@@ -42,7 +42,6 @@ const DeviceTable = (): JSX.Element => {
   /** Array of rows currently selected by user. */
   const selectedRows = useSelector(state => state.userSelection.rows);
   const dispatch = useDispatch();
-  const columns = useContext(ConfigurationContext).columns;
   const {
     deviceData,
     selectedFilters,
@@ -58,7 +57,7 @@ const DeviceTable = (): JSX.Element => {
       <div className={classes.root}>
         <Table stickyHeader>
           <DeviceTableHead
-            columns={columns}
+            columns={config.columns}
             selectedSorting={selectedSorting}
             setSorting={setSorting}
           />
@@ -66,7 +65,7 @@ const DeviceTable = (): JSX.Element => {
             {deviceData.map(([rowId, rowData]) => (
               <DeviceTableRow
                 key={rowId}
-                columns={columns}
+                columns={config.columns}
                 rowData={rowData}
                 selected={selectedRows.includes(rowId)}
                 handleRowClick={(e: MouseEvent) => {

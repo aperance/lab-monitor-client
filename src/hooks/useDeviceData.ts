@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import {useContext, useReducer} from "react";
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import {useReducer} from "react";
+
+import config from "../configuration/configuration";
 import {useSelector} from "../redux/store";
 
 type RowData = [string, {[x: string]: string | null}];
@@ -41,11 +42,10 @@ const sortingReducer = (
 };
 
 export const useDeviceData = () => {
-  const columns = useContext(ConfigurationContext).columns;
   const rawData = useSelector(state => Object.entries(state.tableData));
   const [selectedFilters, setFilters] = useReducer(filterReducer, {});
   const [selectedSorting, setSorting] = useReducer(sortingReducer, {
-    property: columns[0].property,
+    property: config.columns[0].property,
     reverse: false
   });
 
@@ -53,7 +53,7 @@ export const useDeviceData = () => {
    *
    */
   const replaceFunction = ([id, rowData]: RowData): RowData => {
-    columns
+    config.columns
       /** Filter out column config with no replacement rule */
       .filter(x => typeof x.replace !== "undefined")
       /** Iterate over column config with replacement rules */
@@ -80,7 +80,7 @@ export const useDeviceData = () => {
     const prop =
       key1[1][selectedSorting.property] !== key2[1][selectedSorting.property]
         ? selectedSorting.property
-        : columns[0].property;
+        : config.columns[0].property;
     let result = (key1[1][prop] || "") > (key2[1][prop] || "");
     if (selectedSorting.reverse) result = !result;
     return result ? 1 : -1;

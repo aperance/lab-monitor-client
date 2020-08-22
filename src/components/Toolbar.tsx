@@ -6,13 +6,13 @@
 import React, {useContext, useState} from "react";
 import {List, Divider} from "@material-ui/core";
 
+import config from "../configuration/configuration";
 import {
   commandRequest,
   refreshDevice,
   clearDevice
 } from "../websockets/messageCreators";
 import {WebsocketContext} from "../websockets/WebsocketContext";
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import {useSelector, useDispatch} from "../redux/store";
 import {viewSelect} from "../redux/actionCreators";
 import ToolbarItem from "./ToolbarItem";
@@ -24,7 +24,6 @@ const Toolbar = (): JSX.Element => {
   const isProxyEnabled = useSelector(state => state.userSelection.proxy);
   const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
-  const {vnc, httpProxy, logsPath} = useContext(ConfigurationContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
 
   return (
@@ -82,8 +81,8 @@ const Toolbar = (): JSX.Element => {
                       new Blob(
                         [
                           `net use \\\\${selectedRows[0]} ` +
-                            `/user:${vnc.username} ` +
-                            `${vnc.password} ` +
+                            `/user:${config.vnc.username} ` +
+                            `${config.vnc.password} ` +
                             `/PERSISTENT:NO\n` +
                             `start \\\\${selectedRows[0]}`
                         ],
@@ -111,14 +110,14 @@ const Toolbar = (): JSX.Element => {
               {isProxyEnabled ? (
                 <a
                   id="logsLink"
-                  href={`http://${httpProxy}${logsPath}?target=${selectedRows[0]}`}
+                  href={`http://${config.httpProxy}${config.logsPath}?target=${selectedRows[0]}`}
                   target="_blank"
                   rel="noreferrer"
                 />
               ) : (
                 <a
                   id="logsLink"
-                  href={`http://${selectedRows[0]}:8001${logsPath}`}
+                  href={`http://${selectedRows[0]}:8001${config.logsPath}`}
                   target="_blank"
                   rel="noreferrer"
                 />

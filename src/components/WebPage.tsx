@@ -3,11 +3,11 @@
  * @packageDocumentation
  */
 
-import React, {useContext} from "react";
+import React from "react";
 import {Fab, makeStyles} from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import config from "../configuration/configuration";
 import {useSelector} from "../redux/store";
 
 /**
@@ -30,13 +30,12 @@ const WebPage = (): JSX.Element | null => {
   const ipAddress = useSelector(state => state.userSelection.rows[0] ?? null);
   /** If true, HTTP request is routed through backend server. */
   const isProxyEnabled = useSelector(state => state.userSelection.proxy);
-  const {httpProxy, statePath} = useContext(ConfigurationContext);
 
   if (ipAddress === null) return null;
 
   const url = isProxyEnabled
-    ? `http://${httpProxy}${statePath}&target=${ipAddress}`
-    : `http://${ipAddress}:8001${statePath}`;
+    ? `http://${config.httpProxy}${config.statePath}&target=${ipAddress}`
+    : `http://${ipAddress}:8001${config.statePath}`;
 
   return (
     <>

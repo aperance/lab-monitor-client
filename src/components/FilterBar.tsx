@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import React, {useContext} from "react";
+import React from "react";
 import {
   FormControl,
   FormControlLabel,
@@ -13,9 +13,9 @@ import {
   makeStyles
 } from "@material-ui/core";
 
+import config from "../configuration/configuration";
 import {useSelector, useDispatch} from "../redux/store";
 import {proxyToggle} from "../redux/actionCreators";
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
 import FilterBarItem from "./FilterBarItem";
 
 type Props = {
@@ -66,11 +66,10 @@ const FilterBar = (props: Props): JSX.Element => {
   const classes = useStyles();
   const isProxyEnabled = useSelector(state => state.userSelection.proxy);
   const dispatch = useDispatch();
-  const filters = useContext(ConfigurationContext).filters;
 
   return (
     <FormControl className={classes.root}>
-      {filters.map(filter => {
+      {config.filters.map(filter => {
         return (
           <div key={filter.property}>
             <FormLabel className={classes.formLabel} focused={false}>

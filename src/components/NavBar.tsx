@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/MoreVert";
 
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import config from "../configuration/configuration";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {refreshDevice, clearDevice} from "../websockets/messageCreators";
 
@@ -45,7 +45,6 @@ const useStyles = makeStyles({
 const NavBar = (): JSX.Element => {
   const classes = useStyles();
   const ws = useContext(WebsocketContext);
-  const title = useContext(ConfigurationContext).title;
   const [anchor, setAnchor] = useState(null as HTMLElement | null);
 
   return (
@@ -56,7 +55,7 @@ const NavBar = (): JSX.Element => {
       className={classes.root}
     >
       <Toolbar className={classes.toolbar}>
-        <span className={classes.title}>{title}</span>
+        <span className={classes.title}>{config.title}</span>
         <IconButton onClick={e => setAnchor(e.currentTarget)}>
           <MenuIcon />
         </IconButton>

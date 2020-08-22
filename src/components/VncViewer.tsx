@@ -3,13 +3,13 @@
  * @packageDocumentation
  */
 
-import React, {useContext} from "react";
+import React from "react";
 import {Fab, makeStyles} from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import config from "../configuration/configuration";
 import {useSelector} from "../redux/store";
 import {useVnc} from "../hooks/useVnc";
 import Spinner from "./Spinner";
@@ -60,7 +60,7 @@ const VncViewer = (): JSX.Element => {
   /** Used to determine if vnc area needs to be resized. */
   const isDragging = useSelector(state => state.userSelection.dragging);
   const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, isDragging);
-  const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
+  // const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
 
   return (
     <div className={classes.root}>
@@ -95,8 +95,8 @@ const VncViewer = (): JSX.Element => {
               [
                 `[connection]\n` +
                   `host=${ipAddress}\n` +
-                  `port=${port}\n` +
-                  `password=${passwordEncrypted}`
+                  `port=${config.vnc.port}\n` +
+                  `password=${config.vnc.passwordEncrypted}`
               ],
               {type: "text/plain"}
             )

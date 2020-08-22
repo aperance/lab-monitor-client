@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ import {
   makeStyles
 } from "@material-ui/core";
 
-import {ConfigurationContext} from "../configuration/ConfigurationContext";
+import config from "../configuration/configuration";
 
 type Props = {
   open: boolean;
@@ -40,7 +40,6 @@ const useStyles = makeStyles({
  */
 const LogLevel = (props: Props): JSX.Element => {
   const classes = useStyles();
-  const configuration = useContext(ConfigurationContext).logLevel;
   const [namespace, setNamespace] = useState(null as string | null);
   const [level, setLevel] = useState(null as string | null);
 
@@ -61,7 +60,7 @@ const LogLevel = (props: Props): JSX.Element => {
               onChange={e => setNamespace(e.target.value as string)}
               input={<Input id="namespace" />}
             >
-              {configuration.namespace.map(x => (
+              {config.logLevel.namespace.map(x => (
                 <MenuItem key={x} value={x}>
                   {x}
                 </MenuItem>
@@ -77,7 +76,7 @@ const LogLevel = (props: Props): JSX.Element => {
               onChange={e => setLevel(e.target.value as string)}
               input={<Input id="level" />}
             >
-              {configuration.level.map(x => (
+              {config.logLevel.level.map(x => (
                 <MenuItem key={x} value={x}>
                   {x}
                 </MenuItem>
