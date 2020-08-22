@@ -36,14 +36,14 @@ const Toolbar = (): JSX.Element => {
               leftIcon="list_alt"
               rightIcon="navigate_next"
               isSelected={selectedSubView === "statePage"}
-              onClick={() => dispatch(viewSelect({view: "statePage"}))}
+              onClick={() => dispatch(viewSelect("statePage"))}
             />
             <ToolbarItem
               name="History"
               leftIcon="history"
               rightIcon="navigate_next"
               isSelected={selectedSubView === "history"}
-              onClick={() => dispatch(viewSelect({view: "history"}))}
+              onClick={() => dispatch(viewSelect("history"))}
             />
             {process.env.DEMO !== "true" && (
               <ToolbarItem
@@ -51,7 +51,7 @@ const Toolbar = (): JSX.Element => {
                 leftIcon="code"
                 rightIcon="navigate_next"
                 isSelected={selectedSubView === "psTools"}
-                onClick={() => dispatch(viewSelect({view: "psTools"}))}
+                onClick={() => dispatch(viewSelect("psTools"))}
               />
             )}
             <ToolbarItem
@@ -59,7 +59,7 @@ const Toolbar = (): JSX.Element => {
               leftIcon="picture_in_picture"
               rightIcon="navigate_next"
               isSelected={selectedSubView === "vnc"}
-              onClick={() => dispatch(viewSelect({view: "vnc"}))}
+              onClick={() => dispatch(viewSelect("vnc"))}
             />
 
             {process.env.DEMO !== "true" && (

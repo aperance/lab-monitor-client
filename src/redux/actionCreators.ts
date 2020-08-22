@@ -30,28 +30,28 @@ export const deviceCommandResponse = (payload: CommandResponse): Actions => ({
   payload
 });
 
-export const singleRowSelect = (payload: {row: string | null}): Actions => ({
+export const singleRowSelect = (row: string | null): Actions => ({
   type: ActionTypes.SINGLE_ROW_SELECT,
-  payload
+  payload: {row}
 });
 
-export const multiRowSelect = (payload: {row: string | null}): Actions => ({
+export const multiRowSelect = (row: string | null): Actions => ({
   type: ActionTypes.MULTI_ROW_SELECT,
-  payload
+  payload: {row}
 });
 
-export const viewSelect = (payload: {view: string}): Actions => ({
+export const viewSelect = (view: string): Actions => ({
   type: ActionTypes.VIEW_SELECT,
-  payload
+  payload: {view}
 });
 
 export const proxyToggle = (): Actions => ({
   type: ActionTypes.PROXY_TOGGLE
 });
 
-export const draggingSet = (payload: {isDragging: boolean}): Actions => ({
+export const draggingSet = (isDragging: boolean): Actions => ({
   type: ActionTypes.DRAGGING_SET,
-  payload
+  payload: {isDragging}
 });
 
 export const resetAll = (): Actions => ({

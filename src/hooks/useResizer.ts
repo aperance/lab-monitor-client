@@ -22,7 +22,8 @@ export const useResizer = (startValue: number): [number, () => void] => {
       document.onmouseup = null;
       document.onmouseleave = null;
     }
-    dispatch(draggingSet({isDragging}));
+
+    dispatch(draggingSet(isDragging));
   }, [isDragging, dispatch]);
 
   return [position, () => setDragging(true)];

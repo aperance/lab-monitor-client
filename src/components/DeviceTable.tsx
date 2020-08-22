@@ -69,9 +69,8 @@ const DeviceTable = (): JSX.Element => {
                 rowData={rowData}
                 selected={selectedRows.includes(rowId)}
                 handleRowClick={(e: MouseEvent) => {
-                  if (e.altKey || e.ctrlKey)
-                    dispatch(multiRowSelect({row: rowId}));
-                  else dispatch(singleRowSelect({row: rowId}));
+                  if (e.altKey || e.ctrlKey) dispatch(multiRowSelect(rowId));
+                  else dispatch(singleRowSelect(rowId));
                 }}
               />
             ))}
@@ -79,7 +78,7 @@ const DeviceTable = (): JSX.Element => {
         </Table>
         <div
           className={classes.belowTable}
-          onClick={() => dispatch(singleRowSelect({row: null}))}
+          onClick={() => dispatch(singleRowSelect(null))}
         />
       </div>
     </div>
