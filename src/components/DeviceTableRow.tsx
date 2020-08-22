@@ -6,16 +6,13 @@
 import React from "react";
 import {TableRow, TableCell, makeStyles} from "@material-ui/core";
 
+import config from "../configuration/configuration";
 import StatusIndicator from "./StatusIndicator";
 
 type Props = {
   rowData: {
     [property: string]: string | null;
   };
-  columns: {
-    title: string;
-    property: string;
-  }[];
   selected: boolean;
   handleRowClick: (e: MouseEvent) => void;
 };
@@ -47,12 +44,11 @@ const DeviceTableRow = (props: Props): JSX.Element => {
           status={props.rowData.status}
         />
       </TableCell>
-      {props.columns &&
-        props.columns.map(column => (
-          <TableCell key={column.property} className={classes.cell}>
-            {props.rowData[column.property]}
-          </TableCell>
-        ))}
+      {config.columns.map(column => (
+        <TableCell key={column.property} className={classes.cell}>
+          {props.rowData[column.property]}
+        </TableCell>
+      ))}
     </TableRow>
   );
 };

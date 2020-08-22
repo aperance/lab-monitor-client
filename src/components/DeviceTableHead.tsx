@@ -7,11 +7,9 @@ import React from "react";
 import {TableHead, TableRow, TableCell, makeStyles} from "@material-ui/core";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 
+import config from "../configuration/configuration";
+
 type Props = {
-  columns: {
-    title: string;
-    property: string;
-  }[];
   selectedSorting: {
     property: string | null;
     reverse: boolean;
@@ -32,18 +30,17 @@ const DeviceTableHead = (props: Props): JSX.Element => {
     <TableHead>
       <TableRow>
         <TableCell key="status" className={classes.cell} />
-        {props.columns &&
-          props.columns.map(column => (
-            <TableCell key={column.title} className={classes.cell}>
-              <TableSortLabel
-                active={props.selectedSorting.property === column.property}
-                direction={props.selectedSorting.reverse ? "asc" : "desc"}
-                onClick={() => props.setSorting({property: column.property})}
-              >
-                {column.title}
-              </TableSortLabel>
-            </TableCell>
-          ))}
+        {config.columns.map(column => (
+          <TableCell key={column.title} className={classes.cell}>
+            <TableSortLabel
+              active={props.selectedSorting.property === column.property}
+              direction={props.selectedSorting.reverse ? "asc" : "desc"}
+              onClick={() => props.setSorting({property: column.property})}
+            >
+              {column.title}
+            </TableSortLabel>
+          </TableCell>
+        ))}
       </TableRow>
     </TableHead>
   );

@@ -18,14 +18,15 @@ const useStyles = makeStyles({
     top: "18px",
     backgroundColor: "white",
     opacity: 0.5
-  }
+  },
+  frame: {userSelect: "none", borderWidth: "0px"}
 });
 
 const WebPage = (): JSX.Element | null => {
   /** Generated CSS class names */
   const classes = useStyles();
   /** IP Address of target device. */
-  const ipAddress = useSelector(state => state.userSelection.rows[0] ?? null);
+  const ipAddress = useSelector(state => state.userSelection.rows[0] || null);
   /** If true, HTTP request is routed through backend server. */
   const isProxyEnabled = useSelector(state => state.userSelection.proxy);
 
@@ -41,13 +42,11 @@ const WebPage = (): JSX.Element | null => {
         <OpenIcon />
       </Fab>
       <iframe
+        className={classes.frame}
         src={url}
-        id="qqq"
-        title="iframe"
         width="100%"
         height="100%"
         draggable={false}
-        style={{userSelect: "none", borderWidth: "0px"}}
       >
         <p>Your browser does not support iframes.</p>
       </iframe>

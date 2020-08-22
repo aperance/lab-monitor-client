@@ -6,7 +6,6 @@
 import React from "react";
 import {Table, TableBody, makeStyles} from "@material-ui/core";
 
-import config from "../configuration/configuration";
 import {useDeviceData} from "../hooks/useDeviceData";
 import {useSelector, useDispatch} from "../redux/store";
 import {singleRowSelect, multiRowSelect} from "../redux/actionCreators";
@@ -16,7 +15,8 @@ import FilterBar from "./FilterBar";
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
-  root: {
+  root: {display: "flex", height: "calc(100vh - 60px)"},
+  table: {
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -46,13 +46,12 @@ const DeviceTable = (): JSX.Element => {
   } = useDeviceData();
 
   return (
-    <div style={{display: "flex", height: "calc(100vh - 60px)"}}>
+    <div className={classes.root}>
       <FilterBar selectedFilters={selectedFilters} setFilters={setFilters} />
 
-      <div className={classes.root}>
+      <div className={classes.table}>
         <Table stickyHeader>
           <DeviceTableHead
-            columns={config.columns}
             selectedSorting={selectedSorting}
             setSorting={setSorting}
           />
@@ -60,7 +59,6 @@ const DeviceTable = (): JSX.Element => {
             {deviceData.map(([rowId, rowData]) => (
               <DeviceTableRow
                 key={rowId}
-                columns={config.columns}
                 rowData={rowData}
                 selected={selectedRows.includes(rowId)}
                 handleRowClick={(e: MouseEvent) => {

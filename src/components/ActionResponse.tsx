@@ -34,7 +34,7 @@ const ActionResponse = (): JSX.Element => {
         vertical: "bottom",
         horizontal: "center"
       }}
-      open={message ? true : false}
+      open={message !== null}
       autoHideDuration={6000}
       onClose={handleClose}
       message={<span id="message-id">{message}</span>}

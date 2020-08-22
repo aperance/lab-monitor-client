@@ -22,7 +22,6 @@ export const WebsocketContext = React.createContext(
 );
 
 interface Props {
-  url: string;
   children: JSX.Element;
 }
 
@@ -34,7 +33,7 @@ export const WebsocketProvider = (props: Props): JSX.Element => {
 
   useEffect(() => {
     if (!socket.current || retry) {
-      const ws = new WebSocket(props.url);
+      const ws = new WebSocket(`${process.env.BACKEND}/data`);
 
       ws.onopen = () => setStatus("connected");
       ws.onerror = () => setStatus("connectionError");
@@ -79,7 +78,7 @@ export const WebsocketProvider = (props: Props): JSX.Element => {
       setRetry(false);
       socket.current = ws;
     }
-  }, [retry, props.url, dispatch]);
+  }, [retry, dispatch]);
 
   return (
     <WebsocketContext.Provider

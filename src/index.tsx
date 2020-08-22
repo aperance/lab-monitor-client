@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
-import store from "./redux/store";
 import {MuiThemeProvider, createMuiTheme} from "@material-ui/core/styles";
 import {blue} from "@material-ui/core/colors";
+
 import {WebsocketProvider} from "./websockets/WebsocketContext";
+import store from "./redux/store";
 import App from "./components/App";
 
 const theme = createMuiTheme({
@@ -13,7 +14,7 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <Provider store={store}>
-    <WebsocketProvider url={`${process.env.BACKEND}/data`}>
+    <WebsocketProvider>
       <MuiThemeProvider theme={theme}>
         <App />
       </MuiThemeProvider>
