@@ -1,7 +1,6 @@
 /* eslint-disable no-case-declarations */
 import {Reducer} from "redux";
-import {Actions, ActionTypes} from "./actionCreators";
-import {UserSelectionState} from "./store";
+import {Actions, ActionTypes, UserSelectionState} from "./reduxTypes";
 
 const initialState = {
   rows: [],

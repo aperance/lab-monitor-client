@@ -1,7 +1,6 @@
 /* eslint-disable no-case-declarations */
 import {Reducer} from "redux";
-import {Actions, ActionTypes} from "./actionCreators";
-import {DeviceResponseState} from "./store";
+import {Actions, ActionTypes, DeviceResponseState} from "./reduxTypes";
 
 const initialState = {
   command: {err: null, results: null},

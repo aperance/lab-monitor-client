@@ -1,6 +1,5 @@
 import {Reducer} from "redux";
-import {Actions, ActionTypes} from "./actionCreators";
-import {HistoryDataState} from "./store";
+import {Actions, ActionTypes, HistoryDataState} from "./reduxTypes";
 
 const initialState = {};
 
