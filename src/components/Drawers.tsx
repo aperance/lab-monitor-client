@@ -14,9 +14,16 @@ type Props = {
   rightDrawer: JSX.Element | null;
 };
 
+type StyleProps = {
+  width: number;
+  transform: number;
+};
+
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
+    width: (props: StyleProps) => `${props.width}px`,
+    transform: (props: StyleProps) => `translateX(${props.transform}px)`,
     height: "100%",
     top: "0px",
     right: "0px",
@@ -34,7 +41,13 @@ const useStyles = makeStyles({
     backgroundColor: "rgba(255, 255, 255, 1)",
     boxShadow: `-2px 0px 4px -1px rgba(0, 0, 0, 0.2),
       -4px 0px 5px 0px rgba(0, 0, 0, 0.14),
-      -1px 0px 10px 0px rgba(0, 0, 0, 0.12)`
+      -1px 0px 10px 0px rgba(0, 0, 0, 0.12)`,
+    "&:first-child": {
+      flexGrow: 0
+    },
+    "&:last-child": {
+      flexGrow: 1
+    }
   },
   dragBar: {
     height: "100%",
@@ -54,8 +67,6 @@ const useStyles = makeStyles({
 });
 
 const Drawers = (props: Props): JSX.Element => {
-  /** Generated CSS class names */
-  const classes = useStyles();
   /** Current sub view width and function to start resize by dragging */
   const [viewWidth, triggerResize] = useResizer(800);
   /** Number of drawers that should be visible to the user. */
@@ -63,28 +74,23 @@ const Drawers = (props: Props): JSX.Element => {
     if (state.userSelection.rows.length === 0) return 0;
     return state.userSelection.view ? 2 : 1;
   });
-
-  /** Full drawer width (sub view width plus toolbar width) */
-  const width = viewWidth + 200;
-  /** Convert drawersVisible to px amount that should be shifted off screen */
-  const translateX = [width, viewWidth, 0][drawersVisible];
+  /** Generated CSS class names */
+  const classes = useStyles({
+    /** Full drawer width (sub view width plus toolbar width) */
+    width: viewWidth + 200,
+    /** Convert drawersVisible to px amount that should be shifted off screen */
+    transform: [viewWidth + 200, viewWidth, 0][drawersVisible]
+  });
 
   return (
-    <div
-      className={classes.root}
-      style={{width: `${width}px`, transform: `translateX(${translateX}px)`}}
-    >
-      <div className={classes.drawer} style={{flexGrow: 0}}>
-        {props.leftDrawer}
-      </div>
+    <div className={classes.root}>
+      <div className={classes.drawer}>{props.leftDrawer}</div>
       <div
         className={classes.dragBar}
         role="dragbar"
         onMouseDown={triggerResize}
       />
-      <div className={classes.drawer} style={{flexGrow: 1}}>
-        {props.rightDrawer}
-      </div>
+      <div className={classes.drawer}>{props.rightDrawer}</div>
     </div>
   );
 };
