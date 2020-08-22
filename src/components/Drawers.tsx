@@ -14,10 +14,7 @@ type Props = {
   rightDrawer: JSX.Element | null;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     height: "100%",
@@ -56,11 +53,10 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- *
- */
 const Drawers = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
+  /** Current sub view width and function to start resize by dragging */
   const [viewWidth, triggerResize] = useResizer(800);
   /** Number of drawers that should be visible to the user. */
   const drawersVisible = useSelector((state): 0 | 1 | 2 => {
@@ -68,7 +64,9 @@ const Drawers = (props: Props): JSX.Element => {
     return state.userSelection.view ? 2 : 1;
   });
 
+  /** Full drawer width (sub view width plus toolbar width) */
   const width = viewWidth + 200;
+  /** Convert drawersVisible to px amount that should be shifted off screen */
   const translateX = [width, viewWidth, 0][drawersVisible];
 
   return (

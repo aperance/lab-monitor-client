@@ -25,20 +25,15 @@ type Props = {
   close: () => void;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   form: {display: "flex", flexWrap: "wrap"},
   selectNamespace: {width: "230px", marginRight: "32px"},
   selectLevel: {width: "90px"}
 });
 
-/**
- *
- */
 const LogLevel = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
   const [namespace, setNamespace] = useState(null as string | null);
   const [level, setLevel] = useState(null as string | null);

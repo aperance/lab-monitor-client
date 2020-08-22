@@ -20,10 +20,7 @@ type Props = {
   handleRowClick: (e: MouseEvent) => void;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   row: {cursor: "pointer", userSelect: "none"},
   selectedRow: {backgroundColor: "rgba(0, 0, 0, 0.04) !important"},
@@ -33,10 +30,8 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- *
- */
 const DeviceTableRow = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
 
   return (

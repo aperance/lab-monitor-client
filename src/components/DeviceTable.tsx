@@ -14,10 +14,7 @@ import DeviceTableHead from "./DeviceTableHead";
 import DeviceTableRow from "./DeviceTableRow";
 import FilterBar from "./FilterBar";
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     height: "100%",
@@ -34,20 +31,18 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- *
- */
 const DeviceTable = (): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
   /** Array of rows currently selected by user. */
   const selectedRows = useSelector(state => state.userSelection.rows);
   const dispatch = useDispatch();
   const {
-    deviceData,
-    selectedFilters,
-    setFilters,
-    selectedSorting,
-    setSorting
+    deviceData, // Sorted and filtered data to populate table
+    selectedFilters, // Currently enabled filters
+    setFilters, // Function to add or remove filters
+    selectedSorting, // Parameter the table is currently sorted by
+    setSorting // Function to change sorting parameter
   } = useDeviceData();
 
   return (

@@ -22,10 +22,7 @@ type Props = {
   children?: JSX.Element;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   selected: {backgroundColor: "rgba(0, 0, 0, 0.04)"},
   root: {
@@ -49,10 +46,8 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- *
- */
 const ToolbarItem = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
 
   return (

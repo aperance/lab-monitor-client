@@ -19,18 +19,13 @@ type Props = {
   setSorting: (x: {property: string}) => void;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   cell: {fontSize: "0.825rem", backgroundColor: "#ffffff"}
 });
 
-/**
- *
- */
 const DeviceTableHead = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
 
   return (
@@ -54,9 +49,6 @@ const DeviceTableHead = (props: Props): JSX.Element => {
   );
 };
 
-/**
- *
- */
 const memoizedDeviceTableHead = React.memo(
   DeviceTableHead,
   (prevProps, nextProps) =>

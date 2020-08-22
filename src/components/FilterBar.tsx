@@ -23,10 +23,7 @@ type Props = {
   setFilters: (x: {property: string; regex: string}) => void;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     padding: "16px",
@@ -59,10 +56,8 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- *
- */
 const FilterBar = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
   const isProxyEnabled = useSelector(state => state.userSelection.proxy);
   const dispatch = useDispatch();

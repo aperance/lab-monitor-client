@@ -21,10 +21,7 @@ import {useSelector, useDispatch} from "../redux/store";
 import {psToolsResponseClear} from "../redux/actionCreators";
 import Terminal from "./Terminal";
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/**  CSS-in-JS styling */
 const useStyles = makeStyles({
   container: {
     margin: "24px 32px 0px 32px",
@@ -40,12 +37,15 @@ const useStyles = makeStyles({
 });
 
 const PsTools = (): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
-  /** IP Address of target device. */
+  /** IP Address of target device */
   const ipAddress = useSelector(state => state.userSelection.rows[0] ?? null);
+  /** Output from executed PSTools command  */
   const result = useSelector(state => state.deviceResponse.psTools);
   const dispatch = useDispatch();
-  const ws = useContext(WebsocketContext);
+  /** Function to send message via Websocket */
+  const {send} = useContext(WebsocketContext);
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");
   const [cmd, setCmd] = useState("");
@@ -119,7 +119,7 @@ const PsTools = (): JSX.Element => {
               size="small"
               onClick={() => {
                 dispatch(psToolsResponseClear());
-                if (ipAddress) ws.send(psToolsRequest(ipAddress, mode, cmd));
+                if (ipAddress) send(psToolsRequest(ipAddress, mode, cmd));
               }}
             >
               Send

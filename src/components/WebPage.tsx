@@ -10,10 +10,7 @@ import OpenIcon from "@material-ui/icons/OpenInNew";
 import config from "../configuration/configuration";
 import {useSelector} from "../redux/store";
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   button: {
     position: "absolute",
@@ -25,6 +22,7 @@ const useStyles = makeStyles({
 });
 
 const WebPage = (): JSX.Element | null => {
+  /** Generated CSS class names */
   const classes = useStyles();
   /** IP Address of target device. */
   const ipAddress = useSelector(state => state.userSelection.rows[0] ?? null);

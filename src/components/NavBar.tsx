@@ -18,10 +18,7 @@ import config from "../configuration/configuration";
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {refreshDevice, clearDevice} from "../websockets/messageCreators";
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     backgroundColor: "white",
@@ -39,10 +36,8 @@ const useStyles = makeStyles({
   menuItem: {fontSize: "0.8rem"}
 });
 
-/**
- *
- */
 const NavBar = (): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
   const ws = useContext(WebsocketContext);
   const [anchor, setAnchor] = useState(null as HTMLElement | null);

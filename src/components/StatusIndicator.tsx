@@ -12,10 +12,7 @@ type Props = {
   status: string | null;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     fontSize: "15px",
@@ -31,10 +28,8 @@ const colorLookup: {[x: string]: string} = {
   INACTIVE: "crimson"
 };
 
-/**
- *
- */
 const StatusIndicator = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
   const [initialized, setInitialized] = useState(false);
   const [animate, setAnimate] = useState(false);

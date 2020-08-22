@@ -7,10 +7,7 @@ import React from "react";
 import {makeStyles} from "@material-ui/core";
 import {CircularProgress} from "@material-ui/core";
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     height: "90vh",
@@ -20,10 +17,8 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- *
- */
 const Spinner = (): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
 
   return (

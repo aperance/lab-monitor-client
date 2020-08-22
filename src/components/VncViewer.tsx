@@ -14,10 +14,7 @@ import {useSelector} from "../redux/store";
 import {useVnc} from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/**  CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     height: "100%",
@@ -50,6 +47,7 @@ const useStyles = makeStyles({
 });
 
 const VncViewer = (): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
   /** IP Address of the target device. */
   const ipAddress = useSelector(state =>
@@ -60,7 +58,6 @@ const VncViewer = (): JSX.Element => {
   /** Used to determine if vnc area needs to be resized. */
   const isDragging = useSelector(state => state.userSelection.dragging);
   const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, isDragging);
-  // const {port, passwordEncrypted} = useContext(ConfigurationContext).vnc;
 
   return (
     <div className={classes.root}>

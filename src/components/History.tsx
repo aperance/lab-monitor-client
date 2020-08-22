@@ -9,10 +9,7 @@ import {List, AutoSizer} from "react-virtualized";
 
 import {useSelector} from "../redux/store";
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   root: {
     height: "100%",
@@ -25,6 +22,7 @@ const useStyles = makeStyles({
 });
 
 const HistoryList = (): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
   const historyData = useSelector(
     state => state.historyData[state.userSelection.rows[0]] ?? {}

@@ -17,10 +17,7 @@ type Props = {
   setFilters: (x: {property: string; regex: string}) => void;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   formControlLabel: {
     marginLeft: "0px",
@@ -42,10 +39,8 @@ const useStyles = makeStyles({
   }
 });
 
-/**
- *
- */
 const FilterBarItem = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
 
   const {property, regex, selectedFilters, setFilters} = props;

@@ -10,10 +10,7 @@ type Props = {
   output: string | null;
 };
 
-/**
- * CSS-in-JS styling.
- * @hidden
- */
+/** CSS-in-JS styling */
 const useStyles = makeStyles({
   paper: {
     height: "500px",
@@ -26,10 +23,8 @@ const useStyles = makeStyles({
   pre: {padding: "10px 10px 10px 10px", whiteSpace: "pre-wrap"}
 });
 
-/**
- *
- */
 const Terminal = (props: Props): JSX.Element => {
+  /** Generated CSS class names */
   const classes = useStyles();
 
   return (
