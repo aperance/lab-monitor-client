@@ -53,12 +53,10 @@ const DeviceTableRow = (props: Props): JSX.Element => {
   );
 };
 
-const memoizedDeviceTableRow = React.memo(
+export default React.memo(
   DeviceTableRow,
-  (prevProps, nextProps) =>
-    prevProps.rowData.timestamp === nextProps.rowData.timestamp &&
-    prevProps.rowData.status === nextProps.rowData.status &&
-    prevProps.selected === nextProps.selected
+  (prev, next) =>
+    prev.rowData.timestamp === next.rowData.timestamp &&
+    prev.rowData.status === next.rowData.status &&
+    prev.selected === next.selected
 );
-
-export default memoizedDeviceTableRow;

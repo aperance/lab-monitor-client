@@ -46,11 +46,9 @@ const DeviceTableHead = (props: Props): JSX.Element => {
   );
 };
 
-const memoizedDeviceTableHead = React.memo(
+export default React.memo(
   DeviceTableHead,
-  (prevProps, nextProps) =>
-    prevProps.selectedSorting.property === nextProps.selectedSorting.property &&
-    prevProps.selectedSorting.reverse === nextProps.selectedSorting.reverse
+  (prev, next) =>
+    prev.selectedSorting.property === next.selectedSorting.property &&
+    prev.selectedSorting.reverse === next.selectedSorting.reverse
 );
-
-export default memoizedDeviceTableHead;

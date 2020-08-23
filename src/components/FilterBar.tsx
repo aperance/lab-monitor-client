@@ -109,10 +109,7 @@ const FilterBar = (props: Props): JSX.Element => {
   );
 };
 
-const memoizedFilterBar = React.memo(
+export default React.memo(
   FilterBar,
-  (prevProps, nextProps) =>
-    prevProps.selectedFilters === nextProps.selectedFilters
+  (prev, next) => prev.selectedFilters === next.selectedFilters
 );
-
-export default memoizedFilterBar;
