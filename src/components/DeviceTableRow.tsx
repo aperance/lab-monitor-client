@@ -3,11 +3,11 @@
  * @packageDocumentation
  */
 
-import React from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {TableRow, TableCell, makeStyles} from "@material-ui/core";
+import StatusIndicator from "@material-ui/icons/Lens";
 
 import config from "../configuration/configuration";
-import StatusIndicator from "./StatusIndicator";
 
 type Props = {
   rowData: {
@@ -17,6 +17,11 @@ type Props = {
   handleRowClick: (e: MouseEvent) => void;
 };
 
+type StyleProps = {
+  status: string | null;
+  animate: boolean | null;
+};
+
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
   row: {cursor: "pointer", userSelect: "none"},
@@ -24,12 +29,41 @@ const useStyles = makeStyles({
   cell: {
     fontSize: "0.75rem",
     lineHeight: "unset"
+  },
+  status: {
+    fontSize: "15px",
+    transition: "opacity 0.5s",
+    paddingTop: "2px",
+    opacity: (props: StyleProps) => (props.animate ? 0.3 : 1),
+    color: (props: StyleProps) => {
+      switch (props.status) {
+        case "CONNECTED":
+          return "mediumseagreen";
+        case "RETRY":
+          return "mediumseagreen";
+        case "DISCONNECTED":
+          return "rgb(239, 239, 35)";
+        default:
+          return "crimson";
+      }
+    }
   }
 });
 
 const DeviceTableRow = (props: Props): JSX.Element => {
+  const isInitialMount = useRef(true);
+  const [animate, setAnimate] = useState<boolean | null>(null);
   /** Generated CSS class names */
-  const classes = useStyles();
+  const classes = useStyles({status: props.rowData.status, animate});
+
+  useEffect(() => {
+    if (isInitialMount.current) isInitialMount.current = false;
+    else {
+      setAnimate(true);
+      const id = setTimeout(() => setAnimate(false), 500);
+      return () => clearTimeout(id);
+    }
+  }, [props.rowData.timestamp, props.rowData.status]);
 
   return (
     <TableRow
@@ -39,10 +73,7 @@ const DeviceTableRow = (props: Props): JSX.Element => {
       onClick={e => props.handleRowClick(e.nativeEvent)}
     >
       <TableCell className={classes.cell}>
-        <StatusIndicator
-          timestamp={props.rowData.timestamp}
-          status={props.rowData.status}
-        />
+        <StatusIndicator className={classes.status} />
       </TableCell>
       {config.columns.map(column => (
         <TableCell key={column.property} className={classes.cell}>
