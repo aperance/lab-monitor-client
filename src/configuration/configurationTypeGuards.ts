@@ -1,92 +1,85 @@
-import {Ajv} from "ajv";
-import {Configuration} from "./configurationTypes";
+import { Ajv } from "ajv";
+import { Configuration } from "./configurationTypes";
 
-const ajv = new (require("ajv"))({verbose: true}) as Ajv;
+const ajv = new (require("ajv"))({ verbose: true }) as Ajv;
 
 const validateConfiguration = ajv.compile({
   properties: {
-    title: {type: "string"},
+    title: { type: "string" },
     columns: {
       type: "array",
       minItems: 1,
       items: {
         type: "object",
         properties: {
-          property: {type: "string"},
-          title: {type: "string"},
+          property: { type: "string" },
+          title: { type: "string" },
           replace: {
             type: "object",
-            patternProperties: {"^.*$": {type: "string"}},
-            additionalProperties: false
-          }
+            patternProperties: { "^.*$": { type: "string" } },
+            additionalProperties: false,
+          },
         },
         required: ["property", "title"],
-        additionalProperties: false
-      }
+        additionalProperties: false,
+      },
     },
     filters: {
       type: "array",
       items: {
         type: "object",
         properties: {
-          property: {type: "string"},
-          title: {type: "string"},
+          property: { type: "string" },
+          title: { type: "string" },
           options: {
             type: "object",
-            patternProperties: {"^.*$": {type: "string"}},
-            additionalProperties: false
-          }
+            patternProperties: { "^.*$": { type: "string" } },
+            additionalProperties: false,
+          },
         },
         required: ["property", "title", "options"],
-        additionalProperties: false
-      }
+        additionalProperties: false,
+      },
     },
     logLevel: {
       type: "object",
       properties: {
-        level: {type: "array", minItems: 1, items: {type: "string"}},
-        namespace: {type: "array", minItems: 1, items: {type: "string"}}
+        level: { type: "array", minItems: 1, items: { type: "string" } },
+        namespace: { type: "array", minItems: 1, items: { type: "string" } },
       },
       required: ["level", "namespace"],
-      additionalProperties: false
+      additionalProperties: false,
     },
-    httpProxy: {type: "string"},
-    logsPath: {type: "string"},
-    statePath: {type: "string"},
+    httpProxy: { type: "string" },
+    logsPath: { type: "string" },
+    statePath: { type: "string" },
     psTools: {
       type: "object",
       patternProperties: {
         "^.*$": {
           type: "object",
           properties: {
-            name: {type: "string"},
-            mode: {type: "string"},
-            cmd: {type: "string"}
+            name: { type: "string" },
+            mode: { type: "string" },
+            cmd: { type: "string" },
           },
           required: ["name", "mode", "cmd"],
-          additionalProperties: false
-        }
+          additionalProperties: false,
+        },
       },
-      additionalProperties: false
+      additionalProperties: false,
     },
     vnc: {
       type: "object",
       properties: {
-        proxyUrl: {type: "string"},
-        port: {type: "string"},
-        username: {type: "string"},
-        password: {type: "string"},
-        passwordEncrypted: {type: "string"}
+        port: { type: "string" },
+        username: { type: "string" },
+        password: { type: "string" },
+        passwordEncrypted: { type: "string" },
       },
-      required: [
-        "proxyUrl",
-        "port",
-        "username",
-        "password",
-        "passwordEncrypted"
-      ],
-      additionalProperties: false
-    }
+      required: ["port", "username", "password", "passwordEncrypted"],
+      additionalProperties: false,
+    },
   },
   required: [
     "title",
@@ -97,9 +90,9 @@ const validateConfiguration = ajv.compile({
     // "logsPath",
     // "statePath",
     // "psTools",
-    "vnc"
+    "vnc",
   ],
-  additionalProperties: false
+  additionalProperties: false,
 });
 
 /**
@@ -114,7 +107,7 @@ export const isConfiguration = (payload: unknown): payload is Configuration => {
     console.error({
       ...validateConfiguration.errors[0],
       data: payload,
-      schema: "Configuration"
+      schema: "Configuration",
     });
   return isValid as boolean;
 };

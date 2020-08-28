@@ -3,12 +3,12 @@ export interface Configuration {
   readonly columns: Array<{
     property: string;
     title: string;
-    replace?: {[x: string]: string};
+    replace?: { [x: string]: string };
   }>;
   readonly filters: Array<{
     property: string;
     title: string;
-    options: {[x: string]: string};
+    options: { [x: string]: string };
   }>;
   readonly logLevel: {
     level: string[];
@@ -25,7 +25,6 @@ export interface Configuration {
     };
   };
   readonly vnc: {
-    proxyUrl: string;
     port: string;
     username: string;
     password: string;

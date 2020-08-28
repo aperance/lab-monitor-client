@@ -3,7 +3,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 //@ts-ignore
 import RFB from "@novnc/novnc/core/rfb";
 
@@ -14,7 +14,7 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   const [status, setStatus] = useState("disconnected");
   const targetRef = useRef(null as HTMLSpanElement | null);
 
-  const {proxyUrl, port, password} = config.vnc;
+  const { port, password } = config.vnc;
 
   useEffect(() => {
     if (!suspend) {
@@ -27,12 +27,12 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   let rfb: any = null;
   let timer: any;
 
-  const url = `${proxyUrl}?ip=${ipAddress}&port=${port}`;
+  const url = `${process.env.VNC_PROXY}?ip=${ipAddress}&port=${port}`;
 
   const connectVnc = () => {
     timer = setTimeout(() => {
       rfb = new RFB(targetRef.current, url, {
-        credentials: {password}
+        credentials: { password },
       });
       rfb.scaleViewport = scaled;
       rfb.addEventListener("connect", connectHandler);
@@ -54,5 +54,5 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   const connectHandler = () => setStatus("connected");
   const disconnectHandler = () => setStatus("error");
 
-  return {targetRef, status, scaled, setScaled};
+  return { targetRef, status, scaled, setScaled };
 };
