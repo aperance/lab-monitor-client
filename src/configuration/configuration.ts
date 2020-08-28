@@ -12,38 +12,14 @@ if (process.env.DEMO !== "true") {
   config = {
     title: "QA Lab Monitor",
     columns: [
-      {
-        property: "serial",
-        title: "Serial #"
-      },
-      {
-        property: "ipAddress",
-        title: "IP Address"
-      },
-      {
-        property: "timestamp",
-        title: "Updated At"
-      },
-      {
-        property: "hardware",
-        title: "Hardware"
-      },
-      {
-        property: "firmware",
-        title: "Firmware"
-      },
-      {
-        property: "propertyA",
-        title: "Property A"
-      },
-      {
-        property: "propertyB",
-        title: "Property B"
-      },
-      {
-        property: "propertyC",
-        title: "Property C"
-      }
+      {property: "serial", title: "Serial #"},
+      {property: "ipAddress", title: "IP Address"},
+      {property: "timestamp", title: "Updated At"},
+      {property: "hardware", title: "Hardware"},
+      {property: "firmware", title: "Firmware"},
+      {property: "propertyA", title: "Property A"},
+      {property: "propertyB", title: "Property B"},
+      {property: "propertyC", title: "Property C"}
     ],
     filters: [
       {

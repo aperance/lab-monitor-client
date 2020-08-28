@@ -4,6 +4,7 @@
  */
 
 import React, {useContext} from "react";
+import {Dialog, DialogContent, DialogContentText} from "@material-ui/core";
 
 import {WebsocketContext} from "../websockets/WebsocketContext";
 import {useSelector} from "../redux/store";
@@ -14,7 +15,6 @@ import WebPage from "./WebPage";
 import PsTools from "./PsTools";
 import VncViewer from "./VncViewer";
 import NavBar from "./NavBar";
-import ErrorMessage from "./ErrorMessage";
 import Spinner from "./Spinner";
 import Drawers from "./Drawers";
 import ActionResponse from "./ActionResponse";
@@ -22,18 +22,23 @@ import ActionResponse from "./ActionResponse";
 const App = (): JSX.Element => {
   /** True if initial data payload received via web socket. */
   const isDataReceived = useSelector(
-    state => Object.keys(state.tableData).length !== 0
+    ({tableData}) => Object.keys(tableData).length !== 0
   );
   /** Desired content for the rightmost drawer. */
   const selectedSubView = useSelector(state => state.userSelection.view);
   /** Status of websocket connection to backend server. */
   const wsStatus = useContext(WebsocketContext).status;
 
-  if (wsStatus === "connectionError")
-    return <ErrorMessage message={"connectionError"} />;
-  else if (wsStatus === "dataError")
-    return <ErrorMessage message={"dataError"} />;
-  else if (wsStatus === "connected" && isDataReceived)
+  /** Display spinner if connection pending. */
+  if (
+    wsStatus === "disconnected" ||
+    (wsStatus === "connected" && isDataReceived === false)
+  ) {
+    return <Spinner />;
+  }
+
+  /** Display full layout once data is received. */
+  if (wsStatus === "connected" && isDataReceived === true) {
     return (
       <>
         <NavBar />
@@ -61,7 +66,21 @@ const App = (): JSX.Element => {
         <ActionResponse />
       </>
     );
-  else return <Spinner />;
+  }
+
+  /** Display error to user. */
+  return (
+    <Dialog open={true}>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {wsStatus === "connectionError" &&
+            "Error: Disconnected from server. See console for details."}
+          {wsStatus === "dataError" &&
+            "Error: Invalid data received. See console for details."}
+        </DialogContentText>
+      </DialogContent>
+    </Dialog>
+  );
 };
 
 export default App;
