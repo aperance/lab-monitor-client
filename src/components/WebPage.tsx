@@ -32,9 +32,10 @@ const WebPage = (): JSX.Element | null => {
 
   if (ipAddress === null) return null;
 
-  const url = isProxyEnabled
-    ? `http://${config.httpProxy}${config.statePath}&target=${ipAddress}`
-    : `http://${ipAddress}:8001${config.statePath}`;
+  const url =
+    isProxyEnabled && process.env.HTTP_PROXY
+      ? `http://${process.env.HTTP_PROXY}${config.statePath}&target=${ipAddress}`
+      : `http://${ipAddress}:8001${config.statePath}`;
 
   return (
     <>

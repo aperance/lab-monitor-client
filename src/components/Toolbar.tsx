@@ -62,7 +62,7 @@ const Toolbar = (): JSX.Element => {
               onClick={() => dispatch(viewSelect("vnc"))}
             />
 
-            {process.env.DEMO !== "true" && (
+            {process.env.DEMO !== "true" && config.remoteAccess && (
               <>
                 <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
                 <ToolbarItem
@@ -81,8 +81,8 @@ const Toolbar = (): JSX.Element => {
                       new Blob(
                         [
                           `net use \\\\${selectedRows[0]} ` +
-                            `/user:${config.vnc.username} ` +
-                            `${config.vnc.password} ` +
+                            `/user:${config.remoteAccess.username} ` +
+                            `${config.remoteAccess.username} ` +
                             `/PERSISTENT:NO\n` +
                             `start \\\\${selectedRows[0]}`
                         ],
@@ -107,10 +107,13 @@ const Toolbar = (): JSX.Element => {
                 if (link !== null) link.click();
               }}
             >
-              {isProxyEnabled ? (
+              {isProxyEnabled && process.env.HTTP_PROXY ? (
                 <a
                   id="logsLink"
-                  href={`http://${config.httpProxy}${config.logsPath}?target=${selectedRows[0]}`}
+                  href={
+                    `http://${process.env.HTTP_PROXY}${config.logsPath}` +
+                    `?target=${selectedRows[0]}`
+                  }
                   target="_blank"
                   rel="noreferrer"
                 />

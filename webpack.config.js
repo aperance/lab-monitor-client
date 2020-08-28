@@ -25,10 +25,11 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       DEMO: "false",
       BACKEND: "ws://0.0.0.0:4000",
-      VNC_PROXY: "ws://0.0.0.0:5000",
-      VNC_IP: "",
-      VNC_PORT: "",
-      VNC_PASSWORD: ""
+      VNC_PROXY: "ws://0.0.0.0:5000"
+      // VNC_DEMO_IP: "",
+      // VNC_PORT: "",
+      // VNC_PASSWORD: "",
+      // VNC_PASSWORD_ENC: ""
     }),
     new GoogleFontsPlugin({
       fonts: [{family: "Roboto", variants: ["400", "500", "600", "700"]}]

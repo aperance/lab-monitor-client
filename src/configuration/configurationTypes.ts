@@ -3,18 +3,17 @@ export interface Configuration {
   readonly columns: Array<{
     property: string;
     title: string;
-    replace?: { [x: string]: string };
+    replace?: {[x: string]: string};
   }>;
   readonly filters: Array<{
     property: string;
     title: string;
-    options: { [x: string]: string };
+    options: {[x: string]: string};
   }>;
   readonly logLevel: {
     level: string[];
     namespace: string[];
   };
-  readonly httpProxy?: string;
   readonly logsPath?: string;
   readonly statePath?: string;
   readonly psTools?: {
@@ -24,10 +23,8 @@ export interface Configuration {
       cmd: string;
     };
   };
-  readonly vnc: {
-    port: string;
+  readonly remoteAccess?: {
     username: string;
     password: string;
-    passwordEncrypted: string;
   };
 }

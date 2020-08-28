@@ -9,7 +9,6 @@ import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 
-import config from "../configuration/configuration";
 import {useSelector} from "../redux/store";
 import {useVnc} from "../hooks/useVnc";
 import Spinner from "./Spinner";
@@ -59,7 +58,7 @@ const VncViewer = (): JSX.Element => {
   /** IP Address of the target device. */
   const ipAddress = useSelector(state =>
     process.env.DEMO === "true"
-      ? process.env.VNC_IP || ""
+      ? process.env.VNC_DEMO_IP || ""
       : state.userSelection.rows[0] ?? ""
   );
   /** Used to determine if vnc area needs to be resized. */
@@ -96,8 +95,8 @@ const VncViewer = (): JSX.Element => {
               [
                 `[connection]\n` +
                   `host=${ipAddress}\n` +
-                  `port=${config.vnc.port}\n` +
-                  `password=${config.vnc.passwordEncrypted}`
+                  `port=${process.env.VNC_PORT}\n` +
+                  `password=${process.env.VNC_PASSWORD_ENC}`
               ],
               {type: "text/plain"}
             )

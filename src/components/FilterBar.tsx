@@ -87,7 +87,7 @@ const FilterBar = (props: Props): JSX.Element => {
           </div>
         );
       })}
-      {process.env.DEMO !== "true" && (
+      {process.env.DEMO !== "true" && process.env.HTTP_PROXY && (
         <FormControlLabel
           classes={{
             root: classes.switchForm,
