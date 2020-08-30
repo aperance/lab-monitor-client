@@ -25,7 +25,6 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       DEMO: "false",
       BACKEND: "ws://0.0.0.0:4000",
-      VNC_PROXY: "ws://0.0.0.0:5000",
       VNC_DEMO_IP: "",
       VNC_PORT: "",
       VNC_PASSWORD: "",

@@ -24,7 +24,7 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   let timer: any;
 
   const url =
-    process.env.VNC_PROXY + `?ip=${ipAddress}&port=${process.env.VNC_PORT}`;
+    process.env.BACKEND + `/vnc?ip=${ipAddress}&port=${process.env.VNC_PORT}`;
 
   const connectVnc = () => {
     timer = setTimeout(() => {
