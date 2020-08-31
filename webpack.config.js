@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -24,14 +26,14 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin({
       DEMO: "false",
-      BACKEND: "ws://0.0.0.0:4000",
+      BACKEND: "0.0.0.0:4000",
       VNC_DEMO_IP: "",
       VNC_PORT: "",
       VNC_PASSWORD: "",
       VNC_PASSWORD_ENC: ""
     }),
     new GoogleFontsPlugin({
-      fonts: [{family: "Roboto", variants: ["400", "500", "600", "700"]}]
+      fonts: [{ family: "Roboto", variants: ["400", "500", "600", "700"] }]
     }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
@@ -61,7 +63,7 @@ module.exports = {
           }
         ]
       },
-      {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
+      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   }
 };
