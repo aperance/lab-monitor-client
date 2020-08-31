@@ -4,13 +4,13 @@
  */
 
 import React from "react";
-import {Fab, makeStyles} from "@material-ui/core";
+import { Fab, makeStyles } from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 
-import {useSelector} from "../redux/store";
-import {useVnc} from "../hooks/useVnc";
+import { useSelector } from "../redux/store";
+import { useVnc } from "../hooks/useVnc";
 import Spinner from "./Spinner";
 
 type StyleProps = {
@@ -56,16 +56,19 @@ const useStyles = makeStyles({
 
 const VncViewer = (): JSX.Element => {
   /** IP Address of the target device. */
-  const ipAddress = useSelector(state =>
+  const ipAddress = useSelector((state) =>
     process.env.DEMO === "true"
       ? process.env.VNC_DEMO_IP || ""
       : state.userSelection.rows[0] ?? ""
   );
   /** Used to determine if vnc area needs to be resized. */
-  const isDragging = useSelector(state => state.userSelection.dragging);
-  const {targetRef, status, scaled, setScaled} = useVnc(ipAddress, isDragging);
+  const isDragging = useSelector((state) => state.userSelection.dragging);
+  const { targetRef, status, scaled, setScaled } = useVnc(
+    ipAddress,
+    isDragging
+  );
   /** Generated CSS class names */
-  const classes = useStyles({connected: status === "connected"});
+  const classes = useStyles({ connected: status === "connected" });
 
   return (
     <div className={classes.root}>
@@ -87,25 +90,27 @@ const VncViewer = (): JSX.Element => {
         >
           {scaled ? <ExpandIcon /> : <ShrinkIcon />}
         </Fab>
-        <Fab
-          size="small"
-          className={classes.buttonTwo}
-          href={URL.createObjectURL(
-            new Blob(
-              [
-                `[connection]\n` +
-                  `host=${ipAddress}\n` +
-                  `port=${process.env.VNC_PORT}\n` +
-                  `password=${process.env.VNC_PASSWORD_ENC}`
-              ],
-              {type: "text/plain"}
-            )
-          )}
-          download="test.vnc"
-          target="_blank"
-        >
-          <SaveIcon />
-        </Fab>
+        {process.env.DEMO !== "true" && (
+          <Fab
+            size="small"
+            className={classes.buttonTwo}
+            href={URL.createObjectURL(
+              new Blob(
+                [
+                  `[connection]\n` +
+                    `host=${ipAddress}\n` +
+                    `port=${process.env.VNC_PORT}\n` +
+                    `password=${process.env.VNC_PASSWORD_ENC}`
+                ],
+                { type: "text/plain" }
+              )
+            )}
+            download="test.vnc"
+            target="_blank"
+          >
+            <SaveIcon />
+          </Fab>
+        )}
       </div>
     </div>
   );
