@@ -14,13 +14,13 @@ import {
 } from "@material-ui/core";
 
 import config from "../configuration/configuration";
-import {useSelector, useDispatch} from "../redux/store";
-import {proxyToggle} from "../redux/actionCreators";
+import { useSelector, useDispatch } from "../redux/store";
+import { proxyToggle } from "../redux/actionCreators";
 import FilterBarItem from "./FilterBarItem";
 
 type Props = {
-  selectedFilters: {[property: string]: string[]};
-  setFilters: (x: {property: string; regex: string}) => void;
+  selectedFilters: { [property: string]: string[] };
+  setFilters: (x: { property: string; regex: string }) => void;
 };
 
 /** CSS-in-JS styling */
@@ -59,12 +59,12 @@ const useStyles = makeStyles({
 const FilterBar = (props: Props): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();
-  const isProxyEnabled = useSelector(state => state.userSelection.proxy);
+  const isProxyEnabled = useSelector((state) => state.userSelection.proxy);
   const dispatch = useDispatch();
 
   return (
     <FormControl className={classes.root}>
-      {config.filters.map(filter => {
+      {config.filters.map((filter) => {
         return (
           <div key={filter.property}>
             <FormLabel className={classes.formLabel} focused={false}>
@@ -87,7 +87,7 @@ const FilterBar = (props: Props): JSX.Element => {
           </div>
         );
       })}
-      {process.env.DEMO !== "true" && process.env.HTTP_PROXY && (
+      {process.env.DEMO !== "true" && (
         <FormControlLabel
           classes={{
             root: classes.switchForm,

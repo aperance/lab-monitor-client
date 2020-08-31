@@ -4,11 +4,11 @@
  */
 
 import React from "react";
-import {Fab, makeStyles} from "@material-ui/core";
+import { Fab, makeStyles } from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 
 import config from "../configuration/configuration";
-import {useSelector} from "../redux/store";
+import { useSelector } from "../redux/store";
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
@@ -19,23 +19,22 @@ const useStyles = makeStyles({
     backgroundColor: "white",
     opacity: 0.5
   },
-  frame: {userSelect: "none", borderWidth: "0px"}
+  frame: { userSelect: "none", borderWidth: "0px" }
 });
 
 const WebPage = (): JSX.Element | null => {
   /** Generated CSS class names */
   const classes = useStyles();
   /** IP Address of target device. */
-  const ipAddress = useSelector(state => state.userSelection.rows[0] || null);
+  const ipAddress = useSelector((state) => state.userSelection.rows[0] || null);
   /** If true, HTTP request is routed through backend server. */
-  const isProxyEnabled = useSelector(state => state.userSelection.proxy);
+  const isProxyEnabled = useSelector((state) => state.userSelection.proxy);
 
   if (ipAddress === null) return null;
 
-  const url =
-    isProxyEnabled && process.env.HTTP_PROXY
-      ? `http://${process.env.HTTP_PROXY}${config.statePath}&target=${ipAddress}`
-      : `http://${ipAddress}:8001${config.statePath}`;
+  const url = isProxyEnabled
+    ? `http://${process.env.BACKEND}${config.statePath}&target=${ipAddress}`
+    : `http://${ipAddress}:8001${config.statePath}`;
 
   return (
     <>

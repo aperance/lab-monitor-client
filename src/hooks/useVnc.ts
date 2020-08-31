@@ -3,7 +3,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 //@ts-ignore
 import RFB from "@novnc/novnc/core/rfb";
 
@@ -24,12 +24,13 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   let timer: any;
 
   const url =
-    process.env.BACKEND + `/vnc?ip=${ipAddress}&port=${process.env.VNC_PORT}`;
+    `ws://${process.env.BACKEND}/vnc` +
+    `?ip=${ipAddress}&port=${process.env.VNC_PORT}`;
 
   const connectVnc = () => {
     timer = setTimeout(() => {
       rfb = new RFB(targetRef.current, url, {
-        credentials: {password: process.env.VNC_PASSWORD}
+        credentials: { password: process.env.VNC_PASSWORD }
       });
       rfb.scaleViewport = scaled;
       rfb.addEventListener("connect", connectHandler);
@@ -51,5 +52,5 @@ export const useVnc = (ipAddress: string, suspend: boolean) => {
   const connectHandler = () => setStatus("connected");
   const disconnectHandler = () => setStatus("error");
 
-  return {targetRef, status, scaled, setScaled};
+  return { targetRef, status, scaled, setScaled };
 };

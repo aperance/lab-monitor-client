@@ -1,12 +1,12 @@
-import React, {useState, useRef, useEffect} from "react";
-import {useDispatch} from "../redux/store";
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "../redux/store";
 import {
   deviceCommandResponse,
   deviceDataAll,
   deviceDataUpdate,
   psToolsResponse
 } from "../redux/actionCreators";
-import {WsMessage, WsMessageTypeKeys} from "./messageTypes";
+import { WsMessage, WsMessageTypeKeys } from "./messageTypes";
 import {
   isDeviceDataAll,
   isDeviceDataUpdate,
@@ -33,15 +33,15 @@ export const WebsocketProvider = (props: Props): JSX.Element => {
 
   useEffect(() => {
     if (!socket.current || retry) {
-      const ws = new WebSocket(`${process.env.BACKEND}/data`);
+      const ws = new WebSocket(`ws://${process.env.BACKEND}/data`);
 
       ws.onopen = () => setStatus("connected");
       ws.onerror = () => setStatus("connectionError");
       ws.onclose = () => setTimeout(() => setRetry(true), 5000);
 
-      ws.onmessage = ({data}) => {
+      ws.onmessage = ({ data }) => {
         try {
-          const {type, payload} = JSON.parse(data);
+          const { type, payload } = JSON.parse(data);
 
           switch (type) {
             case WsMessageTypeKeys.DeviceDataAll:

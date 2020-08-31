@@ -3,8 +3,8 @@
  * @packageDocumentation
  */
 
-import React, {useContext, useState} from "react";
-import {List, Divider} from "@material-ui/core";
+import React, { useContext, useState } from "react";
+import { List, Divider } from "@material-ui/core";
 
 import config from "../configuration/configuration";
 import {
@@ -12,16 +12,16 @@ import {
   refreshDevice,
   clearDevice
 } from "../websockets/messageCreators";
-import {WebsocketContext} from "../websockets/WebsocketContext";
-import {useSelector, useDispatch} from "../redux/store";
-import {viewSelect} from "../redux/actionCreators";
+import { WebsocketContext } from "../websockets/WebsocketContext";
+import { useSelector, useDispatch } from "../redux/store";
+import { viewSelect } from "../redux/actionCreators";
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
 
 const Toolbar = (): JSX.Element => {
-  const selectedRows = useSelector(state => state.userSelection.rows);
-  const selectedSubView = useSelector(state => state.userSelection.view);
-  const isProxyEnabled = useSelector(state => state.userSelection.proxy);
+  const selectedRows = useSelector((state) => state.userSelection.rows);
+  const selectedSubView = useSelector((state) => state.userSelection.view);
+  const isProxyEnabled = useSelector((state) => state.userSelection.proxy);
   const dispatch = useDispatch();
   const ws = useContext(WebsocketContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
@@ -64,7 +64,7 @@ const Toolbar = (): JSX.Element => {
 
             {process.env.DEMO !== "true" && config.remoteAccess && (
               <>
-                <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
+                <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
                 <ToolbarItem
                   name="Shared Drives"
                   leftIcon="folder"
@@ -86,7 +86,7 @@ const Toolbar = (): JSX.Element => {
                             `/PERSISTENT:NO\n` +
                             `start \\\\${selectedRows[0]}`
                         ],
-                        {type: "text/plain"}
+                        { type: "text/plain" }
                       )
                     )}
                     target="_blank"
@@ -96,7 +96,7 @@ const Toolbar = (): JSX.Element => {
                 </ToolbarItem>
               </>
             )}
-            <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
+            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
             <ToolbarItem
               name="Logs"
               leftIcon="subject"
@@ -107,11 +107,11 @@ const Toolbar = (): JSX.Element => {
                 if (link !== null) link.click();
               }}
             >
-              {isProxyEnabled && process.env.HTTP_PROXY ? (
+              {isProxyEnabled ? (
                 <a
                   id="logsLink"
                   href={
-                    `http://${process.env.HTTP_PROXY}${config.logsPath}` +
+                    `http://${process.env.BACKEND}${config.logsPath}` +
                     `?target=${selectedRows[0]}`
                   }
                   target="_blank"
@@ -126,7 +126,7 @@ const Toolbar = (): JSX.Element => {
                 />
               )}
             </ToolbarItem>
-            <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
+            <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
           </>
         )}
         {process.env.DEMO !== "true" && (
@@ -161,7 +161,7 @@ const Toolbar = (): JSX.Element => {
           selectedRows={selectedRows}
           onClick={() => ws.send(commandRequest(selectedRows, "resetDisplay"))}
         />
-        <Divider style={{marginTop: "8px", marginBottom: "8px"}} />
+        <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Force Refresh"
           leftIcon="refresh"
@@ -178,7 +178,9 @@ const Toolbar = (): JSX.Element => {
       <LogLevel
         open={logConfigOpen}
         sendDeviceCommand={(namespace: string, level: string) =>
-          ws.send(commandRequest(selectedRows, "logLevel", {namespace, level}))
+          ws.send(
+            commandRequest(selectedRows, "logLevel", { namespace, level })
+          )
         }
         close={() => setLogConfigOpen(false)}
       />
