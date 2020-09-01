@@ -34,7 +34,8 @@ export const WebsocketProvider = (props: Props): JSX.Element => {
   useEffect(() => {
     if (!socket.current || retry) {
       const ws = new WebSocket(
-        `${process.env.DEMO ? "wss" : "ws"}://${process.env.BACKEND}/data`
+        `${process.env.DEMO === "true" ? "wss" : "ws"}://` +
+          `${process.env.BACKEND}/data`
       );
 
       ws.onopen = () => setStatus("connected");
