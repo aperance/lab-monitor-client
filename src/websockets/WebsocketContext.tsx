@@ -67,6 +67,9 @@ export const WebsocketProvider = (props: Props): JSX.Element => {
                 throw Error(`Websocket message failed validation`);
               dispatch(psToolsResponse(payload));
               break;
+            case WsMessageTypeKeys.Error:
+              console.error(payload);
+              break;
             default:
               throw Error("Invalid websocket message type specified");
           }
