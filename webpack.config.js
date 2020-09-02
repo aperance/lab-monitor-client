@@ -43,6 +43,8 @@ module.exports = {
     new CompressionPlugin()
   ],
 
+  devtool: "source-map",
+
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
   },
@@ -60,6 +62,12 @@ module.exports = {
             loader: "ts-loader"
           }
         ]
+      },
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "source-map-loader",
+        exclude: [/node_modules\/zod/]
       }
     ]
   }
