@@ -3,11 +3,11 @@
  * @packageDocumentation
  */
 
-import React, {useState, useRef, useEffect} from "react";
-import {TableRow, TableCell, makeStyles} from "@material-ui/core";
+import React, { useState, useRef, useEffect } from "react";
+import { TableRow, TableCell, makeStyles } from "@material-ui/core";
 import StatusIndicator from "@material-ui/icons/Lens";
 
-import config from "../configuration/configuration";
+import config from "../configuration";
 
 type Props = {
   rowData: {
@@ -24,8 +24,8 @@ type StyleProps = {
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
-  row: {cursor: "pointer", userSelect: "none"},
-  selectedRow: {backgroundColor: "rgba(0, 0, 0, 0.04) !important"},
+  row: { cursor: "pointer", userSelect: "none" },
+  selectedRow: { backgroundColor: "rgba(0, 0, 0, 0.04) !important" },
   cell: {
     fontSize: "0.75rem",
     lineHeight: "unset"
@@ -54,7 +54,7 @@ const DeviceTableRow = (props: Props): JSX.Element => {
   const isInitialMount = useRef(true);
   const [animate, setAnimate] = useState<boolean | null>(null);
   /** Generated CSS class names */
-  const classes = useStyles({status: props.rowData.status, animate});
+  const classes = useStyles({ status: props.rowData.status, animate });
 
   useEffect(() => {
     if (isInitialMount.current) isInitialMount.current = false;
@@ -68,14 +68,14 @@ const DeviceTableRow = (props: Props): JSX.Element => {
   return (
     <TableRow
       hover
-      classes={{root: classes.row, selected: classes.selectedRow}}
+      classes={{ root: classes.row, selected: classes.selectedRow }}
       selected={props.selected}
-      onClick={e => props.handleRowClick(e.nativeEvent)}
+      onClick={(e) => props.handleRowClick(e.nativeEvent)}
     >
       <TableCell className={classes.cell}>
         <StatusIndicator className={classes.status} />
       </TableCell>
-      {config.columns.map(column => (
+      {config.columns.map((column) => (
         <TableCell key={column.property} className={classes.cell}>
           {props.rowData[column.property]}
         </TableCell>

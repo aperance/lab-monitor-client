@@ -6,7 +6,7 @@
 import React, { useContext, useState } from "react";
 import { List, Divider } from "@material-ui/core";
 
-import config from "../configuration/configuration";
+import config from "../configuration";
 import {
   commandRequest,
   refreshDevice,

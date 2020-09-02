@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ import {
   makeStyles
 } from "@material-ui/core";
 
-import config from "../configuration/configuration";
+import config from "../configuration";
 
 type Props = {
   open: boolean;
@@ -27,9 +27,9 @@ type Props = {
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
-  form: {display: "flex", flexWrap: "wrap"},
-  selectNamespace: {width: "230px", marginRight: "32px"},
-  selectLevel: {width: "90px"}
+  form: { display: "flex", flexWrap: "wrap" },
+  selectNamespace: { width: "230px", marginRight: "32px" },
+  selectLevel: { width: "90px" }
 });
 
 const LogLevel = (props: Props): JSX.Element => {
@@ -52,10 +52,10 @@ const LogLevel = (props: Props): JSX.Element => {
             <Select
               className={classes.selectNamespace}
               value={namespace || ""}
-              onChange={e => setNamespace(e.target.value as string)}
+              onChange={(e) => setNamespace(e.target.value as string)}
               input={<Input id="namespace" />}
             >
-              {config.logLevel.namespace.map(x => (
+              {config.logLevel.namespace.map((x) => (
                 <MenuItem key={x} value={x}>
                   {x}
                 </MenuItem>
@@ -68,10 +68,10 @@ const LogLevel = (props: Props): JSX.Element => {
             <Select
               className={classes.selectLevel}
               value={level || ""}
-              onChange={e => setLevel(e.target.value as string)}
+              onChange={(e) => setLevel(e.target.value as string)}
               input={<Input id="level" />}
             >
-              {config.logLevel.level.map(x => (
+              {config.logLevel.level.map((x) => (
                 <MenuItem key={x} value={x}>
                   {x}
                 </MenuItem>

@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 
-import React, {useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -14,9 +14,9 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/MoreVert";
 
-import config from "../configuration/configuration";
-import {WebsocketContext} from "../websockets/WebsocketContext";
-import {refreshDevice, clearDevice} from "../websockets/messageCreators";
+import config from "../configuration";
+import { WebsocketContext } from "../websockets/WebsocketContext";
+import { refreshDevice, clearDevice } from "../websockets/messageCreators";
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
       userSelect: "none"
     }
   },
-  menuItem: {fontSize: "0.8rem"}
+  menuItem: { fontSize: "0.8rem" }
 });
 
 const NavBar = (): JSX.Element => {
@@ -53,7 +53,7 @@ const NavBar = (): JSX.Element => {
     >
       <Toolbar className={classes.toolbar}>
         <span>{config.title}</span>
-        <IconButton onClick={e => setAnchor(e.currentTarget)}>
+        <IconButton onClick={(e) => setAnchor(e.currentTarget)}>
           <MenuIcon />
         </IconButton>
         <Menu

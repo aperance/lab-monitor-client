@@ -13,7 +13,7 @@ import {
   makeStyles
 } from "@material-ui/core";
 
-import config from "../configuration/configuration";
+import config from "../configuration";
 import { useSelector, useDispatch } from "../redux/store";
 import { proxyToggle } from "../redux/actionCreators";
 import FilterBarItem from "./FilterBarItem";

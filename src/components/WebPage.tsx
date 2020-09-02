@@ -7,7 +7,7 @@ import React from "react";
 import { Fab, makeStyles } from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
 
-import config from "../configuration/configuration";
+import config from "../configuration";
 import { useSelector } from "../redux/store";
 
 /** CSS-in-JS styling */
