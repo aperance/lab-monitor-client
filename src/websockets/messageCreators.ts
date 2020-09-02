@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {WsMessageTypeKeys} from "./messageTypes";
+import { WsMessageTypeKeys } from "./messageTypes";
 
 /**
  * Request server to send a remote command to device using PSTools utilities.
@@ -15,7 +15,7 @@ export const psToolsRequest = (
 ) => {
   return {
     type: WsMessageTypeKeys.PsToolsCommand,
-    payload: {target, mode, argument}
+    payload: { target, mode, argument }
   };
 };
 
@@ -32,7 +32,7 @@ export const commandRequest = (
 ) => {
   return {
     type: WsMessageTypeKeys.DeviceAction,
-    payload: {targets, type, parameters}
+    payload: { targets, type, parameters }
   };
 };
 
@@ -43,7 +43,7 @@ export const commandRequest = (
 export const refreshDevice = (targets?: string[]) => {
   return {
     type: WsMessageTypeKeys.RefreshDevice,
-    payload: {targets}
+    payload: { targets }
   };
 };
 
@@ -54,6 +54,6 @@ export const refreshDevice = (targets?: string[]) => {
 export const clearDevice = (targets?: string[]) => {
   return {
     type: WsMessageTypeKeys.ClearDevice,
-    payload: {targets}
+    payload: { targets }
   };
 };

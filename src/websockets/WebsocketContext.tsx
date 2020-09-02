@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { object, string, array, record, tuple, boolean } from "zod";
 import { useDispatch } from "../redux/store";
 import {
   deviceCommandResponse,
@@ -7,12 +8,6 @@ import {
   psToolsResponse
 } from "../redux/actionCreators";
 import { WsMessage, WsMessageTypeKeys } from "./messageTypes";
-import {
-  isDeviceDataAll,
-  isDeviceDataUpdate,
-  isDeviceActionResponse,
-  isPsToolsResponse
-} from "./messageTypeGuards";
 
 export const WebsocketContext = React.createContext(
   {} as {
@@ -47,29 +42,67 @@ export const WebsocketProvider = (props: Props): JSX.Element => {
           const { type, payload } = JSON.parse(data);
 
           switch (type) {
-            case WsMessageTypeKeys.DeviceDataAll:
-              if (!isDeviceDataAll(payload))
-                throw Error(`Websocket message failed validation`);
-              dispatch(deviceDataAll(payload));
+            case WsMessageTypeKeys.DeviceDataAll: {
+              const schema = object({
+                state: record(record(string())),
+                history: record(
+                  record(array(tuple([string(), string().nullable()])))
+                )
+              });
+
+              const validPayload = schema.parse(payload);
+              dispatch(deviceDataAll(validPayload));
               break;
-            case WsMessageTypeKeys.DeviceDataUpdate:
-              if (!isDeviceDataUpdate(payload))
-                throw Error(`Websocket message failed validation`);
-              dispatch(deviceDataUpdate(payload));
+            }
+
+            case WsMessageTypeKeys.DeviceDataUpdate: {
+              const schema = object({
+                id: string(),
+                state: record(string().nullable()).nullable(),
+                history: array(
+                  tuple([string(), tuple([string(), string().nullable()])])
+                ).nullable()
+              });
+
+              const validPayload = schema.parse(payload);
+              dispatch(deviceDataUpdate(validPayload));
               break;
-            case WsMessageTypeKeys.DeviceActionResponse:
-              if (!isDeviceActionResponse(payload))
-                throw Error(`Websocket message failed validation`);
-              dispatch(deviceCommandResponse(payload));
+            }
+
+            case WsMessageTypeKeys.DeviceActionResponse: {
+              const schema = object({
+                err: object({ name: string(), message: string() }).nullable(),
+                results: array(
+                  object({
+                    err: object({
+                      name: string(),
+                      message: string()
+                    }).nullable(),
+                    success: boolean()
+                  })
+                ).nullable()
+              });
+
+              const validPayload = schema.parse(payload);
+              dispatch(deviceCommandResponse(validPayload));
               break;
-            case WsMessageTypeKeys.PsToolsCommandResponse:
-              if (!isPsToolsResponse(payload))
-                throw Error(`Websocket message failed validation`);
-              dispatch(psToolsResponse(payload));
+            }
+
+            case WsMessageTypeKeys.PsToolsCommandResponse: {
+              const schema = object({
+                err: object({ name: string(), message: string() }).nullable(),
+                result: string().nullable()
+              });
+
+              const validPayload = schema.parse(payload);
+              dispatch(psToolsResponse(validPayload));
               break;
+            }
+
             case WsMessageTypeKeys.Error:
               console.error(payload);
               break;
+
             default:
               throw Error("Invalid websocket message type specified");
           }
