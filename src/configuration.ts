@@ -2,7 +2,7 @@ import * as z from "zod";
 
 const config =
   process.env.DEMO !== "true"
-    ? require("../../config.json")
+    ? require("../config.json")
     : {
         title: "QA Lab Monitor",
         columns: [
