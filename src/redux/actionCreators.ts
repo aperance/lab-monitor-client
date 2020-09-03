@@ -5,7 +5,7 @@ import {
   DeviceDataUpdate,
   PsToolsResponse,
   CommandResponse
-} from "./reduxTypes";
+} from "./types";
 
 export const deviceDataAll = (payload: DeviceDataAll): Actions => ({
   type: ActionTypes.DEVICE_DATA_ALL,

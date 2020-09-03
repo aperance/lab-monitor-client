@@ -1,5 +1,5 @@
-import {Reducer} from "redux";
-import {Actions, ActionTypes, HistoryDataState} from "./reduxTypes";
+import { Reducer } from "redux";
+import { Actions, ActionTypes, HistoryDataState } from "./types";
 
 const initialState = {};
 
@@ -9,11 +9,11 @@ export const historyDataReducer: Reducer<HistoryDataState, Actions> = (
 ) => {
   switch (action.type) {
     case ActionTypes.DEVICE_DATA_ALL:
-      return {...action.payload.history};
+      return { ...action.payload.history };
 
     case ActionTypes.DEVICE_DATA_UPDATE:
       if (action.payload.history === null) {
-        const newHistory = {...state};
+        const newHistory = { ...state };
         delete newHistory[action.payload.id];
         return newHistory;
       } else
@@ -26,7 +26,7 @@ export const historyDataReducer: Reducer<HistoryDataState, Actions> = (
               while (acc[key].length > 10) acc[key].pop();
               return acc;
             },
-            {...state[action.payload.id]}
+            { ...state[action.payload.id] }
           )
         };
 
@@ -34,6 +34,6 @@ export const historyDataReducer: Reducer<HistoryDataState, Actions> = (
       return {};
 
     default:
-      return {...state};
+      return { ...state };
   }
 };
