@@ -1,10 +1,11 @@
 import {
+  Actions,
+  ActionTypes,
   DeviceDataAll,
   DeviceDataUpdate,
   PsToolsResponse,
   CommandResponse
-} from "../websockets/messageTypes";
-import {Actions, ActionTypes} from "./reduxTypes";
+} from "./reduxTypes";
 
 export const deviceDataAll = (payload: DeviceDataAll): Actions => ({
   type: ActionTypes.DEVICE_DATA_ALL,
@@ -32,17 +33,17 @@ export const deviceCommandResponse = (payload: CommandResponse): Actions => ({
 
 export const singleRowSelect = (row: string | null): Actions => ({
   type: ActionTypes.SINGLE_ROW_SELECT,
-  payload: {row}
+  payload: { row }
 });
 
 export const multiRowSelect = (row: string | null): Actions => ({
   type: ActionTypes.MULTI_ROW_SELECT,
-  payload: {row}
+  payload: { row }
 });
 
 export const viewSelect = (view: string): Actions => ({
   type: ActionTypes.VIEW_SELECT,
-  payload: {view}
+  payload: { view }
 });
 
 export const proxyToggle = (): Actions => ({
@@ -51,7 +52,7 @@ export const proxyToggle = (): Actions => ({
 
 export const draggingSet = (isDragging: boolean): Actions => ({
   type: ActionTypes.DRAGGING_SET,
-  payload: {isDragging}
+  payload: { isDragging }
 });
 
 export const resetAll = (): Actions => ({

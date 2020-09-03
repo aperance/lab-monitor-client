@@ -3,11 +3,11 @@
  * @packageDocumentation
  */
 
-import React, {useContext} from "react";
-import {Dialog, DialogContent, DialogContentText} from "@material-ui/core";
+import React, { useContext } from "react";
+import { Dialog, DialogContent, DialogContentText } from "@material-ui/core";
 
-import {WebsocketContext} from "../websockets/WebsocketContext";
-import {useSelector} from "../redux/store";
+import { WebsocketContext } from "../WebsocketContext";
+import { useSelector } from "../redux/store";
 import DeviceTable from "./DeviceTable";
 import Toolbar from "./Toolbar";
 import History from "./History";
@@ -22,10 +22,10 @@ import ActionResponse from "./ActionResponse";
 const App = (): JSX.Element => {
   /** True if initial data payload received via web socket. */
   const isDataReceived = useSelector(
-    ({tableData}) => Object.keys(tableData).length !== 0
+    ({ tableData }) => Object.keys(tableData).length !== 0
   );
   /** Desired content for the rightmost drawer. */
-  const selectedSubView = useSelector(state => state.userSelection.view);
+  const selectedSubView = useSelector((state) => state.userSelection.view);
   /** Status of websocket connection to backend server. */
   const wsStatus = useContext(WebsocketContext).status;
 

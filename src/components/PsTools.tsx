@@ -16,8 +16,7 @@ import {
 } from "@material-ui/core";
 
 import config from "../configuration";
-import { WebsocketContext } from "../websockets/WebsocketContext";
-import { psToolsRequest } from "../websockets/messageCreators";
+import { WebsocketContext } from "../WebsocketContext";
 import { useSelector, useDispatch } from "../redux/store";
 import { psToolsResponseClear } from "../redux/actionCreators";
 
@@ -52,7 +51,7 @@ const PsTools = (): JSX.Element | null => {
   /** Generated CSS class names */
   const classes = useStyles();
   /** Function to send message via Websocket */
-  const { send } = useContext(WebsocketContext);
+  const ws = useContext(WebsocketContext);
   /** IP Address of target device */
   const ipAddress = useSelector((state) => state.userSelection.rows[0] || null);
   /** Output from executed PSTools command  */
@@ -128,7 +127,7 @@ const PsTools = (): JSX.Element | null => {
           size="small"
           onClick={() => {
             dispatch(psToolsResponseClear());
-            if (ipAddress) send(psToolsRequest(ipAddress, mode, cmd));
+            if (ipAddress) ws.psToolsRequest(ipAddress, mode, cmd);
           }}
         >
           Send

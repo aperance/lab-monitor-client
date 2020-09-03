@@ -15,8 +15,7 @@ import {
 import MenuIcon from "@material-ui/icons/MoreVert";
 
 import config from "../configuration";
-import { WebsocketContext } from "../websockets/WebsocketContext";
-import { refreshDevice, clearDevice } from "../websockets/messageCreators";
+import { WebsocketContext } from "../WebsocketContext";
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
@@ -73,7 +72,7 @@ const NavBar = (): JSX.Element => {
           <MenuItem
             className={classes.menuItem}
             onClick={() => {
-              ws.send(refreshDevice());
+              ws.refreshDevice();
               setAnchor(null);
             }}
           >
@@ -82,7 +81,7 @@ const NavBar = (): JSX.Element => {
           <MenuItem
             className={classes.menuItem}
             onClick={() => {
-              ws.send(clearDevice());
+              ws.clearDevice();
               setAnchor(null);
             }}
           >

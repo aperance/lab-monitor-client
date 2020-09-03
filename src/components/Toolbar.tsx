@@ -7,12 +7,7 @@ import React, { useContext, useState } from "react";
 import { List, Divider } from "@material-ui/core";
 
 import config from "../configuration";
-import {
-  commandRequest,
-  refreshDevice,
-  clearDevice
-} from "../websockets/messageCreators";
-import { WebsocketContext } from "../websockets/WebsocketContext";
+import { WebsocketContext } from "../WebsocketContext";
 import { useSelector, useDispatch } from "../redux/store";
 import { viewSelect } from "../redux/actionCreators";
 import ToolbarItem from "./ToolbarItem";
@@ -141,46 +136,44 @@ const Toolbar = (): JSX.Element => {
           name="Delete Logs"
           leftIcon="delete_sweep"
           selectedRows={selectedRows}
-          onClick={() => ws.send(commandRequest(selectedRows, "deleteLogs"))}
+          onClick={() => ws.commandRequest(selectedRows, "deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
           leftIcon="power_settings_new"
           selectedRows={selectedRows}
-          onClick={() => ws.send(commandRequest(selectedRows, "cleanStart"))}
+          onClick={() => ws.commandRequest(selectedRows, "cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
           leftIcon="memory"
           selectedRows={selectedRows}
-          onClick={() => ws.send(commandRequest(selectedRows, "ramClear"))}
+          onClick={() => ws.commandRequest(selectedRows, "ramClear")}
         />
         <ToolbarItem
           name="Reset Display"
           leftIcon="desktop_windows"
           selectedRows={selectedRows}
-          onClick={() => ws.send(commandRequest(selectedRows, "resetDisplay"))}
+          onClick={() => ws.commandRequest(selectedRows, "resetDisplay")}
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Force Refresh"
           leftIcon="refresh"
           selectedRows={selectedRows}
-          onClick={() => ws.send(refreshDevice(selectedRows))}
+          onClick={() => ws.refreshDevice(selectedRows)}
         />
         <ToolbarItem
           name="Clear Record"
           leftIcon="delete"
           selectedRows={selectedRows}
-          onClick={() => ws.send(clearDevice(selectedRows))}
+          onClick={() => ws.clearDevice(selectedRows)}
         />
       </List>
       <LogLevel
         open={logConfigOpen}
         sendDeviceCommand={(namespace: string, level: string) =>
-          ws.send(
-            commandRequest(selectedRows, "logLevel", { namespace, level })
-          )
+          ws.commandRequest(selectedRows, "logLevel", { namespace, level })
         }
         close={() => setLogConfigOpen(false)}
       />
