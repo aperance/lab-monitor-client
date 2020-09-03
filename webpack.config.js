@@ -67,7 +67,7 @@ module.exports = {
         enforce: "pre",
         test: /\.js$/,
         loader: "source-map-loader",
-        exclude: [/node_modules\/zod/]
+        exclude: [path.resolve(__dirname, "./node_modules/zod")]
       }
     ]
   }
