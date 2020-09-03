@@ -81,10 +81,7 @@ export const WebsocketProvider = (props: Props): JSX.Element => {
             }
 
             case WsMessageTypeKeys.PsToolsCommandResponse: {
-              const schema = object({
-                err: object({ name: string(), message: string() }).nullable(),
-                result: string().nullable()
-              });
+              const schema = object({ result: string() });
 
               const validPayload = schema.parse(payload);
               dispatch(psToolsResponse(validPayload));

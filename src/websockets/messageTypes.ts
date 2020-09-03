@@ -39,8 +39,7 @@ export interface DeviceDataUpdate {
 }
 
 export interface PsToolsResponse {
-  readonly err: Error | null;
-  readonly result: string | null;
+  readonly result: string;
 }
 
 export interface CommandResponse {
