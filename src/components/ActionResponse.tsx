@@ -19,24 +19,23 @@ const ActionResponse = (): JSX.Element => {
   const handleClose = () =>
     dispatch(deviceCommandResponse({ err: null, ack: null }));
 
+  let message: string | null = null;
+  if (result.err) message = `ERROR: ${result.err}`;
+  else if (result.ack === true)
+    message = "Request successfuly received by device(s).";
+  else if (result.ack === false)
+    message = "Request sent but not acknowledged. Please manually confirm.";
+
   return (
     <Snackbar
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "center"
       }}
-      open={result.err !== null || result.ack !== null}
-      autoHideDuration={60000}
+      open={message !== null}
+      autoHideDuration={6000}
       onClose={handleClose}
-      message={
-        <span id="message-id">
-          {result.err !== null
-            ? `ERROR: ${result.err}`
-            : result.ack
-            ? "Request successfuly received by device(s)."
-            : "Request sent but not acknowledged by every device. Please manually confirm."}
-        </span>
-      }
+      message={<span id="message-id">{message}</span>}
       action={
         <IconButton color="inherit" onClick={handleClose}>
           <CloseIcon />
