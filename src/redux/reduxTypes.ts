@@ -1,10 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  DeviceDataAll,
-  DeviceDataUpdate,
-  PsToolsResponse,
-  CommandResponse
-} from "../websockets/messageTypes";
+/** Inbound Message Types */
+
+export interface DeviceDataAll {
+  readonly state: {
+    [id: string]: { [property: string]: string };
+  };
+  readonly history: {
+    [id: string]: { [property: string]: [string, string | null][] };
+  };
+}
+
+export interface DeviceDataUpdate {
+  readonly id: string;
+  readonly state: { [property: string]: string | null } | null;
+  readonly history: Array<[string, [string, string | null]]> | null;
+}
+
+export interface PsToolsResponse {
+  readonly result: string;
+}
+
+export interface CommandResponse {
+  readonly err: string | null;
+  readonly ack: boolean | null;
+}
+
+/** Redux Store Types */
 
 export interface DeviceResponseState {
   command: { err: string | null; ack: boolean | null };
