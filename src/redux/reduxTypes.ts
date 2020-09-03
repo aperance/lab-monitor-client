@@ -7,7 +7,7 @@ import {
 } from "../websockets/messageTypes";
 
 export interface DeviceResponseState {
-  command: {err: Error | null; results: any[] | null};
+  command: { err: string | null; ack: boolean | null };
   psTools: string;
 }
 
@@ -66,9 +66,9 @@ export type Actions =
   | ActionWithPayload<ActionTypes.PSTOOLS_RESPONSE, PsToolsResponse>
   | ActionWithoutPayload<ActionTypes.PSTOOLS_RESPONSE_CLEAR>
   | ActionWithPayload<ActionTypes.COMMAND_RESPONSE, CommandResponse>
-  | ActionWithPayload<ActionTypes.SINGLE_ROW_SELECT, {row: string | null}>
-  | ActionWithPayload<ActionTypes.MULTI_ROW_SELECT, {row: string | null}>
-  | ActionWithPayload<ActionTypes.VIEW_SELECT, {view: string}>
+  | ActionWithPayload<ActionTypes.SINGLE_ROW_SELECT, { row: string | null }>
+  | ActionWithPayload<ActionTypes.MULTI_ROW_SELECT, { row: string | null }>
+  | ActionWithPayload<ActionTypes.VIEW_SELECT, { view: string }>
   | ActionWithoutPayload<ActionTypes.PROXY_TOGGLE>
-  | ActionWithPayload<ActionTypes.DRAGGING_SET, {isDragging: boolean}>
+  | ActionWithPayload<ActionTypes.DRAGGING_SET, { isDragging: boolean }>
   | ActionWithoutPayload<ActionTypes.RESET_ALL>;

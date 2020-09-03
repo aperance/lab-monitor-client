@@ -71,16 +71,8 @@ export const WebsocketProvider = (props: Props): JSX.Element => {
 
             case WsMessageTypeKeys.DeviceActionResponse: {
               const schema = object({
-                err: object({ name: string(), message: string() }).nullable(),
-                results: array(
-                  object({
-                    err: object({
-                      name: string(),
-                      message: string()
-                    }).nullable(),
-                    success: boolean()
-                  })
-                ).nullable()
+                err: string().nullable(),
+                ack: boolean().nullable()
               });
 
               const validPayload = schema.parse(payload);

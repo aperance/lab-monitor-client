@@ -44,11 +44,8 @@ export interface PsToolsResponse {
 }
 
 export interface CommandResponse {
-  readonly err: Error | null;
-  readonly results: Array<{
-    err: Error | null;
-    success: boolean;
-  }> | null;
+  readonly err: string | null;
+  readonly ack: boolean | null;
 }
 
 /** Outbound Message Types */
