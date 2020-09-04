@@ -1,7 +1,7 @@
-/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require("webpack");
 const path = require("path");
+const internalIp = require("internal-ip");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const GoogleFontsPlugin = require("@beyonk/google-fonts-webpack-plugin");
@@ -26,7 +26,7 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin({
       DEMO: "false",
-      BACKEND: "0.0.0.0:4000",
+      BACKEND: internalIp.v4.sync() + ":4000",
       VNC_DEMO_IP: "",
       VNC_PORT: "",
       VNC_PASSWORD: "",
