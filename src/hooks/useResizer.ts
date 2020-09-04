@@ -1,6 +1,6 @@
-import {useState, useEffect} from "react";
-import {useDispatch} from "../redux/store";
-import {draggingSet} from "../redux/actionCreators";
+import { useState, useEffect } from "react";
+import { useDispatch } from "../redux/store";
+import { draggingSet } from "../redux/actionCreators";
 
 export const useResizer = (startValue: number): [number, () => void] => {
   const [isDragging, setDragging] = useState(false);
@@ -9,7 +9,7 @@ export const useResizer = (startValue: number): [number, () => void] => {
 
   useEffect(() => {
     if (isDragging) {
-      document.onmousemove = e => {
+      document.onmousemove = (e) => {
         const rawPosition = window.innerWidth - e.pageX;
         const max = window.innerWidth - 300;
         const min = 300;

@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { object, string, array, record, tuple, boolean } from "zod";
-import { useDispatch } from "./redux/store";
+import { useDispatch } from "../redux/store";
 import {
   deviceCommandResponse,
   deviceDataAll,
   deviceDataUpdate,
   psToolsResponse
-} from "./redux/actionCreators";
+} from "../redux/actionCreators";
 
 export enum WsMessageTypeKeys {
   DeviceDataAll = "DEVICE_DATA_ALL",

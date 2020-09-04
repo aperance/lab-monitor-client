@@ -15,7 +15,7 @@ import {
 import MenuIcon from "@material-ui/icons/MoreVert";
 
 import config from "../configuration";
-import { WebsocketContext } from "../WebsocketContext";
+import { WebsocketContext } from "../contexts/WebsocketContext";
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({

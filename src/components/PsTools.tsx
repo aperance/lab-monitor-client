@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 
 import config from "../configuration";
-import { WebsocketContext } from "../WebsocketContext";
+import { WebsocketContext } from "../contexts/WebsocketContext";
 import { useSelector, useDispatch } from "../redux/store";
 import { psToolsResponseClear } from "../redux/actionCreators";
 

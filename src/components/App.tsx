@@ -6,7 +6,7 @@
 import React, { useContext } from "react";
 import { Dialog, DialogContent, DialogContentText } from "@material-ui/core";
 
-import { WebsocketContext } from "../WebsocketContext";
+import { WebsocketContext } from "../contexts/WebsocketContext";
 import { useSelector } from "../redux/store";
 import DeviceTable from "./DeviceTable";
 import Toolbar from "./Toolbar";

@@ -7,7 +7,7 @@ import React, { useContext, useState } from "react";
 import { List, Divider } from "@material-ui/core";
 
 import config from "../configuration";
-import { WebsocketContext } from "../WebsocketContext";
+import { WebsocketContext } from "../contexts/WebsocketContext";
 import { useSelector, useDispatch } from "../redux/store";
 import { viewSelect } from "../redux/actionCreators";
 import ToolbarItem from "./ToolbarItem";

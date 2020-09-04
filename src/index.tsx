@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { blue } from "@material-ui/core/colors";
 
-import { WebsocketProvider } from "./WebsocketContext";
+import { WebsocketProvider } from "./contexts/WebsocketContext";
 import store from "./redux/store";
 import App from "./components/App";
 

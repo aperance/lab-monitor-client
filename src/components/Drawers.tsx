@@ -4,10 +4,10 @@
  */
 
 import React from "react";
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-import {useResizer} from "../hooks/useResizer";
-import {useSelector} from "../redux/store";
+import { useResizer } from "../hooks/useResizer";
+import { useSelector } from "../redux/store";
 
 type Props = {
   leftDrawer: JSX.Element;

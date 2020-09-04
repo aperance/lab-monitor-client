@@ -4,18 +4,18 @@
  */
 
 import React from "react";
-import {Table, TableBody, makeStyles} from "@material-ui/core";
+import { Table, TableBody, makeStyles } from "@material-ui/core";
 
-import {useDeviceData} from "../hooks/useDeviceData";
-import {useSelector, useDispatch} from "../redux/store";
-import {singleRowSelect, multiRowSelect} from "../redux/actionCreators";
+import { useDeviceData } from "../hooks/useDeviceData";
+import { useSelector, useDispatch } from "../redux/store";
+import { singleRowSelect, multiRowSelect } from "../redux/actionCreators";
 import DeviceTableHead from "./DeviceTableHead";
 import DeviceTableRow from "./DeviceTableRow";
 import FilterBar from "./FilterBar";
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
-  root: {display: "flex", height: "calc(100vh - 60px)"},
+  root: { display: "flex", height: "calc(100vh - 60px)" },
   table: {
     height: "100%",
     display: "flex",
@@ -35,7 +35,7 @@ const DeviceTable = (): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();
   /** Array of rows currently selected by user. */
-  const selectedRows = useSelector(state => state.userSelection.rows);
+  const selectedRows = useSelector((state) => state.userSelection.rows);
   const dispatch = useDispatch();
   const {
     deviceData, // Sorted and filtered data to populate table

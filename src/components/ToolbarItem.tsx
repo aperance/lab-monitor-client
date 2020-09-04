@@ -24,7 +24,7 @@ type Props = {
 
 /** CSS-in-JS styling */
 const useStyles = makeStyles({
-  selected: {backgroundColor: "rgba(0, 0, 0, 0.04)"},
+  selected: { backgroundColor: "rgba(0, 0, 0, 0.04)" },
   root: {
     width: "200px",
     padding: "8px"
@@ -56,7 +56,10 @@ const ToolbarItem = (props: Props): JSX.Element => {
         <ListItemIcon className={classes.icon}>
           <Icon>{props.leftIcon}</Icon>
         </ListItemIcon>
-        <ListItemText classes={{primary: classes.text}} primary={props.name} />
+        <ListItemText
+          classes={{ primary: classes.text }}
+          primary={props.name}
+        />
         {props.rightIcon && (
           <ListItemIcon className={classes.icon}>
             <Icon>{props.rightIcon}</Icon>
