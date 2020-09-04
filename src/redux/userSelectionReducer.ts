@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 import { Reducer } from "redux";
 import { Actions, ActionTypes, UserSelectionState } from "./types";
 
@@ -9,32 +8,38 @@ const initialState = {
   dragging: false
 };
 
-export const userSelectionReducer: Reducer<UserSelectionState, Actions> = (
-  state = initialState,
+export const userSelectionReducer: Reducer = (
+  state: UserSelectionState = initialState,
   action: Actions
-) => {
+): UserSelectionState => {
   switch (action.type) {
     case ActionTypes.SINGLE_ROW_SELECT:
-      if (
-        action.payload.row === null ||
-        (state.rows.length === 1 &&
-          state.rows.indexOf(action.payload.row) === 0)
-      )
-        return { ...state, rows: [], view: null, history: null };
-      else return { ...state, rows: [action.payload.row] };
+      /** Deselect row if null received */
+      if (action.payload.row === null)
+        return { ...state, rows: [], view: null };
+      /** Deselect row if its already selected */
+      if (state.rows.length === 1 && state.rows[0] === action.payload.row)
+        return { ...state, rows: [], view: null };
+      /** Select row otherwise */
+      return { ...state, rows: [action.payload.row] };
 
-    case ActionTypes.MULTI_ROW_SELECT:
-      const rows: string[] = [...state.rows];
+    case ActionTypes.MULTI_ROW_SELECT: {
       if (action.payload.row === null) return { ...state };
-      else if (rows.indexOf(action.payload.row) === -1)
-        rows.push(action.payload.row);
-      else rows.splice(rows.indexOf(action.payload.row), 1);
-      return { ...state, rows, view: null, history: null };
+      const newRows = [...state.rows];
+      /** Select row if its not already selected, descelect row otherwise */
+      if (newRows.includes(action.payload.row))
+        newRows.splice(newRows.indexOf(action.payload.row), 1);
+      else newRows.push(action.payload.row); //
+      return { ...state, rows: newRows, view: null };
+    }
 
     case ActionTypes.VIEW_SELECT:
-      if (action.payload.view === state.view || state.rows.length !== 1)
-        return { ...state, view: null, history: null };
-      else return { ...state, view: action.payload.view, history: null };
+      /** Close view if no rows are selected */
+      if (state.rows.length !== 1) return { ...state, view: null };
+      /** Close view if same view is already open */
+      if (action.payload.view === state.view) return { ...state, view: null };
+      /** Otherwise open specified view */
+      return { ...state, view: action.payload.view };
 
     case ActionTypes.PROXY_TOGGLE:
       return { ...state, proxy: !state.proxy };
@@ -43,6 +48,7 @@ export const userSelectionReducer: Reducer<UserSelectionState, Actions> = (
       return { ...state, dragging: action.payload.isDragging };
 
     case ActionTypes.DEVICE_DATA_UPDATE:
+      /** Ensure row is no longer selected if deleted from table */
       if (action.payload.state === null)
         return {
           ...state,

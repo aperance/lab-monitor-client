@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 import { Reducer } from "redux";
 import { Actions, ActionTypes, DeviceResponseState } from "./types";
 
@@ -7,31 +6,34 @@ const initialState = {
   psTools: ""
 };
 
-export const deviceResponseReducer: Reducer<DeviceResponseState, Actions> = (
-  state = initialState,
-  action
-) => {
+export const deviceResponseReducer: Reducer = (
+  state: DeviceResponseState = initialState,
+  action: Actions
+): DeviceResponseState => {
   switch (action.type) {
     case ActionTypes.COMMAND_RESPONSE:
       return {
         ...state,
         command: action.payload
       };
+
     case ActionTypes.PSTOOLS_RESPONSE:
-      const newResult = state.psTools + action.payload.result;
       return {
         ...state,
-        psTools: newResult
+        psTools: state.psTools + action.payload.result
       };
+
     case ActionTypes.PSTOOLS_RESPONSE_CLEAR:
       return {
         ...state,
         psTools: ""
       };
+
     case ActionTypes.SINGLE_ROW_SELECT ||
       ActionTypes.MULTI_ROW_SELECT ||
       ActionTypes.VIEW_SELECT:
       return { ...initialState };
+
     default:
       return { ...state };
   }

@@ -1,30 +1,29 @@
 import { Reducer } from "redux";
 import { Actions, ActionTypes, TableDataState } from "./types";
 
-const initialState = {};
-
-export const tableDataReducer: Reducer<TableDataState, Actions> = (
-  state = initialState,
-  action
-) => {
+export const tableDataReducer: Reducer = (
+  state: TableDataState = {},
+  action: Actions
+): TableDataState => {
   switch (action.type) {
     case ActionTypes.DEVICE_DATA_ALL:
       return { ...action.payload.state };
-    case ActionTypes.DEVICE_DATA_UPDATE:
-      if (action.payload.state === null) {
-        const newState = { ...state };
-        delete newState[action.payload.id];
-        return newState;
-      } else
-        return {
-          ...state,
-          [action.payload.id]: {
-            ...state[action.payload.id],
-            ...action.payload.state
-          }
+
+    case ActionTypes.DEVICE_DATA_UPDATE: {
+      const newState = { ...state };
+      /** Merge state update is provided, clear state otherwise */
+      if (action.payload.state !== null)
+        newState[action.payload.id] = {
+          ...state[action.payload.id],
+          ...action.payload.state
         };
+      else delete newState[action.payload.id];
+      return newState;
+    }
+
     case ActionTypes.RESET_ALL:
-      return { ...initialState };
+      return {};
+
     default:
       return { ...state };
   }
