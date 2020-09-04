@@ -1,12 +1,16 @@
-import { Reducer } from "redux";
-import { Actions, ActionTypes, DeviceResponseState } from "./types";
+import { Actions, ActionTypes } from "./actionCreators";
+
+export interface DeviceResponseState {
+  command: { err: string | null; ack: boolean | null };
+  psTools: string;
+}
 
 const initialState = {
   command: { err: null, ack: null },
   psTools: ""
 };
 
-export const deviceResponseReducer: Reducer = (
+export const deviceResponseReducer = (
   state: DeviceResponseState = initialState,
   action: Actions
 ): DeviceResponseState => {

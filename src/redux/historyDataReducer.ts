@@ -1,7 +1,12 @@
-import { Reducer } from "redux";
-import { Actions, ActionTypes, HistoryDataState } from "./types";
+import { Actions, ActionTypes } from "./actionCreators";
 
-export const historyDataReducer: Reducer = (
+export interface HistoryDataState {
+  [id: string]: {
+    [property: string]: Array<[string, string | null]>;
+  };
+}
+
+export const historyDataReducer = (
   state: HistoryDataState = {},
   action: Actions
 ): HistoryDataState => {

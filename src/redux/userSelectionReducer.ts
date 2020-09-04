@@ -1,5 +1,11 @@
-import { Reducer } from "redux";
-import { Actions, ActionTypes, UserSelectionState } from "./types";
+import { Actions, ActionTypes } from "./actionCreators";
+
+export interface UserSelectionState {
+  rows: string[];
+  view: string | null;
+  proxy: boolean;
+  dragging: boolean;
+}
 
 const initialState = {
   rows: [],
@@ -8,7 +14,7 @@ const initialState = {
   dragging: false
 };
 
-export const userSelectionReducer: Reducer = (
+export const userSelectionReducer = (
   state: UserSelectionState = initialState,
   action: Actions
 ): UserSelectionState => {

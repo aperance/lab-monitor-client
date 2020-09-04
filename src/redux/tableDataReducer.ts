@@ -1,7 +1,12 @@
-import { Reducer } from "redux";
-import { Actions, ActionTypes, TableDataState } from "./types";
+import { Actions, ActionTypes } from "./actionCreators";
 
-export const tableDataReducer: Reducer = (
+export interface TableDataState {
+  [id: string]: {
+    [property: string]: string | null;
+  };
+}
+
+export const tableDataReducer = (
   state: TableDataState = {},
   action: Actions
 ): TableDataState => {

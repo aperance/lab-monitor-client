@@ -13,13 +13,26 @@ import {
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 
-import { tableDataReducer } from "./tableDataReducer";
-import { historyDataReducer } from "./historyDataReducer";
-import { deviceResponseReducer } from "./deviceResponseReducer";
-import { userSelectionReducer } from "./userSelectionReducer";
-import { Actions, StoreState } from "./types";
+import { tableDataReducer, TableDataState } from "./tableDataReducer";
+import { historyDataReducer, HistoryDataState } from "./historyDataReducer";
+import {
+  deviceResponseReducer,
+  DeviceResponseState
+} from "./deviceResponseReducer";
+import {
+  userSelectionReducer,
+  UserSelectionState
+} from "./userSelectionReducer";
+import { Actions } from "./actionCreators";
 
-export default createStore(
+export interface StoreState {
+  tableData: TableDataState;
+  historyData: HistoryDataState;
+  deviceResponse: DeviceResponseState;
+  userSelection: UserSelectionState;
+}
+
+export const store = createStore(
   combineReducers<StoreState>({
     tableData: tableDataReducer,
     historyData: historyDataReducer,
