@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React from "react";
 import {
   FormControl,
@@ -10,13 +5,13 @@ import {
   FormGroup,
   FormLabel,
   Switch,
-  makeStyles
+  makeStyles,
+  Checkbox
 } from "@material-ui/core";
 
 import config from "../configuration";
 import { useSelector, useDispatch } from "../redux/store";
 import { proxyToggle } from "../redux/actionCreators";
-import FilterBarItem from "./FilterBarItem";
 
 type Props = {
   selectedFilters: { [property: string]: string[] };
@@ -42,6 +37,24 @@ const useStyles = makeStyles({
   formGroup: {
     margin: "4px 8px 16px 8px"
   },
+  formControlLabel: {
+    marginLeft: "0px",
+    marginRight: "0px"
+  },
+  label: {
+    fontSize: "0.825rem",
+    color: "rgba(0, 0, 0, 0.54)",
+    fontWeight: 400
+  },
+  checkbox: {
+    "& svg": {
+      width: "0.9rem"
+    },
+    fontSize: "1.0rem",
+    width: "24px",
+    height: "18px",
+    padding: "0px"
+  },
   switchForm: {
     transform: "scale(0.75)",
     margin: 0,
@@ -56,6 +69,11 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ * Sidebar for device table containing filtering options for the user.
+ * Also contains http proxy enable switch with redux binding.
+ * Filter state maintained by parent component.
+ */
 const FilterBar = (props: Props): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();
@@ -64,22 +82,29 @@ const FilterBar = (props: Props): JSX.Element => {
 
   return (
     <FormControl className={classes.root}>
-      {config.filters.map((filter) => {
+      {config.filters.map(({ property, title, options }) => {
         return (
-          <div key={filter.property}>
+          <div key={property}>
             <FormLabel className={classes.formLabel} focused={false}>
-              {filter.title}
+              {title}
             </FormLabel>
             <FormGroup className={classes.formGroup}>
-              {Object.entries(filter.options).map(([label, regex]) => {
+              {Object.entries(options).map(([label, regex]) => {
                 return (
-                  <FilterBarItem
-                    key={label}
+                  <FormControlLabel
+                    className={classes.formControlLabel}
+                    classes={{ label: classes.label }}
+                    control={
+                      <Checkbox
+                        className={classes.checkbox}
+                        color="primary"
+                        checked={props.selectedFilters[property]?.includes(
+                          regex
+                        )}
+                        onClick={() => props.setFilters({ property, regex })}
+                      />
+                    }
                     label={label}
-                    regex={regex}
-                    property={filter.property}
-                    selectedFilters={props.selectedFilters}
-                    setFilters={props.setFilters}
                   />
                 );
               })}
@@ -87,24 +112,27 @@ const FilterBar = (props: Props): JSX.Element => {
           </div>
         );
       })}
-      {process.env.DEMO !== "true" && (
-        <FormControlLabel
-          classes={{
-            root: classes.switchForm,
-            label: classes.switchLabel
-          }}
-          control={
-            <Switch
-              checked={!isProxyEnabled}
-              color="primary"
-              disableRipple={true}
-              onClick={() => dispatch(proxyToggle())}
-            />
-          }
-          label="Disable Proxy"
-          labelPlacement="start"
-        />
-      )}
+      {
+        /** HTTP Proxy Option */
+        process.env.DEMO !== "true" && (
+          <FormControlLabel
+            classes={{
+              root: classes.switchForm,
+              label: classes.switchLabel
+            }}
+            control={
+              <Switch
+                checked={!isProxyEnabled}
+                color="primary"
+                disableRipple={true}
+                onClick={() => dispatch(proxyToggle())}
+              />
+            }
+            label="Disable Proxy"
+            labelPlacement="start"
+          />
+        )
+      }
     </FormControl>
   );
 };

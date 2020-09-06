@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 
@@ -60,6 +55,12 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ * Container element for toolbar and sub view components. Will slide in from
+ * the left side when row is selected to reveal toolbar. Will slide in further
+ * to reveal subview if one is selected. User can click and drag on drawer
+ * border to resize (handled by useResizer hook).
+ */
 const Drawers = (props: Props): JSX.Element => {
   /** Current sub view width and function to start resize by dragging */
   const [viewWidth, triggerResize] = useResizer(800);
@@ -68,7 +69,8 @@ const Drawers = (props: Props): JSX.Element => {
     if (state.userSelection.rows.length === 0) return 0;
     return state.userSelection.view ? 2 : 1;
   });
-  /** Generated CSS class names */
+
+  /** Generated CSS class names. Style props to dynamically modify CSS. */
   const classes = useStyles({
     /** Full drawer width (sub view width plus toolbar width) */
     width: viewWidth + 200,

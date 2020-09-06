@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React from "react";
 import { Snackbar, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -10,6 +5,10 @@ import CloseIcon from "@material-ui/icons/Close";
 import { useSelector, useDispatch } from "../redux/store";
 import { deviceCommandResponse } from "../redux/actionCreators";
 
+/**
+ * Popup element to display the result of requests sent to devices.
+ * Wrapper around MUI snackbar element.
+ */
 const ActionResponse = (): JSX.Element => {
   /** Accumulated responses from target devices for recent action. */
   const result = useSelector((state) => state.deviceResponse.command);
