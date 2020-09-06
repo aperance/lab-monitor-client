@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React from "react";
 import { Fab, makeStyles, CircularProgress } from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
@@ -59,6 +54,10 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ * Component implementing a VNC client connected to the selected device.
+ * Connection handled by useVNC hook.
+ */
 const VncViewer = (): JSX.Element => {
   /** IP Address of the target device. */
   const ipAddress = useSelector((state) =>
@@ -77,21 +76,29 @@ const VncViewer = (): JSX.Element => {
 
   return (
     <div className={classes.root}>
-      {status === "disconnected" && (
-        <span className={classes.spinner}>
-          <CircularProgress size={60} />
-        </span>
-      )}
-      {status === "error" && (
-        <div className={classes.errorDiv}>
-          <p>
-            Unable to establish VNC connection. Make sure VNC server is running
-            on the target device.
-          </p>
-        </div>
-      )}
+      {
+        /** Display a circular progress indicator when not connected */
+        status === "disconnected" && (
+          <span className={classes.spinner}>
+            <CircularProgress size={60} />
+          </span>
+        )
+      }
+      {
+        /** Display error message if connection fails */
+        status === "error" && (
+          <div className={classes.errorDiv}>
+            <p>
+              Unable to establish VNC connection. Make sure VNC server is
+              running on the target device.
+            </p>
+          </div>
+        )
+      }
       <div>
+        {/* Ref where VNC client will be injected into DOM */}
         <span ref={targetRef} />
+        {/* Button to fit viewer to screen */}
         <Fab
           size="small"
           className={classes.buttonOne}
@@ -99,27 +106,30 @@ const VncViewer = (): JSX.Element => {
         >
           {scaled ? <ExpandIcon /> : <ShrinkIcon />}
         </Fab>
-        {process.env.DEMO !== "true" && (
-          <Fab
-            size="small"
-            className={classes.buttonTwo}
-            href={URL.createObjectURL(
-              new Blob(
-                [
-                  `[connection]\n` +
-                    `host=${ipAddress}\n` +
-                    `port=${process.env.VNC_PORT}\n` +
-                    `password=${process.env.VNC_PASSWORD_ENC}`
-                ],
-                { type: "text/plain" }
-              )
-            )}
-            download="test.vnc"
-            target="_blank"
-          >
-            <SaveIcon />
-          </Fab>
-        )}
+        {
+          /** Download link for .vnc file to be used by dedicated VNC client */
+          process.env.DEMO !== "true" && (
+            <Fab
+              size="small"
+              className={classes.buttonTwo}
+              href={URL.createObjectURL(
+                new Blob(
+                  [
+                    `[connection]\n` +
+                      `host=${ipAddress}\n` +
+                      `port=${process.env.VNC_PORT}\n` +
+                      `password=${process.env.VNC_PASSWORD_ENC}`
+                  ],
+                  { type: "text/plain" }
+                )
+              )}
+              download="test.vnc"
+              target="_blank"
+            >
+              <SaveIcon />
+            </Fab>
+          )
+        }
       </div>
     </div>
   );

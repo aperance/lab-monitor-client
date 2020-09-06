@@ -44,6 +44,11 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ * Sub view component allowing user to execute OS commands on device.
+ * Commands are sent to backend server which then runs PSTools utilities
+ * to execute command remotely. Styled to simulate a command prompt window.
+ */
 const PsTools = (): JSX.Element | null => {
   const [preset, setPreset] = useState("");
   const [mode, setMode] = useState("");

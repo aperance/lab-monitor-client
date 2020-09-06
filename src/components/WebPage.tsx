@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React from "react";
 import { Fab, makeStyles } from "@material-ui/core";
 import OpenIcon from "@material-ui/icons/OpenInNew";
@@ -22,6 +17,10 @@ const useStyles = makeStyles({
   frame: { userSelect: "none", borderWidth: "0px" }
 });
 
+/**
+ * Sub view component which is a wrapper around an iframe used
+ * to display state property page hosted on selected device.
+ */
 const WebPage = (): JSX.Element | null => {
   /** Generated CSS class names */
   const classes = useStyles();
@@ -38,6 +37,7 @@ const WebPage = (): JSX.Element | null => {
 
   return (
     <>
+      {/* Button to open page in seperate window */}
       <Fab size="small" className={classes.button} href={url} target="_blank">
         <OpenIcon />
       </Fab>

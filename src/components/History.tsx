@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React, { useState } from "react";
 import { ListItem, ListItemText, makeStyles } from "@material-ui/core";
 import { List, AutoSizer } from "react-virtualized";
@@ -27,6 +22,11 @@ const useStyles = makeStyles({
   text: { fontSize: "0.75rem" }
 });
 
+/**
+ * Sub view component listing all known state properties for selected device.
+ * User can select one of the properties to get a history of modifications to
+ * the property value with timestamp.
+ */
 const HistoryList = (): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();

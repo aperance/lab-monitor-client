@@ -23,11 +23,17 @@ export enum WsMessageTypeKeys {
   Error = "ERROR"
 }
 
-interface WsMessage {
-  readonly type: WsMessageTypeKeys;
-  readonly payload?: unknown;
-}
+type WsMessage = {
+  type: WsMessageTypeKeys;
+  payload?: unknown;
+};
 
+type Props = { children: JSX.Element };
+
+/**
+ * React Context that provides child components access to the websocket
+ * connection status as well as all available outgoing ws message creators.
+ */
 export const WebsocketContext = React.createContext(
   {} as {
     status: string;
@@ -42,8 +48,10 @@ export const WebsocketContext = React.createContext(
   }
 );
 
-type Props = { children: JSX.Element };
-
+/**
+ * Provider component for WebsocketContext.
+ * Manages websocket connection state and inbound ws message routing.
+ */
 export const WebsocketProvider = (props: Props): JSX.Element => {
   const [status, setStatus] = useState("disconnected");
   const [retry, setRetry] = useState(false);

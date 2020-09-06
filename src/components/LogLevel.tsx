@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
@@ -32,6 +27,9 @@ const useStyles = makeStyles({
   selectLevel: { width: "90px" }
 });
 
+/**
+ * Modal component allowing user to change logging parameters on devices.
+ */
 const LogLevel = (props: Props): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();

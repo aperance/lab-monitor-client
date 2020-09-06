@@ -37,6 +37,9 @@ const useStyles = makeStyles({
   menuItem: { fontSize: "0.8rem" }
 });
 
+/**
+ * Top nav bar component containing app title and utility menu.
+ */
 const NavBar = (): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();

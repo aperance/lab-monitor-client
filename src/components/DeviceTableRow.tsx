@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React, { useState, useRef, useEffect } from "react";
 import { TableRow, TableCell, makeStyles } from "@material-ui/core";
 import StatusIndicator from "@material-ui/icons/Lens";
@@ -50,13 +45,19 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ * Table row component for device table.
+ * Includes status icon that flashes on update.
+ */
 const DeviceTableRow = (props: Props): JSX.Element => {
   const isInitialMount = useRef(true);
+  /** Status icon animation state */
   const [animate, setAnimate] = useState<boolean | null>(null);
   /** Generated CSS class names */
   const classes = useStyles({ status: props.rowData.status, animate });
 
   useEffect(() => {
+    /** Skip status icon animation on initial load. */
     if (isInitialMount.current) isInitialMount.current = false;
     else {
       setAnimate(true);

@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React from "react";
 import { Table, TableBody, makeStyles } from "@material-ui/core";
 
@@ -31,6 +26,12 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ * Table listing all devices and with key details. Container for table header
+ * component, filter bar component, and table row component for each device.
+ * User may click on one or more rows to open toolbar with more options.
+ * useDeviceData hook manages table data and state of filtering and sorting.
+ */
 const DeviceTable = (): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();
@@ -56,19 +57,23 @@ const DeviceTable = (): JSX.Element => {
             setSorting={setSorting}
           />
           <TableBody>
-            {deviceData.map(([rowId, rowData]) => (
-              <DeviceTableRow
-                key={rowId}
-                rowData={rowData}
-                selected={selectedRows.includes(rowId)}
-                handleRowClick={(e: MouseEvent) => {
-                  if (e.altKey || e.ctrlKey) dispatch(multiRowSelect(rowId));
-                  else dispatch(singleRowSelect(rowId));
-                }}
-              />
-            ))}
+            {
+              /** Generate table row for each device in data store. */
+              deviceData.map(([rowId, rowData]) => (
+                <DeviceTableRow
+                  key={rowId}
+                  rowData={rowData}
+                  selected={selectedRows.includes(rowId)}
+                  handleRowClick={(e: MouseEvent) => {
+                    if (e.altKey || e.ctrlKey) dispatch(multiRowSelect(rowId));
+                    else dispatch(singleRowSelect(rowId));
+                  }}
+                />
+              ))
+            }
           </TableBody>
         </Table>
+        {/* Clear row selection when empty space is clicked. */}
         <div
           className={classes.belowTable}
           onClick={() => dispatch(singleRowSelect(null))}

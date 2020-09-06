@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React from "react";
 import { TableHead, TableRow, TableCell, makeStyles } from "@material-ui/core";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
@@ -22,6 +17,10 @@ const useStyles = makeStyles({
   cell: { fontSize: "0.825rem", backgroundColor: "#ffffff" }
 });
 
+/**
+ * Header component for device table. User may click on column headers to
+ * control table sorting (sorting state contolled by parent).
+ */
 const DeviceTableHead = (props: Props): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();
