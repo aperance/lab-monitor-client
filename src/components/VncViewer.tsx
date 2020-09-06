@@ -4,14 +4,13 @@
  */
 
 import React from "react";
-import { Fab, makeStyles } from "@material-ui/core";
+import { Fab, makeStyles, CircularProgress } from "@material-ui/core";
 import ExpandIcon from "@material-ui/icons/Fullscreen";
 import ShrinkIcon from "@material-ui/icons/FullscreenExit";
 import SaveIcon from "@material-ui/icons/GetApp";
 
 import { useSelector } from "../redux/store";
 import { useVnc } from "../hooks/useVnc";
-import Spinner from "./Spinner";
 
 type StyleProps = {
   connected: boolean;
@@ -41,6 +40,12 @@ const useStyles = makeStyles({
     top: "72px",
     backgroundColor: "white",
     opacity: 0.5
+  },
+  spinner: {
+    height: "90vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   },
   errorDiv: {
     display: "flex",
@@ -72,7 +77,11 @@ const VncViewer = (): JSX.Element => {
 
   return (
     <div className={classes.root}>
-      {status === "disconnected" && <Spinner />}
+      {status === "disconnected" && (
+        <span className={classes.spinner}>
+          <CircularProgress size={60} />
+        </span>
+      )}
       {status === "error" && (
         <div className={classes.errorDiv}>
           <p>
