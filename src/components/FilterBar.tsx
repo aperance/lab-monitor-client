@@ -105,6 +105,7 @@ const FilterBar = (props: Props): JSX.Element => {
                       />
                     }
                     label={label}
+                    key={label}
                   />
                 );
               })}
