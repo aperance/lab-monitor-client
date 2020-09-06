@@ -1,15 +1,29 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { useReducer } from "react";
 
 import config from "../configuration";
 import { useSelector } from "../redux/store";
 
-type RowData = [string, { [x: string]: string | null }];
+/**
+ * Shape of table data for each device.
+ *
+ * [(device ID), Record<(property key), (property value)>]
+ */
+type RowData = [string, Record<string, string | null>];
 
 /**
- *
- * @param selectedFilters
- * @param action
+ * Shape of useDeviceData hook return value.
+ */
+type UseDeviceData = {
+  deviceData: RowData[];
+  selectedFilters: { [x: string]: string[] };
+  setFilters: React.Dispatch<{ property: string; regex: string }>;
+  selectedSorting: { property: string; reverse: boolean };
+  setSorting: React.Dispatch<{ property: string }>;
+};
+
+/**
+ * Reducer for updates to selected filter state. On action will add filter
+ * if not already included or remove filter if it is already included.
  */
 const filterReducer = (
   selectedFilters: { [x: string]: string[] },
@@ -24,9 +38,9 @@ const filterReducer = (
 };
 
 /**
- *
- * @param selectedSorting
- * @param action
+ * Reducer for updates to selected sorting state. On action will change
+ * sorting to new property if different than current property, or toggle
+ * sort direction if same as current property.
  */
 const sortingReducer = (
   selectedSorting: { property: string; reverse: boolean },
@@ -41,7 +55,11 @@ const sortingReducer = (
   };
 };
 
-export const useDeviceData = () => {
+/**
+ * Custom hook that pulls table data from redux store, properly formats
+ * values, and applies any enabled filters or sorting.
+ */
+export const useDeviceData = (): UseDeviceData => {
   const rawData = useSelector((state) => Object.entries(state.tableData));
   const [selectedFilters, setFilters] = useReducer(filterReducer, {});
   const [selectedSorting, setSorting] = useReducer(sortingReducer, {
@@ -50,7 +68,8 @@ export const useDeviceData = () => {
   });
 
   /**
-   *
+   * Function to replace cryptic internal state values with versions
+   * formatted to be more clear to user, as specified in config.json.
    */
   const replaceFunction = ([id, rowData]: RowData): RowData => {
     config.columns
@@ -69,6 +88,9 @@ export const useDeviceData = () => {
     return [id, rowData];
   };
 
+  /**
+   * Function to filter device data by all selected filters.
+   */
   const filterFunction = ([, rowData]: RowData): boolean =>
     Object.entries(selectedFilters).every(
       ([property, regexArray]) =>
@@ -76,6 +98,9 @@ export const useDeviceData = () => {
         regexArray.length === 0
     );
 
+  /**
+   * Filter to sort device data by selected property and direction.
+   */
   const sortFunction = (key1: RowData, key2: RowData): 1 | -1 => {
     const prop =
       key1[1][selectedSorting.property] !== key2[1][selectedSorting.property]
@@ -86,13 +111,11 @@ export const useDeviceData = () => {
     return result ? 1 : -1;
   };
 
-  const conditionedData = rawData
-    .map(replaceFunction)
-    .filter(filterFunction)
-    .sort(sortFunction);
-
   return {
-    deviceData: conditionedData,
+    deviceData: rawData
+      .map(replaceFunction)
+      .filter(filterFunction)
+      .sort(sortFunction),
     selectedFilters,
     setFilters,
     selectedSorting,
