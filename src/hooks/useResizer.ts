@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "../redux/store";
 import { draggingSet } from "../redux/actionCreators";
 
+/**
+ * Custom hook to resize drawer component width when
+ * user clicks and drags on drawer border.
+ */
 export const useResizer = (startValue: number): [number, () => void] => {
   const [isDragging, setDragging] = useState(false);
   const [position, setPosition] = useState(startValue);

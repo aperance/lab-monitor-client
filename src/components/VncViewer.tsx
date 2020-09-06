@@ -67,7 +67,7 @@ const VncViewer = (): JSX.Element => {
   );
   /** Used to determine if vnc area needs to be resized. */
   const isDragging = useSelector((state) => state.userSelection.dragging);
-  const { targetRef, status, scaled, setScaled } = useVnc(
+  const { targetRef, status, isFitToWindow, setFitToWindow } = useVnc(
     ipAddress,
     isDragging
   );
@@ -102,9 +102,9 @@ const VncViewer = (): JSX.Element => {
         <Fab
           size="small"
           className={classes.buttonOne}
-          onClick={() => setScaled(!scaled)}
+          onClick={() => setFitToWindow(!isFitToWindow)}
         >
-          {scaled ? <ExpandIcon /> : <ShrinkIcon />}
+          {isFitToWindow ? <ExpandIcon /> : <ShrinkIcon />}
         </Fab>
         {
           /** Download link for .vnc file to be used by dedicated VNC client */
