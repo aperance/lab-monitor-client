@@ -1,25 +1,43 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React, { useContext } from "react";
-import { Dialog, DialogContent, DialogContentText } from "@material-ui/core";
+import {
+  makeStyles,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  CircularProgress
+} from "@material-ui/core";
 
 import { WebsocketContext } from "../contexts/WebsocketContext";
 import { useSelector } from "../redux/store";
+import ActionResponse from "./ActionResponse";
 import DeviceTable from "./DeviceTable";
+import NavBar from "./NavBar";
+import Drawers from "./Drawers";
 import Toolbar from "./Toolbar";
 import History from "./History";
-import WebPage from "./WebPage";
 import PsTools from "./PsTools";
 import VncViewer from "./VncViewer";
-import NavBar from "./NavBar";
-import Spinner from "./Spinner";
-import Drawers from "./Drawers";
-import ActionResponse from "./ActionResponse";
+import WebPage from "./WebPage";
 
+/** CSS-in-JS styling */
+const useStyles = makeStyles({
+  spinner: {
+    height: "90vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
+
+/**
+ * Primary component of app. When connected to backend this component will
+ * render the app layout. When disconnected a circular progress indicator is
+ * rendered. If an error occurs while connecting to backend that message will
+ * be rendered.
+ */
 const App = (): JSX.Element => {
+  /** Generated CSS class names */
+  const classes = useStyles();
   /** True if initial data payload received via web socket. */
   const isDataReceived = useSelector(
     ({ tableData }) => Object.keys(tableData).length !== 0
@@ -34,7 +52,11 @@ const App = (): JSX.Element => {
     wsStatus === "disconnected" ||
     (wsStatus === "connected" && isDataReceived === false)
   ) {
-    return <Spinner />;
+    return (
+      <span className={classes.spinner}>
+        <CircularProgress size={60} />
+      </span>
+    );
   }
 
   /** Display full layout once data is received. */
