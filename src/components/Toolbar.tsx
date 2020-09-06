@@ -1,9 +1,5 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React, { useContext, useState } from "react";
+import { shallowEqual } from "react-redux";
 import { List, Divider } from "@material-ui/core";
 
 import config from "../configuration";
@@ -13,8 +9,15 @@ import { viewSelect } from "../redux/actionCreators";
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
 
+/**
+ * Toolbar displayed to user when a row is selected containing available
+ * sub views and device actions (i.e. reboot).
+ */
 const Toolbar = (): JSX.Element => {
-  const selectedRows = useSelector((state) => state.userSelection.rows);
+  const selectedRows = useSelector(
+    (state) => state.userSelection.rows,
+    shallowEqual // Needed for array comparison
+  );
   const selectedSubView = useSelector((state) => state.userSelection.view);
   const isProxyEnabled = useSelector((state) => state.userSelection.proxy);
   const dispatch = useDispatch();
@@ -180,4 +183,5 @@ const Toolbar = (): JSX.Element => {
     </>
   );
 };
+
 export default Toolbar;

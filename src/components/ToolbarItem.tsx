@@ -1,8 +1,3 @@
-/**
- *
- * @packageDocumentation
- */
-
 import React from "react";
 import {
   ListItem,
@@ -46,6 +41,9 @@ const useStyles = makeStyles({
   }
 });
 
+/**
+ * Component rendered for each item in the toolbar component.
+ */
 const ToolbarItem = (props: Props): JSX.Element => {
   /** Generated CSS class names */
   const classes = useStyles();
@@ -71,15 +69,4 @@ const ToolbarItem = (props: Props): JSX.Element => {
   );
 };
 
-const memoizedToolbarItem = React.memo(ToolbarItem, (prevProps, nextProps) => {
-  const didIsSelectedChange = prevProps.isSelected !== nextProps.isSelected;
-  const didSelectedRowsChange =
-    prevProps.selectedRows &&
-    nextProps.selectedRows &&
-    (prevProps.selectedRows[0] !== nextProps.selectedRows[0] ||
-      prevProps.selectedRows.length !== nextProps.selectedRows.length);
-
-  return !didIsSelectedChange && !didSelectedRowsChange;
-});
-
-export default memoizedToolbarItem;
+export default ToolbarItem;
