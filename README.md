@@ -5,3 +5,5 @@ A utility that monitors the state of multiple embedded devices and displays the 
 The backend component is a Node.js server that contiuously polls multiple embedded devices and requests their current state using a provided api. The frontend component is a React/Redux application which receives the current state for all devices via a websocket connection and displays it to the user.
 
 This repository stores the source code for the frontend only. The backend repository can be found at <https://www.github.com/aperance/lab-monitor-server>.
+
+A live demo version of this app is hosted at <https://qa.aperance.dev>.
