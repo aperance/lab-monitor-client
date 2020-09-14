@@ -5,7 +5,7 @@ import { List, Divider } from "@material-ui/core";
 import config from "../configuration";
 import { WebsocketContext } from "../contexts/WebsocketContext";
 import { useSelector, useDispatch } from "../redux/store";
-import { viewSelect } from "../redux/actionCreators";
+import { viewSelect, deviceCommandResponse } from "../redux/actionCreators";
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
 
@@ -24,20 +24,30 @@ const Toolbar = (): JSX.Element => {
   const ws = useContext(WebsocketContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
 
+  const showDemoMessage = () =>
+    dispatch(
+      deviceCommandResponse({
+        err: "Feature not available in demo mode.",
+        ack: null
+      })
+    );
+
   return (
     <>
       <List draggable={false}>
         {selectedRows.length <= 1 && (
           <>
-            {process.env.DEMO !== "true" && (
-              <ToolbarItem
-                name="State"
-                leftIcon="list_alt"
-                rightIcon="navigate_next"
-                isSelected={selectedSubView === "statePage"}
-                onClick={() => dispatch(viewSelect("statePage"))}
-              />
-            )}
+            <ToolbarItem
+              name="State"
+              leftIcon="list_alt"
+              rightIcon="navigate_next"
+              isSelected={selectedSubView === "statePage"}
+              onClick={() =>
+                process.env.DEMO !== "true"
+                  ? showDemoMessage()
+                  : dispatch(viewSelect("statePage"))
+              }
+            />
             <ToolbarItem
               name="History"
               leftIcon="history"
@@ -45,15 +55,17 @@ const Toolbar = (): JSX.Element => {
               isSelected={selectedSubView === "history"}
               onClick={() => dispatch(viewSelect("history"))}
             />
-            {process.env.DEMO !== "true" && (
-              <ToolbarItem
-                name="PSTools"
-                leftIcon="code"
-                rightIcon="navigate_next"
-                isSelected={selectedSubView === "psTools"}
-                onClick={() => dispatch(viewSelect("psTools"))}
-              />
-            )}
+            <ToolbarItem
+              name="PSTools"
+              leftIcon="code"
+              rightIcon="navigate_next"
+              isSelected={selectedSubView === "psTools"}
+              onClick={() =>
+                process.env.DEMO !== "true"
+                  ? showDemoMessage()
+                  : dispatch(viewSelect("psTools"))
+              }
+            />
             <ToolbarItem
               name="VNC"
               leftIcon="picture_in_picture"
@@ -129,56 +141,84 @@ const Toolbar = (): JSX.Element => {
             <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
           </>
         )}
-        {process.env.DEMO !== "true" && (
-          <ToolbarItem
-            name="Log Level"
-            leftIcon="tune"
-            selectedRows={selectedRows}
-            onClick={() => setLogConfigOpen(true)}
-          />
-        )}
+        <ToolbarItem
+          name="Log Level"
+          leftIcon="tune"
+          selectedRows={selectedRows}
+          onClick={() =>
+            process.env.DEMO !== "true"
+              ? showDemoMessage()
+              : setLogConfigOpen(true)
+          }
+        />
         <ToolbarItem
           name="Delete Logs"
           leftIcon="delete_sweep"
           selectedRows={selectedRows}
-          onClick={() => ws.commandRequest(selectedRows, "deleteLogs")}
+          onClick={() =>
+            process.env.DEMO !== "true"
+              ? showDemoMessage()
+              : ws.commandRequest(selectedRows, "deleteLogs")
+          }
         />
         <ToolbarItem
           name="Clean Start"
           leftIcon="power_settings_new"
           selectedRows={selectedRows}
-          onClick={() => ws.commandRequest(selectedRows, "cleanStart")}
+          onClick={() =>
+            process.env.DEMO !== "true"
+              ? showDemoMessage()
+              : ws.commandRequest(selectedRows, "cleanStart")
+          }
         />
         <ToolbarItem
           name="RAM Clear"
           leftIcon="memory"
           selectedRows={selectedRows}
-          onClick={() => ws.commandRequest(selectedRows, "ramClear")}
+          onClick={() =>
+            process.env.DEMO !== "true"
+              ? showDemoMessage()
+              : ws.commandRequest(selectedRows, "ramClear")
+          }
         />
         <ToolbarItem
           name="Reset Display"
           leftIcon="desktop_windows"
           selectedRows={selectedRows}
-          onClick={() => ws.commandRequest(selectedRows, "resetDisplay")}
+          onClick={() =>
+            process.env.DEMO !== "true"
+              ? showDemoMessage()
+              : ws.commandRequest(selectedRows, "resetDisplay")
+          }
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Force Refresh"
           leftIcon="refresh"
           selectedRows={selectedRows}
-          onClick={() => ws.refreshDevice(selectedRows)}
+          onClick={() =>
+            process.env.DEMO !== "true"
+              ? showDemoMessage()
+              : ws.refreshDevice(selectedRows)
+          }
         />
         <ToolbarItem
           name="Clear Record"
           leftIcon="delete"
           selectedRows={selectedRows}
-          onClick={() => ws.clearDevice(selectedRows)}
+          onClick={() =>
+            process.env.DEMO !== "true"
+              ? showDemoMessage()
+              : ws.clearDevice(selectedRows)
+          }
         />
       </List>
       <LogLevel
         open={logConfigOpen}
         sendDeviceCommand={(namespace: string, level: string) =>
-          ws.commandRequest(selectedRows, "logLevel", { namespace, level })
+          process.env.DEMO !== "true"
+            ? showDemoMessage()
+            : ws.commandRequest(selectedRows, "logLevel", { namespace, level })
         }
         close={() => setLogConfigOpen(false)}
       />
