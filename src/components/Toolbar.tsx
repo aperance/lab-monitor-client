@@ -43,7 +43,7 @@ const Toolbar = (): JSX.Element => {
               rightIcon="navigate_next"
               isSelected={selectedSubView === "statePage"}
               onClick={() =>
-                process.env.DEMO !== "true"
+                process.env.DEMO === "true"
                   ? showDemoMessage()
                   : dispatch(viewSelect("statePage"))
               }
@@ -61,7 +61,7 @@ const Toolbar = (): JSX.Element => {
               rightIcon="navigate_next"
               isSelected={selectedSubView === "psTools"}
               onClick={() =>
-                process.env.DEMO !== "true"
+                process.env.DEMO === "true"
                   ? showDemoMessage()
                   : dispatch(viewSelect("psTools"))
               }
@@ -146,7 +146,7 @@ const Toolbar = (): JSX.Element => {
           leftIcon="tune"
           selectedRows={selectedRows}
           onClick={() =>
-            process.env.DEMO !== "true"
+            process.env.DEMO === "true"
               ? showDemoMessage()
               : setLogConfigOpen(true)
           }
@@ -156,7 +156,7 @@ const Toolbar = (): JSX.Element => {
           leftIcon="delete_sweep"
           selectedRows={selectedRows}
           onClick={() =>
-            process.env.DEMO !== "true"
+            process.env.DEMO === "true"
               ? showDemoMessage()
               : ws.commandRequest(selectedRows, "deleteLogs")
           }
@@ -166,7 +166,7 @@ const Toolbar = (): JSX.Element => {
           leftIcon="power_settings_new"
           selectedRows={selectedRows}
           onClick={() =>
-            process.env.DEMO !== "true"
+            process.env.DEMO === "true"
               ? showDemoMessage()
               : ws.commandRequest(selectedRows, "cleanStart")
           }
@@ -176,7 +176,7 @@ const Toolbar = (): JSX.Element => {
           leftIcon="memory"
           selectedRows={selectedRows}
           onClick={() =>
-            process.env.DEMO !== "true"
+            process.env.DEMO === "true"
               ? showDemoMessage()
               : ws.commandRequest(selectedRows, "ramClear")
           }
@@ -186,7 +186,7 @@ const Toolbar = (): JSX.Element => {
           leftIcon="desktop_windows"
           selectedRows={selectedRows}
           onClick={() =>
-            process.env.DEMO !== "true"
+            process.env.DEMO === "true"
               ? showDemoMessage()
               : ws.commandRequest(selectedRows, "resetDisplay")
           }
@@ -197,7 +197,7 @@ const Toolbar = (): JSX.Element => {
           leftIcon="refresh"
           selectedRows={selectedRows}
           onClick={() =>
-            process.env.DEMO !== "true"
+            process.env.DEMO === "true"
               ? showDemoMessage()
               : ws.refreshDevice(selectedRows)
           }
@@ -207,7 +207,7 @@ const Toolbar = (): JSX.Element => {
           leftIcon="delete"
           selectedRows={selectedRows}
           onClick={() =>
-            process.env.DEMO !== "true"
+            process.env.DEMO === "true"
               ? showDemoMessage()
               : ws.clearDevice(selectedRows)
           }
@@ -216,9 +216,7 @@ const Toolbar = (): JSX.Element => {
       <LogLevel
         open={logConfigOpen}
         sendDeviceCommand={(namespace: string, level: string) =>
-          process.env.DEMO !== "true"
-            ? showDemoMessage()
-            : ws.commandRequest(selectedRows, "logLevel", { namespace, level })
+          ws.commandRequest(selectedRows, "logLevel", { namespace, level })
         }
         close={() => setLogConfigOpen(false)}
       />
