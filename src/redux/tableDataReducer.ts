@@ -16,7 +16,7 @@ export const tableDataReducer = (
 
     case ActionTypes.DEVICE_DATA_UPDATE: {
       const newState = { ...state };
-      /** Merge state update is provided, clear state otherwise */
+      /** Merge state update if provided, clear state otherwise */
       if (action.payload.state !== null)
         newState[action.payload.id] = {
           ...state[action.payload.id],
