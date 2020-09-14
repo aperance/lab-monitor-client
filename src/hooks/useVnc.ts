@@ -25,7 +25,6 @@ export const useVnc = (ipAddress: string, suspend: boolean): UseVnc => {
 
   /** Reset connection on any state change */
   useEffect(() => {
-    disconnectVnc();
     if (suspend === false) {
       connectVnc();
       return () => disconnectVnc();
@@ -45,21 +44,24 @@ export const useVnc = (ipAddress: string, suspend: boolean): UseVnc => {
         credentials: { password: process.env.VNC_PASSWORD }
       });
       rfb.scaleViewport = isFitToWindow;
-      rfb.addEventListener("connect", () => setStatus("connected"));
-      rfb.addEventListener("disconnect", () => setStatus("error"));
+      rfb.addEventListener("connect", connectHandler);
+      rfb.addEventListener("disconnect", disconnectHandler);
     }, 500);
   };
 
   const disconnectVnc = () => {
     clearTimeout(timer);
     if (rfb) {
-      rfb.removeEventListener("connect", () => setStatus("connected"));
-      rfb.removeEventListener("disconnect", () => setStatus("error"));
+      rfb.removeEventListener("connect", connectHandler);
+      rfb.removeEventListener("disconnect", disconnectHandler);
       if (rfb._rfb_connection_state !== "disconnected") rfb.disconnect();
       rfb = null;
     }
     setStatus("disconnected");
   };
+
+  const connectHandler = () => setStatus("connected");
+  const disconnectHandler = () => setStatus("error");
 
   return { targetRef, status, isFitToWindow, setFitToWindow };
 };
