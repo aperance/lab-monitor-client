@@ -25,8 +25,8 @@ export const useVnc = (ipAddress: string, suspend: boolean): UseVnc => {
 
   /** Reset connection on any state change */
   useEffect(() => {
-    if (!suspend) {
-      disconnectVnc();
+    disconnectVnc();
+    if (suspend === false) {
       connectVnc();
       return () => disconnectVnc();
     }
