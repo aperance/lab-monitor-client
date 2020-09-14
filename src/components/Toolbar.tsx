@@ -29,13 +29,15 @@ const Toolbar = (): JSX.Element => {
       <List draggable={false}>
         {selectedRows.length <= 1 && (
           <>
-            <ToolbarItem
-              name="State"
-              leftIcon="list_alt"
-              rightIcon="navigate_next"
-              isSelected={selectedSubView === "statePage"}
-              onClick={() => dispatch(viewSelect("statePage"))}
-            />
+            {process.env.DEMO !== "true" && (
+              <ToolbarItem
+                name="State"
+                leftIcon="list_alt"
+                rightIcon="navigate_next"
+                isSelected={selectedSubView === "statePage"}
+                onClick={() => dispatch(viewSelect("statePage"))}
+              />
+            )}
             <ToolbarItem
               name="History"
               leftIcon="history"
