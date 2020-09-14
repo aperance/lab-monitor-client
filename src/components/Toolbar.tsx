@@ -5,7 +5,7 @@ import { List, Divider } from "@material-ui/core";
 import config from "../configuration";
 import { WebsocketContext } from "../contexts/WebsocketContext";
 import { useSelector, useDispatch } from "../redux/store";
-import { viewSelect, deviceCommandResponse } from "../redux/actionCreators";
+import { viewSelect } from "../redux/actionCreators";
 import ToolbarItem from "./ToolbarItem";
 import LogLevel from "./LogLevel";
 
@@ -24,14 +24,6 @@ const Toolbar = (): JSX.Element => {
   const ws = useContext(WebsocketContext);
   const [logConfigOpen, setLogConfigOpen] = useState(false);
 
-  const showDemoMessage = () =>
-    dispatch(
-      deviceCommandResponse({
-        err: "Feature not available in demo mode.",
-        ack: null
-      })
-    );
-
   return (
     <>
       <List draggable={false}>
@@ -42,11 +34,8 @@ const Toolbar = (): JSX.Element => {
               leftIcon="list_alt"
               rightIcon="navigate_next"
               isSelected={selectedSubView === "statePage"}
-              onClick={() =>
-                process.env.DEMO === "true"
-                  ? showDemoMessage()
-                  : dispatch(viewSelect("statePage"))
-              }
+              disabledOnDemo={true}
+              onClick={() => dispatch(viewSelect("statePage"))}
             />
             <ToolbarItem
               name="History"
@@ -60,11 +49,8 @@ const Toolbar = (): JSX.Element => {
               leftIcon="code"
               rightIcon="navigate_next"
               isSelected={selectedSubView === "psTools"}
-              onClick={() =>
-                process.env.DEMO === "true"
-                  ? showDemoMessage()
-                  : dispatch(viewSelect("psTools"))
-              }
+              disabledOnDemo={true}
+              onClick={() => dispatch(viewSelect("psTools"))}
             />
             <ToolbarItem
               name="VNC"
@@ -114,6 +100,7 @@ const Toolbar = (): JSX.Element => {
               leftIcon="subject"
               rightIcon="open_in_new"
               selectedRows={selectedRows}
+              disabledOnDemo={true}
               onClick={() => {
                 const link = document.getElementById("logsLink");
                 if (link !== null) link.click();
@@ -145,72 +132,51 @@ const Toolbar = (): JSX.Element => {
           name="Log Level"
           leftIcon="tune"
           selectedRows={selectedRows}
-          onClick={() =>
-            process.env.DEMO === "true"
-              ? showDemoMessage()
-              : setLogConfigOpen(true)
-          }
+          disabledOnDemo={true}
+          onClick={() => setLogConfigOpen(true)}
         />
         <ToolbarItem
           name="Delete Logs"
           leftIcon="delete_sweep"
           selectedRows={selectedRows}
-          onClick={() =>
-            process.env.DEMO === "true"
-              ? showDemoMessage()
-              : ws.commandRequest(selectedRows, "deleteLogs")
-          }
+          disabledOnDemo={true}
+          onClick={() => ws.commandRequest(selectedRows, "deleteLogs")}
         />
         <ToolbarItem
           name="Clean Start"
           leftIcon="power_settings_new"
           selectedRows={selectedRows}
-          onClick={() =>
-            process.env.DEMO === "true"
-              ? showDemoMessage()
-              : ws.commandRequest(selectedRows, "cleanStart")
-          }
+          disabledOnDemo={true}
+          onClick={() => ws.commandRequest(selectedRows, "cleanStart")}
         />
         <ToolbarItem
           name="RAM Clear"
           leftIcon="memory"
           selectedRows={selectedRows}
-          onClick={() =>
-            process.env.DEMO === "true"
-              ? showDemoMessage()
-              : ws.commandRequest(selectedRows, "ramClear")
-          }
+          disabledOnDemo={true}
+          onClick={() => ws.commandRequest(selectedRows, "ramClear")}
         />
         <ToolbarItem
           name="Reset Display"
           leftIcon="desktop_windows"
           selectedRows={selectedRows}
-          onClick={() =>
-            process.env.DEMO === "true"
-              ? showDemoMessage()
-              : ws.commandRequest(selectedRows, "resetDisplay")
-          }
+          disabledOnDemo={true}
+          onClick={() => ws.commandRequest(selectedRows, "resetDisplay")}
         />
         <Divider style={{ marginTop: "8px", marginBottom: "8px" }} />
         <ToolbarItem
           name="Force Refresh"
           leftIcon="refresh"
           selectedRows={selectedRows}
-          onClick={() =>
-            process.env.DEMO === "true"
-              ? showDemoMessage()
-              : ws.refreshDevice(selectedRows)
-          }
+          disabledOnDemo={true}
+          onClick={() => ws.refreshDevice(selectedRows)}
         />
         <ToolbarItem
           name="Clear Record"
           leftIcon="delete"
           selectedRows={selectedRows}
-          onClick={() =>
-            process.env.DEMO === "true"
-              ? showDemoMessage()
-              : ws.clearDevice(selectedRows)
-          }
+          disabledOnDemo={true}
+          onClick={() => ws.clearDevice(selectedRows)}
         />
       </List>
       <LogLevel

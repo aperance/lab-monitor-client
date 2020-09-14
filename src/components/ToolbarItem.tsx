@@ -13,6 +13,7 @@ type Props = {
   rightIcon?: string;
   selectedRows?: string[];
   isSelected?: boolean;
+  disabledOnDemo?: boolean;
   onClick: () => void;
   children?: JSX.Element;
 };
@@ -50,7 +51,12 @@ const ToolbarItem = (props: Props): JSX.Element => {
 
   return (
     <div className={props.isSelected ? classes.selected : undefined}>
-      <ListItem button onClick={props.onClick} className={classes.root}>
+      <ListItem
+        button
+        onClick={props.onClick}
+        className={classes.root}
+        disabled={props.disabledOnDemo && process.env.DEMO === "true"}
+      >
         <ListItemIcon className={classes.icon}>
           <Icon>{props.leftIcon}</Icon>
         </ListItemIcon>
