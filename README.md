@@ -7,3 +7,5 @@ The backend component is a Node.js server that contiuously polls multiple embedd
 This repository stores the source code for the frontend only. The backend repository can be found at <https://www.github.com/aperance/lab-monitor-server>.
 
 A live demo version of this app is hosted at <https://qa.aperance.dev>.
+
+![](demo.gif)
