@@ -18,7 +18,7 @@ The user may select a row by clicking on it. When selected a toolbar will be rev
 
 ![](demo.gif)
 
-## Sub-Views
+## Features
 
 ### State
 The State sub-view opens an iFrame that displays the raw state data exposed on the HTTP endpoint of the embedded device.
