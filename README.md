@@ -8,4 +8,32 @@ This repository stores the source code for the frontend only. The backend reposi
 
 A live demo version of this app is hosted at <https://qa.aperance.dev>.
 
+## How to Use
+
+Once loaded, a table is displayed showing all embedded devices currently being monitored and their key attributes such as serial number and IP address. Additionally a status indicator icon is shown for each device (green if connected, yellow if connection lost but retry pending, and red if disconnected and retry failed). The user may sort the table by any column by clicking on the column header, and filter the table by selecting from the checkboxes on the left side of the app.
+
+Note: When in demo mode the server generates random data to simulate connected embedded devices.
+
+The user may select a row by clicking on it. When selected a toolbar will be revealed on the right side of the app. This toolbar includes sub-views that the user can access and the ability to trigger actions on the embedded device.
+
 ![](demo.gif)
+
+## Sub-Views
+
+### State
+The State sub-view opens an iFrame that displays the raw state data exposed on the HTTP endpoint of the embedded device.
+
+### History
+The History sub-view lists all state property keys for the embedded device. Once a key is selected the history of the 10 most recent values received is displayed.
+
+### PSTools
+The PSTools sub-view provides the user the ability to run remote commands on the embedded device, usually starting or stopping a service. This is done by passing the request to the server, which then runs the command on the device remotely using the PSTools utility suite.
+
+### VNC
+The VNC sub-view opens an interactive VNC client embedded in the app, giving the user full control of the embedded device. This works by proxying the VNC data through the backend server and wrapping the data in a web socket message between the server and client.
+
+### Logs
+Link to the internal logs of the embedded device (files hosted on the device itself).
+
+### Device Actions
+Buttons to trigger actions on the embedded device such as reboot, clear log files, or clear non-volitile memory. This works by sending an HTTP request to the devices enpoint to trigger the actions.
